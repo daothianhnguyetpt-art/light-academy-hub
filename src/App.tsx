@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import SocialFeed from "./pages/SocialFeed";
 import VideoLibrary from "./pages/VideoLibrary";
 import LiveClasses from "./pages/LiveClasses";
+import Whitepaper from "./pages/Whitepaper";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/social-feed" element={<SocialFeed />} />
           <Route path="/video-library" element={<VideoLibrary />} />
           <Route path="/live-classes" element={<LiveClasses />} />
+          <Route path="/whitepaper" element={<Whitepaper />} />
           <Route path="/profile" element={<Profile />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

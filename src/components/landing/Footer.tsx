@@ -9,8 +9,8 @@ const footerLinks = {
     { label: "Academic Profile", href: "/profile" },
   ],
   resources: [
+    { label: "Whitepaper", href: "/whitepaper" },
     { label: "Documentation", href: "#" },
-    { label: "API Reference", href: "#" },
     { label: "Help Center", href: "#" },
     { label: "Community", href: "#" },
   ],
