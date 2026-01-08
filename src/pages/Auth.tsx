@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -197,7 +197,7 @@ export default function Auth() {
           className="w-full max-w-md"
         >
           <div className="academic-card p-8">
-            <Tabs defaultValue="login" className="w-full">
+            <Tabs defaultValue={new URLSearchParams(window.location.search).get("tab") === "register" ? "register" : "login"} className="w-full">
               <TabsList className="grid w-full grid-cols-2 mb-6">
                 <TabsTrigger value="login">Đăng Nhập</TabsTrigger>
                 <TabsTrigger value="register">Đăng Ký</TabsTrigger>
