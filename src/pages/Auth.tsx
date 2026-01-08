@@ -12,6 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { useWallet } from "@/hooks/useWallet";
+import { useConfetti } from "@/contexts/ConfettiContext";
 import funLogo from "@/assets/fun-academy-logo.jpg";
 
 // Validation schemas
@@ -38,6 +39,7 @@ export default function Auth() {
   const { toast } = useToast();
   const { user, loading, signIn, signUp, signInWithGoogle } = useAuth();
   const wallet = useWallet();
+  const { triggerConfetti } = useConfetti();
   
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -80,6 +82,7 @@ export default function Auth() {
           variant: "destructive",
         });
       } else {
+        triggerConfetti();
         toast({
           title: "Đăng nhập thành công",
           description: "Chào mừng con trở lại với Ánh Sáng ✨",
@@ -112,6 +115,7 @@ export default function Auth() {
           });
         }
       } else {
+        triggerConfetti();
         toast({
           title: "Đăng ký thành công",
           description: "Chào mừng con bước vào Ánh Sáng ✨",
@@ -124,8 +128,11 @@ export default function Auth() {
   };
 
   const handleGoogleSignIn = async () => {
+    // Set flag for celebration after redirect
+    localStorage.setItem("pending_celebration", "true");
     const { error } = await signInWithGoogle();
     if (error) {
+      localStorage.removeItem("pending_celebration");
       toast({
         title: "Đăng nhập Google thất bại",
         description: error.message,
