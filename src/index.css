@@ -269,4 +269,37 @@
       background-position: -200% 0;
     }
   }
+
+  /* Radial gradient background for dialogs */
+  .bg-gradient-radial {
+    background: radial-gradient(
+      ellipse at center,
+      hsl(var(--gold) / 0.06) 0%,
+      transparent 60%
+    );
+  }
+
+  /* Text shimmer effect */
+  .text-shimmer {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--foreground)) 40%,
+      hsl(var(--gold)) 50%,
+      hsl(var(--foreground)) 60%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: text-shimmer 4s linear infinite;
+  }
+
+  @keyframes text-shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
 }
