@@ -17,6 +17,7 @@ const navLinks = [
   { href: "/social-feed", label: "Social Feed" },
   { href: "/video-library", label: "Video Library" },
   { href: "/live-classes", label: "Live Classes" },
+  { href: "/library", label: "Library" },
   { href: "/whitepaper", label: "Whitepaper" },
   { href: "/profile", label: "Profile" },
 ];

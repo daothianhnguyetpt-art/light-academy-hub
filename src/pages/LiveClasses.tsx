@@ -17,8 +17,14 @@ import {
   Calendar,
   Clock,
   User,
-  ChevronRight
+  ChevronRight,
+  Circle
 } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
@@ -187,6 +193,16 @@ export default function LiveClasses() {
                     </div>
 
                     <div className="flex items-center gap-2">
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button variant="outline" size="icon" className="border-border text-destructive hover:bg-destructive/10">
+                            <Circle className="w-5 h-5 fill-current" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Record - Lưu vào thư viện học tập</p>
+                        </TooltipContent>
+                      </Tooltip>
                       <Button variant="outline" size="icon" className="border-border">
                         <Settings className="w-5 h-5" />
                       </Button>
