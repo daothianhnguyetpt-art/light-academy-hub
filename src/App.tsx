@@ -11,6 +11,7 @@ import Library from "./pages/Library";
 import Whitepaper from "./pages/Whitepaper";
 import Profile from "./pages/Profile";
 import LightLaw from "./pages/LightLaw";
+import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/light-law" element={<LightLaw />} />
+          <Route path="/auth" element={<Auth />} />
           <Route path="/social-feed" element={<SocialFeed />} />
           <Route path="/video-library" element={<VideoLibrary />} />
           <Route path="/live-classes" element={<LiveClasses />} />
