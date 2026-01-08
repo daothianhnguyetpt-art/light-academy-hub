@@ -6,28 +6,28 @@ const features = [
   {
     icon: Users,
     title: "Social Academic Feed",
-    description: "Kết nối cộng đồng học thuật toàn cầu. Chia sẻ nghiên cứu, bài giảng và tri thức một cách trang nhã.",
+    description: "Như Facebook cho học thuật – kết nối cộng đồng học tập toàn cầu. Chia sẻ nghiên cứu, bài giảng và tri thức một cách trang nhã.",
     href: "/social-feed",
     color: "text-primary",
   },
   {
     icon: Video,
     title: "Video Library",
-    description: "Thư viện video bài giảng chất lượng cao. Không autoplay, không giật gân – chỉ có tri thức thuần khiết.",
+    description: "Như YouTube thuần khiết cho giáo dục – thư viện video bài giảng, khoá học chất lượng cao. Không giật gân – chỉ có tri thức.",
     href: "/video-library",
     color: "text-secondary",
   },
   {
     icon: MonitorPlay,
     title: "Live Classes",
-    description: "Lớp học trực tuyến với Zoom/Google Meet. Học và hợp tác trong không gian yên tĩnh, tôn trọng.",
+    description: "Tích hợp cho lớp học, hội thảo, đào tạo doanh nghiệp, phỏng vấn, mentoring. Học và hợp tác trong không gian trang nhã.",
     href: "/live-classes",
     color: "text-primary",
   },
   {
     icon: BookOpen,
     title: "Academic Library",
-    description: "Kho tài liệu học thuật: sách, hình ảnh, video, nghiên cứu. Tri thức tinh hoa của nhân loại.",
+    description: "Thư viện học thuật đầy đủ: sách, hình ảnh, video, tài liệu nghiên cứu 📚📖 – Tri thức tinh hoa của nhân loại.",
     href: "/video-library",
     color: "text-secondary",
   },
@@ -71,9 +71,11 @@ export function FeaturesSection() {
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Mạng Xã Hội Học Thuật Thế Hệ Mới
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Kết hợp tinh tế giữa Facebook, YouTube và Zoom – phục vụ trọn vẹn cho việc học tập, 
-            giảng dạy và chia sẻ tri thức.
+          <p className="text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            Kết hợp tinh tế giữa <span className="text-foreground font-medium">Facebook</span> – kết nối cộng đồng, 
+            <span className="text-foreground font-medium"> YouTube</span> – chia sẻ video bài giảng, 
+            và <span className="text-foreground font-medium">Thư viện học thuật</span> – sách, hình ảnh, tài liệu nghiên cứu. 
+            Tất cả trong một nền tảng duy nhất, phục vụ trọn vẹn cho học tập, giảng dạy, đào tạo và phát triển năng lực con người.
           </p>
         </motion.div>
 

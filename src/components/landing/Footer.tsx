@@ -47,9 +47,11 @@ export function Footer() {
                 FUN Academy
               </span>
             </Link>
-            <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
-              Nền Tảng Tri Thức Ánh Sáng Toàn Cầu. 
-              Web3 Academic Platform trong FUN Ecosystem.
+            <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+              Trái tim tri thức & khai sáng của FUN Ecosystem.
+            </p>
+            <p className="text-xs text-muted-foreground/80 italic mb-6">
+              "Đây là Thư Viện Ánh Sáng của Nhân Loại trong Kỷ Nguyên 5D"
             </p>
             {/* Social Links */}
             <div className="flex items-center gap-3">
