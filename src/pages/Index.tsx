@@ -1,7 +1,9 @@
 import { Header } from "@/components/landing/Header";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { FeaturesSection } from "@/components/landing/FeaturesSection";
+import { DemocratizationSection } from "@/components/landing/DemocratizationSection";
 import { Web3Section } from "@/components/landing/Web3Section";
+import { EcosystemRoleSection } from "@/components/landing/EcosystemRoleSection";
 import { Footer } from "@/components/landing/Footer";
 import { useWallet } from "@/hooks/useWallet";
 
@@ -18,7 +20,9 @@ const Index = () => {
       <main>
         <HeroSection />
         <FeaturesSection />
+        <DemocratizationSection />
         <Web3Section />
+        <EcosystemRoleSection />
       </main>
       <Footer />
     </div>

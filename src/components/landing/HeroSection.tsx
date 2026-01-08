@@ -49,11 +49,26 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 leading-relaxed"
           >
-            Mạng xã hội học thuật thế hệ mới, kết nối tri thức toàn cầu với Web3 & AI. 
-            Chứng nhận học tập bằng NFT Soulbound Token – vĩnh viễn, minh bạch, không thể làm giả.
+            Nền tảng Web3 kết nối & chia sẻ tri thức toàn cầu, nơi hội tụ những giá trị học thuật 
+            tinh hoa của nhân loại. Chứng nhận học tập bằng NFT Soulbound Token – vĩnh viễn, 
+            minh bạch, không thể làm giả.
           </motion.p>
+
+          {/* Stakeholder Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="flex flex-wrap items-center justify-center gap-2 text-sm text-muted-foreground mb-10"
+          >
+            <span className="px-3 py-1 rounded-full bg-accent/50 border border-border">🌍 Trường học</span>
+            <span className="px-3 py-1 rounded-full bg-accent/50 border border-border">🏢 Tổ chức giáo dục</span>
+            <span className="px-3 py-1 rounded-full bg-accent/50 border border-border">💼 Doanh nghiệp</span>
+            <span className="px-3 py-1 rounded-full bg-accent/50 border border-border">👨‍🏫 Chuyên gia</span>
+            <span className="px-3 py-1 rounded-full bg-accent/50 border border-border">🎓 Người học toàn cầu</span>
+          </motion.div>
 
           {/* CTA Buttons */}
           <motion.div

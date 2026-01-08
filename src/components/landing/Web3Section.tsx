@@ -9,13 +9,18 @@ const sbtFeatures = [
   },
   {
     icon: Shield,
+    title: "Không thể chuyển nhượng",
+    description: "Token gắn liền với linh hồn, không thể bán hoặc trao đổi",
+  },
+  {
+    icon: Shield,
     title: "Không thể làm giả",
     description: "Chứng chỉ được xác thực bởi smart contract",
   },
   {
     icon: Infinity,
     title: "Lưu giữ vĩnh viễn",
-    description: "Giá trị học thuật của bạn được bảo toàn mãi mãi",
+    description: "Giá trị học thuật của mỗi linh hồn được bảo toàn mãi mãi",
   },
 ];
 
