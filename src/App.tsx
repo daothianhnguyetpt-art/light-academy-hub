@@ -10,6 +10,7 @@ import LiveClasses from "./pages/LiveClasses";
 import Library from "./pages/Library";
 import Whitepaper from "./pages/Whitepaper";
 import Profile from "./pages/Profile";
+import LightLaw from "./pages/LightLaw";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/light-law" element={<LightLaw />} />
           <Route path="/social-feed" element={<SocialFeed />} />
           <Route path="/video-library" element={<VideoLibrary />} />
           <Route path="/live-classes" element={<LiveClasses />} />
