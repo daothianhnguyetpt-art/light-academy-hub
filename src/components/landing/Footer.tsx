@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Github, Twitter, Linkedin, Globe } from "lucide-react";
+import funAcademyLogo from "@/assets/fun-academy-logo.jpg";
 
 const footerLinks = {
   platform: [
@@ -37,9 +38,11 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-display font-bold text-xl">F</span>
-              </div>
+              <img 
+                src={funAcademyLogo} 
+                alt="FUN Academy" 
+                className="w-10 h-10 rounded-full object-cover"
+              />
               <span className="font-display font-semibold text-xl text-foreground">
                 FUN Academy
               </span>
