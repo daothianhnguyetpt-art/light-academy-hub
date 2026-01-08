@@ -56,7 +56,8 @@ export default function LightLaw() {
 
   const handleEnter = () => {
     if (allChecked) {
-      navigate("/");
+      localStorage.setItem("light_law_accepted", "true");
+      navigate("/auth");
     }
   };
 
