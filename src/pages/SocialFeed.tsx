@@ -4,7 +4,7 @@ import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import { useWallet } from "@/hooks/useWallet";
 import { 
-  Heart, 
+  Sparkles, 
   Bookmark, 
   Share2, 
   MessageCircle, 
@@ -188,8 +188,8 @@ export default function SocialFeed() {
                   <div className="flex items-center justify-between pt-4 border-t border-border">
                     <div className="flex items-center gap-1">
                       <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-secondary">
-                        <Heart className="w-4 h-4 mr-1" />
-                        <span className="text-xs">{post.stats.appreciates}</span>
+                        <Sparkles className="w-4 h-4 mr-1" />
+                        <span className="text-xs">Appreciate</span>
                       </Button>
                       <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
                         <MessageCircle className="w-4 h-4 mr-1" />

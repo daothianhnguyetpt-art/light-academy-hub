@@ -231,8 +231,14 @@ export default function VideoLibrary() {
                         {video.rating}
                       </span>
                     </div>
-                    <span className="px-2 py-0.5 rounded bg-accent text-foreground">
-                      {video.level}
+                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+                      video.level === "Beginner" 
+                        ? "bg-green-100 text-green-700" 
+                        : video.level === "Intermediate"
+                        ? "bg-amber-100 text-amber-700"
+                        : "bg-red-100 text-red-700"
+                    }`}>
+                      {video.level === "Beginner" ? "Cơ bản" : video.level === "Intermediate" ? "Trung cấp" : "Nâng cao"}
                     </span>
                   </div>
                 </div>
