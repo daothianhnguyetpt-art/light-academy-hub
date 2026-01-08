@@ -24,6 +24,18 @@ export function useAuth() {
           session,
           loading: false,
         });
+
+        // Check for pending celebration (Google login redirect)
+        if (event === 'SIGNED_IN' && session) {
+          const pendingCelebration = localStorage.getItem("pending_celebration");
+          if (pendingCelebration) {
+            // Use setTimeout to ensure state is updated first
+            setTimeout(() => {
+              window.dispatchEvent(new CustomEvent('auth:celebration'));
+              localStorage.removeItem("pending_celebration");
+            }, 100);
+          }
+        }
       }
     );
 

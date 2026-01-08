@@ -58,11 +58,15 @@ export function AuthDialog({
   const handleGoogleLogin = async () => {
     setIsLoading(true);
     try {
+      // Set flag for celebration after redirect
+      localStorage.setItem("pending_celebration", "true");
       const { error } = await signInWithGoogle();
       if (error) {
+        localStorage.removeItem("pending_celebration");
         toast.error("Không thể đăng nhập với Google");
       }
     } catch (err) {
+      localStorage.removeItem("pending_celebration");
       toast.error("Đã xảy ra lỗi");
     } finally {
       setIsLoading(false);
