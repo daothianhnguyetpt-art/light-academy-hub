@@ -8,7 +8,7 @@ import { Footer } from "@/components/landing/Footer";
 import { useWallet } from "@/hooks/useWallet";
 
 const Index = () => {
-  const { isConnected, address, connectWallet } = useWallet();
+  const { isConnected, address, isConnecting, connectingWallet, connectWallet } = useWallet();
 
   return (
     <div className="min-h-screen bg-background">
@@ -16,6 +16,8 @@ const Index = () => {
         onConnectWallet={connectWallet}
         isWalletConnected={isConnected}
         walletAddress={address ?? undefined}
+        isConnectingWallet={isConnecting}
+        connectingWalletType={connectingWallet}
       />
       <main>
         <HeroSection />
