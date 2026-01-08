@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Menu, X, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import funAcademyLogo from "@/assets/fun-academy-logo.jpg";
 
 interface HeaderProps {
   onConnectWallet: () => void;
@@ -38,9 +39,11 @@ export function Header({ onConnectWallet, isWalletConnected, walletAddress }: He
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-display font-bold text-xl">F</span>
-            </div>
+            <img 
+              src={funAcademyLogo} 
+              alt="FUN Academy" 
+              className="w-10 h-10 rounded-full object-cover"
+            />
             <span className="font-display font-semibold text-xl text-foreground hidden sm:block">
               FUN Academy
             </span>
