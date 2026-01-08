@@ -42,7 +42,7 @@ export function EcosystemRoleSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/50 border border-gold-muted mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted/50 border border-gold/30 mb-8">
             <Sparkles className="w-4 h-4 text-secondary" />
             <span className="text-sm font-medium">FUN Ecosystem</span>
           </div>
@@ -68,7 +68,7 @@ export function EcosystemRoleSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="academic-card p-6 text-center hover:border-gold-muted transition-colors"
+              className="academic-card p-6 text-center transition-colors"
             >
               <div className="w-14 h-14 mx-auto mb-4 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
                 <role.icon className="w-7 h-7 text-primary" />
@@ -111,7 +111,7 @@ export function EcosystemRoleSection() {
                   transition={{ duration: 0.4, delay: index * 0.1 }}
                   className="flex items-center gap-2"
                 >
-                  <div className="px-4 py-2 rounded-full bg-accent/50 border border-border hover:border-gold-muted transition-colors">
+                  <div className="px-4 py-2 rounded-full bg-muted/30 border border-border/50 hover:border-gold/40 transition-colors">
                     <span className="text-sm font-medium text-foreground">{platform}</span>
                   </div>
                   {index < ecosystemPlatforms.length - 1 && (
@@ -123,7 +123,7 @@ export function EcosystemRoleSection() {
             
             {/* Central Hub */}
             <div className="mt-6 pt-6 border-t border-border">
-              <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 border border-gold-muted">
+              <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-muted/50 border border-gold/30">
                 <Sparkles className="w-5 h-5 text-secondary" />
                 <span className="font-display font-semibold text-foreground">FUN Academy</span>
                 <span className="text-muted-foreground">– Trái tim của Ecosystem</span>

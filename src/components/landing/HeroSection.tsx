@@ -24,7 +24,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/50 border border-gold-muted mb-8"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted/50 border border-gold/30 mb-8"
           >
             <Sparkles className="w-4 h-4 text-secondary" />
             <span className="text-sm font-medium text-foreground">
@@ -63,11 +63,11 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.25 }}
             className="flex flex-wrap items-center justify-center gap-2 text-sm text-muted-foreground mb-10"
           >
-            <span className="px-3 py-1 rounded-full bg-accent/50 border border-border">🌍 Trường học</span>
-            <span className="px-3 py-1 rounded-full bg-accent/50 border border-border">🏢 Tổ chức giáo dục</span>
-            <span className="px-3 py-1 rounded-full bg-accent/50 border border-border">💼 Doanh nghiệp</span>
-            <span className="px-3 py-1 rounded-full bg-accent/50 border border-border">👨‍🏫 Chuyên gia</span>
-            <span className="px-3 py-1 rounded-full bg-accent/50 border border-border">🎓 Người học toàn cầu</span>
+            <span className="px-3 py-1 rounded-full bg-muted/50 border border-border/50">🌍 Trường học</span>
+            <span className="px-3 py-1 rounded-full bg-muted/50 border border-border/50">🏢 Tổ chức giáo dục</span>
+            <span className="px-3 py-1 rounded-full bg-muted/50 border border-border/50">💼 Doanh nghiệp</span>
+            <span className="px-3 py-1 rounded-full bg-muted/50 border border-border/50">👨‍🏫 Chuyên gia</span>
+            <span className="px-3 py-1 rounded-full bg-muted/50 border border-border/50">🎓 Người học toàn cầu</span>
           </motion.div>
 
           {/* CTA Buttons */}
@@ -84,7 +84,7 @@ export function HeroSection() {
               </Button>
             </Link>
             <Link to="/video-library">
-              <Button variant="outline" className="text-base px-8 py-6 h-auto border-border hover:border-gold-muted hover:bg-accent/30">
+              <Button variant="outline" className="text-base px-8 py-6 h-auto border-border/60 hover:border-gold/50 hover:bg-muted/30">
                 Xem Video Library
               </Button>
             </Link>
