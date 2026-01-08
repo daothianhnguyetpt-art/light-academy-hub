@@ -134,7 +134,7 @@ export default function Profile() {
                       </a>
                     </div>
                   ) : (
-                    <Button onClick={connectWallet} className="btn-primary-gold">
+                    <Button onClick={() => connectWallet()} className="btn-primary-gold">
                       Connect Wallet to View Full Profile
                     </Button>
                   )}
