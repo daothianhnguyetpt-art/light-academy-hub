@@ -14,6 +14,82 @@ export type Database = {
   }
   public: {
     Tables: {
+      academic_verifications: {
+        Row: {
+          credential_name: string
+          end_date: string | null
+          evidence_hash: string | null
+          evidence_url: string | null
+          field_of_study: string | null
+          id: string
+          institution_id: string | null
+          rejection_reason: string | null
+          requested_at: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          start_date: string | null
+          status: string | null
+          user_id: string
+          verification_type: string
+        }
+        Insert: {
+          credential_name: string
+          end_date?: string | null
+          evidence_hash?: string | null
+          evidence_url?: string | null
+          field_of_study?: string | null
+          id?: string
+          institution_id?: string | null
+          rejection_reason?: string | null
+          requested_at?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          start_date?: string | null
+          status?: string | null
+          user_id: string
+          verification_type: string
+        }
+        Update: {
+          credential_name?: string
+          end_date?: string | null
+          evidence_hash?: string | null
+          evidence_url?: string | null
+          field_of_study?: string | null
+          id?: string
+          institution_id?: string | null
+          rejection_reason?: string | null
+          requested_at?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          start_date?: string | null
+          status?: string | null
+          user_id?: string
+          verification_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "academic_verifications_institution_id_fkey"
+            columns: ["institution_id"]
+            isOneToOne: false
+            referencedRelation: "institutions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "academic_verifications_reviewed_by_fkey"
+            columns: ["reviewed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "academic_verifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       appreciates: {
         Row: {
           created_at: string | null
@@ -94,7 +170,9 @@ export type Database = {
           id: string
           institution: string | null
           issued_at: string | null
+          issuing_institution_id: string | null
           metadata: Json | null
+          recognition_count: number | null
           score: number | null
           token_id: string | null
           verified: boolean | null
@@ -106,7 +184,9 @@ export type Database = {
           id?: string
           institution?: string | null
           issued_at?: string | null
+          issuing_institution_id?: string | null
           metadata?: Json | null
+          recognition_count?: number | null
           score?: number | null
           token_id?: string | null
           verified?: boolean | null
@@ -118,7 +198,9 @@ export type Database = {
           id?: string
           institution?: string | null
           issued_at?: string | null
+          issuing_institution_id?: string | null
           metadata?: Json | null
+          recognition_count?: number | null
           score?: number | null
           token_id?: string | null
           verified?: boolean | null
@@ -136,6 +218,13 @@ export type Database = {
             columns: ["holder_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "certificates_issuing_institution_id_fkey"
+            columns: ["issuing_institution_id"]
+            isOneToOne: false
+            referencedRelation: "institutions"
             referencedColumns: ["id"]
           },
         ]
@@ -181,42 +270,58 @@ export type Database = {
       }
       courses: {
         Row: {
+          accessible_to: string | null
+          accreditation_status: string | null
           category: string | null
           created_at: string | null
           description: string | null
           duration_hours: number | null
           id: string
           institution: string | null
+          institution_id: string | null
           instructor_id: string | null
           level: string | null
           thumbnail_url: string | null
           title: string
         }
         Insert: {
+          accessible_to?: string | null
+          accreditation_status?: string | null
           category?: string | null
           created_at?: string | null
           description?: string | null
           duration_hours?: number | null
           id?: string
           institution?: string | null
+          institution_id?: string | null
           instructor_id?: string | null
           level?: string | null
           thumbnail_url?: string | null
           title: string
         }
         Update: {
+          accessible_to?: string | null
+          accreditation_status?: string | null
           category?: string | null
           created_at?: string | null
           description?: string | null
           duration_hours?: number | null
           id?: string
           institution?: string | null
+          institution_id?: string | null
           instructor_id?: string | null
           level?: string | null
           thumbnail_url?: string | null
           title?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "courses_institution_id_fkey"
+            columns: ["institution_id"]
+            isOneToOne: false
+            referencedRelation: "institutions"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "courses_instructor_id_fkey"
             columns: ["instructor_id"]
@@ -225,6 +330,191 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      cross_border_recognitions: {
+        Row: {
+          certificate_id: string
+          equivalent_credential: string | null
+          id: string
+          notes: string | null
+          recognition_type: string
+          recognized_at: string | null
+          recognized_by: string | null
+          recognizing_institution_id: string
+          valid_until: string | null
+        }
+        Insert: {
+          certificate_id: string
+          equivalent_credential?: string | null
+          id?: string
+          notes?: string | null
+          recognition_type: string
+          recognized_at?: string | null
+          recognized_by?: string | null
+          recognizing_institution_id: string
+          valid_until?: string | null
+        }
+        Update: {
+          certificate_id?: string
+          equivalent_credential?: string | null
+          id?: string
+          notes?: string | null
+          recognition_type?: string
+          recognized_at?: string | null
+          recognized_by?: string | null
+          recognizing_institution_id?: string
+          valid_until?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cross_border_recognitions_certificate_id_fkey"
+            columns: ["certificate_id"]
+            isOneToOne: false
+            referencedRelation: "certificates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cross_border_recognitions_recognized_by_fkey"
+            columns: ["recognized_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cross_border_recognitions_recognizing_institution_id_fkey"
+            columns: ["recognizing_institution_id"]
+            isOneToOne: false
+            referencedRelation: "institutions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      institution_members: {
+        Row: {
+          department: string | null
+          id: string
+          institution_id: string
+          joined_at: string | null
+          member_role: string
+          title: string | null
+          user_id: string
+          verified: boolean | null
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          department?: string | null
+          id?: string
+          institution_id: string
+          joined_at?: string | null
+          member_role: string
+          title?: string | null
+          user_id: string
+          verified?: boolean | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          department?: string | null
+          id?: string
+          institution_id?: string
+          joined_at?: string | null
+          member_role?: string
+          title?: string | null
+          user_id?: string
+          verified?: boolean | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "institution_members_institution_id_fkey"
+            columns: ["institution_id"]
+            isOneToOne: false
+            referencedRelation: "institutions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "institution_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "institution_members_verified_by_fkey"
+            columns: ["verified_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      institutions: {
+        Row: {
+          address: string | null
+          city: string | null
+          contribution_score: number | null
+          country: string | null
+          created_at: string | null
+          description: string | null
+          email: string | null
+          founding_year: number | null
+          id: string
+          institution_type: string
+          logo_url: string | null
+          metadata: Json | null
+          name: string
+          phone: string | null
+          region: string | null
+          updated_at: string | null
+          verified: boolean | null
+          wallet_address: string | null
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          city?: string | null
+          contribution_score?: number | null
+          country?: string | null
+          created_at?: string | null
+          description?: string | null
+          email?: string | null
+          founding_year?: number | null
+          id?: string
+          institution_type: string
+          logo_url?: string | null
+          metadata?: Json | null
+          name: string
+          phone?: string | null
+          region?: string | null
+          updated_at?: string | null
+          verified?: boolean | null
+          wallet_address?: string | null
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          city?: string | null
+          contribution_score?: number | null
+          country?: string | null
+          created_at?: string | null
+          description?: string | null
+          email?: string | null
+          founding_year?: number | null
+          id?: string
+          institution_type?: string
+          logo_url?: string | null
+          metadata?: Json | null
+          name?: string
+          phone?: string | null
+          region?: string | null
+          updated_at?: string | null
+          verified?: boolean | null
+          wallet_address?: string | null
+          website?: string | null
+        }
+        Relationships: []
       }
       library_resources: {
         Row: {
@@ -321,6 +611,66 @@ export type Database = {
           },
         ]
       }
+      partnerships: {
+        Row: {
+          approved_by_a: boolean | null
+          approved_by_b: boolean | null
+          created_at: string | null
+          description: string | null
+          ended_at: string | null
+          established_at: string | null
+          id: string
+          institution_a_id: string
+          institution_b_id: string
+          partnership_type: string
+          status: string | null
+          terms: Json | null
+        }
+        Insert: {
+          approved_by_a?: boolean | null
+          approved_by_b?: boolean | null
+          created_at?: string | null
+          description?: string | null
+          ended_at?: string | null
+          established_at?: string | null
+          id?: string
+          institution_a_id: string
+          institution_b_id: string
+          partnership_type: string
+          status?: string | null
+          terms?: Json | null
+        }
+        Update: {
+          approved_by_a?: boolean | null
+          approved_by_b?: boolean | null
+          created_at?: string | null
+          description?: string | null
+          ended_at?: string | null
+          established_at?: string | null
+          id?: string
+          institution_a_id?: string
+          institution_b_id?: string
+          partnership_type?: string
+          status?: string | null
+          terms?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partnerships_institution_a_id_fkey"
+            columns: ["institution_a_id"]
+            isOneToOne: false
+            referencedRelation: "institutions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "partnerships_institution_b_id_fkey"
+            columns: ["institution_b_id"]
+            isOneToOne: false
+            referencedRelation: "institutions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       posts: {
         Row: {
           author_id: string
@@ -364,6 +714,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          academic_title: string | null
           avatar_url: string | null
           bio: string | null
           created_at: string | null
@@ -371,10 +722,13 @@ export type Database = {
           id: string
           knowledge_score: number | null
           light_law_accepted_at: string | null
+          primary_institution_id: string | null
           updated_at: string | null
+          verification_level: string | null
           wallet_address: string | null
         }
         Insert: {
+          academic_title?: string | null
           avatar_url?: string | null
           bio?: string | null
           created_at?: string | null
@@ -382,10 +736,13 @@ export type Database = {
           id: string
           knowledge_score?: number | null
           light_law_accepted_at?: string | null
+          primary_institution_id?: string | null
           updated_at?: string | null
+          verification_level?: string | null
           wallet_address?: string | null
         }
         Update: {
+          academic_title?: string | null
           avatar_url?: string | null
           bio?: string | null
           created_at?: string | null
@@ -393,10 +750,20 @@ export type Database = {
           id?: string
           knowledge_score?: number | null
           light_law_accepted_at?: string | null
+          primary_institution_id?: string | null
           updated_at?: string | null
+          verification_level?: string | null
           wallet_address?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_primary_institution_id_fkey"
+            columns: ["primary_institution_id"]
+            isOneToOne: false
+            referencedRelation: "institutions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
@@ -495,6 +862,14 @@ export type Database = {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
+        Returns: boolean
+      }
+      is_institution_admin: {
+        Args: { _institution_id: string; _user_id: string }
+        Returns: boolean
+      }
+      is_institution_member: {
+        Args: { _institution_id: string; _user_id: string }
         Returns: boolean
       }
     }
