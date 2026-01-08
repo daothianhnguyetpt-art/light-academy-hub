@@ -1,9 +1,17 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Menu, X, Wallet } from "lucide-react";
+import { Menu, X, Wallet, LogIn, UserPlus, LogOut, User, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/hooks/useAuth";
 import funAcademyLogo from "@/assets/fun-academy-logo.jpg";
 
 interface HeaderProps {
@@ -24,9 +32,16 @@ const navLinks = [
 
 export function Header({ onConnectWallet, isWalletConnected, walletAddress }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, loading, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const formatAddress = (address: string) => {
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/");
   };
 
   return (
@@ -63,19 +78,69 @@ export function Header({ onConnectWallet, isWalletConnected, walletAddress }: He
             ))}
           </nav>
 
-          {/* Wallet Connect Button */}
-          <div className="flex items-center gap-3">
+          {/* Auth & Wallet Buttons */}
+          <div className="flex items-center gap-2">
+            {/* Auth Buttons - Desktop */}
+            <div className="hidden sm:flex items-center gap-2">
+              {loading ? (
+                <div className="w-20 h-9 bg-muted animate-pulse rounded-md" />
+              ) : user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="flex items-center gap-2 border border-primary/30 hover:bg-primary/5">
+                      <User className="w-4 h-4" />
+                      <span className="max-w-[120px] truncate">
+                        {user.user_metadata?.full_name || user.email?.split('@')[0]}
+                      </span>
+                      <ChevronDown className="w-3 h-3" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem onClick={() => navigate("/profile")}>
+                      <User className="w-4 h-4 mr-2" />
+                      Hồ Sơ
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleSignOut}>
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Đăng Xuất
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <>
+                  <Button
+                    variant="ghost"
+                    onClick={() => navigate("/auth")}
+                    className="flex items-center gap-2 border border-primary/30 hover:bg-primary/5"
+                  >
+                    <LogIn className="w-4 h-4" />
+                    Đăng Nhập
+                  </Button>
+                  <Button
+                    onClick={() => navigate("/auth?tab=register")}
+                    className="btn-primary-gold flex items-center gap-2"
+                  >
+                    <UserPlus className="w-4 h-4" />
+                    Đăng Ký
+                  </Button>
+                </>
+              )}
+            </div>
+
+            {/* Wallet Button */}
             <Button
               onClick={onConnectWallet}
+              variant="ghost"
               className={cn(
-                "btn-primary-gold hidden sm:flex items-center gap-2",
+                "hidden sm:flex items-center gap-2 border border-primary/30 hover:bg-primary/5",
                 isWalletConnected && "bg-secondary text-secondary-foreground"
               )}
             >
               <Wallet className="w-4 h-4" />
               {isWalletConnected && walletAddress
                 ? formatAddress(walletAddress)
-                : "Connect Wallet"}
+                : "Wallet"}
             </Button>
 
             {/* Mobile Menu Button */}
@@ -107,17 +172,76 @@ export function Header({ onConnectWallet, isWalletConnected, walletAddress }: He
                   {link.label}
                 </Link>
               ))}
+
+              {/* Mobile Auth Buttons */}
+              <div className="flex flex-col gap-2 pt-3 mt-2 border-t border-border/50">
+                {loading ? (
+                  <div className="h-10 bg-muted animate-pulse rounded-md" />
+                ) : user ? (
+                  <>
+                    <Link
+                      to="/profile"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center gap-2 px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-md transition-colors"
+                    >
+                      <User className="w-4 h-4" />
+                      Hồ Sơ của tôi
+                    </Link>
+                    <Button
+                      variant="ghost"
+                      onClick={() => {
+                        handleSignOut();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="justify-start gap-2"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Đăng Xuất
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      variant="ghost"
+                      onClick={() => {
+                        navigate("/auth");
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="justify-start gap-2 border border-primary/30"
+                    >
+                      <LogIn className="w-4 h-4" />
+                      Đăng Nhập
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        navigate("/auth?tab=register");
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="btn-primary-gold justify-center gap-2"
+                    >
+                      <UserPlus className="w-4 h-4" />
+                      Đăng Ký
+                    </Button>
+                  </>
+                )}
+              </div>
+
+              {/* Mobile Wallet Button */}
               <Button
                 onClick={() => {
                   onConnectWallet();
                   setIsMobileMenuOpen(false);
                 }}
-                className="btn-primary-gold mt-2 flex items-center justify-center gap-2"
+                variant="ghost"
+                className={cn(
+                  "mt-2 flex items-center justify-center gap-2 border border-primary/30",
+                  isWalletConnected && "bg-secondary text-secondary-foreground"
+                )}
               >
                 <Wallet className="w-4 h-4" />
                 {isWalletConnected && walletAddress
                   ? formatAddress(walletAddress)
-                  : "Connect Wallet"}
+                  : "Kết nối Wallet"}
               </Button>
             </div>
           </motion.nav>
