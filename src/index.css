@@ -9,52 +9,52 @@
 
 @layer base {
   :root {
-    /* Backgrounds - Trắng ngà / Light Pearl */
-    --background: 40 33% 98%;
+    /* Backgrounds - Trắng sáng tinh khiết */
+    --background: 0 0% 100%;
     --foreground: 213 47% 15%;
 
-    /* Cards - Trắng sứ nhẹ */
-    --card: 40 30% 99%;
+    /* Cards - Trắng tinh khiết */
+    --card: 0 0% 100%;
     --card-foreground: 213 47% 15%;
 
-    --popover: 40 30% 99%;
+    --popover: 0 0% 100%;
     --popover-foreground: 213 47% 15%;
 
-    /* Primary - Xanh biếc (Deep Azure / Elegant Blue) */
-    --primary: 213 52% 24%;
-    --primary-foreground: 40 33% 98%;
+    /* Primary - Xanh biếc đậm (Deep Blue) */
+    --primary: 213 55% 28%;
+    --primary-foreground: 0 0% 100%;
 
-    /* Secondary - Vàng kim loại (Metallic Gold) */
-    --secondary: 43 56% 47%;
+    /* Secondary - Vàng kim loại sáng (Metallic Gold) */
+    --secondary: 45 60% 52%;
     --secondary-foreground: 213 47% 15%;
 
-    /* Muted - Ivory nhẹ */
-    --muted: 40 20% 94%;
+    /* Muted - Xám rất nhạt */
+    --muted: 45 20% 97%;
     --muted-foreground: 213 20% 45%;
 
-    /* Accent - Vàng kim nhạt */
-    --accent: 43 45% 90%;
+    /* Accent - Trắng ngà nhẹ */
+    --accent: 45 30% 98%;
     --accent-foreground: 213 47% 15%;
 
     /* Destructive */
     --destructive: 0 84% 60%;
-    --destructive-foreground: 40 33% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    /* Borders - Vàng kim mỏng */
-    --border: 43 30% 85%;
-    --input: 43 30% 88%;
-    --ring: 213 52% 24%;
+    /* Borders - Rất nhẹ */
+    --border: 45 15% 92%;
+    --input: 45 15% 94%;
+    --ring: 213 55% 28%;
 
     --radius: 0.625rem;
 
     /* Custom FUN Academy tokens */
-    --gold: 43 56% 47%;
-    --gold-light: 43 45% 75%;
-    --gold-muted: 43 30% 85%;
-    --navy: 213 52% 24%;
-    --navy-light: 213 40% 35%;
-    --pearl: 40 33% 98%;
-    --ivory: 40 30% 96%;
+    --gold: 45 60% 52%;
+    --gold-light: 45 50% 72%;
+    --gold-muted: 45 25% 88%;
+    --navy: 213 55% 28%;
+    --navy-light: 213 45% 38%;
+    --pearl: 0 0% 100%;
+    --ivory: 45 25% 98%;
 
     /* Sidebar */
     --sidebar-background: 40 30% 99%;
@@ -137,41 +137,56 @@
 }
 
 @layer components {
-  /* Gold border accent button */
+  /* Gold border accent button - Xanh biếc + viền vàng kim loại THẬT MỎNG 1px */
   .btn-primary-gold {
     @apply relative overflow-hidden bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium transition-all duration-300;
-    box-shadow: 0 0 0 1px hsl(var(--gold) / 0.5), 0 4px 12px hsl(var(--primary) / 0.15);
+    box-shadow: 
+      inset 0 0 0 1px hsl(45 60% 52% / 0.6),
+      0 2px 8px hsl(var(--primary) / 0.12);
   }
 
   .btn-primary-gold:hover {
-    @apply brightness-110;
-    box-shadow: 0 0 0 1.5px hsl(var(--gold) / 0.7), 0 6px 20px hsl(var(--primary) / 0.25);
+    @apply brightness-105;
+    box-shadow: 
+      inset 0 0 0 1px hsl(45 60% 58% / 0.8),
+      0 4px 12px hsl(var(--primary) / 0.18);
   }
 
-  /* Academic card with subtle depth */
+  /* Academic card with subtle depth - nhẹ nhàng, trang nhã */
   .academic-card {
-    @apply bg-card rounded-xl border border-border/50 transition-all duration-300;
-    box-shadow: 0 2px 8px hsl(var(--foreground) / 0.03), 0 1px 2px hsl(var(--foreground) / 0.02);
+    @apply bg-card rounded-xl border border-border/40 transition-all duration-300;
+    box-shadow: 0 1px 4px hsl(var(--foreground) / 0.02);
   }
 
   .academic-card:hover {
-    box-shadow: 0 8px 24px hsl(var(--foreground) / 0.06), 0 2px 4px hsl(var(--foreground) / 0.03);
+    @apply border-gold/30;
+    box-shadow: 0 4px 16px hsl(var(--foreground) / 0.04);
   }
 
-  /* Gold accent line */
+  /* Gold accent line - mỏng và tinh tế hơn */
   .gold-line {
     @apply h-px w-full;
-    background: linear-gradient(90deg, transparent, hsl(var(--gold) / 0.5), transparent);
+    background: linear-gradient(
+      90deg, 
+      transparent 15%, 
+      hsl(45 60% 52% / 0.35) 50%, 
+      transparent 85%
+    );
   }
 
   .gold-line-vertical {
     @apply w-px h-full;
-    background: linear-gradient(180deg, transparent, hsl(var(--gold) / 0.5), transparent);
+    background: linear-gradient(
+      180deg, 
+      transparent 15%, 
+      hsl(45 60% 52% / 0.35) 50%, 
+      transparent 85%
+    );
   }
 
   /* Subtle glow effect for NFT/SBT elements */
   .sbt-glow {
-    box-shadow: 0 0 20px hsl(var(--gold) / 0.2), 0 0 40px hsl(var(--gold) / 0.1);
+    box-shadow: 0 0 15px hsl(var(--gold) / 0.15), 0 0 30px hsl(var(--gold) / 0.08);
   }
 }
 

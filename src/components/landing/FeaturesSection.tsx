@@ -64,7 +64,7 @@ export function FeaturesSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/50 border border-gold-muted mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted/50 border border-gold/30 mb-6">
             <Sparkles className="w-4 h-4 text-secondary" />
             <span className="text-sm font-medium">Tính Năng Nổi Bật</span>
           </div>
@@ -90,9 +90,9 @@ export function FeaturesSection() {
           {features.map((feature) => (
             <motion.div key={feature.title} variants={itemVariants}>
               <Link to={feature.href}>
-                <div className="academic-card p-8 h-full group cursor-pointer hover:border-gold-muted transition-all duration-300">
+                <div className="academic-card p-8 h-full group cursor-pointer transition-all duration-300">
                   <div className="flex items-start gap-5">
-                    <div className="p-3 rounded-xl bg-accent/50 border border-border group-hover:border-gold-muted transition-colors">
+                    <div className="p-3 rounded-xl bg-muted/50 border border-border/50 group-hover:border-gold/40 transition-colors">
                       <feature.icon className={`w-6 h-6 ${feature.color}`} />
                     </div>
                     <div className="flex-1">
@@ -118,15 +118,15 @@ export function FeaturesSection() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-wrap items-center justify-center gap-4 mt-16"
         >
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-border">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-muted/30 border border-border/50">
             <Shield className="w-4 h-4 text-primary" />
             <span className="text-sm text-muted-foreground">Web3 Secured</span>
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-border">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-muted/30 border border-border/50">
             <Sparkles className="w-4 h-4 text-secondary" />
             <span className="text-sm text-muted-foreground">AI Powered</span>
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-border">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-muted/30 border border-border/50">
             <span className="text-sm text-muted-foreground">NFT Certificates</span>
           </div>
         </motion.div>

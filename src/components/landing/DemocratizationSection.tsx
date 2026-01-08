@@ -34,7 +34,7 @@ export function DemocratizationSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/50 border border-gold-muted mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted/50 border border-gold/30 mb-6">
             <Globe className="w-4 h-4 text-secondary" />
             <span className="text-sm font-medium">Tri Thức Không Biên Giới</span>
           </div>
@@ -59,7 +59,7 @@ export function DemocratizationSection() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="text-center"
             >
-              <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-accent/50 border border-gold-muted flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-muted/50 border border-gold/30 flex items-center justify-center">
                 <point.icon className="w-8 h-8 text-primary" />
               </div>
               <h3 className="font-display text-xl font-semibold text-foreground mb-2">
@@ -80,7 +80,7 @@ export function DemocratizationSection() {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mx-auto"
         >
-          <div className="academic-card p-8 text-center border-gold-muted">
+          <div className="academic-card p-8 text-center border-gold/30">
             <p className="font-display text-lg sm:text-xl font-medium text-foreground leading-relaxed">
               FUN ACADEMY <span className="text-gradient-gold">không phân biệt</span>:
             </p>

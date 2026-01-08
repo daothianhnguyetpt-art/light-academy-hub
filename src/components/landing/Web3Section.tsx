@@ -39,7 +39,7 @@ export function Web3Section() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/50 border border-gold-muted mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted/50 border border-gold/30 mb-6">
               <Award className="w-4 h-4 text-secondary" />
               <span className="text-sm font-medium">Soulbound Token (SBT)</span>
             </div>
@@ -129,7 +129,7 @@ export function Web3Section() {
                 <div className="gold-line my-6" />
 
                 {/* Verification Badge */}
-                <div className="flex items-center justify-center gap-2 py-3 rounded-lg bg-accent/50 border border-gold-muted">
+                <div className="flex items-center justify-center gap-2 py-3 rounded-lg bg-muted/50 border border-gold/30">
                   <CheckCircle className="w-5 h-5 text-secondary" />
                   <span className="text-sm font-medium text-foreground">Verified on Blockchain</span>
                 </div>
