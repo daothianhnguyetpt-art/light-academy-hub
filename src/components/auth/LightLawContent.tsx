@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import { Particles } from "@/components/effects/Particles";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 const checklistItems = [
   { id: "honest", icon: Heart, text: "Con sống chân thật với chính mình" },
@@ -79,8 +78,7 @@ interface LightLawContentProps {
 
 export function LightLawContent({ checkedItems, onCheckChange }: LightLawContentProps) {
   return (
-    <ScrollArea className="h-[60vh] pr-4">
-      <div className="space-y-5 relative">
+    <div className="space-y-5 relative pr-4">
         {/* Particles Background */}
         <Particles count={12} />
         
@@ -379,9 +377,8 @@ export function LightLawContent({ checkedItems, onCheckChange }: LightLawContent
                 {item.text}
               </label>
             </motion.div>
-          ))}
-        </div>
+        ))}
       </div>
-    </ScrollArea>
+    </div>
   );
 }
