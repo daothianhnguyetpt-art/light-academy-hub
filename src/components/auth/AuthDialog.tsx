@@ -26,6 +26,8 @@ interface AuthDialogProps {
 
 type DialogStep = "light-law" | "auth-methods";
 
+const CHECKLIST_ITEMS = ["truth", "give", "respect", "protect", "light"];
+
 export function AuthDialog({
   open,
   onOpenChange,
@@ -35,10 +37,18 @@ export function AuthDialog({
 }: AuthDialogProps) {
   const [step, setStep] = useState<DialogStep>("light-law");
   const [isLoading, setIsLoading] = useState(false);
+  const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
   const navigate = useNavigate();
   const { signInWithGoogle } = useAuth();
 
+  const allChecked = CHECKLIST_ITEMS.every((id) => checkedItems[id] === true);
+
+  const handleCheckChange = (id: string, checked: boolean) => {
+    setCheckedItems((prev) => ({ ...prev, [id]: checked }));
+  };
+
   const handleAcceptLightLaw = () => {
+    if (!allChecked) return;
     // Store acceptance
     localStorage.setItem("light_law_accepted", "true");
     localStorage.setItem("light_law_accepted_at", new Date().toISOString());
@@ -84,15 +94,18 @@ export function AuthDialog({
 
   const handleOpenChange = (newOpen: boolean) => {
     if (!newOpen) {
-      // Reset to first step when closing
-      setTimeout(() => setStep("light-law"), 300);
+      // Reset to first step and clear checkboxes when closing
+      setTimeout(() => {
+        setStep("light-law");
+        setCheckedItems({});
+      }, 300);
     }
     onOpenChange(newOpen);
   };
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto relative">
+      <DialogContent className="sm:max-w-lg max-h-[85vh] overflow-y-auto relative">
         {/* Background glow effect */}
         <div className="absolute inset-0 bg-gradient-radial pointer-events-none" />
         
@@ -115,29 +128,40 @@ export function AuthDialog({
               transition={{ duration: 0.2 }}
               className="relative z-10"
             >
-              <LightLawContent />
+              <LightLawContent 
+                checkedItems={checkedItems}
+                onCheckChange={handleCheckChange}
+              />
               
-              <div className="mt-6">
+              <div className="mt-5">
                 <motion.div
-                  animate={{
+                  animate={allChecked ? {
                     boxShadow: [
                       "0 0 15px hsl(var(--gold) / 0.2)",
                       "0 0 30px hsl(var(--gold) / 0.4)",
                       "0 0 15px hsl(var(--gold) / 0.2)"
                     ]
-                  }}
+                  } : {}}
                   transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                   className="rounded-md"
                 >
                   <Button
                     onClick={handleAcceptLightLaw}
-                    className="w-full btn-primary-gold h-12 text-base"
+                    disabled={!allChecked}
+                    className={`w-full h-11 text-base transition-all ${
+                      allChecked 
+                        ? "btn-primary-gold" 
+                        : "bg-muted text-muted-foreground cursor-not-allowed"
+                    }`}
                   >
                     <Sparkles className="w-5 h-5 mr-2" />
-                    Con Đồng Ý & Tiếp Tục
-                    <ArrowRight className="w-5 h-5 ml-2" />
+                    {allChecked ? "Con Đồng Ý & Tiếp Tục" : "Vui lòng đồng ý tất cả điều khoản"}
+                    {allChecked && <ArrowRight className="w-5 h-5 ml-2" />}
                   </Button>
                 </motion.div>
+                <p className="text-xs text-muted-foreground text-center mt-2">
+                  Đã đồng ý: {Object.values(checkedItems).filter(Boolean).length} / {CHECKLIST_ITEMS.length}
+                </p>
               </div>
             </motion.div>
           ) : (

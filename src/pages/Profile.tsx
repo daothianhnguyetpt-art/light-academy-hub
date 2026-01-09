@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import { useWallet } from "@/hooks/useWallet";
+import { useAuth } from "@/hooks/useAuth";
 import { 
   Award,
   BookOpen,
@@ -12,7 +14,8 @@ import {
   Copy,
   Shield,
   Calendar,
-  TrendingUp
+  TrendingUp,
+  LogOut
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -59,11 +62,23 @@ const skills = [
 
 export default function Profile() {
   const { isConnected, address, connectWallet } = useWallet();
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const copyAddress = () => {
     if (address) {
       navigator.clipboard.writeText(address);
       toast.success("Address copied to clipboard!");
+    }
+  };
+
+  const handleSignOut = async () => {
+    const { error } = await signOut();
+    if (error) {
+      toast.error("Đã xảy ra lỗi khi đăng xuất");
+    } else {
+      toast.success("Đã đăng xuất thành công!");
+      navigate("/");
     }
   };
 
@@ -137,6 +152,20 @@ export default function Profile() {
                     <Button onClick={() => connectWallet()} className="btn-primary-gold">
                       Connect Wallet to View Full Profile
                     </Button>
+                  )}
+
+                  {/* Logout Button */}
+                  {user && (
+                    <div className="mt-4">
+                      <Button 
+                        onClick={handleSignOut}
+                        variant="outline"
+                        className="border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive"
+                      >
+                        <LogOut className="w-4 h-4 mr-2" />
+                        Đăng Xuất
+                      </Button>
+                    </div>
                   )}
                 </div>
               </div>
