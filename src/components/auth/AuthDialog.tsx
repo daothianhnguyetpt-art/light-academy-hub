@@ -26,7 +26,7 @@ interface AuthDialogProps {
 
 type DialogStep = "light-law" | "auth-methods";
 
-const CHECKLIST_ITEMS = ["truth", "give", "respect", "protect", "light"];
+const CHECKLIST_ITEMS = ["honest", "responsible", "growth", "love", "light"];
 
 export function AuthDialog({
   open,
@@ -155,7 +155,7 @@ export function AuthDialog({
                     }`}
                   >
                     <Sparkles className="w-5 h-5 mr-2" />
-                    {allChecked ? "Con Đồng Ý & Tiếp Tục" : "Vui lòng đồng ý tất cả điều khoản"}
+                    {allChecked ? "CON ĐỒNG Ý & BƯỚC VÀO ÁNH SÁNG" : "Vui lòng đồng ý tất cả điều khoản"}
                     {allChecked && <ArrowRight className="w-5 h-5 ml-2" />}
                   </Button>
                 </motion.div>
