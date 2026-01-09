@@ -105,7 +105,7 @@ export function AuthDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-lg max-h-[85vh] overflow-y-auto relative">
+      <DialogContent className="sm:max-w-lg max-w-[95vw] relative">
         {/* Background glow effect */}
         <div className="absolute inset-0 bg-gradient-radial pointer-events-none" />
         
