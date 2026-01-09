@@ -78,7 +78,7 @@ export function HeroSection() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <Link to="/social-feed">
-              <Button className="btn-primary-gold text-base px-8 py-6 h-auto">
+              <Button variant="gold" className="text-base px-8 py-6 h-auto">
                 Khám Phá Ngay
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>

@@ -148,8 +148,9 @@ export function Header({
                 ) : (
                   // Not logged in - single login button
                   <Button
+                    variant="gold"
                     onClick={() => setIsAuthDialogOpen(true)}
-                    className="btn-primary-gold flex items-center gap-2"
+                    className="flex items-center gap-2"
                   >
                     <Sparkles className="w-4 h-4" />
                     Đăng Nhập
@@ -230,11 +231,12 @@ export function Header({
                     </>
                   ) : (
                     <Button
+                      variant="gold"
                       onClick={() => {
                         setIsAuthDialogOpen(true);
                         setIsMobileMenuOpen(false);
                       }}
-                      className="w-full btn-primary-gold justify-center gap-2"
+                      className="w-full justify-center gap-2"
                     >
                       <Sparkles className="w-4 h-4" />
                       Đăng Nhập
