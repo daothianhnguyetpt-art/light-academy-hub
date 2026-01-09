@@ -11,30 +11,30 @@
   :root {
     /* Backgrounds - Trắng ngà, trắng sứ, light pearl */
     --background: 42 35% 98%;
-    --foreground: 228 60% 20%;
+    --foreground: 226 72% 33%;
 
     /* Cards - Trắng ngà tinh tế */
     --card: 40 30% 99%;
-    --card-foreground: 228 60% 20%;
+    --card-foreground: 226 72% 33%;
 
     --popover: 40 30% 99%;
-    --popover-foreground: 228 60% 20%;
+    --popover-foreground: 226 72% 33%;
 
-    /* Primary - Xanh dương đậm Navy Blue (như hình tham khảo) */
-    --primary: 228 60% 24%;
+    /* Primary - Xanh Navy Blue đậm sáng như hình (#1E3A8A) */
+    --primary: 226 72% 33%;
     --primary-foreground: 0 0% 100%;
 
     /* Secondary - Vàng kim loại Golden */
     --secondary: 43 65% 50%;
-    --secondary-foreground: 228 60% 20%;
+    --secondary-foreground: 226 72% 33%;
 
     /* Muted - Ngà nhẹ */
     --muted: 42 25% 96%;
-    --muted-foreground: 228 30% 40%;
+    --muted-foreground: 226 50% 45%;
 
     /* Accent - Trắng ngà nhẹ */
     --accent: 42 30% 97%;
-    --accent-foreground: 228 60% 20%;
+    --accent-foreground: 226 72% 33%;
 
     /* Destructive */
     --destructive: 0 84% 60%;
@@ -43,7 +43,7 @@
     /* Borders - Rất nhẹ, mảnh */
     --border: 42 20% 90%;
     --input: 42 20% 92%;
-    --ring: 228 60% 24%;
+    --ring: 226 72% 33%;
 
     --radius: 0.625rem;
 
@@ -51,20 +51,20 @@
     --gold: 43 70% 56%;
     --gold-light: 43 60% 68%;
     --gold-muted: 43 35% 85%;
-    --navy: 228 60% 24%;
-    --navy-light: 228 50% 35%;
+    --navy: 226 72% 33%;
+    --navy-light: 226 60% 45%;
     --pearl: 40 30% 99%;
     --ivory: 42 35% 97%;
 
     /* Sidebar */
     --sidebar-background: 42 30% 98%;
-    --sidebar-foreground: 228 60% 20%;
-    --sidebar-primary: 228 60% 24%;
+    --sidebar-foreground: 226 72% 33%;
+    --sidebar-primary: 226 72% 33%;
     --sidebar-primary-foreground: 40 33% 98%;
     --sidebar-accent: 43 40% 92%;
-    --sidebar-accent-foreground: 228 60% 20%;
+    --sidebar-accent-foreground: 226 72% 33%;
     --sidebar-border: 43 25% 88%;
-    --sidebar-ring: 228 60% 24%;
+    --sidebar-ring: 226 72% 33%;
   }
 
   .dark {
