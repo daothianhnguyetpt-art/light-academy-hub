@@ -61,7 +61,7 @@ const skills = [
 ];
 
 export default function Profile() {
-  const { isConnected, address, connectWallet } = useWallet();
+  const { isConnected, address, connectWallet, disconnectWallet } = useWallet();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
 
@@ -80,6 +80,12 @@ export default function Profile() {
       toast.success("Đã đăng xuất thành công!");
       navigate("/");
     }
+  };
+
+  const handleDisconnectWallet = () => {
+    disconnectWallet();
+    toast.success("Đã ngắt kết nối ví!");
+    navigate("/");
   };
 
   return (
@@ -154,16 +160,16 @@ export default function Profile() {
                     </Button>
                   )}
 
-                  {/* Logout Button */}
-                  {user && (
+                  {/* Logout / Disconnect Button */}
+                  {(user || isConnected) && (
                     <div className="mt-4">
                       <Button 
-                        onClick={handleSignOut}
+                        onClick={user ? handleSignOut : handleDisconnectWallet}
                         variant="outline"
                         className="border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive"
                       >
                         <LogOut className="w-4 h-4 mr-2" />
-                        Đăng Xuất
+                        {user ? "Đăng Xuất" : "Ngắt Kết Nối Ví"}
                       </Button>
                     </div>
                   )}
