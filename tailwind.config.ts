@@ -76,8 +76,8 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Playfair Display', 'Georgia', 'serif'],
+        sans: ['Be Vietnam Pro', 'system-ui', 'sans-serif'],
+        display: ['Be Vietnam Pro', 'system-ui', 'sans-serif'],
       },
       keyframes: {
         "accordion-down": {
