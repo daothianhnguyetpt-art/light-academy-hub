@@ -9,62 +9,62 @@
 
 @layer base {
   :root {
-    /* Backgrounds - Trắng sáng tinh khiết */
-    --background: 0 0% 100%;
-    --foreground: 213 47% 15%;
+    /* Backgrounds - Trắng ngà, trắng sứ, light pearl */
+    --background: 42 35% 98%;
+    --foreground: 228 60% 20%;
 
-    /* Cards - Trắng tinh khiết */
-    --card: 0 0% 100%;
-    --card-foreground: 213 47% 15%;
+    /* Cards - Trắng ngà tinh tế */
+    --card: 40 30% 99%;
+    --card-foreground: 228 60% 20%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 213 47% 15%;
+    --popover: 40 30% 99%;
+    --popover-foreground: 228 60% 20%;
 
-    /* Primary - Xanh biếc đậm (Deep Blue) */
-    --primary: 213 55% 28%;
+    /* Primary - Xanh dương đậm Navy Blue (như hình tham khảo) */
+    --primary: 228 60% 24%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary - Vàng kim loại sáng (Metallic Gold) */
-    --secondary: 45 60% 52%;
-    --secondary-foreground: 213 47% 15%;
+    /* Secondary - Vàng kim loại Golden */
+    --secondary: 43 65% 50%;
+    --secondary-foreground: 228 60% 20%;
 
-    /* Muted - Xám rất nhạt */
-    --muted: 45 20% 97%;
-    --muted-foreground: 213 20% 45%;
+    /* Muted - Ngà nhẹ */
+    --muted: 42 25% 96%;
+    --muted-foreground: 228 30% 40%;
 
     /* Accent - Trắng ngà nhẹ */
-    --accent: 45 30% 98%;
-    --accent-foreground: 213 47% 15%;
+    --accent: 42 30% 97%;
+    --accent-foreground: 228 60% 20%;
 
     /* Destructive */
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Borders - Rất nhẹ */
-    --border: 45 15% 92%;
-    --input: 45 15% 94%;
-    --ring: 213 55% 28%;
+    /* Borders - Rất nhẹ, mảnh */
+    --border: 42 20% 90%;
+    --input: 42 20% 92%;
+    --ring: 228 60% 24%;
 
     --radius: 0.625rem;
 
     /* Custom FUN Academy tokens */
-    --gold: 45 60% 52%;
-    --gold-light: 45 50% 72%;
-    --gold-muted: 45 25% 88%;
-    --navy: 213 55% 28%;
-    --navy-light: 213 45% 38%;
-    --pearl: 0 0% 100%;
-    --ivory: 45 25% 98%;
+    --gold: 43 65% 50%;
+    --gold-light: 43 55% 68%;
+    --gold-muted: 43 30% 85%;
+    --navy: 228 60% 24%;
+    --navy-light: 228 50% 35%;
+    --pearl: 40 30% 99%;
+    --ivory: 42 35% 97%;
 
     /* Sidebar */
-    --sidebar-background: 40 30% 99%;
-    --sidebar-foreground: 213 47% 15%;
-    --sidebar-primary: 213 52% 24%;
+    --sidebar-background: 42 30% 98%;
+    --sidebar-foreground: 228 60% 20%;
+    --sidebar-primary: 228 60% 24%;
     --sidebar-primary-foreground: 40 33% 98%;
-    --sidebar-accent: 43 45% 90%;
-    --sidebar-accent-foreground: 213 47% 15%;
-    --sidebar-border: 43 30% 85%;
-    --sidebar-ring: 213 52% 24%;
+    --sidebar-accent: 43 40% 92%;
+    --sidebar-accent-foreground: 228 60% 20%;
+    --sidebar-border: 43 25% 88%;
+    --sidebar-ring: 228 60% 24%;
   }
 
   .dark {
@@ -163,24 +163,26 @@
     box-shadow: 0 4px 16px hsl(var(--foreground) / 0.04);
   }
 
-  /* Gold accent line - mỏng và tinh tế hơn */
+  /* Gold accent line - THẬT MẢNH 0.5px, mỏng hơn 50% */
   .gold-line {
-    @apply h-px w-full;
+    @apply w-full;
+    height: 0.5px;
     background: linear-gradient(
       90deg, 
-      transparent 15%, 
-      hsl(45 60% 52% / 0.35) 50%, 
-      transparent 85%
+      transparent 10%, 
+      hsl(43 65% 50% / 0.5) 50%, 
+      transparent 90%
     );
   }
 
   .gold-line-vertical {
-    @apply w-px h-full;
+    @apply h-full;
+    width: 0.5px;
     background: linear-gradient(
       180deg, 
-      transparent 15%, 
-      hsl(45 60% 52% / 0.35) 50%, 
-      transparent 85%
+      transparent 10%, 
+      hsl(43 65% 50% / 0.5) 50%, 
+      transparent 90%
     );
   }
 
