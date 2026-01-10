@@ -4,7 +4,11 @@ import { motion } from "framer-motion";
 import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import { useWallet } from "@/hooks/useWallet";
+import { useVideoInteractions } from "@/hooks/useVideoInteractions";
+import { VideoRating } from "@/components/videos/VideoRating";
+import { VideoCommentSection } from "@/components/videos/VideoCommentSection";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import { 
   Play,
   Clock, 
@@ -13,7 +17,9 @@ import {
   ArrowLeft,
   Loader2,
   BookOpen,
-  Award
+  Award,
+  Bookmark,
+  Share2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -44,6 +50,39 @@ export default function VideoDetail() {
   const [video, setVideo] = useState<Video | null>(null);
   const [loading, setLoading] = useState(true);
   const [relatedVideos, setRelatedVideos] = useState<Video[]>([]);
+  
+  const {
+    isBookmarked,
+    userRating,
+    averageRating,
+    ratingCount,
+    comments,
+    commentsCount,
+    loadingBookmark,
+    loadingComments,
+    toggleBookmark,
+    submitRating,
+    addComment,
+    deleteComment,
+  } = useVideoInteractions(id);
+
+  const handleShare = async () => {
+    const url = window.location.href;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: video?.title || 'Video',
+          text: video?.description || 'Xem video học thuật trên FUN Academy',
+          url
+        });
+      } catch (err) {
+        // User cancelled share
+      }
+    } else {
+      await navigator.clipboard.writeText(url);
+      toast.success("Đã sao chép link video!");
+    }
+  };
 
   useEffect(() => {
     const fetchVideo = async () => {
@@ -261,6 +300,23 @@ export default function VideoDetail() {
                   {video.title}
                 </h1>
 
+                {/* Action Buttons */}
+                <div className="flex flex-wrap items-center gap-3 mb-6">
+                  <Button
+                    variant="outline"
+                    onClick={toggleBookmark}
+                    disabled={loadingBookmark}
+                    className={isBookmarked ? "border-secondary text-secondary" : "border-border"}
+                  >
+                    <Bookmark className={`w-4 h-4 mr-2 ${isBookmarked ? "fill-current" : ""}`} />
+                    {isBookmarked ? "Đã lưu" : "Lưu video"}
+                  </Button>
+                  <Button variant="outline" onClick={handleShare} className="border-border">
+                    <Share2 className="w-4 h-4 mr-2" />
+                    Chia sẻ
+                  </Button>
+                </div>
+
                 <div className="flex flex-wrap items-center gap-4 mb-6 text-sm text-muted-foreground">
                   <span className="flex items-center gap-1">
                     <Users className="w-4 h-4" />
@@ -270,22 +326,32 @@ export default function VideoDetail() {
                     <Clock className="w-4 h-4" />
                     {formatDuration(video.duration_minutes)}
                   </span>
-                  {video.rating && (
-                    <span className="flex items-center gap-1">
-                      <Star className="w-4 h-4 text-secondary" />
-                      {video.rating.toFixed(1)}
-                    </span>
-                  )}
                   {video.level && (
                     <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                      video.level === "Beginner" 
+                      video.level === "beginner" 
                         ? "bg-green-100 text-green-700" 
-                        : video.level === "Intermediate"
+                        : video.level === "intermediate"
                         ? "bg-amber-100 text-amber-700"
                         : "bg-red-100 text-red-700"
                     }`}>
-                      {video.level === "Beginner" ? "Cơ bản" : video.level === "Intermediate" ? "Trung cấp" : "Nâng cao"}
+                      {video.level === "beginner" ? "Cơ bản" : video.level === "intermediate" ? "Trung cấp" : "Nâng cao"}
                     </span>
+                  )}
+                </div>
+
+                {/* Rating Section */}
+                <div className="academic-card p-4 mb-6">
+                  <h3 className="font-semibold text-foreground mb-3">Đánh giá video</h3>
+                  <VideoRating
+                    rating={averageRating || video.rating}
+                    userRating={userRating}
+                    count={ratingCount}
+                    interactive={true}
+                    onRate={submitRating}
+                    size="lg"
+                  />
+                  {userRating && (
+                    <p className="text-xs text-muted-foreground mt-2">Bạn đã đánh giá {userRating} sao</p>
                   )}
                 </div>
 
@@ -311,13 +377,22 @@ export default function VideoDetail() {
 
                 {/* Description */}
                 {video.description && (
-                  <div className="academic-card p-6">
+                  <div className="academic-card p-6 mb-6">
                     <h3 className="font-semibold text-foreground mb-3">Mô tả</h3>
                     <p className="text-muted-foreground whitespace-pre-wrap">
                       {video.description}
                     </p>
                   </div>
                 )}
+
+                {/* Comments */}
+                <VideoCommentSection
+                  comments={comments}
+                  commentsCount={commentsCount}
+                  loading={loadingComments}
+                  onAddComment={addComment}
+                  onDeleteComment={deleteComment}
+                />
               </motion.div>
             </div>
 
