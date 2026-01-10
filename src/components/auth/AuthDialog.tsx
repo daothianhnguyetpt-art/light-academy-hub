@@ -113,7 +113,7 @@ export function AuthDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-lg max-w-[95vw] relative">
+      <DialogContent className="sm:max-w-xl md:max-w-2xl max-w-[95vw] relative">
         {/* Background glow effect */}
         <div className="absolute inset-0 bg-gradient-radial pointer-events-none" />
         
