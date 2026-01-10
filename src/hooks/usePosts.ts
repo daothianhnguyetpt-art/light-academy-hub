@@ -9,6 +9,7 @@ export interface Post {
   media_url: string | null;
   media_type: string | null;
   post_type: string | null;
+  location: string | null;
   created_at: string;
   updated_at?: string;
   author: {
@@ -43,6 +44,7 @@ export function usePosts() {
           media_url,
           media_type,
           post_type,
+          location,
           created_at,
           updated_at,
           author:profiles!posts_author_id_fkey (
@@ -106,6 +108,7 @@ export function usePosts() {
             media_url: post.media_url,
             media_type: post.media_type,
             post_type: post.post_type,
+            location: (post as any).location || null,
             created_at: post.created_at,
             updated_at: post.updated_at,
             author: post.author as Post['author'],
@@ -207,7 +210,7 @@ export function usePosts() {
     }
   }, [user, posts]);
 
-  const createPost = useCallback(async (content: string, postType?: string, mediaUrl?: string, mediaType?: string) => {
+  const createPost = useCallback(async (content: string, postType?: string, mediaUrl?: string, mediaType?: string, location?: string) => {
     if (!user) {
       toast.error('Vui lòng đăng nhập để đăng bài');
       return null;
@@ -219,9 +222,10 @@ export function usePosts() {
         .insert({
           content,
           author_id: user.id,
-          post_type: postType || 'Sharing',
+          post_type: postType || 'sharing',
           media_url: mediaUrl || null,
           media_type: mediaType || null,
+          location: location || null,
         })
         .select()
         .single();
