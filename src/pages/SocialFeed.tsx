@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import { useWallet } from "@/hooks/useWallet";
+import { usePosts } from "@/hooks/usePosts";
 import { 
   Sparkles, 
   Bookmark, 
@@ -14,68 +15,44 @@ import {
   FileText,
   GraduationCap,
   Users,
-  TrendingUp
+  TrendingUp,
+  Loader2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-// Sample posts data
-const posts = [
-  {
-    id: 1,
-    author: {
-      name: "Dr. Nguyễn Minh Tuấn",
-      role: "Professor of Computer Science",
-      avatar: null,
-      initials: "NT",
-    },
-    type: "Research",
-    content: "Nghiên cứu mới về ứng dụng Blockchain trong giáo dục đại học. Soulbound Token có thể thay đổi hoàn toàn cách chúng ta xác thực bằng cấp và chứng chỉ.",
-    media: null,
-    stats: { appreciates: 234, saves: 56, shares: 12, comments: 28 },
-    timestamp: "2 giờ trước",
-  },
-  {
-    id: 2,
-    author: {
-      name: "MIT OpenCourseWare",
-      role: "Educational Institution",
-      avatar: null,
-      initials: "MIT",
-    },
-    type: "Course",
-    content: "Khóa học mới: Introduction to Machine Learning. 12 tuần học với project thực hành và chứng chỉ NFT khi hoàn thành.",
-    media: { type: "video", placeholder: true },
-    stats: { appreciates: 1892, saves: 453, shares: 89, comments: 156 },
-    timestamp: "5 giờ trước",
-  },
-  {
-    id: 3,
-    author: {
-      name: "Trần Thị Lan",
-      role: "PhD Candidate, Harvard",
-      avatar: null,
-      initials: "TL",
-    },
-    type: "Sharing",
-    content: "Chia sẻ kinh nghiệm apply học bổng Fulbright thành công. Hi vọng giúp ích cho các bạn đang chuẩn bị hồ sơ năm nay! 📚✨",
-    media: { type: "document", placeholder: true },
-    stats: { appreciates: 567, saves: 234, shares: 45, comments: 89 },
-    timestamp: "1 ngày trước",
-  },
-];
+import { formatDistanceToNow } from "date-fns";
+import { vi } from "date-fns/locale";
 
 const contentTypes = [
   { icon: FileText, label: "Tất cả" },
-  { icon: GraduationCap, label: "Courses" },
+  { icon: GraduationCap, label: "Course" },
   { icon: FileText, label: "Research" },
-  { icon: Video, label: "Lectures" },
+  { icon: Video, label: "Lecture" },
   { icon: Users, label: "Sharing" },
 ];
 
 export default function SocialFeed() {
   const { isConnected, address, connectWallet } = useWallet();
+  const { posts, loading, toggleAppreciate, toggleBookmark, fetchPosts } = usePosts();
   const [activeFilter, setActiveFilter] = useState("Tất cả");
+
+  const filteredPosts = posts.filter(post => {
+    if (activeFilter === "Tất cả") return true;
+    return post.post_type === activeFilter;
+  });
+
+  const getInitials = (name: string | null) => {
+    if (!name) return "?";
+    return name.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase();
+  };
+
+  const formatTime = (dateStr: string) => {
+    try {
+      return formatDistanceToNow(new Date(dateStr), { addSuffix: true, locale: vi });
+    } catch {
+      return dateStr;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -125,9 +102,34 @@ export default function SocialFeed() {
               ))}
             </motion.div>
 
+            {/* Loading State */}
+            {loading && (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                <span className="ml-2 text-muted-foreground">Đang tải bài viết...</span>
+              </div>
+            )}
+
+            {/* Empty State */}
+            {!loading && filteredPosts.length === 0 && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-center py-12 academic-card"
+              >
+                <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-foreground mb-2">
+                  Chưa có bài viết nào
+                </h3>
+                <p className="text-muted-foreground">
+                  Hãy là người đầu tiên chia sẻ tri thức với cộng đồng!
+                </p>
+              </motion.div>
+            )}
+
             {/* Posts */}
             <div className="space-y-6">
-              {posts.map((post, index) => (
+              {filteredPosts.map((post, index) => (
                 <motion.article
                   key={post.id}
                   initial={{ opacity: 0, y: 20 }}
@@ -139,20 +141,26 @@ export default function SocialFeed() {
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <Avatar className="w-12 h-12 border-2 border-gold-muted">
-                        <AvatarImage src={post.author.avatar ?? undefined} />
+                        <AvatarImage src={post.author.avatar_url ?? undefined} />
                         <AvatarFallback className="bg-primary/10 text-primary font-medium">
-                          {post.author.initials}
+                          {getInitials(post.author.full_name)}
                         </AvatarFallback>
                       </Avatar>
                       <div>
-                        <h3 className="font-semibold text-foreground">{post.author.name}</h3>
-                        <p className="text-sm text-muted-foreground">{post.author.role}</p>
+                        <h3 className="font-semibold text-foreground">
+                          {post.author.full_name || "Ẩn danh"}
+                        </h3>
+                        <p className="text-sm text-muted-foreground">
+                          {post.author.academic_title || "FUN Academy Member"}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 rounded-full bg-accent text-xs font-medium text-foreground">
-                        {post.type}
-                      </span>
+                      {post.post_type && (
+                        <span className="px-3 py-1 rounded-full bg-accent text-xs font-medium text-foreground">
+                          {post.post_type}
+                        </span>
+                      )}
                       <button className="p-2 text-muted-foreground hover:text-foreground transition-colors">
                         <MoreHorizontal className="w-5 h-5" />
                       </button>
@@ -160,25 +168,26 @@ export default function SocialFeed() {
                   </div>
 
                   {/* Post Content */}
-                  <p className="text-foreground mb-4 leading-relaxed">{post.content}</p>
+                  <p className="text-foreground mb-4 leading-relaxed whitespace-pre-wrap">
+                    {post.content}
+                  </p>
 
                   {/* Media Placeholder */}
-                  {post.media && (
-                    <div className="mb-4 rounded-xl bg-accent/50 border border-border h-48 flex items-center justify-center">
-                      {post.media.type === "video" ? (
-                        <div className="text-center">
-                          <Video className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
-                          <span className="text-sm text-muted-foreground">Video Preview</span>
+                  {post.media_url && (
+                    <div className="mb-4 rounded-xl bg-accent/50 border border-border overflow-hidden">
+                      {post.media_type === "video" ? (
+                        <div className="aspect-video flex items-center justify-center">
+                          <Video className="w-12 h-12 text-muted-foreground" />
                         </div>
-                      ) : post.media.type === "document" ? (
-                        <div className="text-center">
-                          <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
-                          <span className="text-sm text-muted-foreground">Document Preview</span>
-                        </div>
+                      ) : post.media_type === "image" ? (
+                        <img 
+                          src={post.media_url} 
+                          alt="Post media" 
+                          className="w-full h-auto max-h-96 object-cover"
+                        />
                       ) : (
-                        <div className="text-center">
-                          <ImageIcon className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
-                          <span className="text-sm text-muted-foreground">Image Preview</span>
+                        <div className="h-48 flex items-center justify-center">
+                          <FileText className="w-12 h-12 text-muted-foreground" />
                         </div>
                       )}
                     </div>
@@ -187,36 +196,59 @@ export default function SocialFeed() {
                   {/* Post Footer */}
                   <div className="flex items-center justify-between pt-4 border-t border-border">
                     <div className="flex items-center gap-1">
-                      <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-secondary">
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => toggleAppreciate(post.id)}
+                        className={post.user_appreciated 
+                          ? "text-secondary" 
+                          : "text-muted-foreground hover:text-secondary"
+                        }
+                      >
                         <Sparkles className="w-4 h-4 mr-1" />
-                        <span className="text-xs">Appreciate</span>
+                        <span className="text-xs">
+                          {post.appreciates_count > 0 ? post.appreciates_count : "Appreciate"}
+                        </span>
                       </Button>
                       <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
                         <MessageCircle className="w-4 h-4 mr-1" />
-                        <span className="text-xs">{post.stats.comments}</span>
+                        <span className="text-xs">{post.comments_count || ""}</span>
                       </Button>
-                      <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
-                        <Bookmark className="w-4 h-4 mr-1" />
-                        <span className="text-xs">{post.stats.saves}</span>
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => toggleBookmark(post.id)}
+                        className={post.user_bookmarked 
+                          ? "text-primary" 
+                          : "text-muted-foreground hover:text-primary"
+                        }
+                      >
+                        <Bookmark className={`w-4 h-4 mr-1 ${post.user_bookmarked ? "fill-current" : ""}`} />
+                        <span className="text-xs">{post.bookmarks_count || ""}</span>
                       </Button>
                       <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
                         <Share2 className="w-4 h-4 mr-1" />
-                        <span className="text-xs">{post.stats.shares}</span>
                       </Button>
                     </div>
-                    <span className="text-xs text-muted-foreground">{post.timestamp}</span>
+                    <span className="text-xs text-muted-foreground">{formatTime(post.created_at)}</span>
                   </div>
                 </motion.article>
               ))}
             </div>
 
             {/* Load More */}
-            <div className="text-center mt-8">
-              <Button variant="outline" className="border-gold-muted hover:bg-accent">
-                <TrendingUp className="w-4 h-4 mr-2" />
-                Xem thêm nội dung
-              </Button>
-            </div>
+            {!loading && posts.length > 0 && (
+              <div className="text-center mt-8">
+                <Button 
+                  variant="outline" 
+                  className="border-gold-muted hover:bg-accent"
+                  onClick={() => fetchPosts()}
+                >
+                  <TrendingUp className="w-4 h-4 mr-2" />
+                  Tải lại bài viết
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </main>

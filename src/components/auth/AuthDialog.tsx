@@ -14,6 +14,7 @@ import { AuthMethodSelector } from "./AuthMethodSelector";
 import { WalletType } from "./WalletOptions";
 import { Particles } from "@/components/effects/Particles";
 import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
 import { toast } from "sonner";
 
 interface AuthDialogProps {
@@ -39,7 +40,8 @@ export function AuthDialog({
   const [isLoading, setIsLoading] = useState(false);
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
   const navigate = useNavigate();
-  const { signInWithGoogle } = useAuth();
+  const { signInWithGoogle, user } = useAuth();
+  const { acceptLightLaw } = useProfile();
 
   const allChecked = CHECKLIST_ITEMS.every((id) => checkedItems[id] === true);
 
@@ -47,11 +49,17 @@ export function AuthDialog({
     setCheckedItems((prev) => ({ ...prev, [id]: checked }));
   };
 
-  const handleAcceptLightLaw = () => {
+  const handleAcceptLightLaw = async () => {
     if (!allChecked) return;
-    // Store acceptance
+    // Store acceptance locally first
     localStorage.setItem("light_law_accepted", "true");
     localStorage.setItem("light_law_accepted_at", new Date().toISOString());
+    
+    // If user is already logged in, save to database
+    if (user) {
+      await acceptLightLaw();
+    }
+    
     setStep("auth-methods");
   };
 
