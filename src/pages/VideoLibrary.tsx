@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import { useWallet } from "@/hooks/useWallet";
@@ -164,14 +165,14 @@ export default function VideoLibrary() {
           {!loading && videos.length > 0 && (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {videos.map((video, index) => (
-                <motion.article
-                  key={video.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + index * 0.05 }}
-                  className="academic-card overflow-hidden group cursor-pointer"
-                  onClick={() => incrementViews(video.id)}
-                >
+                <Link key={video.id} to={`/video/${video.id}`}>
+                  <motion.article
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 + index * 0.05 }}
+                    className="academic-card overflow-hidden group cursor-pointer"
+                    onClick={() => incrementViews(video.id)}
+                  >
                   {/* Video Thumbnail */}
                   <div className="relative aspect-video bg-accent/50 flex items-center justify-center">
                     {video.thumbnail_url ? (
@@ -239,7 +240,8 @@ export default function VideoLibrary() {
                       )}
                     </div>
                   </div>
-                </motion.article>
+                  </motion.article>
+                </Link>
               ))}
             </div>
           )}

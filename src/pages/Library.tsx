@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import { useWallet } from "@/hooks/useWallet";
@@ -262,13 +263,13 @@ export default function Library() {
               {filteredResources.map((resource, index) => {
                 const TypeIcon = getTypeIcon(resource.resource_type);
                 return (
-                  <motion.article
-                    key={resource.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 + index * 0.05 }}
-                    className="academic-card overflow-hidden group cursor-pointer"
-                  >
+                  <Link key={resource.id} to={`/library/${resource.id}`}>
+                    <motion.article
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 + index * 0.05 }}
+                      className="academic-card overflow-hidden group cursor-pointer"
+                    >
                     {/* Resource Preview */}
                     <div className="relative aspect-[4/3] bg-accent/50 flex items-center justify-center">
                       {resource.thumbnail_url ? (
@@ -313,7 +314,8 @@ export default function Library() {
                         </span>
                       </div>
                     </div>
-                  </motion.article>
+                    </motion.article>
+                  </Link>
                 );
               })}
             </div>
