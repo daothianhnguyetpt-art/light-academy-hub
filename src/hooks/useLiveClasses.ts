@@ -1,6 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
+export interface LiveClassInstructor {
+  id: string;
+  full_name: string | null;
+  avatar_url: string | null;
+  academic_title: string | null;
+}
+
 export interface LiveClass {
   id: string;
   title: string;
@@ -14,7 +21,8 @@ export interface LiveClass {
   status: string | null;
   created_at: string | null;
   // Joined data
-  instructor_name?: string;
+  instructor?: LiveClassInstructor | null;
+  registration_count?: number;
 }
 
 export function useLiveClasses() {
@@ -27,15 +35,36 @@ export function useLiveClasses() {
       setLoading(true);
       setError(null);
 
+      // Fetch classes with instructor info
       const { data, error: fetchError } = await supabase
         .from('live_classes')
-        .select('*')
+        .select(`
+          *,
+          instructor:profiles!live_classes_instructor_id_fkey(
+            id, full_name, avatar_url, academic_title
+          )
+        `)
         .gte('scheduled_at', new Date().toISOString())
         .order('scheduled_at', { ascending: true });
 
       if (fetchError) throw fetchError;
 
-      setClasses(data || []);
+      // Fetch registration counts for each class
+      const classesWithCounts = await Promise.all(
+        (data || []).map(async (classItem) => {
+          const { count } = await supabase
+            .from('class_registrations')
+            .select('*', { count: 'exact', head: true })
+            .eq('class_id', classItem.id);
+
+          return {
+            ...classItem,
+            registration_count: count || 0,
+          };
+        })
+      );
+
+      setClasses(classesWithCounts);
     } catch (err) {
       console.error('Error fetching live classes:', err);
       setError('Không thể tải lớp học');
@@ -46,10 +75,14 @@ export function useLiveClasses() {
 
   const fetchLiveNow = useCallback(async () => {
     try {
-      const now = new Date();
       const { data, error: fetchError } = await supabase
         .from('live_classes')
-        .select('*')
+        .select(`
+          *,
+          instructor:profiles!live_classes_instructor_id_fkey(
+            id, full_name, avatar_url, academic_title
+          )
+        `)
         .eq('status', 'live')
         .order('scheduled_at', { ascending: true });
 
