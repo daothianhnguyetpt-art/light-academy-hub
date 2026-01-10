@@ -4,24 +4,26 @@ import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import { useWallet } from "@/hooks/useWallet";
 import { usePosts } from "@/hooks/usePosts";
+import { CreatePostForm } from "@/components/posts/CreatePostForm";
+import { CommentSection } from "@/components/posts/CommentSection";
 import { 
   Sparkles, 
   Bookmark, 
   Share2, 
-  MessageCircle, 
   MoreHorizontal,
-  Image as ImageIcon,
   Video,
   FileText,
   GraduationCap,
   Users,
   TrendingUp,
-  Loader2
+  Loader2,
+  Link as LinkIcon
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { formatDistanceToNow } from "date-fns";
 import { vi } from "date-fns/locale";
+import { toast } from "sonner";
 
 const contentTypes = [
   { icon: FileText, label: "Tất cả" },
@@ -33,8 +35,18 @@ const contentTypes = [
 
 export default function SocialFeed() {
   const { isConnected, address, connectWallet } = useWallet();
-  const { posts, loading, toggleAppreciate, toggleBookmark, fetchPosts } = usePosts();
+  const { posts, loading, toggleAppreciate, toggleBookmark, fetchPosts, createPost } = usePosts();
   const [activeFilter, setActiveFilter] = useState("Tất cả");
+
+  const handleSharePost = async (postId: string) => {
+    const url = `${window.location.origin}/social-feed#${postId}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      toast.success("Đã sao chép link bài viết");
+    } catch {
+      toast.error("Không thể sao chép link");
+    }
+  };
 
   const filteredPosts = posts.filter(post => {
     if (activeFilter === "Tất cả") return true;
@@ -78,6 +90,9 @@ export default function SocialFeed() {
                 Kết nối và chia sẻ tri thức với cộng đồng học thuật toàn cầu
               </p>
             </motion.div>
+
+            {/* Create Post Form */}
+            <CreatePostForm onCreatePost={createPost} />
 
             {/* Filter Tabs */}
             <motion.div
@@ -210,10 +225,11 @@ export default function SocialFeed() {
                           {post.appreciates_count > 0 ? post.appreciates_count : "Appreciate"}
                         </span>
                       </Button>
-                      <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
-                        <MessageCircle className="w-4 h-4 mr-1" />
-                        <span className="text-xs">{post.comments_count || ""}</span>
-                      </Button>
+                      <CommentSection 
+                        postId={post.id} 
+                        commentsCount={post.comments_count}
+                        onCommentAdded={fetchPosts}
+                      />
                       <Button 
                         variant="ghost" 
                         size="sm" 
@@ -226,8 +242,13 @@ export default function SocialFeed() {
                         <Bookmark className={`w-4 h-4 mr-1 ${post.user_bookmarked ? "fill-current" : ""}`} />
                         <span className="text-xs">{post.bookmarks_count || ""}</span>
                       </Button>
-                      <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
-                        <Share2 className="w-4 h-4 mr-1" />
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => handleSharePost(post.id)}
+                        className="text-muted-foreground hover:text-primary"
+                      >
+                        <LinkIcon className="w-4 h-4 mr-1" />
                       </Button>
                     </div>
                     <span className="text-xs text-muted-foreground">{formatTime(post.created_at)}</span>

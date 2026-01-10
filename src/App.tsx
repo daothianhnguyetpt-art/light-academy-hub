@@ -9,8 +9,10 @@ import GlobalSchools from "./pages/GlobalSchools";
 import InstitutionDetail from "./pages/InstitutionDetail";
 import SocialFeed from "./pages/SocialFeed";
 import VideoLibrary from "./pages/VideoLibrary";
+import VideoDetail from "./pages/VideoDetail";
 import LiveClasses from "./pages/LiveClasses";
 import Library from "./pages/Library";
+import LibraryDetail from "./pages/LibraryDetail";
 import Whitepaper from "./pages/Whitepaper";
 import Profile from "./pages/Profile";
 import LightLaw from "./pages/LightLaw";
@@ -34,8 +36,10 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/social-feed" element={<SocialFeed />} />
             <Route path="/video-library" element={<VideoLibrary />} />
+            <Route path="/video/:id" element={<VideoDetail />} />
             <Route path="/live-classes" element={<LiveClasses />} />
             <Route path="/library" element={<Library />} />
+            <Route path="/library/:id" element={<LibraryDetail />} />
             <Route path="/whitepaper" element={<Whitepaper />} />
             <Route path="/profile" element={<Profile />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
