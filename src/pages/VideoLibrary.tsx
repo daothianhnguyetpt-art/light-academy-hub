@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import { useWallet } from "@/hooks/useWallet";
 import { useVideos } from "@/hooks/useVideos";
+import { VideoFilterDrawer, VideoFilters } from "@/components/videos/VideoFilterDrawer";
 import { 
   Play, 
   Clock, 
@@ -15,10 +16,12 @@ import {
   BookOpen,
   Award,
   ChevronRight,
-  Loader2
+  Loader2,
+  SlidersHorizontal
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 
 const categories = [
   "Tất cả",
@@ -36,6 +39,12 @@ export default function VideoLibrary() {
   const [activeCategory, setActiveCategory] = useState("Tất cả");
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
+  const [filters, setFilters] = useState<VideoFilters>({
+    level: null,
+    duration: null,
+    minRating: null,
+  });
 
   // Debounce search
   useEffect(() => {
@@ -49,6 +58,33 @@ export default function VideoLibrary() {
   useEffect(() => {
     fetchVideos(activeCategory, debouncedSearch);
   }, [activeCategory, debouncedSearch, fetchVideos]);
+
+  // Apply local filters
+  const filteredVideos = useMemo(() => {
+    return videos.filter(video => {
+      // Level filter
+      if (filters.level && video.level !== filters.level) {
+        return false;
+      }
+
+      // Duration filter
+      if (filters.duration) {
+        const duration = video.duration_minutes || 0;
+        if (filters.duration === "short" && duration >= 30) return false;
+        if (filters.duration === "medium" && (duration < 30 || duration > 60)) return false;
+        if (filters.duration === "long" && duration <= 60) return false;
+      }
+
+      // Rating filter
+      if (filters.minRating && (video.rating || 0) < filters.minRating) {
+        return false;
+      }
+
+      return true;
+    });
+  }, [videos, filters]);
+
+  const activeFiltersCount = [filters.level, filters.duration, filters.minRating].filter(Boolean).length;
 
   const formatDuration = (minutes: number | null) => {
     if (!minutes) return "00:00";
@@ -108,11 +144,28 @@ export default function VideoLibrary() {
                 className="pl-10 bg-card border-border focus:border-gold-muted"
               />
             </div>
-            <Button variant="outline" className="border-border hover:border-gold-muted">
-              <Filter className="w-4 h-4 mr-2" />
-              Filters
+            <Button 
+              variant="outline" 
+              className="border-border hover:border-gold-muted relative"
+              onClick={() => setShowFilters(true)}
+            >
+              <SlidersHorizontal className="w-4 h-4 mr-2" />
+              Bộ lọc
+              {activeFiltersCount > 0 && (
+                <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center bg-secondary text-secondary-foreground text-xs">
+                  {activeFiltersCount}
+                </Badge>
+              )}
             </Button>
           </motion.div>
+
+          {/* Filter Drawer */}
+          <VideoFilterDrawer
+            open={showFilters}
+            onOpenChange={setShowFilters}
+            filters={filters}
+            onFiltersChange={setFilters}
+          />
 
           {/* Categories */}
           <motion.div
@@ -145,7 +198,7 @@ export default function VideoLibrary() {
           )}
 
           {/* Empty State */}
-          {!loading && videos.length === 0 && (
+          {!loading && filteredVideos.length === 0 && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -153,18 +206,21 @@ export default function VideoLibrary() {
             >
               <BookOpen className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-foreground mb-2">
-                Chưa có video nào
+                {videos.length === 0 ? "Chưa có video nào" : "Không tìm thấy video phù hợp"}
               </h3>
               <p className="text-muted-foreground">
-                Thư viện video đang được cập nhật. Vui lòng quay lại sau!
+                {videos.length === 0 
+                  ? "Thư viện video đang được cập nhật. Vui lòng quay lại sau!"
+                  : "Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm."
+                }
               </p>
             </motion.div>
           )}
 
           {/* Video Grid */}
-          {!loading && videos.length > 0 && (
+          {!loading && filteredVideos.length > 0 && (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {videos.map((video, index) => (
+              {filteredVideos.map((video, index) => (
                 <Link key={video.id} to={`/video/${video.id}`}>
                   <motion.article
                     initial={{ opacity: 0, y: 20 }}
@@ -229,13 +285,13 @@ export default function VideoLibrary() {
                       </div>
                       {video.level && (
                         <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                          video.level === "Beginner" 
+                          video.level === "beginner" 
                             ? "bg-green-100 text-green-700" 
-                            : video.level === "Intermediate"
+                            : video.level === "intermediate"
                             ? "bg-amber-100 text-amber-700"
                             : "bg-red-100 text-red-700"
                         }`}>
-                          {video.level === "Beginner" ? "Cơ bản" : video.level === "Intermediate" ? "Trung cấp" : "Nâng cao"}
+                          {video.level === "beginner" ? "Cơ bản" : video.level === "intermediate" ? "Trung cấp" : "Nâng cao"}
                         </span>
                       )}
                     </div>
