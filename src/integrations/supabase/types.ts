@@ -677,6 +677,9 @@ export type Database = {
           content: string
           created_at: string | null
           id: string
+          location: string | null
+          location_lat: number | null
+          location_lng: number | null
           media_type: string | null
           media_url: string | null
           post_type: string | null
@@ -687,6 +690,9 @@ export type Database = {
           content: string
           created_at?: string | null
           id?: string
+          location?: string | null
+          location_lat?: number | null
+          location_lng?: number | null
           media_type?: string | null
           media_url?: string | null
           post_type?: string | null
@@ -697,6 +703,9 @@ export type Database = {
           content?: string
           created_at?: string | null
           id?: string
+          location?: string | null
+          location_lat?: number | null
+          location_lng?: number | null
           media_type?: string | null
           media_url?: string | null
           post_type?: string | null

@@ -28,10 +28,10 @@ interface EditPostModalProps {
 }
 
 const postTypes = [
-  { value: "Sharing", label: "Chia sẻ" },
-  { value: "Course", label: "Khóa học" },
-  { value: "Research", label: "Nghiên cứu" },
-  { value: "Lecture", label: "Bài giảng" },
+  { value: "sharing", label: "Chia sẻ" },
+  { value: "course", label: "Khóa học" },
+  { value: "research", label: "Nghiên cứu" },
+  { value: "lecture", label: "Bài giảng" },
 ];
 
 export function EditPostModal({ isOpen, onClose, post, onSave }: EditPostModalProps) {

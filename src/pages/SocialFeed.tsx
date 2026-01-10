@@ -21,7 +21,8 @@ import {
   Link as LinkIcon,
   Pencil,
   Trash2,
-  Flag
+  Flag,
+  MapPin
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -47,18 +48,18 @@ import { vi } from "date-fns/locale";
 import { toast } from "sonner";
 
 const contentTypes = [
-  { icon: FileText, label: "Tất cả" },
-  { icon: GraduationCap, label: "Course" },
-  { icon: FileText, label: "Research" },
-  { icon: Video, label: "Lecture" },
-  { icon: Users, label: "Sharing" },
+  { icon: FileText, label: "Tất cả", value: "all" },
+  { icon: GraduationCap, label: "Khóa học", value: "course" },
+  { icon: FileText, label: "Nghiên cứu", value: "research" },
+  { icon: Video, label: "Bài giảng", value: "lecture" },
+  { icon: Users, label: "Chia sẻ", value: "sharing" },
 ];
 
 export default function SocialFeed() {
   const { user } = useAuth();
   const { isConnected, address, connectWallet } = useWallet();
   const { posts, loading, toggleAppreciate, toggleBookmark, fetchPosts, createPost, updatePost, deletePost } = usePosts();
-  const [activeFilter, setActiveFilter] = useState("Tất cả");
+  const [activeFilter, setActiveFilter] = useState("all");
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [deletingPostId, setDeletingPostId] = useState<string | null>(null);
 
@@ -83,7 +84,7 @@ export default function SocialFeed() {
   };
 
   const filteredPosts = posts.filter(post => {
-    if (activeFilter === "Tất cả") return true;
+    if (activeFilter === "all") return true;
     return post.post_type === activeFilter;
   });
 
@@ -141,10 +142,10 @@ export default function SocialFeed() {
             >
               {contentTypes.map((type) => (
                 <button
-                  key={type.label}
-                  onClick={() => setActiveFilter(type.label)}
+                  key={type.value}
+                  onClick={() => setActiveFilter(type.value)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
-                    activeFilter === type.label
+                    activeFilter === type.value
                       ? "bg-primary text-primary-foreground"
                       : "bg-card border border-border text-muted-foreground hover:text-foreground hover:border-gold-muted"
                   }`}
@@ -251,13 +252,23 @@ export default function SocialFeed() {
                     {post.content}
                   </p>
 
+                  {/* Location */}
+                  {post.location && (
+                    <div className="flex items-center gap-1 text-sm text-muted-foreground mb-3">
+                      <MapPin className="w-4 h-4" />
+                      <span>{post.location}</span>
+                    </div>
+                  )}
+
                   {/* Media */}
                   {post.media_url && (
                     <div className="mb-4 rounded-xl bg-accent/50 border border-border overflow-hidden">
                       {post.media_type === "video" ? (
-                        <div className="aspect-video flex items-center justify-center">
-                          <Video className="w-12 h-12 text-muted-foreground" />
-                        </div>
+                        <video 
+                          src={post.media_url} 
+                          controls 
+                          className="w-full max-h-96"
+                        />
                       ) : post.media_type === "image" ? (
                         <img 
                           src={post.media_url} 
