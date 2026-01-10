@@ -32,7 +32,6 @@ const navLinks = [
   { href: "/live-classes", label: "Live Classes" },
   { href: "/library", label: "Library" },
   { href: "/whitepaper", label: "Whitepaper" },
-  { href: "/profile", label: "Profile" },
 ];
 
 export function Header({ 

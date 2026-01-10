@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/landing/Header";
@@ -5,6 +6,7 @@ import { Footer } from "@/components/landing/Footer";
 import { useWallet } from "@/hooks/useWallet";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
+import { EditProfileModal } from "@/components/profile/EditProfileModal";
 import { 
   Award,
   BookOpen,
@@ -21,7 +23,8 @@ import {
   Sparkles,
   Info,
   Clock,
-  Heart
+  Heart,
+  Pencil
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -33,9 +36,10 @@ import {
 } from "@/components/ui/tooltip";
 
 export default function Profile() {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { isConnected, address, connectWallet, disconnectWallet } = useWallet();
   const { user, signOut } = useAuth();
-  const { profile, certificates, stats, loading } = useProfile();
+  const { profile, certificates, stats, loading, updateProfile } = useProfile();
   const navigate = useNavigate();
 
   const copyAddress = () => {
@@ -229,9 +233,19 @@ export default function Profile() {
                     </Button>
                   )}
 
-                  {/* Logout / Disconnect Button */}
-                  {(user || isConnected) && (
-                    <div className="mt-4">
+                  {/* Edit Profile Button */}
+                  <div className="mt-4 flex flex-wrap gap-2 justify-center sm:justify-start">
+                    <Button
+                      onClick={() => setIsEditModalOpen(true)}
+                      variant="outline"
+                      className="border-gold-muted hover:bg-accent"
+                    >
+                      <Pencil className="w-4 h-4 mr-2" />
+                      Chỉnh Sửa Hồ Sơ
+                    </Button>
+
+                    {/* Logout / Disconnect Button */}
+                    {(user || isConnected) && (
                       <Button 
                         onClick={user ? handleSignOut : handleDisconnectWallet}
                         variant="outline"
@@ -240,8 +254,8 @@ export default function Profile() {
                         <LogOut className="w-4 h-4 mr-2" />
                         {user ? "Đăng Xuất" : "Ngắt Kết Nối Ví"}
                       </Button>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -472,6 +486,16 @@ export default function Profile() {
       </main>
 
       <Footer />
+
+      {/* Edit Profile Modal */}
+      <EditProfileModal
+        open={isEditModalOpen}
+        onOpenChange={setIsEditModalOpen}
+        profile={profile}
+        onUpdate={updateProfile}
+        onConnectWallet={connectWallet}
+        currentWalletAddress={address ?? undefined}
+      />
     </div>
   );
 }
