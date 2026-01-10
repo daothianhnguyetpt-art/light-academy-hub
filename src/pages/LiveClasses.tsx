@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import { useWallet } from "@/hooks/useWallet";
-import { useLiveClasses } from "@/hooks/useLiveClasses";
+import { useLiveClasses, LiveClass } from "@/hooks/useLiveClasses";
+import { useMyRegistrations } from "@/hooks/useLiveClassRegistration";
+import { ClassDetailModal } from "@/components/live-classes/ClassDetailModal";
+import { checkReminders } from "@/lib/calendar-utils";
 import { 
   Video,
   Mic,
@@ -17,11 +20,11 @@ import {
   Phone,
   Calendar,
   Clock,
-  User,
   ChevronRight,
   Circle,
   Loader2,
-  Sparkles
+  Sparkles,
+  CheckCircle2
 } from "lucide-react";
 import {
   Tooltip,
@@ -29,53 +32,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-
-// Fallback mock data when no classes in database
-const mockUpcomingClasses = [
-  {
-    id: "1",
-    title: "Web3 Development Workshop",
-    instructor_name: "Dr. Vitalik B.",
-    scheduled_at: new Date().toISOString(),
-    duration_minutes: 120,
-    max_participants: 200,
-    category: "Workshop",
-    status: "live",
-    description: null,
-    instructor_id: null,
-    meeting_url: null,
-    created_at: null,
-  },
-  {
-    id: "2",
-    title: "Machine Learning Office Hours",
-    instructor_name: "Prof. Andrew N.",
-    scheduled_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-    duration_minutes: 60,
-    max_participants: 100,
-    category: "Office Hours",
-    status: "scheduled",
-    description: null,
-    instructor_id: null,
-    meeting_url: null,
-    created_at: null,
-  },
-  {
-    id: "3",
-    title: "Research Methodology Seminar",
-    instructor_name: "Dr. Sarah J.",
-    scheduled_at: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
-    duration_minutes: 90,
-    max_participants: 300,
-    category: "Seminar",
-    status: "scheduled",
-    description: null,
-    instructor_id: null,
-    meeting_url: null,
-    created_at: null,
-  },
-];
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 
 const meetingParticipants = [
   { name: "Giảng viên", initials: "GV", isSpeaking: true },
@@ -106,13 +65,47 @@ const formatScheduledDate = (dateString: string) => {
 
 export default function LiveClasses() {
   const { isConnected, address, connectWallet } = useWallet();
-  const { classes, loading, error } = useLiveClasses();
+  const { classes, loading, error, fetchClasses } = useLiveClasses();
+  const { registeredClassIds, loading: loadingRegistrations } = useMyRegistrations();
+  
   const [isMuted, setIsMuted] = useState(true);
   const [isVideoOn, setIsVideoOn] = useState(false);
   const [isHandRaised, setIsHandRaised] = useState(false);
+  const [selectedClass, setSelectedClass] = useState<LiveClass | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<string>("all");
 
-  // Use real data if available, otherwise fallback to mock
-  const displayClasses = classes.length > 0 ? classes : mockUpcomingClasses;
+  // Check for reminders on load
+  useEffect(() => {
+    checkReminders();
+    const interval = setInterval(checkReminders, 60000); // Check every minute
+    return () => clearInterval(interval);
+  }, []);
+
+  // Filter classes based on active tab
+  const filteredClasses = classes.filter((classItem) => {
+    if (activeTab === "registered") {
+      return registeredClassIds.includes(classItem.id);
+    }
+    if (activeTab === "live") {
+      return classItem.status === "live";
+    }
+    return true;
+  });
+
+  const handleClassClick = (classItem: LiveClass) => {
+    setSelectedClass(classItem);
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setSelectedClass(null);
+    // Refresh classes to update registration counts
+    fetchClasses();
+  };
+
+  const liveClass = classes.find(c => c.status === 'live');
 
   return (
     <div className="min-h-screen bg-background">
@@ -153,12 +146,17 @@ export default function LiveClasses() {
                   <div className="absolute inset-4 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
                     <div className="text-center">
                       <Avatar className="w-24 h-24 mx-auto mb-4 border-4 border-gold-muted">
+                        <AvatarImage src={liveClass?.instructor?.avatar_url || undefined} />
                         <AvatarFallback className="bg-primary text-primary-foreground text-2xl font-bold">
-                          GV
+                          {liveClass?.instructor?.full_name?.charAt(0) || "GV"}
                         </AvatarFallback>
                       </Avatar>
-                      <h3 className="font-semibold text-foreground">Giảng Viên</h3>
-                      <p className="text-sm text-muted-foreground">Web3 Development Workshop</p>
+                      <h3 className="font-semibold text-foreground">
+                        {liveClass?.instructor?.full_name || "Giảng Viên"}
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        {liveClass?.title || "Chưa có lớp học đang diễn ra"}
+                      </p>
                     </div>
                   </div>
 
@@ -184,16 +182,18 @@ export default function LiveClasses() {
                   </div>
 
                   {/* Live Badge */}
-                  <div className="absolute top-4 left-4 flex items-center gap-2">
-                    <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-destructive text-destructive-foreground text-sm font-medium">
-                      <span className="w-2 h-2 rounded-full bg-destructive-foreground animate-pulse" />
-                      TRỰC TIẾP
-                    </span>
-                    <span className="px-3 py-1.5 rounded-full bg-card/80 backdrop-blur text-sm text-foreground">
-                      <Users className="w-4 h-4 inline mr-1" />
-                      156 người tham gia
-                    </span>
-                  </div>
+                  {liveClass && (
+                    <div className="absolute top-4 left-4 flex items-center gap-2">
+                      <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-destructive text-destructive-foreground text-sm font-medium">
+                        <span className="w-2 h-2 rounded-full bg-destructive-foreground animate-pulse" />
+                        TRỰC TIẾP
+                      </span>
+                      <span className="px-3 py-1.5 rounded-full bg-card/80 backdrop-blur text-sm text-foreground">
+                        <Users className="w-4 h-4 inline mr-1" />
+                        {liveClass.registration_count || 0} người tham gia
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Controls */}
@@ -332,69 +332,116 @@ export default function LiveClasses() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
               >
-                <h2 className="font-display text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-                  <Calendar className="w-5 h-5 text-secondary" />
-                  Lớp Học Sắp Tới
-                </h2>
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="font-display text-xl font-semibold text-foreground flex items-center gap-2">
+                    <Calendar className="w-5 h-5 text-secondary" />
+                    Lớp Học Sắp Tới
+                  </h2>
+                </div>
 
-                {loading && (
+                {/* Filter Tabs */}
+                <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-4">
+                  <TabsList className="w-full grid grid-cols-3">
+                    <TabsTrigger value="all" className="text-xs">
+                      Tất cả
+                    </TabsTrigger>
+                    <TabsTrigger value="registered" className="text-xs">
+                      Đã đăng ký
+                    </TabsTrigger>
+                    <TabsTrigger value="live" className="text-xs">
+                      Đang diễn ra
+                    </TabsTrigger>
+                  </TabsList>
+                </Tabs>
+
+                {(loading || loadingRegistrations) && (
                   <div className="flex items-center justify-center py-8">
                     <Loader2 className="w-6 h-6 animate-spin text-primary" />
                     <span className="ml-2 text-sm text-muted-foreground">Đang tải...</span>
                   </div>
                 )}
 
-                {!loading && displayClasses.length === 0 && (
+                {!loading && !loadingRegistrations && filteredClasses.length === 0 && (
                   <div className="academic-card p-6 text-center">
                     <Sparkles className="w-10 h-10 text-gold mx-auto mb-3" />
-                    <h3 className="font-semibold text-foreground mb-1">Chưa có lớp học</h3>
+                    <h3 className="font-semibold text-foreground mb-1">
+                      {activeTab === "registered" ? "Chưa đăng ký lớp nào" : "Chưa có lớp học"}
+                    </h3>
                     <p className="text-sm text-muted-foreground">
-                      Các lớp học mới sẽ được cập nhật sớm ✨
+                      {activeTab === "registered" 
+                        ? "Hãy đăng ký lớp học để bắt đầu học tập ✨" 
+                        : "Các lớp học mới sẽ được cập nhật sớm ✨"}
                     </p>
                   </div>
                 )}
 
-                {!loading && displayClasses.length > 0 && (
+                {!loading && !loadingRegistrations && filteredClasses.length > 0 && (
                   <div className="space-y-4">
-                    {displayClasses.map((classItem) => (
-                      <div
-                        key={classItem.id}
-                        className="academic-card p-4 cursor-pointer hover:border-gold-muted transition-colors"
-                      >
-                        <div className="flex items-start justify-between mb-3">
-                          <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                            classItem.status === 'live' 
-                              ? "bg-destructive/10 text-destructive" 
-                              : "bg-accent text-foreground"
-                          }`}>
-                            {classItem.status === 'live' ? "🔴 Đang diễn ra" : classItem.category || "Lớp học"}
-                          </span>
-                          <ChevronRight className="w-4 h-4 text-muted-foreground" />
-                        </div>
+                    {filteredClasses.map((classItem) => {
+                      const isRegistered = registeredClassIds.includes(classItem.id);
+                      
+                      return (
+                        <div
+                          key={classItem.id}
+                          onClick={() => handleClassClick(classItem)}
+                          className="academic-card p-4 cursor-pointer hover:border-gold-muted transition-all hover:shadow-md"
+                        >
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+                                classItem.status === 'live' 
+                                  ? "bg-destructive/10 text-destructive" 
+                                  : "bg-accent text-foreground"
+                              }`}>
+                                {classItem.status === 'live' ? "🔴 Đang diễn ra" : classItem.category || "Lớp học"}
+                              </span>
+                              {isRegistered && (
+                                <Badge variant="outline" className="text-xs text-secondary border-secondary/50 flex items-center gap-1">
+                                  <CheckCircle2 className="w-3 h-3" />
+                                  Đã đăng ký
+                                </Badge>
+                              )}
+                            </div>
+                            <ChevronRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                          </div>
 
-                        <h3 className="font-semibold text-foreground mb-1 line-clamp-2">
-                          {classItem.title}
-                        </h3>
-                        <p className="text-sm text-muted-foreground mb-3">
-                          {classItem.instructor_name || "Giảng viên"}
-                        </p>
+                          <h3 className="font-semibold text-foreground mb-1 line-clamp-2">
+                            {classItem.title}
+                          </h3>
+                          
+                          <div className="flex items-center gap-2 mb-3">
+                            <Avatar className="w-5 h-5">
+                              <AvatarImage src={classItem.instructor?.avatar_url || undefined} />
+                              <AvatarFallback className="text-[10px] bg-accent">
+                                {classItem.instructor?.full_name?.charAt(0) || "G"}
+                              </AvatarFallback>
+                            </Avatar>
+                            <p className="text-sm text-muted-foreground">
+                              {classItem.instructor?.full_name || "Giảng viên"}
+                            </p>
+                          </div>
 
-                        <div className="flex items-center justify-between text-xs text-muted-foreground">
-                          <span className="flex items-center gap-1">
-                            <Clock className="w-3.5 h-3.5" />
-                            {formatScheduledDate(classItem.scheduled_at)}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <User className="w-3.5 h-3.5" />
-                            {classItem.max_participants || "—"}
-                          </span>
+                          <div className="flex items-center justify-between text-xs text-muted-foreground">
+                            <span className="flex items-center gap-1">
+                              <Clock className="w-3.5 h-3.5" />
+                              {formatScheduledDate(classItem.scheduled_at)}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <Users className="w-3.5 h-3.5" />
+                              {classItem.registration_count || 0}/{classItem.max_participants || "∞"}
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
 
-                <Button variant="outline" className="w-full mt-4 border-gold-muted hover:bg-accent">
+                <Button 
+                  variant="outline" 
+                  className="w-full mt-4 border-gold-muted hover:bg-accent"
+                  onClick={() => setActiveTab("all")}
+                >
                   Xem tất cả lịch học
                 </Button>
               </motion.div>
@@ -404,6 +451,13 @@ export default function LiveClasses() {
       </main>
 
       <Footer />
+
+      {/* Class Detail Modal */}
+      <ClassDetailModal 
+        classItem={selectedClass}
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+      />
     </div>
   );
 }

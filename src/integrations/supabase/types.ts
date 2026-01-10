@@ -229,6 +229,41 @@ export type Database = {
           },
         ]
       }
+      class_registrations: {
+        Row: {
+          attended: boolean | null
+          class_id: string
+          id: string
+          registered_at: string | null
+          reminder_enabled: boolean | null
+          user_id: string
+        }
+        Insert: {
+          attended?: boolean | null
+          class_id: string
+          id?: string
+          registered_at?: string | null
+          reminder_enabled?: boolean | null
+          user_id: string
+        }
+        Update: {
+          attended?: boolean | null
+          class_id?: string
+          id?: string
+          registered_at?: string | null
+          reminder_enabled?: boolean | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "class_registrations_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "live_classes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       comments: {
         Row: {
           author_id: string
