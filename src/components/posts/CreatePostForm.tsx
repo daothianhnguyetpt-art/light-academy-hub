@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { Sparkles, Send, Image as ImageIcon, Loader2 } from "lucide-react";
+import { Sparkles, Image as ImageIcon, Loader2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -13,9 +13,11 @@ import {
 } from "@/components/ui/select";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 interface CreatePostFormProps {
-  onCreatePost: (content: string, postType: string) => Promise<any>;
+  onCreatePost: (content: string, postType: string, mediaUrl?: string, mediaType?: string) => Promise<any>;
 }
 
 const postTypes = [
@@ -31,10 +33,55 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
   const [content, setContent] = useState("");
   const [postType, setPostType] = useState("Sharing");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const getInitials = (name: string | null) => {
     if (!name) return "?";
     return name.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase();
+  };
+
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("Ảnh phải nhỏ hơn 5MB");
+        return;
+      }
+      setSelectedImage(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  const removeImage = () => {
+    setSelectedImage(null);
+    setImagePreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const uploadImage = async (file: File): Promise<string | null> => {
+    if (!user) return null;
+    
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${user.id}/${Date.now()}.${fileExt}`;
+    
+    const { error } = await supabase.storage
+      .from('post-images')
+      .upload(fileName, file);
+
+    if (error) {
+      console.error('Upload error:', error);
+      throw error;
+    }
+
+    const { data } = supabase.storage
+      .from('post-images')
+      .getPublicUrl(fileName);
+
+    return data.publicUrl;
   };
 
   const handleSubmit = async () => {
@@ -42,9 +89,21 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
     
     setIsSubmitting(true);
     try {
-      await onCreatePost(content.trim(), postType);
+      let mediaUrl: string | undefined;
+      let mediaType: string | undefined;
+
+      if (selectedImage) {
+        mediaUrl = await uploadImage(selectedImage) || undefined;
+        mediaType = "image";
+      }
+
+      await onCreatePost(content.trim(), postType, mediaUrl, mediaType);
       setContent("");
       setPostType("Sharing");
+      removeImage();
+    } catch (err) {
+      console.error('Error creating post:', err);
+      toast.error('Không thể đăng bài');
     } finally {
       setIsSubmitting(false);
     }
@@ -90,6 +149,23 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
             className="min-h-[100px] resize-none border-border focus:border-gold-muted bg-background"
           />
 
+          {/* Image Preview */}
+          {imagePreview && (
+            <div className="relative inline-block">
+              <img 
+                src={imagePreview} 
+                alt="Preview" 
+                className="max-h-48 rounded-lg border border-border"
+              />
+              <button
+                onClick={removeImage}
+                className="absolute -top-2 -right-2 p-1 bg-destructive text-destructive-foreground rounded-full hover:bg-destructive/90 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Select value={postType} onValueChange={setPostType}>
@@ -105,7 +181,19 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
                 </SelectContent>
               </Select>
 
-              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-primary">
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleImageSelect}
+                className="hidden"
+              />
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="text-muted-foreground hover:text-primary"
+                onClick={() => fileInputRef.current?.click()}
+              >
                 <ImageIcon className="w-5 h-5" />
               </Button>
             </div>
