@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import { useWallet } from "@/hooks/useWallet";
+import { useLibraryResources } from "@/hooks/useLibraryResources";
 import { 
   BookOpen, 
   FileText, 
@@ -11,91 +12,23 @@ import {
   Search,
   Filter,
   Download,
-  Eye,
   Star,
-  ChevronRight
+  ChevronRight,
+  Loader2,
+  Sparkles
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const categories = [
-  { icon: BookOpen, label: "Tất cả" },
-  { icon: BookOpen, label: "Sách" },
-  { icon: FileText, label: "Tài liệu" },
-  { icon: ImageIcon, label: "Hình ảnh" },
-  { icon: Video, label: "Video" },
+  { icon: BookOpen, label: "Tất cả", type: null },
+  { icon: BookOpen, label: "Sách", type: "Sách" },
+  { icon: FileText, label: "Tài liệu", type: "Tài liệu" },
+  { icon: ImageIcon, label: "Hình ảnh", type: "Hình ảnh" },
+  { icon: Video, label: "Video", type: "Video" },
 ];
 
-const resources = [
-  {
-    id: 1,
-    title: "Blockchain Technology Fundamentals",
-    author: "Dr. Satoshi Nakamoto",
-    type: "Sách",
-    format: "PDF",
-    pages: 324,
-    downloads: "12.5K",
-    rating: 4.9,
-    category: "Computer Science",
-  },
-  {
-    id: 2,
-    title: "Machine Learning Research Papers Collection",
-    author: "Stanford AI Lab",
-    type: "Tài liệu",
-    format: "PDF",
-    pages: 156,
-    downloads: "8.3K",
-    rating: 4.8,
-    category: "AI & ML",
-  },
-  {
-    id: 3,
-    title: "Academic Infographics - Data Science",
-    author: "MIT Media Lab",
-    type: "Hình ảnh",
-    format: "PNG",
-    pages: 45,
-    downloads: "5.2K",
-    rating: 4.7,
-    category: "Data Science",
-  },
-  {
-    id: 4,
-    title: "Quantum Computing Lecture Series",
-    author: "Prof. Richard Feynman",
-    type: "Video",
-    format: "MP4",
-    pages: 12,
-    downloads: "15.8K",
-    rating: 4.95,
-    category: "Physics",
-  },
-  {
-    id: 5,
-    title: "Web3 Development Guide",
-    author: "Ethereum Foundation",
-    type: "Sách",
-    format: "PDF",
-    pages: 248,
-    downloads: "22.1K",
-    rating: 4.85,
-    category: "Blockchain",
-  },
-  {
-    id: 6,
-    title: "Research Methodology Handbook",
-    author: "Harvard University",
-    type: "Tài liệu",
-    format: "PDF",
-    pages: 89,
-    downloads: "6.7K",
-    rating: 4.6,
-    category: "Research",
-  },
-];
-
-const getTypeIcon = (type: string) => {
+const getTypeIcon = (type: string | null) => {
   switch (type) {
     case "Sách":
       return BookOpen;
@@ -110,17 +43,124 @@ const getTypeIcon = (type: string) => {
   }
 };
 
+// Fallback mock data when no resources in database
+const mockResources = [
+  {
+    id: "1",
+    title: "Blockchain Technology Fundamentals",
+    author: "Dr. Satoshi Nakamoto",
+    resource_type: "Sách",
+    category: "Computer Science",
+    page_count: 324,
+    downloads: 12500,
+    rating: 4.9,
+    file_url: null,
+    thumbnail_url: null,
+    description: null,
+    created_at: null,
+  },
+  {
+    id: "2",
+    title: "Machine Learning Research Papers Collection",
+    author: "Stanford AI Lab",
+    resource_type: "Tài liệu",
+    category: "AI & ML",
+    page_count: 156,
+    downloads: 8300,
+    rating: 4.8,
+    file_url: null,
+    thumbnail_url: null,
+    description: null,
+    created_at: null,
+  },
+  {
+    id: "3",
+    title: "Academic Infographics - Data Science",
+    author: "MIT Media Lab",
+    resource_type: "Hình ảnh",
+    category: "Data Science",
+    page_count: 45,
+    downloads: 5200,
+    rating: 4.7,
+    file_url: null,
+    thumbnail_url: null,
+    description: null,
+    created_at: null,
+  },
+  {
+    id: "4",
+    title: "Quantum Computing Lecture Series",
+    author: "Prof. Richard Feynman",
+    resource_type: "Video",
+    category: "Physics",
+    page_count: 12,
+    downloads: 15800,
+    rating: 4.95,
+    file_url: null,
+    thumbnail_url: null,
+    description: null,
+    created_at: null,
+  },
+  {
+    id: "5",
+    title: "Web3 Development Guide",
+    author: "Ethereum Foundation",
+    resource_type: "Sách",
+    category: "Blockchain",
+    page_count: 248,
+    downloads: 22100,
+    rating: 4.85,
+    file_url: null,
+    thumbnail_url: null,
+    description: null,
+    created_at: null,
+  },
+  {
+    id: "6",
+    title: "Research Methodology Handbook",
+    author: "Harvard University",
+    resource_type: "Tài liệu",
+    category: "Research",
+    page_count: 89,
+    downloads: 6700,
+    rating: 4.6,
+    file_url: null,
+    thumbnail_url: null,
+    description: null,
+    created_at: null,
+  },
+];
+
+const formatDownloads = (num: number | null) => {
+  if (!num) return "0";
+  if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
+  return num.toString();
+};
+
 export default function Library() {
   const { isConnected, address, connectWallet } = useWallet();
+  const { resources, loading, error, fetchResources } = useLibraryResources();
   const [activeCategory, setActiveCategory] = useState("Tất cả");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredResources = resources.filter((resource) => {
-    const matchesCategory = activeCategory === "Tất cả" || resource.type === activeCategory;
-    const matchesSearch = resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          resource.author.toLowerCase().includes(searchQuery.toLowerCase());
+  // Use real data if available, otherwise fallback to mock
+  const displayResources = resources.length > 0 ? resources : mockResources;
+
+  const filteredResources = displayResources.filter((resource) => {
+    const matchesCategory = activeCategory === "Tất cả" || resource.resource_type === activeCategory;
+    const matchesSearch = 
+      resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (resource.author?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
     return matchesCategory && matchesSearch;
   });
+
+  const handleCategoryChange = (label: string) => {
+    setActiveCategory(label);
+  };
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -139,10 +179,10 @@ export default function Library() {
             className="mb-8"
           >
             <h1 className="font-display text-3xl font-bold text-foreground mb-2">
-              Library
+              Thư Viện Tri Thức
             </h1>
             <p className="text-muted-foreground">
-              Thư viện tri thức với sách, tài liệu nghiên cứu và hình ảnh học thuật
+              Kho tàng sách, tài liệu nghiên cứu và hình ảnh học thuật của nhân loại
             </p>
           </motion.div>
 
@@ -158,13 +198,13 @@ export default function Library() {
               <Input
                 placeholder="Tìm kiếm sách, tài liệu..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => handleSearch(e.target.value)}
                 className="pl-10 bg-card border-border focus:border-gold-muted"
               />
             </div>
             <Button variant="outline" className="border-border hover:border-gold-muted">
               <Filter className="w-4 h-4 mr-2" />
-              Filters
+              Bộ lọc
             </Button>
           </motion.div>
 
@@ -178,7 +218,7 @@ export default function Library() {
             {categories.map((category) => (
               <button
                 key={category.label}
-                onClick={() => setActiveCategory(category.label)}
+                onClick={() => handleCategoryChange(category.label)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
                   activeCategory === category.label
                     ? "bg-primary text-primary-foreground"
@@ -191,72 +231,104 @@ export default function Library() {
             ))}
           </motion.div>
 
+          {/* Loading State */}
+          {loading && (
+            <div className="flex items-center justify-center py-16">
+              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+              <span className="ml-2 text-muted-foreground">Đang tải tài liệu...</span>
+            </div>
+          )}
+
+          {/* Empty State */}
+          {!loading && filteredResources.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center py-16"
+            >
+              <Sparkles className="w-12 h-12 text-gold mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-foreground mb-2">
+                Chưa có tài liệu nào
+              </h3>
+              <p className="text-muted-foreground">
+                Thư viện đang được xây dựng, hãy quay lại sau nhé ✨
+              </p>
+            </motion.div>
+          )}
+
           {/* Resources Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredResources.map((resource, index) => {
-              const TypeIcon = getTypeIcon(resource.type);
-              return (
-                <motion.article
-                  key={resource.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + index * 0.05 }}
-                  className="academic-card overflow-hidden group cursor-pointer"
-                >
-                  {/* Resource Preview */}
-                  <div className="relative aspect-[4/3] bg-accent/50 flex items-center justify-center">
-                    <div className="w-20 h-20 rounded-xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <TypeIcon className="w-10 h-10 text-primary" />
-                    </div>
-                    {/* Format Badge */}
-                    <span className="absolute top-3 right-3 px-2 py-1 rounded bg-foreground/80 text-background text-xs font-medium">
-                      {resource.format}
-                    </span>
-                    {/* Type Badge */}
-                    <span className="absolute top-3 left-3 px-2 py-1 rounded-full bg-secondary/90 text-secondary-foreground text-xs font-medium">
-                      {resource.type}
-                    </span>
-                  </div>
-
-                  {/* Resource Info */}
-                  <div className="p-5">
-                    <h3 className="font-semibold text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-                      {resource.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-1">{resource.author}</p>
-                    <p className="text-xs text-muted-foreground mb-4">{resource.category}</p>
-
-                    {/* Meta Info */}
-                    <div className="flex items-center justify-between text-xs text-muted-foreground">
-                      <div className="flex items-center gap-3">
-                        <span className="flex items-center gap-1">
-                          <Download className="w-3.5 h-3.5" />
-                          {resource.downloads}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Star className="w-3.5 h-3.5 text-secondary" />
-                          {resource.rating}
-                        </span>
-                      </div>
-                      <span className="flex items-center gap-1">
-                        <Eye className="w-3.5 h-3.5" />
-                        {resource.pages} {resource.type === "Video" ? "videos" : "pages"}
+          {!loading && filteredResources.length > 0 && (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredResources.map((resource, index) => {
+                const TypeIcon = getTypeIcon(resource.resource_type);
+                return (
+                  <motion.article
+                    key={resource.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 + index * 0.05 }}
+                    className="academic-card overflow-hidden group cursor-pointer"
+                  >
+                    {/* Resource Preview */}
+                    <div className="relative aspect-[4/3] bg-accent/50 flex items-center justify-center">
+                      {resource.thumbnail_url ? (
+                        <img 
+                          src={resource.thumbnail_url} 
+                          alt={resource.title}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-20 h-20 rounded-xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                          <TypeIcon className="w-10 h-10 text-primary" />
+                        </div>
+                      )}
+                      {/* Type Badge */}
+                      <span className="absolute top-3 left-3 px-2 py-1 rounded-full bg-secondary/90 text-secondary-foreground text-xs font-medium">
+                        {resource.resource_type || "Tài liệu"}
                       </span>
                     </div>
-                  </div>
-                </motion.article>
-              );
-            })}
-          </div>
+
+                    {/* Resource Info */}
+                    <div className="p-5">
+                      <h3 className="font-semibold text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                        {resource.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground mb-1">{resource.author || "Tác giả"}</p>
+                      <p className="text-xs text-muted-foreground mb-4">{resource.category || "Chưa phân loại"}</p>
+
+                      {/* Meta Info */}
+                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <div className="flex items-center gap-3">
+                          <span className="flex items-center gap-1">
+                            <Download className="w-3.5 h-3.5" />
+                            {formatDownloads(resource.downloads)}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Star className="w-3.5 h-3.5 text-secondary" />
+                            {resource.rating || "—"}
+                          </span>
+                        </div>
+                        <span className="flex items-center gap-1">
+                          {resource.page_count || 0} {resource.resource_type === "Video" ? "video" : "trang"}
+                        </span>
+                      </div>
+                    </div>
+                  </motion.article>
+                );
+              })}
+            </div>
+          )}
 
           {/* Load More */}
-          <div className="text-center mt-12">
-            <Button variant="outline" className="border-gold-muted hover:bg-accent">
-              <BookOpen className="w-4 h-4 mr-2" />
-              Xem thêm tài liệu
-              <ChevronRight className="w-4 h-4 ml-1" />
-            </Button>
-          </div>
+          {!loading && filteredResources.length > 0 && (
+            <div className="text-center mt-12">
+              <Button variant="outline" className="border-gold-muted hover:bg-accent">
+                <BookOpen className="w-4 h-4 mr-2" />
+                Xem thêm tài liệu
+                <ChevronRight className="w-4 h-4 ml-1" />
+              </Button>
+            </div>
+          )}
         </div>
       </main>
 
