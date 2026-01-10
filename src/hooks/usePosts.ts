@@ -10,6 +10,7 @@ export interface Post {
   media_type: string | null;
   post_type: string | null;
   created_at: string;
+  updated_at?: string;
   author: {
     id: string;
     full_name: string | null;
@@ -43,6 +44,7 @@ export function usePosts() {
           media_type,
           post_type,
           created_at,
+          updated_at,
           author:profiles!posts_author_id_fkey (
             id,
             full_name,
@@ -105,6 +107,7 @@ export function usePosts() {
             media_type: post.media_type,
             post_type: post.post_type,
             created_at: post.created_at,
+            updated_at: post.updated_at,
             author: post.author as Post['author'],
             appreciates_count: appreciatesCount || 0,
             comments_count: commentsCount || 0,
@@ -204,7 +207,7 @@ export function usePosts() {
     }
   }, [user, posts]);
 
-  const createPost = useCallback(async (content: string, postType?: string) => {
+  const createPost = useCallback(async (content: string, postType?: string, mediaUrl?: string, mediaType?: string) => {
     if (!user) {
       toast.error('Vui lòng đăng nhập để đăng bài');
       return null;
@@ -217,6 +220,8 @@ export function usePosts() {
           content,
           author_id: user.id,
           post_type: postType || 'Sharing',
+          media_url: mediaUrl || null,
+          media_type: mediaType || null,
         })
         .select()
         .single();
@@ -233,6 +238,71 @@ export function usePosts() {
     }
   }, [user, fetchPosts]);
 
+  const updatePost = useCallback(async (postId: string, content: string, postType: string) => {
+    if (!user) {
+      toast.error('Vui lòng đăng nhập để thực hiện');
+      return false;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('posts')
+        .update({ 
+          content, 
+          post_type: postType, 
+          updated_at: new Date().toISOString() 
+        })
+        .eq('id', postId)
+        .eq('author_id', user.id);
+
+      if (error) throw error;
+
+      setPosts(prev => prev.map(p => 
+        p.id === postId 
+          ? { ...p, content, post_type: postType, updated_at: new Date().toISOString() }
+          : p
+      ));
+
+      toast.success('Đã cập nhật bài viết');
+      return true;
+    } catch (err) {
+      console.error('Error updating post:', err);
+      toast.error('Không thể cập nhật bài viết');
+      return false;
+    }
+  }, [user]);
+
+  const deletePost = useCallback(async (postId: string) => {
+    if (!user) {
+      toast.error('Vui lòng đăng nhập để thực hiện');
+      return false;
+    }
+
+    try {
+      // Delete related records first
+      await supabase.from('appreciates').delete().eq('post_id', postId);
+      await supabase.from('bookmarks').delete().eq('post_id', postId);
+      await supabase.from('comments').delete().eq('post_id', postId);
+
+      // Delete the post
+      const { error } = await supabase
+        .from('posts')
+        .delete()
+        .eq('id', postId)
+        .eq('author_id', user.id);
+
+      if (error) throw error;
+
+      setPosts(prev => prev.filter(p => p.id !== postId));
+      toast.success('Đã xóa bài viết');
+      return true;
+    } catch (err) {
+      console.error('Error deleting post:', err);
+      toast.error('Không thể xóa bài viết');
+      return false;
+    }
+  }, [user]);
+
   return {
     posts,
     loading,
@@ -241,5 +311,7 @@ export function usePosts() {
     toggleAppreciate,
     toggleBookmark,
     createPost,
+    updatePost,
+    deletePost,
   };
 }

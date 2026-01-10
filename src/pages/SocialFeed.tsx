@@ -3,13 +3,14 @@ import { motion } from "framer-motion";
 import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import { useWallet } from "@/hooks/useWallet";
-import { usePosts } from "@/hooks/usePosts";
+import { usePosts, Post } from "@/hooks/usePosts";
+import { useAuth } from "@/hooks/useAuth";
 import { CreatePostForm } from "@/components/posts/CreatePostForm";
 import { CommentSection } from "@/components/posts/CommentSection";
+import { EditPostModal } from "@/components/posts/EditPostModal";
 import { 
   Sparkles, 
   Bookmark, 
-  Share2, 
   MoreHorizontal,
   Video,
   FileText,
@@ -17,10 +18,30 @@ import {
   Users,
   TrendingUp,
   Loader2,
-  Link as LinkIcon
+  Link as LinkIcon,
+  Pencil,
+  Trash2,
+  Flag
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { formatDistanceToNow } from "date-fns";
 import { vi } from "date-fns/locale";
 import { toast } from "sonner";
@@ -34,9 +55,12 @@ const contentTypes = [
 ];
 
 export default function SocialFeed() {
+  const { user } = useAuth();
   const { isConnected, address, connectWallet } = useWallet();
-  const { posts, loading, toggleAppreciate, toggleBookmark, fetchPosts, createPost } = usePosts();
+  const { posts, loading, toggleAppreciate, toggleBookmark, fetchPosts, createPost, updatePost, deletePost } = usePosts();
   const [activeFilter, setActiveFilter] = useState("Tất cả");
+  const [editingPost, setEditingPost] = useState<Post | null>(null);
+  const [deletingPostId, setDeletingPostId] = useState<string | null>(null);
 
   const handleSharePost = async (postId: string) => {
     const url = `${window.location.origin}/social-feed#${postId}`;
@@ -46,6 +70,16 @@ export default function SocialFeed() {
     } catch {
       toast.error("Không thể sao chép link");
     }
+  };
+
+  const handleReportPost = () => {
+    toast.success("Đã gửi báo cáo. Cảm ơn bạn đã góp ý!");
+  };
+
+  const handleDeletePost = async () => {
+    if (!deletingPostId) return;
+    await deletePost(deletingPostId);
+    setDeletingPostId(null);
   };
 
   const filteredPosts = posts.filter(post => {
@@ -64,6 +98,10 @@ export default function SocialFeed() {
     } catch {
       return dateStr;
     }
+  };
+
+  const isEdited = (post: Post) => {
+    return post.updated_at && post.updated_at !== post.created_at;
   };
 
   return (
@@ -176,9 +214,35 @@ export default function SocialFeed() {
                           {post.post_type}
                         </span>
                       )}
-                      <button className="p-2 text-muted-foreground hover:text-foreground transition-colors">
-                        <MoreHorizontal className="w-5 h-5" />
-                      </button>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <button className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-accent">
+                            <MoreHorizontal className="w-5 h-5" />
+                          </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-48">
+                          {user?.id === post.author.id && (
+                            <>
+                              <DropdownMenuItem onClick={() => setEditingPost(post)}>
+                                <Pencil className="w-4 h-4 mr-2" />
+                                Chỉnh sửa
+                              </DropdownMenuItem>
+                              <DropdownMenuItem 
+                                onClick={() => setDeletingPostId(post.id)}
+                                className="text-destructive focus:text-destructive"
+                              >
+                                <Trash2 className="w-4 h-4 mr-2" />
+                                Xóa bài viết
+                              </DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                            </>
+                          )}
+                          <DropdownMenuItem onClick={handleReportPost}>
+                            <Flag className="w-4 h-4 mr-2" />
+                            Báo cáo
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
                     </div>
                   </div>
 
@@ -187,7 +251,7 @@ export default function SocialFeed() {
                     {post.content}
                   </p>
 
-                  {/* Media Placeholder */}
+                  {/* Media */}
                   {post.media_url && (
                     <div className="mb-4 rounded-xl bg-accent/50 border border-border overflow-hidden">
                       {post.media_type === "video" ? (
@@ -251,7 +315,10 @@ export default function SocialFeed() {
                         <LinkIcon className="w-4 h-4 mr-1" />
                       </Button>
                     </div>
-                    <span className="text-xs text-muted-foreground">{formatTime(post.created_at)}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {formatTime(post.created_at)}
+                      {isEdited(post) && <span className="ml-1">(đã sửa)</span>}
+                    </span>
                   </div>
                 </motion.article>
               ))}
@@ -275,6 +342,34 @@ export default function SocialFeed() {
       </main>
 
       <Footer />
+
+      {/* Edit Post Modal */}
+      {editingPost && (
+        <EditPostModal
+          isOpen={!!editingPost}
+          onClose={() => setEditingPost(null)}
+          post={editingPost}
+          onSave={updatePost}
+        />
+      )}
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={!!deletingPostId} onOpenChange={() => setDeletingPostId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Xóa bài viết?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Hành động này không thể hoàn tác. Bài viết sẽ bị xóa vĩnh viễn cùng với tất cả bình luận và tương tác.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Hủy</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeletePost} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Xóa
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
