@@ -26,6 +26,7 @@ interface HeaderProps {
 
 const navLinks = [
   { href: "/", label: "Trang Chủ" },
+  { href: "/global-schools", label: "Global Schools" },
   { href: "/social-feed", label: "Social Feed" },
   { href: "/video-library", label: "Video Library" },
   { href: "/live-classes", label: "Live Classes" },

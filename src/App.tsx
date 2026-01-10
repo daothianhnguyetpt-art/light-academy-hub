@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ConfettiProvider } from "@/contexts/ConfettiContext";
 import Index from "./pages/Index";
+import GlobalSchools from "./pages/GlobalSchools";
+import InstitutionDetail from "./pages/InstitutionDetail";
 import SocialFeed from "./pages/SocialFeed";
 import VideoLibrary from "./pages/VideoLibrary";
 import LiveClasses from "./pages/LiveClasses";
@@ -26,6 +28,8 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/global-schools" element={<GlobalSchools />} />
+            <Route path="/institution/:id" element={<InstitutionDetail />} />
             <Route path="/light-law" element={<LightLaw />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/social-feed" element={<SocialFeed />} />
