@@ -5,6 +5,7 @@ import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import { useWallet } from "@/hooks/useWallet";
 import { useVideos } from "@/hooks/useVideos";
+import { useTranslation } from "@/i18n/useTranslation";
 import { VideoFilterDrawer, VideoFilters } from "@/components/videos/VideoFilterDrawer";
 import { 
   Play, 
@@ -24,7 +25,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 
 const categories = [
-  "Tất cả",
+  "all",
   "Computer Science",
   "Mathematics",
   "Physics",
@@ -34,9 +35,10 @@ const categories = [
 ];
 
 export default function VideoLibrary() {
+  const { t } = useTranslation();
   const { isConnected, address, connectWallet } = useWallet();
   const { videos, loading, fetchVideos, incrementViews } = useVideos();
-  const [activeCategory, setActiveCategory] = useState("Tất cả");
+  const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [showFilters, setShowFilters] = useState(false);
@@ -56,7 +58,8 @@ export default function VideoLibrary() {
 
   // Fetch when category or search changes
   useEffect(() => {
-    fetchVideos(activeCategory, debouncedSearch);
+    const categoryToFetch = activeCategory === "all" ? "Tất cả" : activeCategory;
+    fetchVideos(categoryToFetch, debouncedSearch);
   }, [activeCategory, debouncedSearch, fetchVideos]);
 
   // Apply local filters
@@ -104,6 +107,21 @@ export default function VideoLibrary() {
     return views.toString();
   };
 
+  const getCategoryLabel = (category: string) => {
+    if (category === "all") return t("videoLibrary.allCategories");
+    return category;
+  };
+
+  const getLevelLabel = (level: string | null) => {
+    if (!level) return "";
+    switch (level) {
+      case "beginner": return t("videoLibrary.level.beginner");
+      case "intermediate": return t("videoLibrary.level.intermediate");
+      case "advanced": return t("videoLibrary.level.advanced");
+      default: return level;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header
@@ -121,10 +139,10 @@ export default function VideoLibrary() {
             className="mb-8"
           >
             <h1 className="font-display text-3xl font-bold text-foreground mb-2">
-              Video Library
+              {t("videoLibrary.title")}
             </h1>
             <p className="text-muted-foreground">
-              Thư viện video bài giảng chất lượng cao từ các trường đại học hàng đầu thế giới
+              {t("videoLibrary.subtitle")}
             </p>
           </motion.div>
 
@@ -138,7 +156,7 @@ export default function VideoLibrary() {
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               <Input
-                placeholder="Tìm kiếm video, giảng viên..."
+                placeholder={t("videoLibrary.searchPlaceholder")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10 bg-card border-border focus:border-gold-muted"
@@ -150,7 +168,7 @@ export default function VideoLibrary() {
               onClick={() => setShowFilters(true)}
             >
               <SlidersHorizontal className="w-4 h-4 mr-2" />
-              Bộ lọc
+              {t("videoLibrary.filters")}
               {activeFiltersCount > 0 && (
                 <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center bg-secondary text-secondary-foreground text-xs">
                   {activeFiltersCount}
@@ -184,7 +202,7 @@ export default function VideoLibrary() {
                     : "bg-card border border-border text-muted-foreground hover:text-foreground hover:border-gold-muted"
                 }`}
               >
-                {category}
+                {getCategoryLabel(category)}
               </button>
             ))}
           </motion.div>
@@ -193,7 +211,7 @@ export default function VideoLibrary() {
           {loading && (
             <div className="flex items-center justify-center py-12">
               <Loader2 className="w-8 h-8 animate-spin text-primary" />
-              <span className="ml-2 text-muted-foreground">Đang tải video...</span>
+              <span className="ml-2 text-muted-foreground">{t("common.loading")}</span>
             </div>
           )}
 
@@ -206,13 +224,10 @@ export default function VideoLibrary() {
             >
               <BookOpen className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-foreground mb-2">
-                {videos.length === 0 ? "Chưa có video nào" : "Không tìm thấy video phù hợp"}
+                {t("videoLibrary.noVideos")}
               </h3>
               <p className="text-muted-foreground">
-                {videos.length === 0 
-                  ? "Thư viện video đang được cập nhật. Vui lòng quay lại sau!"
-                  : "Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm."
-                }
+                {t("videoLibrary.noVideosDescription")}
               </p>
             </motion.div>
           )}
@@ -263,7 +278,7 @@ export default function VideoLibrary() {
                       {video.title}
                     </h3>
                     <p className="text-sm text-muted-foreground mb-1">
-                      {video.instructor?.full_name || "Giảng viên"}
+                      {video.instructor?.full_name || t("videoLibrary.instructor")}
                     </p>
                     <p className="text-xs text-muted-foreground mb-4">
                       {video.institution || "FUN Academy"}
@@ -274,7 +289,7 @@ export default function VideoLibrary() {
                       <div className="flex items-center gap-3">
                         <span className="flex items-center gap-1">
                           <Users className="w-3.5 h-3.5" />
-                          {formatViews(video.views)}
+                          {formatViews(video.views)} {t("videoLibrary.views")}
                         </span>
                         {video.rating && (
                           <span className="flex items-center gap-1">
@@ -291,7 +306,7 @@ export default function VideoLibrary() {
                             ? "bg-amber-100 text-amber-700"
                             : "bg-red-100 text-red-700"
                         }`}>
-                          {video.level === "beginner" ? "Cơ bản" : video.level === "intermediate" ? "Trung cấp" : "Nâng cao"}
+                          {getLevelLabel(video.level)}
                         </span>
                       )}
                     </div>
@@ -308,10 +323,13 @@ export default function VideoLibrary() {
               <Button 
                 variant="outline" 
                 className="border-gold-muted hover:bg-accent"
-                onClick={() => fetchVideos(activeCategory, debouncedSearch)}
+                onClick={() => {
+                  const categoryToFetch = activeCategory === "all" ? "Tất cả" : activeCategory;
+                  fetchVideos(categoryToFetch, debouncedSearch);
+                }}
               >
                 <BookOpen className="w-4 h-4 mr-2" />
-                Tải lại videos
+                {t("videoLibrary.loadMore")}
                 <ChevronRight className="w-4 h-4 ml-1" />
               </Button>
             </div>

@@ -7,6 +7,10 @@ import { useWallet } from "@/hooks/useWallet";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { EditProfileModal } from "@/components/profile/EditProfileModal";
+import { useTranslation } from "@/i18n/useTranslation";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { getDateLocale } from "@/lib/date-utils";
+import { format } from "date-fns";
 import { 
   Award,
   BookOpen,
@@ -36,32 +40,36 @@ import {
 } from "@/components/ui/tooltip";
 
 export default function Profile() {
+  const { t } = useTranslation();
+  const { language } = useLanguage();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { isConnected, address, connectWallet, disconnectWallet } = useWallet();
   const { user, signOut } = useAuth();
   const { profile, certificates, stats, loading, updateProfile } = useProfile();
   const navigate = useNavigate();
 
+  const dateLocale = getDateLocale(language);
+
   const copyAddress = () => {
     if (address) {
       navigator.clipboard.writeText(address);
-      toast.success("Đã sao chép địa chỉ!");
+      toast.success(t("profile.addressCopied"));
     }
   };
 
   const handleSignOut = async () => {
     const { error } = await signOut();
     if (error) {
-      toast.error("Đã xảy ra lỗi khi đăng xuất");
+      toast.error(t("common.error"));
     } else {
-      toast.success("Đã đăng xuất thành công!");
+      toast.success(t("profile.logoutSuccess"));
       navigate("/");
     }
   };
 
   const handleDisconnectWallet = () => {
     disconnectWallet();
-    toast.success("Đã ngắt kết nối ví!");
+    toast.success(t("profile.walletDisconnected"));
     navigate("/");
   };
 
@@ -70,32 +78,37 @@ export default function Profile() {
     return name.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase();
   };
 
-  const displayName = profile?.full_name || user?.user_metadata?.full_name || user?.email?.split("@")[0] || "Người dùng";
+  const displayName = profile?.full_name || user?.user_metadata?.full_name || user?.email?.split("@")[0] || t("profile.defaultUser");
+
+  const formatDate = (dateString: string | null) => {
+    if (!dateString) return null;
+    return format(new Date(dateString), 'd MMM yyyy', { locale: dateLocale });
+  };
 
   const learningStatsDisplay = [
     { 
-      label: "Khóa Học Hoàn Thành", 
+      label: t("profile.stats.coursesCompleted"), 
       value: stats.coursesCompleted, 
       icon: BookOpen,
-      emptyMessage: "Sẵn sàng bắt đầu ✨"
+      emptyMessage: t("profile.stats.readyToStart")
     },
     { 
-      label: "Chứng Chỉ Đạt Được", 
+      label: t("profile.stats.certificatesEarned"), 
       value: stats.certificatesEarned, 
       icon: Award,
-      emptyMessage: "Đang chờ đón bạn 🌟"
+      emptyMessage: t("profile.stats.waitingForYou")
     },
     { 
-      label: "Giờ Học Tích Lũy", 
+      label: t("profile.stats.hoursLearned"), 
       value: stats.learningHours, 
       icon: Clock,
-      emptyMessage: "Hành trình bắt đầu ⏳"
+      emptyMessage: t("profile.stats.journeyBegins")
     },
     { 
-      label: "Điểm Tri Thức", 
+      label: t("profile.stats.knowledgeScore"), 
       value: stats.knowledgeScore, 
       icon: TrendingUp,
-      emptyMessage: "Đang tích lũy 💡"
+      emptyMessage: t("profile.stats.accumulating")
     },
   ];
 
@@ -106,26 +119,26 @@ export default function Profile() {
   // Soul Journey milestones
   const soulJourney = [
     { 
-      title: "Gia nhập FUN Academy", 
-      date: profile?.created_at ? new Date(profile.created_at).toLocaleDateString('vi-VN') : null,
+      title: t("profile.soulJourney.joinedAcademy"), 
+      date: formatDate(profile?.created_at ?? null),
       completed: !!profile?.created_at,
       icon: Heart
     },
     { 
-      title: "Chấp nhận Luật Ánh Sáng", 
-      date: profile?.light_law_accepted_at ? new Date(profile.light_law_accepted_at).toLocaleDateString('vi-VN') : null,
+      title: t("profile.soulJourney.acceptedLightLaw"), 
+      date: formatDate(profile?.light_law_accepted_at ?? null),
       completed: !!profile?.light_law_accepted_at,
       icon: Sparkles
     },
     { 
-      title: "Hoàn thành khóa học đầu tiên", 
+      title: t("profile.soulJourney.firstCourse"), 
       date: null,
       completed: stats.coursesCompleted > 0,
       icon: BookOpen
     },
     { 
-      title: "Nhận chứng chỉ SBT đầu tiên", 
-      date: certificates[0]?.issued_at ? new Date(certificates[0].issued_at).toLocaleDateString('vi-VN') : null,
+      title: t("profile.soulJourney.firstCertificate"), 
+      date: formatDate(certificates[0]?.issued_at ?? null),
       completed: certificates.length > 0,
       icon: Award
     },
@@ -142,7 +155,7 @@ export default function Profile() {
         <main className="pt-24 pb-16">
           <div className="container mx-auto px-4 flex items-center justify-center">
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
-            <span className="ml-2 text-muted-foreground">Đang tải hồ sơ...</span>
+            <span className="ml-2 text-muted-foreground">{t("common.loading")}</span>
           </div>
         </main>
         <Footer />
@@ -192,12 +205,12 @@ export default function Profile() {
                     {profile?.verification_level === 'verified' && (
                       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary/20 text-secondary text-xs font-medium">
                         <Shield className="w-3 h-3" />
-                        Học Giả Xác Thực
+                        {t("profile.verifiedScholar")}
                       </span>
                     )}
                   </div>
                   <p className="text-muted-foreground mb-4">
-                    {profile?.academic_title || "Tiên Phong FUN Academy"}
+                    {profile?.academic_title || t("profile.defaultTitle")}
                   </p>
 
                   {/* Wallet Address */}
@@ -229,7 +242,7 @@ export default function Profile() {
                     </div>
                   ) : (
                     <Button onClick={() => connectWallet()} className="btn-primary-gold">
-                      Kết Nối Ví để Xem Đầy Đủ
+                      {t("profile.connectWalletFull")}
                     </Button>
                   )}
 
@@ -241,7 +254,7 @@ export default function Profile() {
                       className="border-gold-muted hover:bg-accent"
                     >
                       <Pencil className="w-4 h-4 mr-2" />
-                      Chỉnh Sửa Hồ Sơ
+                      {t("profile.editProfile")}
                     </Button>
 
                     {/* Logout / Disconnect Button */}
@@ -252,7 +265,7 @@ export default function Profile() {
                         className="border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive"
                       >
                         <LogOut className="w-4 h-4 mr-2" />
-                        {user ? "Đăng Xuất" : "Ngắt Kết Nối Ví"}
+                        {user ? t("common.logout") : t("common.disconnect")}
                       </Button>
                     )}
                   </div>
@@ -291,7 +304,7 @@ export default function Profile() {
             >
               <h2 className="font-display text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-gold" />
-                Hành Trình Linh Hồn
+                {t("profile.soulJourney.title")}
               </h2>
               <div className="relative">
                 {/* Timeline line */}
@@ -315,7 +328,7 @@ export default function Profile() {
                           <p className="text-xs text-muted-foreground">{milestone.date}</p>
                         )}
                         {!milestone.completed && (
-                          <p className="text-xs text-gold">Đang chờ đón bạn ✨</p>
+                          <p className="text-xs text-gold">{t("profile.soulJourney.waiting")}</p>
                         )}
                       </div>
                     </div>
@@ -333,7 +346,7 @@ export default function Profile() {
             >
               <h2 className="font-display text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
                 <Star className="w-5 h-5 text-secondary" />
-                Lĩnh Vực Tri Thức
+                {t("profile.skills")}
               </h2>
               <div className="flex flex-wrap gap-2">
                 {skills.map((skill) => (
@@ -356,34 +369,34 @@ export default function Profile() {
             >
               <h2 className="font-display text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
                 <Info className="w-5 h-5 text-gold" />
-                Soulbound Token (SBT) là gì?
+                {t("profile.sbt.title")}
               </h2>
               <div className="grid sm:grid-cols-3 gap-4">
                 <div className="text-center p-4 rounded-xl bg-background/50 border border-border">
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-2">
                     <Shield className="w-5 h-5 text-primary" />
                   </div>
-                  <h3 className="font-semibold text-foreground mb-1">Vĩnh Viễn</h3>
+                  <h3 className="font-semibold text-foreground mb-1">{t("profile.sbt.permanent")}</h3>
                   <p className="text-xs text-muted-foreground">
-                    Gắn liền với linh hồn học thuật của bạn mãi mãi
+                    {t("profile.sbt.permanentDesc")}
                   </p>
                 </div>
                 <div className="text-center p-4 rounded-xl bg-background/50 border border-border">
                   <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-2">
                     <Heart className="w-5 h-5 text-secondary" />
                   </div>
-                  <h3 className="font-semibold text-foreground mb-1">Không Thể Chuyển</h3>
+                  <h3 className="font-semibold text-foreground mb-1">{t("profile.sbt.nonTransferable")}</h3>
                   <p className="text-xs text-muted-foreground">
-                    Đảm bảo giá trị thật sự, không thể mua bán
+                    {t("profile.sbt.nonTransferableDesc")}
                   </p>
                 </div>
                 <div className="text-center p-4 rounded-xl bg-background/50 border border-border">
                   <div className="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-2">
                     <ExternalLink className="w-5 h-5 text-gold" />
                   </div>
-                  <h3 className="font-semibold text-foreground mb-1">Minh Bạch</h3>
+                  <h3 className="font-semibold text-foreground mb-1">{t("profile.sbt.transparent")}</h3>
                   <p className="text-xs text-muted-foreground">
-                    Xác thực công khai trên blockchain
+                    {t("profile.sbt.transparentDesc")}
                   </p>
                 </div>
               </div>
@@ -397,21 +410,21 @@ export default function Profile() {
             >
               <h2 className="font-display text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
                 <GraduationCap className="w-6 h-6 text-secondary" />
-                Chứng Chỉ Linh Hồn (SBT)
+                {t("profile.certificates")}
               </h2>
 
               {certificates.length === 0 ? (
                 <div className="academic-card p-8 text-center">
                   <Award className="w-12 h-12 text-gold mx-auto mb-4" />
                   <h3 className="text-lg font-semibold text-foreground mb-2">
-                    Chứng chỉ đầu tiên đang chờ đón bạn 🌟
+                    {t("profile.noCertificates")}
                   </h3>
                   <p className="text-muted-foreground mb-4">
-                    Hoàn thành các khóa học để nhận Chứng Chỉ Linh Hồn đầu tiên
+                    {t("profile.noCertificatesDesc")}
                   </p>
                   <Button onClick={() => navigate('/video-library')} variant="outline" className="border-gold-muted hover:bg-accent">
                     <BookOpen className="w-4 h-4 mr-2" />
-                    Khám Phá Khóa Học
+                    {t("profile.exploreCourses")}
                   </Button>
                 </div>
               ) : (
@@ -438,9 +451,9 @@ export default function Profile() {
                             </p>
                             <div className="flex items-center gap-3 text-xs text-muted-foreground">
                               {cert.issued_at && (
-                                <span>Cấp ngày: {new Date(cert.issued_at).toLocaleDateString('vi-VN')}</span>
+                                <span>{t("profile.issuedAt")}: {formatDate(cert.issued_at)}</span>
                               )}
-                              {cert.score && <span>Điểm: {cert.score}/100</span>}
+                              {cert.score && <span>{t("profile.score")}: {cert.score}/100</span>}
                             </div>
                           </div>
                         </div>
@@ -451,18 +464,18 @@ export default function Profile() {
                               <TooltipTrigger asChild>
                                 <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-secondary/10 text-secondary text-xs font-medium cursor-help">
                                   <CheckCircle className="w-3 h-3" />
-                                  Đã Xác Thực
+                                  {t("profile.verified")}
                                 </span>
                               </TooltipTrigger>
                               <TooltipContent>
-                                <p>Chứng chỉ này đã được xác thực bởi tổ chức cấp</p>
+                                <p>{t("profile.verifiedTooltip")}</p>
                               </TooltipContent>
                             </Tooltip>
                           )}
                           {cert.token_id && (
                             <Button variant="outline" size="sm" className="border-gold-muted hover:bg-accent">
                               <ExternalLink className="w-4 h-4 mr-1" />
-                              Xem On-Chain
+                              {t("profile.viewOnChain")}
                             </Button>
                           )}
                         </div>

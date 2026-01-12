@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/sheet";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useTranslation } from "@/i18n/useTranslation";
 
 export interface VideoFilters {
   level: string | null;
@@ -23,33 +24,35 @@ interface VideoFilterDrawerProps {
   onFiltersChange: (filters: VideoFilters) => void;
 }
 
-const levels = [
-  { value: "all", label: "Tất cả" },
-  { value: "beginner", label: "Cơ bản" },
-  { value: "intermediate", label: "Trung cấp" },
-  { value: "advanced", label: "Nâng cao" },
-];
-
-const durations = [
-  { value: "all", label: "Tất cả" },
-  { value: "short", label: "< 30 phút" },
-  { value: "medium", label: "30 - 60 phút" },
-  { value: "long", label: "> 60 phút" },
-];
-
-const ratings = [
-  { value: "all", label: "Tất cả" },
-  { value: "4.5", label: "≥ 4.5 sao" },
-  { value: "4.0", label: "≥ 4.0 sao" },
-  { value: "3.5", label: "≥ 3.5 sao" },
-];
-
 export function VideoFilterDrawer({
   open,
   onOpenChange,
   filters,
   onFiltersChange,
 }: VideoFilterDrawerProps) {
+  const { t } = useTranslation();
+
+  const levels = [
+    { value: "all", label: t("videoLibrary.level.all") },
+    { value: "beginner", label: t("videoLibrary.level.beginner") },
+    { value: "intermediate", label: t("videoLibrary.level.intermediate") },
+    { value: "advanced", label: t("videoLibrary.level.advanced") },
+  ];
+
+  const durations = [
+    { value: "all", label: t("videoLibrary.duration.all") },
+    { value: "short", label: t("videoLibrary.duration.short") },
+    { value: "medium", label: t("videoLibrary.duration.medium") },
+    { value: "long", label: t("videoLibrary.duration.long") },
+  ];
+
+  const ratings = [
+    { value: "all", label: t("videoLibrary.rating.all") },
+    { value: "4.5", label: t("videoLibrary.rating.above45") },
+    { value: "4.0", label: t("videoLibrary.rating.above4") },
+    { value: "3.5", label: t("videoLibrary.rating.above35") },
+  ];
+
   const handleLevelChange = (value: string) => {
     onFiltersChange({
       ...filters,
@@ -86,7 +89,7 @@ export function VideoFilterDrawer({
       <SheetContent className="w-[320px] sm:w-[400px] bg-card border-border">
         <SheetHeader>
           <SheetTitle className="text-foreground flex items-center justify-between">
-            Bộ lọc nâng cao
+            {t("videoLibrary.advancedFilters")}
             {hasActiveFilters && (
               <Button
                 variant="ghost"
@@ -95,7 +98,7 @@ export function VideoFilterDrawer({
                 className="text-muted-foreground hover:text-foreground"
               >
                 <X className="w-4 h-4 mr-1" />
-                Xóa bộ lọc
+                {t("videoLibrary.clearFilters")}
               </Button>
             )}
           </SheetTitle>
@@ -104,7 +107,7 @@ export function VideoFilterDrawer({
         <div className="py-6 space-y-6">
           {/* Level Filter */}
           <div className="space-y-3">
-            <Label className="text-foreground font-medium">Trình độ</Label>
+            <Label className="text-foreground font-medium">{t("videoLibrary.levelLabel")}</Label>
             <RadioGroup
               value={filters.level || "all"}
               onValueChange={handleLevelChange}
@@ -130,7 +133,7 @@ export function VideoFilterDrawer({
 
           {/* Duration Filter */}
           <div className="space-y-3">
-            <Label className="text-foreground font-medium">Thời lượng</Label>
+            <Label className="text-foreground font-medium">{t("videoLibrary.durationLabel")}</Label>
             <RadioGroup
               value={filters.duration || "all"}
               onValueChange={handleDurationChange}
@@ -156,7 +159,7 @@ export function VideoFilterDrawer({
 
           {/* Rating Filter */}
           <div className="space-y-3">
-            <Label className="text-foreground font-medium">Đánh giá</Label>
+            <Label className="text-foreground font-medium">{t("videoLibrary.ratingLabel")}</Label>
             <RadioGroup
               value={filters.minRating?.toString() || "all"}
               onValueChange={handleRatingChange}
@@ -186,7 +189,7 @@ export function VideoFilterDrawer({
             onClick={() => onOpenChange(false)}
             className="w-full bg-primary hover:bg-primary/90"
           >
-            Áp dụng bộ lọc
+            {t("videoLibrary.applyFilters")}
           </Button>
         </SheetFooter>
       </SheetContent>
