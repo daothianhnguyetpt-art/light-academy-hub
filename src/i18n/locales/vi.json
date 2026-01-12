@@ -20,7 +20,24 @@
     "back": "Quay lại",
     "download": "Tải xuống",
     "register": "Đăng Ký",
-    "unregister": "Hủy Đăng Ký"
+    "unregister": "Hủy Đăng Ký",
+    "report": "Báo cáo",
+    "reload": "Tải lại",
+    "all": "Tất cả",
+    "filters": "Bộ lọc",
+    "apply": "Áp dụng",
+    "clear": "Xóa bộ lọc",
+    "noData": "Không có dữ liệu",
+    "or": "hoặc",
+    "views": "lượt xem",
+    "minutes": "phút",
+    "pages": "trang",
+    "participants": "người tham gia",
+    "leave": "Rời khỏi",
+    "join": "Tham gia",
+    "copied": "Đã sao chép",
+    "connectWallet": "Kết Nối Ví",
+    "verified": "Đã xác thực"
   },
   "nav": {
     "home": "Trang Chủ",
@@ -47,19 +64,40 @@
     "alreadyHaveAccount": "Đã có tài khoản?",
     "dontHaveAccount": "Chưa có tài khoản?",
     "forgotPassword": "Quên mật khẩu?",
-    "backToLightLaw": "Quay lại Luật Ánh Sáng"
+    "backToLightLaw": "Quay lại Luật Ánh Sáng",
+    "loggingIn": "Đang đăng nhập...",
+    "registering": "Đang đăng ký...",
+    "loginToLight": "Đăng Nhập Vào Ánh Sáng",
+    "registerToLight": "Đăng Ký & Bước Vào Ánh Sáng",
+    "goldenAgeNetwork": "Mạng Xã Hội Thời Đại Hoàng Kim 5D",
+    "walletWeb3": "Kết Nối Ví Web3",
+    "installed": "Đã cài",
+    "noWallet": "Chưa có ví? Bấm vào để tải về",
+    "loginSuccess": "Đăng nhập thành công",
+    "loginSuccessMessage": "Chào mừng con trở lại với Ánh Sáng ✨",
+    "registerSuccess": "Đăng ký thành công",
+    "registerSuccessMessage": "Chào mừng con bước vào Ánh Sáng ✨",
+    "loginFailed": "Đăng nhập thất bại",
+    "registerFailed": "Đăng ký thất bại",
+    "emailExists": "Email đã tồn tại",
+    "emailExistsMessage": "Email này đã được đăng ký. Vui lòng đăng nhập hoặc sử dụng email khác.",
+    "invalidCredentials": "Email hoặc mật khẩu không đúng",
+    "googleLoginFailed": "Đăng nhập Google thất bại",
+    "walletConnectFailed": "Kết nối ví thất bại",
+    "installMetamask": "Vui lòng cài đặt MetaMask hoặc ví Web3 tương thích"
   },
   "whitepaper": {
     "title": "WHITEPAPER",
     "subtitle": "FUN ACADEMY – Nền Tảng Tri Thức Ánh Sáng Toàn Cầu",
     "downloadPdf": "Tải PDF",
+    "tableOfContents": "Mục Lục",
     "sections": {
       "vision": "Tầm Nhìn",
       "visionSub": "Vision",
       "mission": "Sứ Mệnh",
       "missionSub": "Mission",
       "problem": "Vấn Đề Giáo Dục",
-      "problemSub": "Education Problems",
+      "problemSub": "Current Problems",
       "solution": "Giải Pháp",
       "solutionSub": "Solutions",
       "technology": "Kiến Trúc Công Nghệ",
@@ -81,34 +119,46 @@
   },
   "videoLibrary": {
     "title": "Thư Viện Video",
-    "subtitle": "Khám phá tri thức không giới hạn",
+    "subtitle": "Thư viện video bài giảng chất lượng cao từ các trường đại học hàng đầu thế giới",
     "filters": "Bộ lọc",
-    "searchPlaceholder": "Tìm kiếm video...",
+    "searchPlaceholder": "Tìm kiếm video, giảng viên...",
     "allCategories": "Tất cả",
-    "noVideos": "Không tìm thấy video nào",
+    "noVideos": "Chưa có video nào",
+    "noVideosFiltered": "Không tìm thấy video phù hợp",
+    "noVideosMessage": "Thư viện video đang được cập nhật. Vui lòng quay lại sau!",
+    "changeFilters": "Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm.",
+    "loadingVideos": "Đang tải video...",
+    "reloadVideos": "Tải lại videos",
     "level": {
+      "label": "Cấp độ",
       "all": "Tất cả cấp độ",
       "beginner": "Cơ bản",
       "intermediate": "Trung cấp",
       "advanced": "Nâng cao"
     },
     "duration": {
+      "label": "Thời lượng",
       "all": "Mọi thời lượng",
-      "short": "Dưới 10 phút",
-      "medium": "10-30 phút",
-      "long": "Trên 30 phút"
+      "short": "Dưới 30 phút",
+      "medium": "30-60 phút",
+      "long": "Trên 60 phút"
     },
     "rating": {
+      "label": "Đánh giá",
       "all": "Mọi đánh giá",
       "above4": "4+ sao",
       "above3": "3+ sao"
     },
     "views": "lượt xem",
-    "minutes": "phút"
+    "minutes": "phút",
+    "instructor": "Giảng viên",
+    "nftCertificate": "NFT Certificate",
+    "clearFilters": "Xóa bộ lọc",
+    "applyFilters": "Áp dụng"
   },
   "liveClasses": {
     "title": "Lớp Học Trực Tuyến",
-    "subtitle": "Học trực tiếp với giảng viên hàng đầu",
+    "subtitle": "Kết nối với giảng viên và học viên trên toàn thế giới",
     "tabs": {
       "all": "Tất cả",
       "registered": "Đã đăng ký",
@@ -119,16 +169,42 @@
     "registered": "Đã đăng ký",
     "joinNow": "Tham Gia Ngay",
     "addToCalendar": "Thêm vào lịch",
+    "downloadICS": "Tải file ICS",
     "enableReminder": "Nhận thông báo nhắc nhở",
     "reminderNote": "Nhắc trước 30 phút",
     "participants": "người tham gia",
     "instructor": "Giảng viên",
-    "noClasses": "Không có lớp học nào",
-    "upcoming": "Sắp diễn ra"
+    "noClasses": "Chưa có lớp học",
+    "noRegisteredClasses": "Chưa đăng ký lớp nào",
+    "registerPrompt": "Hãy đăng ký lớp học để bắt đầu học tập ✨",
+    "noClassesMessage": "Các lớp học mới sẽ được cập nhật sớm ✨",
+    "upcoming": "Lớp Học Sắp Tới",
+    "live": "TRỰC TIẾP",
+    "today": "Hôm nay",
+    "tomorrow": "Ngày mai",
+    "integration": "Tích hợp sẵn sàng",
+    "connectAccount": "Kết nối tài khoản của bạn",
+    "controls": {
+      "mute": "Tắt micro",
+      "unmute": "Bật micro",
+      "videoOn": "Bật camera",
+      "videoOff": "Tắt camera",
+      "shareScreen": "Chia sẻ màn hình",
+      "raiseHand": "Giơ tay phát biểu",
+      "lowerHand": "Hạ tay",
+      "openChat": "Mở chat",
+      "record": "Ghi hình - Lưu vào thư viện học tập",
+      "leave": "Rời khỏi"
+    },
+    "noInstructor": "Chưa có lớp học đang diễn ra",
+    "classDetails": "Chi tiết lớp học",
+    "duration": "Thời lượng",
+    "scheduledAt": "Thời gian"
   },
   "socialFeed": {
-    "title": "Bảng Tin Học Thuật",
-    "createPost": "Chia sẻ tri thức...",
+    "title": "Academic Feed",
+    "subtitle": "Kết nối và chia sẻ tri thức với cộng đồng học thuật toàn cầu",
+    "createPost": "Chia sẻ tri thức với cộng đồng...",
     "appreciate": "Trân Trọng",
     "comment": "Bình luận",
     "comments": "bình luận",
@@ -139,35 +215,222 @@
       "course": "Khóa học",
       "research": "Nghiên cứu",
       "lecture": "Bài giảng"
-    }
+    },
+    "noPosts": "Chưa có bài viết nào",
+    "beFirst": "Hãy là người đầu tiên chia sẻ tri thức với cộng đồng!",
+    "loadingPosts": "Đang tải bài viết...",
+    "reloadPosts": "Tải lại bài viết",
+    "editPost": "Chỉnh sửa",
+    "deletePost": "Xóa bài viết",
+    "deleteConfirm": "Xóa bài viết?",
+    "deleteWarning": "Hành động này không thể hoàn tác. Bài viết sẽ bị xóa vĩnh viễn cùng với tất cả bình luận và tương tác.",
+    "copiedLink": "Đã sao chép link bài viết",
+    "copyFailed": "Không thể sao chép link",
+    "reportSent": "Đã gửi báo cáo. Cảm ơn bạn đã góp ý!",
+    "anonymous": "Ẩn danh",
+    "member": "FUN Academy Member",
+    "addImage": "Thêm ảnh",
+    "addVideo": "Thêm video",
+    "addLocation": "Thêm vị trí",
+    "post": "Đăng",
+    "posting": "Đang đăng...",
+    "loginToPost": "Đăng nhập để chia sẻ",
+    "loginToComment": "Đăng nhập để bình luận",
+    "writeComment": "Viết bình luận...",
+    "send": "Gửi",
+    "sending": "Đang gửi...",
+    "noComments": "Chưa có bình luận nào",
+    "beFirstComment": "Hãy là người đầu tiên bình luận!"
   },
   "profile": {
     "title": "Hồ Sơ Cá Nhân",
     "soulJourney": "Hành Trình Linh Hồn",
-    "certificates": "Chứng Chỉ SBT",
+    "certificates": "Chứng Chỉ Linh Hồn (SBT)",
     "academicId": "Danh Tính Học Thuật",
-    "editProfile": "Chỉnh sửa hồ sơ",
+    "editProfile": "Chỉnh Sửa Hồ Sơ",
     "stats": {
-      "coursesCompleted": "Khóa học hoàn thành",
-      "certificatesEarned": "Chứng chỉ đạt được",
-      "hoursLearned": "Giờ học tập",
-      "knowledgeScore": "Điểm tri thức"
+      "coursesCompleted": "Khóa Học Hoàn Thành",
+      "certificatesEarned": "Chứng Chỉ Đạt Được",
+      "hoursLearned": "Giờ Học Tích Lũy",
+      "knowledgeScore": "Điểm Tri Thức"
     },
-    "skills": "Kỹ năng",
-    "noCertificates": "Chưa có chứng chỉ nào"
+    "emptyStats": {
+      "courses": "Sẵn sàng bắt đầu ✨",
+      "certificates": "Đang chờ đón bạn 🌟",
+      "hours": "Hành trình bắt đầu ⏳",
+      "score": "Đang tích lũy 💡"
+    },
+    "skills": "Lĩnh Vực Tri Thức",
+    "noCertificates": "Chứng chỉ đầu tiên đang chờ đón bạn 🌟",
+    "noCertificatesMessage": "Hoàn thành các khóa học để nhận Chứng Chỉ Linh Hồn đầu tiên",
+    "exploreCourses": "Khám Phá Khóa Học",
+    "loadingProfile": "Đang tải hồ sơ...",
+    "pioneer": "Tiên Phong FUN Academy",
+    "verifiedScholar": "Học Giả Xác Thực",
+    "copiedAddress": "Đã sao chép địa chỉ!",
+    "connectWalletFull": "Kết Nối Ví để Xem Đầy Đủ",
+    "logoutSuccess": "Đã đăng xuất thành công!",
+    "logoutError": "Đã xảy ra lỗi khi đăng xuất",
+    "disconnectSuccess": "Đã ngắt kết nối ví!",
+    "sbtInfo": {
+      "title": "Soulbound Token (SBT) là gì?",
+      "permanent": "Vĩnh Viễn",
+      "permanentDesc": "Gắn liền với linh hồn học thuật của bạn mãi mãi",
+      "nonTransferable": "Không Thể Chuyển",
+      "nonTransferableDesc": "Đảm bảo giá trị thật sự, không thể mua bán",
+      "transparent": "Minh Bạch",
+      "transparentDesc": "Xác thực công khai trên blockchain"
+    },
+    "journey": {
+      "joined": "Gia nhập FUN Academy",
+      "acceptedLaw": "Chấp nhận Luật Ánh Sáng",
+      "firstCourse": "Hoàn thành khóa học đầu tiên",
+      "firstCert": "Nhận chứng chỉ SBT đầu tiên",
+      "waiting": "Đang chờ đón bạn ✨"
+    },
+    "editModal": {
+      "title": "Chỉnh Sửa Hồ Sơ",
+      "avatar": "Ảnh đại diện",
+      "avatarUrl": "URL ảnh đại diện",
+      "fullName": "Họ và tên",
+      "academicTitle": "Danh hiệu học thuật",
+      "bio": "Giới thiệu bản thân",
+      "wallet": "Ví Web3",
+      "walletConnected": "Đã kết nối",
+      "connectWallet": "Kết nối ví",
+      "saving": "Đang lưu..."
+    }
   },
   "library": {
-    "title": "Thư Viện Tài Liệu",
-    "subtitle": "Kho tàng tri thức học thuật",
-    "searchPlaceholder": "Tìm kiếm tài liệu...",
+    "title": "Thư Viện Tri Thức",
+    "subtitle": "Kho tàng sách, tài liệu nghiên cứu và hình ảnh học thuật của nhân loại",
+    "searchPlaceholder": "Tìm kiếm sách, tài liệu...",
     "downloads": "lượt tải",
-    "pages": "trang"
+    "pages": "trang",
+    "categories": {
+      "all": "Tất cả",
+      "book": "Sách",
+      "document": "Tài liệu",
+      "image": "Hình ảnh",
+      "video": "Video"
+    },
+    "loading": "Đang tải tài liệu...",
+    "noResources": "Chưa có tài liệu nào",
+    "noResourcesMessage": "Thư viện đang được xây dựng, hãy quay lại sau nhé ✨",
+    "viewMore": "Xem thêm tài liệu",
+    "author": "Tác giả",
+    "uncategorized": "Chưa phân loại"
   },
   "footer": {
-    "description": "Nền tảng tri thức ánh sáng toàn cầu",
+    "description": "Trái tim tri thức & khai sáng của FUN Ecosystem.",
+    "quote": "Đây là Thư Viện Ánh Sáng của Nhân Loại trong Kỷ Nguyên 5D",
+    "platform": "Platform",
+    "resources": "Resources",
+    "ecosystem": "FUN Ecosystem",
     "quickLinks": "Liên kết nhanh",
-    "resources": "Tài nguyên",
     "connect": "Kết nối",
-    "copyright": "© 2024 FUN Academy. All rights reserved."
+    "copyright": "© 2026 FUN Academy. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "globalSchools": {
+    "title": "Global Schools",
+    "subtitle": "Khám phá mạng lưới trường học và tổ chức giáo dục toàn cầu",
+    "searchPlaceholder": "Tìm kiếm trường học, tổ chức...",
+    "filters": "Bộ Lọc",
+    "allRegions": "Tất Cả Khu Vực",
+    "allTypes": "Tất Cả Loại Hình",
+    "clearFilters": "Xóa bộ lọc",
+    "organizations": "tổ chức",
+    "featuredSchools": "Trường Học Nổi Bật",
+    "featuredDesc": "Từ khắp nơi trên thế giới",
+    "remoteSchools": "Remote Schools",
+    "noOrganizations": "Chưa có tổ chức nào",
+    "loading": "Đang tải...",
+    "error": "Có lỗi xảy ra khi tải dữ liệu",
+    "philosophy": {
+      "title": "Triết Lý Bình Đẳng",
+      "description": "FUN Academy không sử dụng hệ thống xếp hạng truyền thống. Thay vào đó, chúng tôi đo lường Điểm Đóng Góp – phản ánh giá trị thực sự mà mỗi tổ chức mang lại cho cộng đồng tri thức toàn cầu.",
+      "contribution": "Điểm Đóng Góp"
+    },
+    "institutionTypes": {
+      "university": "Đại học",
+      "college": "Cao đẳng",
+      "research": "Viện nghiên cứu",
+      "online": "Trường trực tuyến",
+      "corporate": "Đào tạo doanh nghiệp",
+      "nonprofit": "Tổ chức phi lợi nhuận"
+    }
+  },
+  "landing": {
+    "hero": {
+      "badge": "Web3 Academic Platform",
+      "title": "FUN ACADEMY",
+      "subtitle": "Trái Tim Tri Thức & Khai Sáng của FUN Ecosystem",
+      "cta1": "Khám Phá Ngay",
+      "cta2": "Xem Video Library",
+      "stakeholders": ["Sinh Viên", "Giảng Viên", "Nhà Nghiên Cứu", "Doanh Nghiệp"],
+      "stats": {
+        "countries": "Quốc gia",
+        "courses": "Khóa học",
+        "certificates": "Chứng chỉ NFT"
+      }
+    },
+    "features": {
+      "title": "Tính Năng Chính",
+      "socialFeed": {
+        "title": "Mạng Xã Hội Học Thuật",
+        "desc": "Kết nối với cộng đồng học giả toàn cầu"
+      },
+      "videoLibrary": {
+        "title": "Thư Viện Video",
+        "desc": "Khóa học chất lượng cao từ đại học hàng đầu"
+      },
+      "liveClasses": {
+        "title": "Lớp Học Trực Tuyến",
+        "desc": "Học và tương tác trực tiếp với giảng viên"
+      },
+      "library": {
+        "title": "Thư Viện Tài Liệu",
+        "desc": "Kho tàng sách và tài liệu nghiên cứu"
+      }
+    }
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Oops! Trang không tồn tại",
+    "backHome": "Về Trang Chủ"
+  },
+  "videoDetail": {
+    "relatedVideos": "Video liên quan",
+    "comments": "Bình luận",
+    "writeComment": "Viết bình luận...",
+    "noComments": "Chưa có bình luận nào. Hãy là người đầu tiên!",
+    "loginToComment": "Đăng nhập để bình luận",
+    "send": "Gửi",
+    "sending": "Đang gửi..."
+  },
+  "libraryDetail": {
+    "downloadNow": "Tải Xuống Ngay",
+    "openFile": "Mở Tài Liệu",
+    "noFile": "Chưa có file",
+    "details": "Chi tiết",
+    "author": "Tác giả",
+    "category": "Danh mục",
+    "pages": "Số trang",
+    "downloads": "Lượt tải",
+    "rating": "Đánh giá"
+  },
+  "institutionDetail": {
+    "about": "Giới thiệu",
+    "members": "Thành viên",
+    "courses": "Khóa học",
+    "partnerships": "Đối tác",
+    "contact": "Liên hệ",
+    "website": "Website",
+    "location": "Địa chỉ",
+    "founded": "Năm thành lập",
+    "contributionScore": "Điểm Đóng Góp",
+    "verifiedInstitution": "Tổ chức đã xác thực"
   }
 }

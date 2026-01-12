@@ -20,7 +20,24 @@
     "back": "Back",
     "download": "Download",
     "register": "Register",
-    "unregister": "Unregister"
+    "unregister": "Unregister",
+    "report": "Report",
+    "reload": "Reload",
+    "all": "All",
+    "filters": "Filters",
+    "apply": "Apply",
+    "clear": "Clear filters",
+    "noData": "No data",
+    "or": "or",
+    "views": "views",
+    "minutes": "min",
+    "pages": "pages",
+    "participants": "participants",
+    "leave": "Leave",
+    "join": "Join",
+    "copied": "Copied",
+    "connectWallet": "Connect Wallet",
+    "verified": "Verified"
   },
   "nav": {
     "home": "Home",
@@ -47,12 +64,33 @@
     "alreadyHaveAccount": "Already have an account?",
     "dontHaveAccount": "Don't have an account?",
     "forgotPassword": "Forgot password?",
-    "backToLightLaw": "Back to Light Law"
+    "backToLightLaw": "Back to Light Law",
+    "loggingIn": "Logging in...",
+    "registering": "Registering...",
+    "loginToLight": "Login to the Light",
+    "registerToLight": "Register & Enter the Light",
+    "goldenAgeNetwork": "Golden Age 5D Social Network",
+    "walletWeb3": "Connect Web3 Wallet",
+    "installed": "Installed",
+    "noWallet": "No wallet? Click to download",
+    "loginSuccess": "Login successful",
+    "loginSuccessMessage": "Welcome back to the Light ✨",
+    "registerSuccess": "Registration successful",
+    "registerSuccessMessage": "Welcome to the Light ✨",
+    "loginFailed": "Login failed",
+    "registerFailed": "Registration failed",
+    "emailExists": "Email already exists",
+    "emailExistsMessage": "This email is already registered. Please login or use a different email.",
+    "invalidCredentials": "Invalid email or password",
+    "googleLoginFailed": "Google login failed",
+    "walletConnectFailed": "Wallet connection failed",
+    "installMetamask": "Please install MetaMask or a compatible Web3 wallet"
   },
   "whitepaper": {
     "title": "WHITEPAPER",
     "subtitle": "FUN ACADEMY – Global Light Knowledge Platform",
     "downloadPdf": "Download PDF",
+    "tableOfContents": "Table of Contents",
     "sections": {
       "vision": "Vision",
       "visionSub": "Our Vision",
@@ -81,34 +119,46 @@
   },
   "videoLibrary": {
     "title": "Video Library",
-    "subtitle": "Explore unlimited knowledge",
+    "subtitle": "High-quality video lectures from top universities around the world",
     "filters": "Filters",
-    "searchPlaceholder": "Search videos...",
+    "searchPlaceholder": "Search videos, instructors...",
     "allCategories": "All",
-    "noVideos": "No videos found",
+    "noVideos": "No videos yet",
+    "noVideosFiltered": "No matching videos found",
+    "noVideosMessage": "Video library is being updated. Please check back later!",
+    "changeFilters": "Try changing filters or search keywords.",
+    "loadingVideos": "Loading videos...",
+    "reloadVideos": "Reload videos",
     "level": {
+      "label": "Level",
       "all": "All levels",
       "beginner": "Beginner",
       "intermediate": "Intermediate",
       "advanced": "Advanced"
     },
     "duration": {
+      "label": "Duration",
       "all": "Any duration",
-      "short": "Under 10 min",
-      "medium": "10-30 min",
-      "long": "Over 30 min"
+      "short": "Under 30 min",
+      "medium": "30-60 min",
+      "long": "Over 60 min"
     },
     "rating": {
+      "label": "Rating",
       "all": "Any rating",
       "above4": "4+ stars",
       "above3": "3+ stars"
     },
     "views": "views",
-    "minutes": "min"
+    "minutes": "min",
+    "instructor": "Instructor",
+    "nftCertificate": "NFT Certificate",
+    "clearFilters": "Clear filters",
+    "applyFilters": "Apply"
   },
   "liveClasses": {
     "title": "Live Classes",
-    "subtitle": "Learn directly from top instructors",
+    "subtitle": "Connect with instructors and students from around the world",
     "tabs": {
       "all": "All",
       "registered": "Registered",
@@ -119,16 +169,42 @@
     "registered": "Registered",
     "joinNow": "Join Now",
     "addToCalendar": "Add to calendar",
+    "downloadICS": "Download ICS",
     "enableReminder": "Enable reminder",
     "reminderNote": "30 min before",
     "participants": "participants",
     "instructor": "Instructor",
     "noClasses": "No classes available",
-    "upcoming": "Upcoming"
+    "noRegisteredClasses": "No registered classes",
+    "registerPrompt": "Register for classes to start learning ✨",
+    "noClassesMessage": "New classes will be updated soon ✨",
+    "upcoming": "Upcoming Classes",
+    "live": "LIVE",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "integration": "Ready integrations",
+    "connectAccount": "Connect your account",
+    "controls": {
+      "mute": "Mute",
+      "unmute": "Unmute",
+      "videoOn": "Turn on camera",
+      "videoOff": "Turn off camera",
+      "shareScreen": "Share screen",
+      "raiseHand": "Raise hand",
+      "lowerHand": "Lower hand",
+      "openChat": "Open chat",
+      "record": "Record - Save to library",
+      "leave": "Leave"
+    },
+    "noInstructor": "No live class currently",
+    "classDetails": "Class Details",
+    "duration": "Duration",
+    "scheduledAt": "Scheduled at"
   },
   "socialFeed": {
     "title": "Academic Feed",
-    "createPost": "Share knowledge...",
+    "subtitle": "Connect and share knowledge with the global academic community",
+    "createPost": "Share knowledge with the community...",
     "appreciate": "Appreciate",
     "comment": "Comment",
     "comments": "comments",
@@ -139,35 +215,222 @@
       "course": "Course",
       "research": "Research",
       "lecture": "Lecture"
-    }
+    },
+    "noPosts": "No posts yet",
+    "beFirst": "Be the first to share knowledge with the community!",
+    "loadingPosts": "Loading posts...",
+    "reloadPosts": "Reload posts",
+    "editPost": "Edit",
+    "deletePost": "Delete post",
+    "deleteConfirm": "Delete post?",
+    "deleteWarning": "This action cannot be undone. The post will be permanently deleted along with all comments and interactions.",
+    "copiedLink": "Post link copied",
+    "copyFailed": "Failed to copy link",
+    "reportSent": "Report sent. Thank you for your feedback!",
+    "anonymous": "Anonymous",
+    "member": "FUN Academy Member",
+    "addImage": "Add image",
+    "addVideo": "Add video",
+    "addLocation": "Add location",
+    "post": "Post",
+    "posting": "Posting...",
+    "loginToPost": "Login to share",
+    "loginToComment": "Login to comment",
+    "writeComment": "Write a comment...",
+    "send": "Send",
+    "sending": "Sending...",
+    "noComments": "No comments yet",
+    "beFirstComment": "Be the first to comment!"
   },
   "profile": {
     "title": "Personal Profile",
     "soulJourney": "Soul Journey",
-    "certificates": "SBT Certificates",
+    "certificates": "Soul Certificates (SBT)",
     "academicId": "Academic Identity",
-    "editProfile": "Edit profile",
+    "editProfile": "Edit Profile",
     "stats": {
-      "coursesCompleted": "Courses completed",
-      "certificatesEarned": "Certificates earned",
-      "hoursLearned": "Hours learned",
-      "knowledgeScore": "Knowledge score"
+      "coursesCompleted": "Courses Completed",
+      "certificatesEarned": "Certificates Earned",
+      "hoursLearned": "Hours Learned",
+      "knowledgeScore": "Knowledge Score"
     },
-    "skills": "Skills",
-    "noCertificates": "No certificates yet"
+    "emptyStats": {
+      "courses": "Ready to start ✨",
+      "certificates": "Waiting for you 🌟",
+      "hours": "Journey begins ⏳",
+      "score": "Accumulating 💡"
+    },
+    "skills": "Knowledge Areas",
+    "noCertificates": "Your first certificate awaits 🌟",
+    "noCertificatesMessage": "Complete courses to earn your first Soul Certificate",
+    "exploreCourses": "Explore Courses",
+    "loadingProfile": "Loading profile...",
+    "pioneer": "FUN Academy Pioneer",
+    "verifiedScholar": "Verified Scholar",
+    "copiedAddress": "Address copied!",
+    "connectWalletFull": "Connect Wallet for Full Access",
+    "logoutSuccess": "Logged out successfully!",
+    "logoutError": "Error logging out",
+    "disconnectSuccess": "Wallet disconnected!",
+    "sbtInfo": {
+      "title": "What is a Soulbound Token (SBT)?",
+      "permanent": "Permanent",
+      "permanentDesc": "Bound to your academic soul forever",
+      "nonTransferable": "Non-Transferable",
+      "nonTransferableDesc": "Ensures true value, cannot be traded",
+      "transparent": "Transparent",
+      "transparentDesc": "Publicly verifiable on blockchain"
+    },
+    "journey": {
+      "joined": "Joined FUN Academy",
+      "acceptedLaw": "Accepted the Light Law",
+      "firstCourse": "Completed first course",
+      "firstCert": "Received first SBT certificate",
+      "waiting": "Waiting for you ✨"
+    },
+    "editModal": {
+      "title": "Edit Profile",
+      "avatar": "Avatar",
+      "avatarUrl": "Avatar URL",
+      "fullName": "Full name",
+      "academicTitle": "Academic title",
+      "bio": "Bio",
+      "wallet": "Web3 Wallet",
+      "walletConnected": "Connected",
+      "connectWallet": "Connect wallet",
+      "saving": "Saving..."
+    }
   },
   "library": {
-    "title": "Document Library",
-    "subtitle": "Academic knowledge repository",
-    "searchPlaceholder": "Search documents...",
+    "title": "Knowledge Library",
+    "subtitle": "A treasure trove of books, research documents, and academic images",
+    "searchPlaceholder": "Search books, documents...",
     "downloads": "downloads",
-    "pages": "pages"
+    "pages": "pages",
+    "categories": {
+      "all": "All",
+      "book": "Books",
+      "document": "Documents",
+      "image": "Images",
+      "video": "Videos"
+    },
+    "loading": "Loading resources...",
+    "noResources": "No resources yet",
+    "noResourcesMessage": "Library is being built, please check back later ✨",
+    "viewMore": "View more resources",
+    "author": "Author",
+    "uncategorized": "Uncategorized"
   },
   "footer": {
-    "description": "Global light knowledge platform",
-    "quickLinks": "Quick Links",
+    "description": "The heart of knowledge & enlightenment of FUN Ecosystem.",
+    "quote": "This is the Light Library of Humanity in the 5D Era",
+    "platform": "Platform",
     "resources": "Resources",
+    "ecosystem": "FUN Ecosystem",
+    "quickLinks": "Quick Links",
     "connect": "Connect",
-    "copyright": "© 2024 FUN Academy. All rights reserved."
+    "copyright": "© 2026 FUN Academy. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "globalSchools": {
+    "title": "Global Schools",
+    "subtitle": "Explore the global network of schools and educational institutions",
+    "searchPlaceholder": "Search schools, organizations...",
+    "filters": "Filters",
+    "allRegions": "All Regions",
+    "allTypes": "All Types",
+    "clearFilters": "Clear filters",
+    "organizations": "organizations",
+    "featuredSchools": "Featured Schools",
+    "featuredDesc": "From around the world",
+    "remoteSchools": "Remote Schools",
+    "noOrganizations": "No organizations yet",
+    "loading": "Loading...",
+    "error": "Error loading data",
+    "philosophy": {
+      "title": "Philosophy of Equality",
+      "description": "FUN Academy does not use traditional ranking systems. Instead, we measure Contribution Scores – reflecting the real value each organization brings to the global knowledge community.",
+      "contribution": "Contribution Score"
+    },
+    "institutionTypes": {
+      "university": "University",
+      "college": "College",
+      "research": "Research Institute",
+      "online": "Online School",
+      "corporate": "Corporate Training",
+      "nonprofit": "Non-profit Organization"
+    }
+  },
+  "landing": {
+    "hero": {
+      "badge": "Web3 Academic Platform",
+      "title": "FUN ACADEMY",
+      "subtitle": "The Heart of Knowledge & Enlightenment of FUN Ecosystem",
+      "cta1": "Explore Now",
+      "cta2": "View Video Library",
+      "stakeholders": ["Students", "Instructors", "Researchers", "Enterprises"],
+      "stats": {
+        "countries": "Countries",
+        "courses": "Courses",
+        "certificates": "NFT Certificates"
+      }
+    },
+    "features": {
+      "title": "Key Features",
+      "socialFeed": {
+        "title": "Academic Social Network",
+        "desc": "Connect with the global scholarly community"
+      },
+      "videoLibrary": {
+        "title": "Video Library",
+        "desc": "High-quality courses from top universities"
+      },
+      "liveClasses": {
+        "title": "Live Classes",
+        "desc": "Learn and interact directly with instructors"
+      },
+      "library": {
+        "title": "Document Library",
+        "desc": "Treasure trove of books and research documents"
+      }
+    }
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Oops! Page not found",
+    "backHome": "Return to Home"
+  },
+  "videoDetail": {
+    "relatedVideos": "Related Videos",
+    "comments": "Comments",
+    "writeComment": "Write a comment...",
+    "noComments": "No comments yet. Be the first!",
+    "loginToComment": "Login to comment",
+    "send": "Send",
+    "sending": "Sending..."
+  },
+  "libraryDetail": {
+    "downloadNow": "Download Now",
+    "openFile": "Open Document",
+    "noFile": "No file available",
+    "details": "Details",
+    "author": "Author",
+    "category": "Category",
+    "pages": "Pages",
+    "downloads": "Downloads",
+    "rating": "Rating"
+  },
+  "institutionDetail": {
+    "about": "About",
+    "members": "Members",
+    "courses": "Courses",
+    "partnerships": "Partners",
+    "contact": "Contact",
+    "website": "Website",
+    "location": "Location",
+    "founded": "Founded",
+    "contributionScore": "Contribution Score",
+    "verifiedInstitution": "Verified Institution"
   }
 }
