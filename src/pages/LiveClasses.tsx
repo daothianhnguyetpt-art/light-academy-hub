@@ -7,6 +7,10 @@ import { useLiveClasses, LiveClass } from "@/hooks/useLiveClasses";
 import { useMyRegistrations } from "@/hooks/useLiveClassRegistration";
 import { ClassDetailModal } from "@/components/live-classes/ClassDetailModal";
 import { checkReminders } from "@/lib/calendar-utils";
+import { useTranslation } from "@/i18n/useTranslation";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { getDateLocale } from "@/lib/date-utils";
+import { format } from "date-fns";
 import { 
   Video,
   Mic,
@@ -43,27 +47,9 @@ const meetingParticipants = [
   { name: "Học viên 3", initials: "H3", isSpeaking: false },
 ];
 
-const formatScheduledDate = (dateString: string) => {
-  const date = new Date(dateString);
-  const now = new Date();
-  const tomorrow = new Date(now);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-
-  if (date.toDateString() === now.toDateString()) {
-    return `Hôm nay, ${date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}`;
-  } else if (date.toDateString() === tomorrow.toDateString()) {
-    return `Ngày mai, ${date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}`;
-  } else {
-    return date.toLocaleDateString('vi-VN', { 
-      day: 'numeric', 
-      month: 'short',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  }
-};
-
 export default function LiveClasses() {
+  const { t } = useTranslation();
+  const { language } = useLanguage();
   const { isConnected, address, connectWallet } = useWallet();
   const { classes, loading, error, fetchClasses } = useLiveClasses();
   const { registeredClassIds, loading: loadingRegistrations } = useMyRegistrations();
@@ -74,6 +60,23 @@ export default function LiveClasses() {
   const [selectedClass, setSelectedClass] = useState<LiveClass | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<string>("all");
+
+  const dateLocale = getDateLocale(language);
+
+  const formatScheduledDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    if (date.toDateString() === now.toDateString()) {
+      return `${t("liveClasses.today")}, ${format(date, 'HH:mm', { locale: dateLocale })}`;
+    } else if (date.toDateString() === tomorrow.toDateString()) {
+      return `${t("liveClasses.tomorrow")}, ${format(date, 'HH:mm', { locale: dateLocale })}`;
+    } else {
+      return format(date, 'd MMM, HH:mm', { locale: dateLocale });
+    }
+  };
 
   // Check for reminders on load
   useEffect(() => {
@@ -126,10 +129,10 @@ export default function LiveClasses() {
                 className="mb-6"
               >
                 <h1 className="font-display text-3xl font-bold text-foreground mb-2">
-                  Lớp Học Trực Tuyến
+                  {t("liveClasses.title")}
                 </h1>
                 <p className="text-muted-foreground">
-                  Kết nối với giảng viên và học viên trên toàn thế giới
+                  {t("liveClasses.subtitle")}
                 </p>
               </motion.div>
 
@@ -152,10 +155,10 @@ export default function LiveClasses() {
                         </AvatarFallback>
                       </Avatar>
                       <h3 className="font-semibold text-foreground">
-                        {liveClass?.instructor?.full_name || "Giảng Viên"}
+                        {liveClass?.instructor?.full_name || t("liveClasses.instructor")}
                       </h3>
                       <p className="text-sm text-muted-foreground">
-                        {liveClass?.title || "Chưa có lớp học đang diễn ra"}
+                        {liveClass?.title || t("liveClasses.noLiveClass")}
                       </p>
                     </div>
                   </div>
@@ -186,11 +189,11 @@ export default function LiveClasses() {
                     <div className="absolute top-4 left-4 flex items-center gap-2">
                       <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-destructive text-destructive-foreground text-sm font-medium">
                         <span className="w-2 h-2 rounded-full bg-destructive-foreground animate-pulse" />
-                        TRỰC TIẾP
+                        {t("liveClasses.liveBadge")}
                       </span>
                       <span className="px-3 py-1.5 rounded-full bg-card/80 backdrop-blur text-sm text-foreground">
                         <Users className="w-4 h-4 inline mr-1" />
-                        {liveClass.registration_count || 0} người tham gia
+                        {liveClass.registration_count || 0} {t("liveClasses.participants")}
                       </span>
                     </div>
                   )}
@@ -212,7 +215,7 @@ export default function LiveClasses() {
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>{isMuted ? "Bật micro" : "Tắt micro"}</p>
+                          <p>{isMuted ? t("liveClasses.controls.unmute") : t("liveClasses.controls.mute")}</p>
                         </TooltipContent>
                       </Tooltip>
                       
@@ -228,7 +231,7 @@ export default function LiveClasses() {
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>{isVideoOn ? "Tắt camera" : "Bật camera"}</p>
+                          <p>{isVideoOn ? t("liveClasses.controls.videoOff") : t("liveClasses.controls.videoOn")}</p>
                         </TooltipContent>
                       </Tooltip>
                       
@@ -239,7 +242,7 @@ export default function LiveClasses() {
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>Chia sẻ màn hình</p>
+                          <p>{t("liveClasses.controls.shareScreen")}</p>
                         </TooltipContent>
                       </Tooltip>
                       
@@ -255,7 +258,7 @@ export default function LiveClasses() {
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>{isHandRaised ? "Hạ tay" : "Giơ tay phát biểu"}</p>
+                          <p>{isHandRaised ? t("liveClasses.controls.lowerHand") : t("liveClasses.controls.raiseHand")}</p>
                         </TooltipContent>
                       </Tooltip>
                       
@@ -266,7 +269,7 @@ export default function LiveClasses() {
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>Mở chat</p>
+                          <p>{t("liveClasses.controls.openChat")}</p>
                         </TooltipContent>
                       </Tooltip>
                     </div>
@@ -279,7 +282,7 @@ export default function LiveClasses() {
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>Ghi hình - Lưu vào thư viện học tập</p>
+                          <p>{t("liveClasses.controls.record")}</p>
                         </TooltipContent>
                       </Tooltip>
                       <Button variant="outline" size="icon" className="border-border">
@@ -287,7 +290,7 @@ export default function LiveClasses() {
                       </Button>
                       <Button variant="destructive" className="px-4">
                         <Phone className="w-4 h-4 mr-2" />
-                        Rời khỏi
+                        {t("liveClasses.controls.leave")}
                       </Button>
                     </div>
                   </div>
@@ -301,7 +304,7 @@ export default function LiveClasses() {
                 transition={{ delay: 0.2 }}
                 className="mt-6 p-6 academic-card"
               >
-                <h3 className="font-semibold text-foreground mb-3">Tích hợp sẵn sàng</h3>
+                <h3 className="font-semibold text-foreground mb-3">{t("liveClasses.integrations.title")}</h3>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="flex items-center gap-3 p-4 rounded-lg bg-accent/50 border border-border">
                     <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold">
@@ -309,7 +312,7 @@ export default function LiveClasses() {
                     </div>
                     <div>
                       <p className="font-medium text-foreground">Zoom</p>
-                      <p className="text-xs text-muted-foreground">Kết nối tài khoản của bạn</p>
+                      <p className="text-xs text-muted-foreground">{t("liveClasses.integrations.connect")}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-4 rounded-lg bg-accent/50 border border-border">
@@ -318,7 +321,7 @@ export default function LiveClasses() {
                     </div>
                     <div>
                       <p className="font-medium text-foreground">Google Meet</p>
-                      <p className="text-xs text-muted-foreground">Kết nối tài khoản của bạn</p>
+                      <p className="text-xs text-muted-foreground">{t("liveClasses.integrations.connect")}</p>
                     </div>
                   </div>
                 </div>
@@ -335,7 +338,7 @@ export default function LiveClasses() {
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="font-display text-xl font-semibold text-foreground flex items-center gap-2">
                     <Calendar className="w-5 h-5 text-secondary" />
-                    Lớp Học Sắp Tới
+                    {t("liveClasses.upcomingClasses")}
                   </h2>
                 </div>
 
@@ -343,13 +346,13 @@ export default function LiveClasses() {
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-4">
                   <TabsList className="w-full grid grid-cols-3">
                     <TabsTrigger value="all" className="text-xs">
-                      Tất cả
+                      {t("liveClasses.tabs.all")}
                     </TabsTrigger>
                     <TabsTrigger value="registered" className="text-xs">
-                      Đã đăng ký
+                      {t("liveClasses.tabs.registered")}
                     </TabsTrigger>
                     <TabsTrigger value="live" className="text-xs">
-                      Đang diễn ra
+                      {t("liveClasses.tabs.live")}
                     </TabsTrigger>
                   </TabsList>
                 </Tabs>
@@ -357,7 +360,7 @@ export default function LiveClasses() {
                 {(loading || loadingRegistrations) && (
                   <div className="flex items-center justify-center py-8">
                     <Loader2 className="w-6 h-6 animate-spin text-primary" />
-                    <span className="ml-2 text-sm text-muted-foreground">Đang tải...</span>
+                    <span className="ml-2 text-sm text-muted-foreground">{t("common.loading")}</span>
                   </div>
                 )}
 
@@ -365,12 +368,12 @@ export default function LiveClasses() {
                   <div className="academic-card p-6 text-center">
                     <Sparkles className="w-10 h-10 text-gold mx-auto mb-3" />
                     <h3 className="font-semibold text-foreground mb-1">
-                      {activeTab === "registered" ? "Chưa đăng ký lớp nào" : "Chưa có lớp học"}
+                      {activeTab === "registered" ? t("liveClasses.noRegistered") : t("liveClasses.noClasses")}
                     </h3>
                     <p className="text-sm text-muted-foreground">
                       {activeTab === "registered" 
-                        ? "Hãy đăng ký lớp học để bắt đầu học tập ✨" 
-                        : "Các lớp học mới sẽ được cập nhật sớm ✨"}
+                        ? t("liveClasses.noRegisteredDescription") 
+                        : t("liveClasses.noClassesDescription")}
                     </p>
                   </div>
                 )}
@@ -393,12 +396,12 @@ export default function LiveClasses() {
                                   ? "bg-destructive/10 text-destructive" 
                                   : "bg-accent text-foreground"
                               }`}>
-                                {classItem.status === 'live' ? "🔴 Đang diễn ra" : classItem.category || "Lớp học"}
+                                {classItem.status === 'live' ? `🔴 ${t("liveClasses.liveNow")}` : classItem.category || t("liveClasses.class")}
                               </span>
                               {isRegistered && (
                                 <Badge variant="outline" className="text-xs text-secondary border-secondary/50 flex items-center gap-1">
                                   <CheckCircle2 className="w-3 h-3" />
-                                  Đã đăng ký
+                                  {t("liveClasses.registered")}
                                 </Badge>
                               )}
                             </div>
@@ -417,7 +420,7 @@ export default function LiveClasses() {
                               </AvatarFallback>
                             </Avatar>
                             <p className="text-sm text-muted-foreground">
-                              {classItem.instructor?.full_name || "Giảng viên"}
+                              {classItem.instructor?.full_name || t("liveClasses.instructor")}
                             </p>
                           </div>
 
@@ -442,7 +445,7 @@ export default function LiveClasses() {
                   className="w-full mt-4 border-gold-muted hover:bg-accent"
                   onClick={() => setActiveTab("all")}
                 >
-                  Xem tất cả lịch học
+                  {t("liveClasses.viewAll")}
                 </Button>
               </motion.div>
             </div>

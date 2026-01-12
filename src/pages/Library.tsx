@@ -5,6 +5,7 @@ import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import { useWallet } from "@/hooks/useWallet";
 import { useLibraryResources } from "@/hooks/useLibraryResources";
+import { useTranslation } from "@/i18n/useTranslation";
 import { 
   BookOpen, 
   FileText, 
@@ -21,23 +22,19 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-const categories = [
-  { icon: BookOpen, label: "Tất cả", type: null },
-  { icon: BookOpen, label: "Sách", type: "Sách" },
-  { icon: FileText, label: "Tài liệu", type: "Tài liệu" },
-  { icon: ImageIcon, label: "Hình ảnh", type: "Hình ảnh" },
-  { icon: Video, label: "Video", type: "Video" },
-];
-
 const getTypeIcon = (type: string | null) => {
   switch (type) {
     case "Sách":
+    case "book":
       return BookOpen;
     case "Tài liệu":
+    case "document":
       return FileText;
     case "Hình ảnh":
+    case "image":
       return ImageIcon;
     case "Video":
+    case "video":
       return Video;
     default:
       return FileText;
@@ -50,7 +47,7 @@ const mockResources = [
     id: "1",
     title: "Blockchain Technology Fundamentals",
     author: "Dr. Satoshi Nakamoto",
-    resource_type: "Sách",
+    resource_type: "book",
     category: "Computer Science",
     page_count: 324,
     downloads: 12500,
@@ -64,7 +61,7 @@ const mockResources = [
     id: "2",
     title: "Machine Learning Research Papers Collection",
     author: "Stanford AI Lab",
-    resource_type: "Tài liệu",
+    resource_type: "document",
     category: "AI & ML",
     page_count: 156,
     downloads: 8300,
@@ -78,7 +75,7 @@ const mockResources = [
     id: "3",
     title: "Academic Infographics - Data Science",
     author: "MIT Media Lab",
-    resource_type: "Hình ảnh",
+    resource_type: "image",
     category: "Data Science",
     page_count: 45,
     downloads: 5200,
@@ -92,7 +89,7 @@ const mockResources = [
     id: "4",
     title: "Quantum Computing Lecture Series",
     author: "Prof. Richard Feynman",
-    resource_type: "Video",
+    resource_type: "video",
     category: "Physics",
     page_count: 12,
     downloads: 15800,
@@ -106,7 +103,7 @@ const mockResources = [
     id: "5",
     title: "Web3 Development Guide",
     author: "Ethereum Foundation",
-    resource_type: "Sách",
+    resource_type: "book",
     category: "Blockchain",
     page_count: 248,
     downloads: 22100,
@@ -120,7 +117,7 @@ const mockResources = [
     id: "6",
     title: "Research Methodology Handbook",
     author: "Harvard University",
-    resource_type: "Tài liệu",
+    resource_type: "document",
     category: "Research",
     page_count: 89,
     downloads: 6700,
@@ -139,28 +136,47 @@ const formatDownloads = (num: number | null) => {
 };
 
 export default function Library() {
+  const { t } = useTranslation();
   const { isConnected, address, connectWallet } = useWallet();
   const { resources, loading, error, fetchResources } = useLibraryResources();
-  const [activeCategory, setActiveCategory] = useState("Tất cả");
+  const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+
+  const categories = [
+    { icon: BookOpen, label: t("library.categories.all"), type: "all" },
+    { icon: BookOpen, label: t("library.categories.books"), type: "book" },
+    { icon: FileText, label: t("library.categories.documents"), type: "document" },
+    { icon: ImageIcon, label: t("library.categories.images"), type: "image" },
+    { icon: Video, label: t("library.categories.videos"), type: "video" },
+  ];
 
   // Use real data if available, otherwise fallback to mock
   const displayResources = resources.length > 0 ? resources : mockResources;
 
   const filteredResources = displayResources.filter((resource) => {
-    const matchesCategory = activeCategory === "Tất cả" || resource.resource_type === activeCategory;
+    const matchesCategory = activeCategory === "all" || resource.resource_type === activeCategory;
     const matchesSearch = 
       resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (resource.author?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
     return matchesCategory && matchesSearch;
   });
 
-  const handleCategoryChange = (label: string) => {
-    setActiveCategory(label);
+  const handleCategoryChange = (type: string) => {
+    setActiveCategory(type);
   };
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
+  };
+
+  const getTypeLabel = (type: string | null) => {
+    switch (type) {
+      case "book": return t("library.categories.books");
+      case "document": return t("library.categories.documents");
+      case "image": return t("library.categories.images");
+      case "video": return t("library.categories.videos");
+      default: return t("library.categories.documents");
+    }
   };
 
   return (
@@ -180,10 +196,10 @@ export default function Library() {
             className="mb-8"
           >
             <h1 className="font-display text-3xl font-bold text-foreground mb-2">
-              Thư Viện Tri Thức
+              {t("library.title")}
             </h1>
             <p className="text-muted-foreground">
-              Kho tàng sách, tài liệu nghiên cứu và hình ảnh học thuật của nhân loại
+              {t("library.subtitle")}
             </p>
           </motion.div>
 
@@ -197,7 +213,7 @@ export default function Library() {
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               <Input
-                placeholder="Tìm kiếm sách, tài liệu..."
+                placeholder={t("library.searchPlaceholder")}
                 value={searchQuery}
                 onChange={(e) => handleSearch(e.target.value)}
                 className="pl-10 bg-card border-border focus:border-gold-muted"
@@ -205,7 +221,7 @@ export default function Library() {
             </div>
             <Button variant="outline" className="border-border hover:border-gold-muted">
               <Filter className="w-4 h-4 mr-2" />
-              Bộ lọc
+              {t("library.filters")}
             </Button>
           </motion.div>
 
@@ -218,10 +234,10 @@ export default function Library() {
           >
             {categories.map((category) => (
               <button
-                key={category.label}
-                onClick={() => handleCategoryChange(category.label)}
+                key={category.type}
+                onClick={() => handleCategoryChange(category.type)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
-                  activeCategory === category.label
+                  activeCategory === category.type
                     ? "bg-primary text-primary-foreground"
                     : "bg-card border border-border text-muted-foreground hover:text-foreground hover:border-gold-muted"
                 }`}
@@ -236,7 +252,7 @@ export default function Library() {
           {loading && (
             <div className="flex items-center justify-center py-16">
               <Loader2 className="w-8 h-8 animate-spin text-primary" />
-              <span className="ml-2 text-muted-foreground">Đang tải tài liệu...</span>
+              <span className="ml-2 text-muted-foreground">{t("common.loading")}</span>
             </div>
           )}
 
@@ -249,10 +265,10 @@ export default function Library() {
             >
               <Sparkles className="w-12 h-12 text-gold mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-foreground mb-2">
-                Chưa có tài liệu nào
+                {t("library.noResources")}
               </h3>
               <p className="text-muted-foreground">
-                Thư viện đang được xây dựng, hãy quay lại sau nhé ✨
+                {t("library.noResourcesDescription")}
               </p>
             </motion.div>
           )}
@@ -285,7 +301,7 @@ export default function Library() {
                       )}
                       {/* Type Badge */}
                       <span className="absolute top-3 left-3 px-2 py-1 rounded-full bg-secondary/90 text-secondary-foreground text-xs font-medium">
-                        {resource.resource_type || "Tài liệu"}
+                        {getTypeLabel(resource.resource_type)}
                       </span>
                     </div>
 
@@ -294,15 +310,15 @@ export default function Library() {
                       <h3 className="font-semibold text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors">
                         {resource.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground mb-1">{resource.author || "Tác giả"}</p>
-                      <p className="text-xs text-muted-foreground mb-4">{resource.category || "Chưa phân loại"}</p>
+                      <p className="text-sm text-muted-foreground mb-1">{resource.author || t("library.author")}</p>
+                      <p className="text-xs text-muted-foreground mb-4">{resource.category || t("library.uncategorized")}</p>
 
                       {/* Meta Info */}
                       <div className="flex items-center justify-between text-xs text-muted-foreground">
                         <div className="flex items-center gap-3">
                           <span className="flex items-center gap-1">
                             <Download className="w-3.5 h-3.5" />
-                            {formatDownloads(resource.downloads)}
+                            {formatDownloads(resource.downloads)} {t("library.downloads")}
                           </span>
                           <span className="flex items-center gap-1">
                             <Star className="w-3.5 h-3.5 text-secondary" />
@@ -310,7 +326,7 @@ export default function Library() {
                           </span>
                         </div>
                         <span className="flex items-center gap-1">
-                          {resource.page_count || 0} {resource.resource_type === "Video" ? "video" : "trang"}
+                          {resource.page_count || 0} {resource.resource_type === "video" ? t("library.videos") : t("library.pages")}
                         </span>
                       </div>
                     </div>
@@ -326,7 +342,7 @@ export default function Library() {
             <div className="text-center mt-12">
               <Button variant="outline" className="border-gold-muted hover:bg-accent">
                 <BookOpen className="w-4 h-4 mr-2" />
-                Xem thêm tài liệu
+                {t("library.loadMore")}
                 <ChevronRight className="w-4 h-4 ml-1" />
               </Button>
             </div>
