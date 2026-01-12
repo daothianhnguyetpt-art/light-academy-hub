@@ -1,0 +1,173 @@
+{
+  "common": {
+    "login": "ログイン",
+    "logout": "ログアウト",
+    "disconnect": "切断",
+    "profile": "プロフィール",
+    "myProfile": "マイプロフィール",
+    "search": "検索",
+    "cancel": "キャンセル",
+    "save": "保存",
+    "delete": "削除",
+    "edit": "編集",
+    "loading": "読み込み中...",
+    "error": "エラーが発生しました",
+    "success": "成功",
+    "viewMore": "もっと見る",
+    "loadMore": "もっと読み込む",
+    "share": "シェア",
+    "bookmark": "ブックマーク",
+    "back": "戻る",
+    "download": "ダウンロード",
+    "register": "登録",
+    "unregister": "登録解除"
+  },
+  "nav": {
+    "home": "ホーム",
+    "globalSchools": "グローバルスクール",
+    "socialFeed": "ソーシャルフィード",
+    "videoLibrary": "動画ライブラリ",
+    "liveClasses": "ライブ授業",
+    "library": "ライブラリ",
+    "whitepaper": "ホワイトペーパー"
+  },
+  "auth": {
+    "welcomeBack": "おかえりなさい",
+    "createAccount": "新規アカウント作成",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "confirmPassword": "パスワード確認",
+    "fullName": "氏名",
+    "loginTab": "ログイン",
+    "registerTab": "登録",
+    "loginWithGoogle": "Googleでログイン",
+    "connectWallet": "ウォレット接続",
+    "agreeToLightLaw": "同意して光の世界へ",
+    "orContinueWith": "または続ける",
+    "alreadyHaveAccount": "アカウントをお持ちですか？",
+    "dontHaveAccount": "アカウントをお持ちでないですか？",
+    "forgotPassword": "パスワードを忘れましたか？",
+    "backToLightLaw": "光の法則に戻る"
+  },
+  "whitepaper": {
+    "title": "ホワイトペーパー",
+    "subtitle": "FUN ACADEMY – グローバル光知識プラットフォーム",
+    "downloadPdf": "PDFダウンロード",
+    "sections": {
+      "vision": "ビジョン",
+      "visionSub": "私たちのビジョン",
+      "mission": "ミッション",
+      "missionSub": "私たちのミッション",
+      "problem": "教育問題",
+      "problemSub": "現在の課題",
+      "solution": "ソリューション",
+      "solutionSub": "私たちのアプローチ",
+      "technology": "技術アーキテクチャ",
+      "technologySub": "技術スタック",
+      "sbt": "NFTとソウルバウンドトークン",
+      "sbtSub": "アカデミックソウルパスポート",
+      "values": "コアバリュー",
+      "valuesSub": "私たちの信念",
+      "stakeholders": "ステークホルダー",
+      "stakeholdersSub": "受益者",
+      "ecosystem": "FUNエコシステム",
+      "ecosystemSub": "私たちのネットワーク"
+    },
+    "cta": {
+      "title": "旅を始める",
+      "subtitle": "グローバル知識コミュニティに参加",
+      "button": "プラットフォームを探索"
+    }
+  },
+  "videoLibrary": {
+    "title": "動画ライブラリ",
+    "subtitle": "無限の知識を探索",
+    "filters": "フィルター",
+    "searchPlaceholder": "動画を検索...",
+    "allCategories": "すべて",
+    "noVideos": "動画が見つかりません",
+    "level": {
+      "all": "すべてのレベル",
+      "beginner": "初級",
+      "intermediate": "中級",
+      "advanced": "上級"
+    },
+    "duration": {
+      "all": "すべての時間",
+      "short": "10分未満",
+      "medium": "10-30分",
+      "long": "30分以上"
+    },
+    "rating": {
+      "all": "すべての評価",
+      "above4": "4つ星以上",
+      "above3": "3つ星以上"
+    },
+    "views": "回視聴",
+    "minutes": "分"
+  },
+  "liveClasses": {
+    "title": "ライブ授業",
+    "subtitle": "トップ講師から直接学ぶ",
+    "tabs": {
+      "all": "すべて",
+      "registered": "登録済み",
+      "live": "ライブ中"
+    },
+    "register": "参加登録",
+    "unregister": "登録解除",
+    "registered": "登録済み",
+    "joinNow": "今すぐ参加",
+    "addToCalendar": "カレンダーに追加",
+    "enableReminder": "リマインダーを有効",
+    "reminderNote": "30分前",
+    "participants": "人の参加者",
+    "instructor": "講師",
+    "noClasses": "授業がありません",
+    "upcoming": "開催予定"
+  },
+  "socialFeed": {
+    "title": "アカデミックフィード",
+    "createPost": "知識を共有...",
+    "appreciate": "感謝",
+    "comment": "コメント",
+    "comments": "件のコメント",
+    "edited": "編集済み",
+    "postTypes": {
+      "all": "すべて",
+      "sharing": "共有",
+      "course": "コース",
+      "research": "研究",
+      "lecture": "講義"
+    }
+  },
+  "profile": {
+    "title": "個人プロフィール",
+    "soulJourney": "ソウルジャーニー",
+    "certificates": "SBT証明書",
+    "academicId": "学術ID",
+    "editProfile": "プロフィール編集",
+    "stats": {
+      "coursesCompleted": "修了コース",
+      "certificatesEarned": "取得証明書",
+      "hoursLearned": "学習時間",
+      "knowledgeScore": "知識スコア"
+    },
+    "skills": "スキル",
+    "noCertificates": "証明書がまだありません"
+  },
+  "library": {
+    "title": "ドキュメントライブラリ",
+    "subtitle": "学術知識リポジトリ",
+    "searchPlaceholder": "ドキュメントを検索...",
+    "downloads": "ダウンロード",
+    "pages": "ページ"
+  },
+  "footer": {
+    "description": "グローバル光知識プラットフォーム",
+    "quickLinks": "クイックリンク",
+    "resources": "リソース",
+    "connect": "つながる",
+    "copyright": "© 2024 FUN Academy. All rights reserved."
+  }
+}

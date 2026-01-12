@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ConfettiProvider } from "@/contexts/ConfettiContext";
+import { LanguageProvider } from "@/i18n";
 import Index from "./pages/Index";
 import GlobalSchools from "./pages/GlobalSchools";
 import InstitutionDetail from "./pages/InstitutionDetail";
@@ -22,33 +23,35 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <ConfettiProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/global-schools" element={<GlobalSchools />} />
-            <Route path="/institution/:id" element={<InstitutionDetail />} />
-            <Route path="/light-law" element={<LightLaw />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/social-feed" element={<SocialFeed />} />
-            <Route path="/video-library" element={<VideoLibrary />} />
-            <Route path="/video/:id" element={<VideoDetail />} />
-            <Route path="/live-classes" element={<LiveClasses />} />
-            <Route path="/library" element={<Library />} />
-            <Route path="/library/:id" element={<LibraryDetail />} />
-            <Route path="/whitepaper" element={<Whitepaper />} />
-            <Route path="/profile" element={<Profile />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </ConfettiProvider>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <LanguageProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <ConfettiProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/global-schools" element={<GlobalSchools />} />
+              <Route path="/institution/:id" element={<InstitutionDetail />} />
+              <Route path="/light-law" element={<LightLaw />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/social-feed" element={<SocialFeed />} />
+              <Route path="/video-library" element={<VideoLibrary />} />
+              <Route path="/video/:id" element={<VideoDetail />} />
+              <Route path="/live-classes" element={<LiveClasses />} />
+              <Route path="/library" element={<Library />} />
+              <Route path="/library/:id" element={<LibraryDetail />} />
+              <Route path="/whitepaper" element={<Whitepaper />} />
+              <Route path="/profile" element={<Profile />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </ConfettiProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </LanguageProvider>
 );
 
 export default App;

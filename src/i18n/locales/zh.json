@@ -1,0 +1,173 @@
+{
+  "common": {
+    "login": "登录",
+    "logout": "退出登录",
+    "disconnect": "断开连接",
+    "profile": "个人资料",
+    "myProfile": "我的资料",
+    "search": "搜索",
+    "cancel": "取消",
+    "save": "保存",
+    "delete": "删除",
+    "edit": "编辑",
+    "loading": "加载中...",
+    "error": "发生错误",
+    "success": "成功",
+    "viewMore": "查看更多",
+    "loadMore": "加载更多",
+    "share": "分享",
+    "bookmark": "收藏",
+    "back": "返回",
+    "download": "下载",
+    "register": "注册",
+    "unregister": "取消注册"
+  },
+  "nav": {
+    "home": "首页",
+    "globalSchools": "全球学校",
+    "socialFeed": "社交动态",
+    "videoLibrary": "视频库",
+    "liveClasses": "直播课程",
+    "library": "资料库",
+    "whitepaper": "白皮书"
+  },
+  "auth": {
+    "welcomeBack": "欢迎回来",
+    "createAccount": "创建新账户",
+    "email": "邮箱",
+    "password": "密码",
+    "confirmPassword": "确认密码",
+    "fullName": "全名",
+    "loginTab": "登录",
+    "registerTab": "注册",
+    "loginWithGoogle": "使用Google登录",
+    "connectWallet": "连接钱包",
+    "agreeToLightLaw": "我同意并进入光明",
+    "orContinueWith": "或继续使用",
+    "alreadyHaveAccount": "已有账户？",
+    "dontHaveAccount": "没有账户？",
+    "forgotPassword": "忘记密码？",
+    "backToLightLaw": "返回光之法则"
+  },
+  "whitepaper": {
+    "title": "白皮书",
+    "subtitle": "FUN ACADEMY – 全球光明知识平台",
+    "downloadPdf": "下载PDF",
+    "sections": {
+      "vision": "愿景",
+      "visionSub": "我们的愿景",
+      "mission": "使命",
+      "missionSub": "我们的使命",
+      "problem": "教育问题",
+      "problemSub": "当前挑战",
+      "solution": "解决方案",
+      "solutionSub": "我们的方法",
+      "technology": "技术架构",
+      "technologySub": "技术栈",
+      "sbt": "NFT与灵魂绑定代币",
+      "sbtSub": "学术灵魂护照",
+      "values": "核心价值",
+      "valuesSub": "我们的信念",
+      "stakeholders": "利益相关者",
+      "stakeholdersSub": "受益者",
+      "ecosystem": "FUN生态系统",
+      "ecosystemSub": "我们的网络"
+    },
+    "cta": {
+      "title": "开始您的旅程",
+      "subtitle": "加入全球知识社区",
+      "button": "探索平台"
+    }
+  },
+  "videoLibrary": {
+    "title": "视频库",
+    "subtitle": "探索无限知识",
+    "filters": "筛选",
+    "searchPlaceholder": "搜索视频...",
+    "allCategories": "全部",
+    "noVideos": "未找到视频",
+    "level": {
+      "all": "所有级别",
+      "beginner": "初级",
+      "intermediate": "中级",
+      "advanced": "高级"
+    },
+    "duration": {
+      "all": "任意时长",
+      "short": "10分钟以内",
+      "medium": "10-30分钟",
+      "long": "30分钟以上"
+    },
+    "rating": {
+      "all": "任意评分",
+      "above4": "4星以上",
+      "above3": "3星以上"
+    },
+    "views": "次观看",
+    "minutes": "分钟"
+  },
+  "liveClasses": {
+    "title": "直播课程",
+    "subtitle": "与顶级讲师直接学习",
+    "tabs": {
+      "all": "全部",
+      "registered": "已注册",
+      "live": "直播中"
+    },
+    "register": "报名参加",
+    "unregister": "取消报名",
+    "registered": "已报名",
+    "joinNow": "立即加入",
+    "addToCalendar": "添加到日历",
+    "enableReminder": "开启提醒",
+    "reminderNote": "提前30分钟",
+    "participants": "位参与者",
+    "instructor": "讲师",
+    "noClasses": "暂无课程",
+    "upcoming": "即将开始"
+  },
+  "socialFeed": {
+    "title": "学术动态",
+    "createPost": "分享知识...",
+    "appreciate": "欣赏",
+    "comment": "评论",
+    "comments": "条评论",
+    "edited": "已编辑",
+    "postTypes": {
+      "all": "全部",
+      "sharing": "分享",
+      "course": "课程",
+      "research": "研究",
+      "lecture": "讲座"
+    }
+  },
+  "profile": {
+    "title": "个人资料",
+    "soulJourney": "灵魂之旅",
+    "certificates": "SBT证书",
+    "academicId": "学术身份",
+    "editProfile": "编辑资料",
+    "stats": {
+      "coursesCompleted": "已完成课程",
+      "certificatesEarned": "获得证书",
+      "hoursLearned": "学习小时",
+      "knowledgeScore": "知识得分"
+    },
+    "skills": "技能",
+    "noCertificates": "暂无证书"
+  },
+  "library": {
+    "title": "文档库",
+    "subtitle": "学术知识宝库",
+    "searchPlaceholder": "搜索文档...",
+    "downloads": "次下载",
+    "pages": "页"
+  },
+  "footer": {
+    "description": "全球光明知识平台",
+    "quickLinks": "快速链接",
+    "resources": "资源",
+    "connect": "联系我们",
+    "copyright": "© 2024 FUN Academy. 保留所有权利。"
+  }
+}
