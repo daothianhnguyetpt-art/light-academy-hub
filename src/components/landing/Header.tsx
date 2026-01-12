@@ -14,6 +14,8 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { AuthDialog } from "@/components/auth/AuthDialog";
 import { WalletType } from "@/components/auth/WalletOptions";
+import { LanguageSelector } from "@/components/LanguageSelector";
+import { useTranslation } from "@/i18n";
 import funAcademyLogo from "@/assets/fun-academy-logo.jpg";
 
 interface HeaderProps {
@@ -24,14 +26,16 @@ interface HeaderProps {
   connectingWalletType?: WalletType | null;
 }
 
-const navLinks = [
-  { href: "/", label: "Trang Chủ" },
-  { href: "/global-schools", label: "Global Schools" },
-  { href: "/social-feed", label: "Social Feed" },
-  { href: "/video-library", label: "Video Library" },
-  { href: "/live-classes", label: "Live Classes" },
-  { href: "/library", label: "Library" },
-  { href: "/whitepaper", label: "Whitepaper" },
+type NavLinkKey = 'home' | 'globalSchools' | 'socialFeed' | 'videoLibrary' | 'liveClasses' | 'library' | 'whitepaper';
+
+const navLinkKeys: { href: string; key: NavLinkKey }[] = [
+  { href: "/", key: "home" },
+  { href: "/global-schools", key: "globalSchools" },
+  { href: "/social-feed", key: "socialFeed" },
+  { href: "/video-library", key: "videoLibrary" },
+  { href: "/live-classes", key: "liveClasses" },
+  { href: "/library", key: "library" },
+  { href: "/whitepaper", key: "whitepaper" },
 ];
 
 export function Header({ 
@@ -44,6 +48,7 @@ export function Header({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const { user, loading, signOut } = useAuth();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const formatAddress = (address: string) => {
@@ -82,19 +87,21 @@ export function Header({
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => (
+              {navLinkKeys.map((link) => (
                 <Link
                   key={link.href}
                   to={link.href}
                   className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent/50"
                 >
-                  {link.label}
+                  {t(`nav.${link.key}`)}
                 </Link>
               ))}
             </nav>
 
-            {/* Auth Button */}
+            {/* Language Selector + Auth Button */}
             <div className="flex items-center gap-2">
+              <LanguageSelector />
+              
               {/* Desktop */}
               <div className="hidden sm:flex items-center gap-2">
                 {loading ? (
@@ -177,14 +184,14 @@ export function Header({
               className="lg:hidden pb-4 border-t border-border/50 mt-2"
             >
               <div className="flex flex-col gap-1 pt-4">
-                {navLinks.map((link) => (
+                {navLinkKeys.map((link) => (
                   <Link
                     key={link.href}
                     to={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-md transition-colors"
                   >
-                    {link.label}
+                    {t(`nav.${link.key}`)}
                   </Link>
                 ))}
 

@@ -1,0 +1,173 @@
+{
+  "common": {
+    "login": "Đăng Nhập",
+    "logout": "Đăng Xuất",
+    "disconnect": "Ngắt Kết Nối",
+    "profile": "Hồ Sơ",
+    "myProfile": "Hồ Sơ của tôi",
+    "search": "Tìm kiếm",
+    "cancel": "Hủy",
+    "save": "Lưu",
+    "delete": "Xóa",
+    "edit": "Chỉnh sửa",
+    "loading": "Đang tải...",
+    "error": "Có lỗi xảy ra",
+    "success": "Thành công",
+    "viewMore": "Xem thêm",
+    "loadMore": "Tải thêm",
+    "share": "Chia sẻ",
+    "bookmark": "Lưu lại",
+    "back": "Quay lại",
+    "download": "Tải xuống",
+    "register": "Đăng Ký",
+    "unregister": "Hủy Đăng Ký"
+  },
+  "nav": {
+    "home": "Trang Chủ",
+    "globalSchools": "Global Schools",
+    "socialFeed": "Social Feed",
+    "videoLibrary": "Video Library",
+    "liveClasses": "Live Classes",
+    "library": "Library",
+    "whitepaper": "Whitepaper"
+  },
+  "auth": {
+    "welcomeBack": "Chào mừng trở lại",
+    "createAccount": "Tạo tài khoản mới",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "fullName": "Họ và tên",
+    "loginTab": "Đăng Nhập",
+    "registerTab": "Đăng Ký",
+    "loginWithGoogle": "Đăng nhập với Google",
+    "connectWallet": "Kết nối ví",
+    "agreeToLightLaw": "CON ĐỒNG Ý & BƯỚC VÀO ÁNH SÁNG",
+    "orContinueWith": "Hoặc tiếp tục với",
+    "alreadyHaveAccount": "Đã có tài khoản?",
+    "dontHaveAccount": "Chưa có tài khoản?",
+    "forgotPassword": "Quên mật khẩu?",
+    "backToLightLaw": "Quay lại Luật Ánh Sáng"
+  },
+  "whitepaper": {
+    "title": "WHITEPAPER",
+    "subtitle": "FUN ACADEMY – Nền Tảng Tri Thức Ánh Sáng Toàn Cầu",
+    "downloadPdf": "Tải PDF",
+    "sections": {
+      "vision": "Tầm Nhìn",
+      "visionSub": "Vision",
+      "mission": "Sứ Mệnh",
+      "missionSub": "Mission",
+      "problem": "Vấn Đề Giáo Dục",
+      "problemSub": "Education Problems",
+      "solution": "Giải Pháp",
+      "solutionSub": "Solutions",
+      "technology": "Kiến Trúc Công Nghệ",
+      "technologySub": "Technology",
+      "sbt": "NFT & Soulbound Token",
+      "sbtSub": "Academic Soul Passport",
+      "values": "Giá Trị Cốt Lõi",
+      "valuesSub": "Core Values",
+      "stakeholders": "Đối Tượng Tham Gia",
+      "stakeholdersSub": "Stakeholders",
+      "ecosystem": "FUN Ecosystem",
+      "ecosystemSub": "Ecosystem"
+    },
+    "cta": {
+      "title": "Bắt Đầu Hành Trình",
+      "subtitle": "Tham gia cộng đồng tri thức toàn cầu",
+      "button": "Khám Phá Nền Tảng"
+    }
+  },
+  "videoLibrary": {
+    "title": "Thư Viện Video",
+    "subtitle": "Khám phá tri thức không giới hạn",
+    "filters": "Bộ lọc",
+    "searchPlaceholder": "Tìm kiếm video...",
+    "allCategories": "Tất cả",
+    "noVideos": "Không tìm thấy video nào",
+    "level": {
+      "all": "Tất cả cấp độ",
+      "beginner": "Cơ bản",
+      "intermediate": "Trung cấp",
+      "advanced": "Nâng cao"
+    },
+    "duration": {
+      "all": "Mọi thời lượng",
+      "short": "Dưới 10 phút",
+      "medium": "10-30 phút",
+      "long": "Trên 30 phút"
+    },
+    "rating": {
+      "all": "Mọi đánh giá",
+      "above4": "4+ sao",
+      "above3": "3+ sao"
+    },
+    "views": "lượt xem",
+    "minutes": "phút"
+  },
+  "liveClasses": {
+    "title": "Lớp Học Trực Tuyến",
+    "subtitle": "Học trực tiếp với giảng viên hàng đầu",
+    "tabs": {
+      "all": "Tất cả",
+      "registered": "Đã đăng ký",
+      "live": "Đang diễn ra"
+    },
+    "register": "Đăng Ký Tham Gia",
+    "unregister": "Hủy Đăng Ký",
+    "registered": "Đã đăng ký",
+    "joinNow": "Tham Gia Ngay",
+    "addToCalendar": "Thêm vào lịch",
+    "enableReminder": "Nhận thông báo nhắc nhở",
+    "reminderNote": "Nhắc trước 30 phút",
+    "participants": "người tham gia",
+    "instructor": "Giảng viên",
+    "noClasses": "Không có lớp học nào",
+    "upcoming": "Sắp diễn ra"
+  },
+  "socialFeed": {
+    "title": "Bảng Tin Học Thuật",
+    "createPost": "Chia sẻ tri thức...",
+    "appreciate": "Trân Trọng",
+    "comment": "Bình luận",
+    "comments": "bình luận",
+    "edited": "đã sửa",
+    "postTypes": {
+      "all": "Tất cả",
+      "sharing": "Chia sẻ",
+      "course": "Khóa học",
+      "research": "Nghiên cứu",
+      "lecture": "Bài giảng"
+    }
+  },
+  "profile": {
+    "title": "Hồ Sơ Cá Nhân",
+    "soulJourney": "Hành Trình Linh Hồn",
+    "certificates": "Chứng Chỉ SBT",
+    "academicId": "Danh Tính Học Thuật",
+    "editProfile": "Chỉnh sửa hồ sơ",
+    "stats": {
+      "coursesCompleted": "Khóa học hoàn thành",
+      "certificatesEarned": "Chứng chỉ đạt được",
+      "hoursLearned": "Giờ học tập",
+      "knowledgeScore": "Điểm tri thức"
+    },
+    "skills": "Kỹ năng",
+    "noCertificates": "Chưa có chứng chỉ nào"
+  },
+  "library": {
+    "title": "Thư Viện Tài Liệu",
+    "subtitle": "Kho tàng tri thức học thuật",
+    "searchPlaceholder": "Tìm kiếm tài liệu...",
+    "downloads": "lượt tải",
+    "pages": "trang"
+  },
+  "footer": {
+    "description": "Nền tảng tri thức ánh sáng toàn cầu",
+    "quickLinks": "Liên kết nhanh",
+    "resources": "Tài nguyên",
+    "connect": "Kết nối",
+    "copyright": "© 2024 FUN Academy. All rights reserved."
+  }
+}

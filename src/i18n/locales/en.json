@@ -1,0 +1,173 @@
+{
+  "common": {
+    "login": "Login",
+    "logout": "Logout",
+    "disconnect": "Disconnect",
+    "profile": "Profile",
+    "myProfile": "My Profile",
+    "search": "Search",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "viewMore": "View more",
+    "loadMore": "Load more",
+    "share": "Share",
+    "bookmark": "Bookmark",
+    "back": "Back",
+    "download": "Download",
+    "register": "Register",
+    "unregister": "Unregister"
+  },
+  "nav": {
+    "home": "Home",
+    "globalSchools": "Global Schools",
+    "socialFeed": "Social Feed",
+    "videoLibrary": "Video Library",
+    "liveClasses": "Live Classes",
+    "library": "Library",
+    "whitepaper": "Whitepaper"
+  },
+  "auth": {
+    "welcomeBack": "Welcome back",
+    "createAccount": "Create a new account",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "fullName": "Full name",
+    "loginTab": "Login",
+    "registerTab": "Register",
+    "loginWithGoogle": "Login with Google",
+    "connectWallet": "Connect wallet",
+    "agreeToLightLaw": "I AGREE & ENTER THE LIGHT",
+    "orContinueWith": "Or continue with",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "forgotPassword": "Forgot password?",
+    "backToLightLaw": "Back to Light Law"
+  },
+  "whitepaper": {
+    "title": "WHITEPAPER",
+    "subtitle": "FUN ACADEMY – Global Light Knowledge Platform",
+    "downloadPdf": "Download PDF",
+    "sections": {
+      "vision": "Vision",
+      "visionSub": "Our Vision",
+      "mission": "Mission",
+      "missionSub": "Our Mission",
+      "problem": "Education Problems",
+      "problemSub": "Current Challenges",
+      "solution": "Solutions",
+      "solutionSub": "Our Approach",
+      "technology": "Technology Architecture",
+      "technologySub": "Tech Stack",
+      "sbt": "NFT & Soulbound Token",
+      "sbtSub": "Academic Soul Passport",
+      "values": "Core Values",
+      "valuesSub": "What We Believe",
+      "stakeholders": "Stakeholders",
+      "stakeholdersSub": "Who Benefits",
+      "ecosystem": "FUN Ecosystem",
+      "ecosystemSub": "Our Network"
+    },
+    "cta": {
+      "title": "Start Your Journey",
+      "subtitle": "Join the global knowledge community",
+      "button": "Explore Platform"
+    }
+  },
+  "videoLibrary": {
+    "title": "Video Library",
+    "subtitle": "Explore unlimited knowledge",
+    "filters": "Filters",
+    "searchPlaceholder": "Search videos...",
+    "allCategories": "All",
+    "noVideos": "No videos found",
+    "level": {
+      "all": "All levels",
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "duration": {
+      "all": "Any duration",
+      "short": "Under 10 min",
+      "medium": "10-30 min",
+      "long": "Over 30 min"
+    },
+    "rating": {
+      "all": "Any rating",
+      "above4": "4+ stars",
+      "above3": "3+ stars"
+    },
+    "views": "views",
+    "minutes": "min"
+  },
+  "liveClasses": {
+    "title": "Live Classes",
+    "subtitle": "Learn directly from top instructors",
+    "tabs": {
+      "all": "All",
+      "registered": "Registered",
+      "live": "Live Now"
+    },
+    "register": "Register",
+    "unregister": "Unregister",
+    "registered": "Registered",
+    "joinNow": "Join Now",
+    "addToCalendar": "Add to calendar",
+    "enableReminder": "Enable reminder",
+    "reminderNote": "30 min before",
+    "participants": "participants",
+    "instructor": "Instructor",
+    "noClasses": "No classes available",
+    "upcoming": "Upcoming"
+  },
+  "socialFeed": {
+    "title": "Academic Feed",
+    "createPost": "Share knowledge...",
+    "appreciate": "Appreciate",
+    "comment": "Comment",
+    "comments": "comments",
+    "edited": "edited",
+    "postTypes": {
+      "all": "All",
+      "sharing": "Sharing",
+      "course": "Course",
+      "research": "Research",
+      "lecture": "Lecture"
+    }
+  },
+  "profile": {
+    "title": "Personal Profile",
+    "soulJourney": "Soul Journey",
+    "certificates": "SBT Certificates",
+    "academicId": "Academic Identity",
+    "editProfile": "Edit profile",
+    "stats": {
+      "coursesCompleted": "Courses completed",
+      "certificatesEarned": "Certificates earned",
+      "hoursLearned": "Hours learned",
+      "knowledgeScore": "Knowledge score"
+    },
+    "skills": "Skills",
+    "noCertificates": "No certificates yet"
+  },
+  "library": {
+    "title": "Document Library",
+    "subtitle": "Academic knowledge repository",
+    "searchPlaceholder": "Search documents...",
+    "downloads": "downloads",
+    "pages": "pages"
+  },
+  "footer": {
+    "description": "Global light knowledge platform",
+    "quickLinks": "Quick Links",
+    "resources": "Resources",
+    "connect": "Connect",
+    "copyright": "© 2024 FUN Academy. All rights reserved."
+  }
+}
