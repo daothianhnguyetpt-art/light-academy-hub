@@ -8,6 +8,9 @@ import { useAuth } from "@/hooks/useAuth";
 import { CreatePostForm } from "@/components/posts/CreatePostForm";
 import { CommentSection } from "@/components/posts/CommentSection";
 import { EditPostModal } from "@/components/posts/EditPostModal";
+import { useTranslation } from "@/i18n/useTranslation";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { getDateLocale } from "@/lib/date-utils";
 import { 
   Sparkles, 
   Bookmark, 
@@ -44,16 +47,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { formatDistanceToNow } from "date-fns";
-import { vi } from "date-fns/locale";
 import { toast } from "sonner";
-
-const contentTypes = [
-  { icon: FileText, label: "Tất cả", value: "all" },
-  { icon: GraduationCap, label: "Khóa học", value: "course" },
-  { icon: FileText, label: "Nghiên cứu", value: "research" },
-  { icon: Video, label: "Bài giảng", value: "lecture" },
-  { icon: Users, label: "Chia sẻ", value: "sharing" },
-];
 
 export default function SocialFeed() {
   const { user } = useAuth();
@@ -62,19 +56,29 @@ export default function SocialFeed() {
   const [activeFilter, setActiveFilter] = useState("all");
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [deletingPostId, setDeletingPostId] = useState<string | null>(null);
+  const { t } = useTranslation();
+  const { language } = useLanguage();
+
+  const contentTypes = [
+    { icon: FileText, label: t('socialFeed.postTypes.all'), value: "all" },
+    { icon: GraduationCap, label: t('socialFeed.postTypes.course'), value: "course" },
+    { icon: FileText, label: t('socialFeed.postTypes.research'), value: "research" },
+    { icon: Video, label: t('socialFeed.postTypes.lecture'), value: "lecture" },
+    { icon: Users, label: t('socialFeed.postTypes.sharing'), value: "sharing" },
+  ];
 
   const handleSharePost = async (postId: string) => {
     const url = `${window.location.origin}/social-feed#${postId}`;
     try {
       await navigator.clipboard.writeText(url);
-      toast.success("Đã sao chép link bài viết");
+      toast.success(t('socialFeed.copiedLink'));
     } catch {
-      toast.error("Không thể sao chép link");
+      toast.error(t('socialFeed.copyFailed'));
     }
   };
 
   const handleReportPost = () => {
-    toast.success("Đã gửi báo cáo. Cảm ơn bạn đã góp ý!");
+    toast.success(t('socialFeed.reportSent'));
   };
 
   const handleDeletePost = async () => {
@@ -95,7 +99,7 @@ export default function SocialFeed() {
 
   const formatTime = (dateStr: string) => {
     try {
-      return formatDistanceToNow(new Date(dateStr), { addSuffix: true, locale: vi });
+      return formatDistanceToNow(new Date(dateStr), { addSuffix: true, locale: getDateLocale(language) });
     } catch {
       return dateStr;
     }
@@ -123,10 +127,10 @@ export default function SocialFeed() {
               className="mb-8"
             >
               <h1 className="font-display text-3xl font-bold text-foreground mb-2">
-                Academic Feed
+                {t('socialFeed.title')}
               </h1>
               <p className="text-muted-foreground">
-                Kết nối và chia sẻ tri thức với cộng đồng học thuật toàn cầu
+                {t('socialFeed.subtitle')}
               </p>
             </motion.div>
 
@@ -160,7 +164,7 @@ export default function SocialFeed() {
             {loading && (
               <div className="flex items-center justify-center py-12">
                 <Loader2 className="w-8 h-8 animate-spin text-primary" />
-                <span className="ml-2 text-muted-foreground">Đang tải bài viết...</span>
+                <span className="ml-2 text-muted-foreground">{t('socialFeed.loadingPosts')}</span>
               </div>
             )}
 
@@ -173,10 +177,10 @@ export default function SocialFeed() {
               >
                 <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-foreground mb-2">
-                  Chưa có bài viết nào
+                  {t('socialFeed.noPosts')}
                 </h3>
                 <p className="text-muted-foreground">
-                  Hãy là người đầu tiên chia sẻ tri thức với cộng đồng!
+                  {t('socialFeed.beFirst')}
                 </p>
               </motion.div>
             )}
@@ -202,10 +206,10 @@ export default function SocialFeed() {
                       </Avatar>
                       <div>
                         <h3 className="font-semibold text-foreground">
-                          {post.author.full_name || "Ẩn danh"}
+                          {post.author.full_name || t('socialFeed.anonymous')}
                         </h3>
                         <p className="text-sm text-muted-foreground">
-                          {post.author.academic_title || "FUN Academy Member"}
+                          {post.author.academic_title || t('socialFeed.member')}
                         </p>
                       </div>
                     </div>
@@ -226,21 +230,21 @@ export default function SocialFeed() {
                             <>
                               <DropdownMenuItem onClick={() => setEditingPost(post)}>
                                 <Pencil className="w-4 h-4 mr-2" />
-                                Chỉnh sửa
+                                {t('socialFeed.editPost')}
                               </DropdownMenuItem>
                               <DropdownMenuItem 
                                 onClick={() => setDeletingPostId(post.id)}
                                 className="text-destructive focus:text-destructive"
                               >
                                 <Trash2 className="w-4 h-4 mr-2" />
-                                Xóa bài viết
+                                {t('socialFeed.deletePost')}
                               </DropdownMenuItem>
                               <DropdownMenuSeparator />
                             </>
                           )}
                           <DropdownMenuItem onClick={handleReportPost}>
                             <Flag className="w-4 h-4 mr-2" />
-                            Báo cáo
+                            {t('common.report')}
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
@@ -328,7 +332,7 @@ export default function SocialFeed() {
                     </div>
                     <span className="text-xs text-muted-foreground">
                       {formatTime(post.created_at)}
-                      {isEdited(post) && <span className="ml-1">(đã sửa)</span>}
+                      {isEdited(post) && <span className="ml-1">({t('socialFeed.edited')})</span>}
                     </span>
                   </div>
                 </motion.article>
@@ -344,7 +348,7 @@ export default function SocialFeed() {
                   onClick={() => fetchPosts()}
                 >
                   <TrendingUp className="w-4 h-4 mr-2" />
-                  Tải lại bài viết
+                  {t('socialFeed.reloadPosts')}
                 </Button>
               </div>
             )}
@@ -368,15 +372,15 @@ export default function SocialFeed() {
       <AlertDialog open={!!deletingPostId} onOpenChange={() => setDeletingPostId(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Xóa bài viết?</AlertDialogTitle>
+            <AlertDialogTitle>{t('socialFeed.deleteConfirm')}</AlertDialogTitle>
             <AlertDialogDescription>
-              Hành động này không thể hoàn tác. Bài viết sẽ bị xóa vĩnh viễn cùng với tất cả bình luận và tương tác.
+              {t('socialFeed.deleteWarning')}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Hủy</AlertDialogCancel>
+            <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
             <AlertDialogAction onClick={handleDeletePost} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-              Xóa
+              {t('common.delete')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
