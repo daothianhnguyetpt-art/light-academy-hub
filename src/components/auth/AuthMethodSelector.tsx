@@ -3,6 +3,7 @@ import { Mail, UserPlus, Chrome } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { WalletOptions, WalletType } from "./WalletOptions";
 import { Separator } from "@/components/ui/separator";
+import { useTranslation } from "@/i18n/useTranslation";
 
 interface AuthMethodSelectorProps {
   onEmailLogin: () => void;
@@ -23,14 +24,16 @@ export function AuthMethodSelector({
   isConnectingWallet,
   connectingWalletType,
 }: AuthMethodSelectorProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-4">
       <div className="text-center mb-4">
         <h2 className="font-display text-xl font-semibold text-foreground mb-1">
-          Chọn Phương Thức
+          {t('auth.chooseMethod')}
         </h2>
         <p className="text-sm text-muted-foreground">
-          Đăng nhập hoặc tạo tài khoản mới
+          {t('auth.loginOrRegister')}
         </p>
       </div>
 
@@ -47,7 +50,7 @@ export function AuthMethodSelector({
             disabled={isLoading}
           >
             <Mail className="w-5 h-5 mr-3 text-primary" />
-            <span className="font-medium">Đăng Nhập với Email</span>
+            <span className="font-medium">{t('auth.emailLogin')}</span>
           </Button>
         </motion.div>
 
@@ -63,7 +66,7 @@ export function AuthMethodSelector({
             disabled={isLoading}
           >
             <UserPlus className="w-5 h-5 mr-3 text-muted-foreground" />
-            <span className="font-medium">Đăng Ký Tài Khoản Mới</span>
+            <span className="font-medium">{t('auth.emailRegister')}</span>
           </Button>
         </motion.div>
       </div>
@@ -71,7 +74,7 @@ export function AuthMethodSelector({
       <div className="relative py-2">
         <Separator className="bg-border/50" />
         <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-3 text-xs text-muted-foreground">
-          HOẶC
+          {t('auth.orSeparator')}
         </span>
       </div>
 
@@ -88,14 +91,14 @@ export function AuthMethodSelector({
           disabled={isLoading}
         >
           <Chrome className="w-5 h-5 mr-3 text-red-500" />
-          <span className="font-medium">Đăng Nhập với Google</span>
+          <span className="font-medium">{t('auth.loginWithGoogle')}</span>
         </Button>
       </motion.div>
 
       <div className="relative py-2">
         <Separator className="bg-border/50" />
         <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-3 text-xs text-muted-foreground">
-          KẾT NỐI VÍ
+          {t('auth.connectWalletSeparator')}
         </span>
       </div>
 

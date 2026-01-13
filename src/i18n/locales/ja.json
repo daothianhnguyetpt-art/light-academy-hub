@@ -20,7 +20,24 @@
     "back": "戻る",
     "download": "ダウンロード",
     "register": "登録",
-    "unregister": "登録解除"
+    "unregister": "登録解除",
+    "report": "報告",
+    "reload": "再読み込み",
+    "all": "すべて",
+    "filters": "フィルター",
+    "apply": "適用",
+    "clear": "フィルターをクリア",
+    "noData": "データがありません",
+    "or": "または",
+    "views": "回視聴",
+    "minutes": "分",
+    "pages": "ページ",
+    "participants": "人の参加者",
+    "leave": "退出",
+    "join": "参加",
+    "copied": "コピーしました",
+    "connectWallet": "ウォレット接続",
+    "verified": "認証済み"
   },
   "nav": {
     "home": "ホーム",
@@ -47,12 +64,39 @@
     "alreadyHaveAccount": "アカウントをお持ちですか？",
     "dontHaveAccount": "アカウントをお持ちでないですか？",
     "forgotPassword": "パスワードを忘れましたか？",
-    "backToLightLaw": "光の法則に戻る"
+    "backToLightLaw": "光の法則に戻る",
+    "loggingIn": "ログイン中...",
+    "registering": "登録中...",
+    "loginToLight": "光の世界へログイン",
+    "registerToLight": "登録して光の世界へ",
+    "goldenAgeNetwork": "ゴールデンエイジ5Dソーシャルネットワーク",
+    "walletWeb3": "Web3ウォレット接続",
+    "installed": "インストール済み",
+    "noWallet": "ウォレットがありませんか？クリックしてダウンロード",
+    "loginSuccess": "ログイン成功",
+    "loginSuccessMessage": "光の世界へおかえりなさい ✨",
+    "registerSuccess": "登録成功",
+    "registerSuccessMessage": "光の世界へようこそ ✨",
+    "loginFailed": "ログイン失敗",
+    "registerFailed": "登録失敗",
+    "emailExists": "メールアドレスは既に存在します",
+    "emailExistsMessage": "このメールアドレスは既に登録されています。ログインするか、別のメールアドレスを使用してください。",
+    "invalidCredentials": "メールアドレスまたはパスワードが正しくありません",
+    "googleLoginFailed": "Googleログイン失敗",
+    "walletConnectFailed": "ウォレット接続失敗",
+    "installMetamask": "MetaMaskまたは互換性のあるWeb3ウォレットをインストールしてください",
+    "chooseMethod": "方法を選択",
+    "loginOrRegister": "ログインまたは新規アカウント作成",
+    "emailLogin": "メールでログイン",
+    "emailRegister": "新規アカウント作成",
+    "orSeparator": "または",
+    "connectWalletSeparator": "ウォレット接続"
   },
   "whitepaper": {
     "title": "ホワイトペーパー",
     "subtitle": "FUN ACADEMY – グローバル光知識プラットフォーム",
     "downloadPdf": "PDFダウンロード",
+    "tableOfContents": "目次",
     "sections": {
       "vision": "ビジョン",
       "visionSub": "私たちのビジョン",
@@ -81,34 +125,46 @@
   },
   "videoLibrary": {
     "title": "動画ライブラリ",
-    "subtitle": "無限の知識を探索",
+    "subtitle": "世界トップ大学からの高品質な動画講義",
     "filters": "フィルター",
-    "searchPlaceholder": "動画を検索...",
+    "searchPlaceholder": "動画、講師を検索...",
     "allCategories": "すべて",
-    "noVideos": "動画が見つかりません",
+    "noVideos": "動画がまだありません",
+    "noVideosFiltered": "該当する動画が見つかりません",
+    "noVideosMessage": "動画ライブラリは更新中です。後でまたお越しください！",
+    "changeFilters": "フィルターや検索キーワードを変更してみてください。",
+    "loadingVideos": "動画を読み込み中...",
+    "reloadVideos": "動画を再読み込み",
     "level": {
+      "label": "レベル",
       "all": "すべてのレベル",
       "beginner": "初級",
       "intermediate": "中級",
       "advanced": "上級"
     },
     "duration": {
+      "label": "時間",
       "all": "すべての時間",
-      "short": "10分未満",
-      "medium": "10-30分",
-      "long": "30分以上"
+      "short": "30分未満",
+      "medium": "30-60分",
+      "long": "60分以上"
     },
     "rating": {
+      "label": "評価",
       "all": "すべての評価",
       "above4": "4つ星以上",
       "above3": "3つ星以上"
     },
     "views": "回視聴",
-    "minutes": "分"
+    "minutes": "分",
+    "instructor": "講師",
+    "nftCertificate": "NFT証明書",
+    "clearFilters": "フィルターをクリア",
+    "applyFilters": "適用"
   },
   "liveClasses": {
     "title": "ライブ授業",
-    "subtitle": "トップ講師から直接学ぶ",
+    "subtitle": "世界中の講師や学生とつながる",
     "tabs": {
       "all": "すべて",
       "registered": "登録済み",
@@ -119,16 +175,42 @@
     "registered": "登録済み",
     "joinNow": "今すぐ参加",
     "addToCalendar": "カレンダーに追加",
+    "downloadICS": "ICSファイルをダウンロード",
     "enableReminder": "リマインダーを有効",
     "reminderNote": "30分前",
     "participants": "人の参加者",
     "instructor": "講師",
     "noClasses": "授業がありません",
-    "upcoming": "開催予定"
+    "noRegisteredClasses": "登録済みの授業がありません",
+    "registerPrompt": "授業に登録して学習を始めましょう ✨",
+    "noClassesMessage": "新しい授業が近日公開予定です ✨",
+    "upcoming": "開催予定",
+    "live": "ライブ",
+    "today": "今日",
+    "tomorrow": "明日",
+    "integration": "統合準備完了",
+    "connectAccount": "アカウントを接続",
+    "controls": {
+      "mute": "ミュート",
+      "unmute": "ミュート解除",
+      "videoOn": "カメラをオン",
+      "videoOff": "カメラをオフ",
+      "shareScreen": "画面共有",
+      "raiseHand": "手を挙げる",
+      "lowerHand": "手を下げる",
+      "openChat": "チャットを開く",
+      "record": "録画 - ライブラリに保存",
+      "leave": "退出"
+    },
+    "noInstructor": "現在ライブ授業はありません",
+    "classDetails": "授業詳細",
+    "duration": "時間",
+    "scheduledAt": "予定時間"
   },
   "socialFeed": {
     "title": "アカデミックフィード",
-    "createPost": "知識を共有...",
+    "subtitle": "グローバル学術コミュニティと知識を共有しつながる",
+    "createPost": "コミュニティと知識を共有...",
     "appreciate": "感謝",
     "comment": "コメント",
     "comments": "件のコメント",
@@ -139,12 +221,49 @@
       "course": "コース",
       "research": "研究",
       "lecture": "講義"
-    }
+    },
+    "noPosts": "投稿がまだありません",
+    "beFirst": "コミュニティで最初に知識を共有しましょう！",
+    "loadingPosts": "投稿を読み込み中...",
+    "reloadPosts": "投稿を再読み込み",
+    "editPost": "編集",
+    "deletePost": "投稿を削除",
+    "deleteConfirm": "投稿を削除しますか？",
+    "deleteWarning": "この操作は取り消せません。投稿はすべてのコメントと反応とともに永久に削除されます。",
+    "copiedLink": "投稿リンクをコピーしました",
+    "copyFailed": "リンクのコピーに失敗しました",
+    "reportSent": "報告を送信しました。フィードバックありがとうございます！",
+    "anonymous": "匿名",
+    "member": "FUN Academyメンバー",
+    "addImage": "写真",
+    "addVideo": "動画",
+    "addLocation": "位置情報",
+    "getLocation": "位置を取得",
+    "post": "共有",
+    "posting": "投稿中...",
+    "loginToPost": "知識を共有するにはログイン",
+    "loginToPostDesc": "学術コミュニティに参加して知識の共有を始めましょう",
+    "loginToComment": "コメントするにはログイン",
+    "writeComment": "コメントを書く...",
+    "send": "送信",
+    "sending": "送信中...",
+    "noComments": "コメントがまだありません",
+    "beFirstComment": "最初にコメントしましょう！",
+    "commentAdded": "コメントを追加しました",
+    "commentFailed": "コメントの追加に失敗しました",
+    "createPostPlaceholder": "知識、研究、レッスンを共有...",
+    "postTypeLabel": "投稿タイプ",
+    "enterLocation": "位置を入力...",
+    "imageTooLarge": "画像は5MB未満である必要があります",
+    "videoTooLarge": "動画は50MB未満である必要があります",
+    "postFailed": "投稿に失敗しました",
+    "locationFailed": "位置を取得できませんでした",
+    "browserNoLocation": "ブラウザは位置情報をサポートしていません"
   },
   "profile": {
     "title": "個人プロフィール",
     "soulJourney": "ソウルジャーニー",
-    "certificates": "SBT証明書",
+    "certificates": "ソウル証明書（SBT）",
     "academicId": "学術ID",
     "editProfile": "プロフィール編集",
     "stats": {
@@ -153,21 +272,183 @@
       "hoursLearned": "学習時間",
       "knowledgeScore": "知識スコア"
     },
-    "skills": "スキル",
-    "noCertificates": "証明書がまだありません"
+    "emptyStats": {
+      "courses": "開始準備完了 ✨",
+      "certificates": "あなたを待っています 🌟",
+      "hours": "旅が始まります ⏳",
+      "score": "蓄積中 💡"
+    },
+    "skills": "知識領域",
+    "noCertificates": "最初の証明書があなたを待っています 🌟",
+    "noCertificatesMessage": "コースを修了して最初のソウル証明書を取得しましょう",
+    "exploreCourses": "コースを探索",
+    "loadingProfile": "プロフィールを読み込み中...",
+    "pioneer": "FUN Academyパイオニア",
+    "verifiedScholar": "認証済み学者",
+    "copiedAddress": "アドレスをコピーしました！",
+    "connectWalletFull": "ウォレットを接続してフルアクセス",
+    "logoutSuccess": "ログアウト成功！",
+    "logoutError": "ログアウト中にエラーが発生しました",
+    "disconnectSuccess": "ウォレットを切断しました！",
+    "sbtInfo": {
+      "title": "ソウルバウンドトークン（SBT）とは？",
+      "permanent": "永久的",
+      "permanentDesc": "あなたの学術魂に永久に結びつく",
+      "nonTransferable": "譲渡不可",
+      "nonTransferableDesc": "真の価値を保証、取引不可",
+      "transparent": "透明",
+      "transparentDesc": "ブロックチェーンで公開検証可能"
+    },
+    "journey": {
+      "joined": "FUN Academyに参加",
+      "acceptedLaw": "光の法則を受諾",
+      "firstCourse": "最初のコースを修了",
+      "firstCert": "最初のSBT証明書を取得",
+      "waiting": "あなたを待っています ✨"
+    },
+    "editModal": {
+      "title": "プロフィール編集",
+      "avatar": "アバター",
+      "avatarUrl": "アバターURL",
+      "fullName": "氏名",
+      "academicTitle": "学術タイトル",
+      "bio": "自己紹介",
+      "wallet": "Web3ウォレット",
+      "walletConnected": "接続済み",
+      "connectWallet": "ウォレット接続",
+      "saving": "保存中..."
+    }
   },
   "library": {
-    "title": "ドキュメントライブラリ",
-    "subtitle": "学術知識リポジトリ",
-    "searchPlaceholder": "ドキュメントを検索...",
+    "title": "知識ライブラリ",
+    "subtitle": "書籍、研究文書、学術画像の宝庫",
+    "searchPlaceholder": "書籍、文書を検索...",
     "downloads": "ダウンロード",
-    "pages": "ページ"
+    "pages": "ページ",
+    "categories": {
+      "all": "すべて",
+      "book": "書籍",
+      "document": "文書",
+      "image": "画像",
+      "video": "動画"
+    },
+    "loading": "リソースを読み込み中...",
+    "noResources": "リソースがまだありません",
+    "noResourcesMessage": "ライブラリは構築中です。後でまたお越しください ✨",
+    "viewMore": "もっとリソースを見る",
+    "author": "著者",
+    "uncategorized": "未分類"
   },
   "footer": {
-    "description": "グローバル光知識プラットフォーム",
-    "quickLinks": "クイックリンク",
+    "description": "FUNエコシステムの知識と啓発の中心。",
+    "quote": "5D時代の人類の光のライブラリ",
+    "platform": "プラットフォーム",
     "resources": "リソース",
+    "ecosystem": "FUNエコシステム",
+    "quickLinks": "クイックリンク",
     "connect": "つながる",
-    "copyright": "© 2024 FUN Academy. All rights reserved."
+    "copyright": "© 2026 FUN Academy. All rights reserved.",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約"
+  },
+  "globalSchools": {
+    "title": "グローバルスクール",
+    "subtitle": "世界中の学校と教育機関のネットワークを探索",
+    "searchPlaceholder": "学校、機関を検索...",
+    "filters": "フィルター",
+    "allRegions": "すべての地域",
+    "allTypes": "すべてのタイプ",
+    "clearFilters": "フィルターをクリア",
+    "organizations": "機関",
+    "featuredSchools": "注目の学校",
+    "featuredDesc": "世界中から",
+    "remoteSchools": "リモートスクール",
+    "noOrganizations": "機関がまだありません",
+    "loading": "読み込み中...",
+    "error": "データの読み込み中にエラーが発生しました",
+    "philosophy": {
+      "title": "平等の哲学",
+      "description": "FUN Academyは従来のランキングシステムを使用しません。代わりに、貢献スコアを測定します。これは各機関がグローバル知識コミュニティにもたらす真の価値を反映しています。",
+      "contribution": "貢献スコア"
+    },
+    "institutionTypes": {
+      "university": "大学",
+      "college": "短期大学",
+      "research": "研究所",
+      "online": "オンラインスクール",
+      "corporate": "企業研修",
+      "nonprofit": "非営利団体"
+    }
+  },
+  "landing": {
+    "hero": {
+      "badge": "Web3学術プラットフォーム",
+      "title": "FUN ACADEMY",
+      "subtitle": "FUNエコシステムの知識と啓発の中心",
+      "cta1": "今すぐ探索",
+      "cta2": "動画ライブラリを見る",
+      "stakeholders": ["学生", "講師", "研究者", "企業"],
+      "stats": {
+        "countries": "国",
+        "courses": "コース",
+        "certificates": "NFT証明書"
+      }
+    },
+    "features": {
+      "title": "主な機能",
+      "socialFeed": {
+        "title": "学術ソーシャルネットワーク",
+        "desc": "グローバル学術コミュニティとつながる"
+      },
+      "videoLibrary": {
+        "title": "動画ライブラリ",
+        "desc": "トップ大学からの高品質コース"
+      },
+      "liveClasses": {
+        "title": "ライブ授業",
+        "desc": "講師と直接学習・交流"
+      },
+      "library": {
+        "title": "文書ライブラリ",
+        "desc": "書籍と研究文書の宝庫"
+      }
+    }
+  },
+  "notFound": {
+    "title": "404",
+    "message": "おっと！ページが見つかりません",
+    "backHome": "ホームに戻る"
+  },
+  "videoDetail": {
+    "relatedVideos": "関連動画",
+    "comments": "コメント",
+    "writeComment": "コメントを書く...",
+    "noComments": "コメントがまだありません。最初にどうぞ！",
+    "loginToComment": "コメントするにはログイン",
+    "send": "送信",
+    "sending": "送信中..."
+  },
+  "libraryDetail": {
+    "downloadNow": "今すぐダウンロード",
+    "openFile": "文書を開く",
+    "noFile": "ファイルがありません",
+    "details": "詳細",
+    "author": "著者",
+    "category": "カテゴリ",
+    "pages": "ページ数",
+    "downloads": "ダウンロード数",
+    "rating": "評価"
+  },
+  "institutionDetail": {
+    "about": "概要",
+    "members": "メンバー",
+    "courses": "コース",
+    "partnerships": "パートナー",
+    "contact": "連絡先",
+    "website": "ウェブサイト",
+    "location": "所在地",
+    "founded": "設立年",
+    "contributionScore": "貢献スコア",
+    "verifiedInstitution": "認証済み機関"
   }
 }

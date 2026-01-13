@@ -20,7 +20,24 @@
     "back": "뒤로",
     "download": "다운로드",
     "register": "등록",
-    "unregister": "등록 취소"
+    "unregister": "등록 취소",
+    "report": "신고",
+    "reload": "새로고침",
+    "all": "전체",
+    "filters": "필터",
+    "apply": "적용",
+    "clear": "필터 지우기",
+    "noData": "데이터 없음",
+    "or": "또는",
+    "views": "조회",
+    "minutes": "분",
+    "pages": "페이지",
+    "participants": "명 참가자",
+    "leave": "나가기",
+    "join": "참여",
+    "copied": "복사됨",
+    "connectWallet": "지갑 연결",
+    "verified": "인증됨"
   },
   "nav": {
     "home": "홈",
@@ -47,12 +64,39 @@
     "alreadyHaveAccount": "이미 계정이 있으신가요?",
     "dontHaveAccount": "계정이 없으신가요?",
     "forgotPassword": "비밀번호를 잊으셨나요?",
-    "backToLightLaw": "빛의 법칙으로 돌아가기"
+    "backToLightLaw": "빛의 법칙으로 돌아가기",
+    "loggingIn": "로그인 중...",
+    "registering": "등록 중...",
+    "loginToLight": "빛의 세계로 로그인",
+    "registerToLight": "등록하고 빛의 세계로",
+    "goldenAgeNetwork": "황금시대 5D 소셜 네트워크",
+    "walletWeb3": "Web3 지갑 연결",
+    "installed": "설치됨",
+    "noWallet": "지갑이 없으신가요? 클릭하여 다운로드",
+    "loginSuccess": "로그인 성공",
+    "loginSuccessMessage": "빛의 세계로 다시 오신 것을 환영합니다 ✨",
+    "registerSuccess": "등록 성공",
+    "registerSuccessMessage": "빛의 세계에 오신 것을 환영합니다 ✨",
+    "loginFailed": "로그인 실패",
+    "registerFailed": "등록 실패",
+    "emailExists": "이메일이 이미 존재합니다",
+    "emailExistsMessage": "이 이메일은 이미 등록되어 있습니다. 로그인하거나 다른 이메일을 사용하세요.",
+    "invalidCredentials": "이메일 또는 비밀번호가 올바르지 않습니다",
+    "googleLoginFailed": "Google 로그인 실패",
+    "walletConnectFailed": "지갑 연결 실패",
+    "installMetamask": "MetaMask 또는 호환되는 Web3 지갑을 설치해 주세요",
+    "chooseMethod": "방법 선택",
+    "loginOrRegister": "로그인 또는 새 계정 만들기",
+    "emailLogin": "이메일로 로그인",
+    "emailRegister": "새 계정 만들기",
+    "orSeparator": "또는",
+    "connectWalletSeparator": "지갑 연결"
   },
   "whitepaper": {
     "title": "백서",
     "subtitle": "FUN ACADEMY – 글로벌 빛 지식 플랫폼",
     "downloadPdf": "PDF 다운로드",
+    "tableOfContents": "목차",
     "sections": {
       "vision": "비전",
       "visionSub": "우리의 비전",
@@ -81,34 +125,46 @@
   },
   "videoLibrary": {
     "title": "비디오 라이브러리",
-    "subtitle": "무한한 지식 탐험",
+    "subtitle": "세계 최고 대학의 고품질 비디오 강의",
     "filters": "필터",
-    "searchPlaceholder": "비디오 검색...",
+    "searchPlaceholder": "비디오, 강사 검색...",
     "allCategories": "전체",
-    "noVideos": "비디오를 찾을 수 없습니다",
+    "noVideos": "비디오가 아직 없습니다",
+    "noVideosFiltered": "일치하는 비디오를 찾을 수 없습니다",
+    "noVideosMessage": "비디오 라이브러리가 업데이트 중입니다. 나중에 다시 확인해 주세요!",
+    "changeFilters": "필터나 검색어를 변경해 보세요.",
+    "loadingVideos": "비디오 로딩 중...",
+    "reloadVideos": "비디오 새로고침",
     "level": {
+      "label": "레벨",
       "all": "모든 레벨",
       "beginner": "초급",
       "intermediate": "중급",
       "advanced": "고급"
     },
     "duration": {
+      "label": "시간",
       "all": "모든 시간",
-      "short": "10분 미만",
-      "medium": "10-30분",
-      "long": "30분 이상"
+      "short": "30분 미만",
+      "medium": "30-60분",
+      "long": "60분 이상"
     },
     "rating": {
+      "label": "평점",
       "all": "모든 평점",
       "above4": "4점 이상",
       "above3": "3점 이상"
     },
     "views": "조회",
-    "minutes": "분"
+    "minutes": "분",
+    "instructor": "강사",
+    "nftCertificate": "NFT 인증서",
+    "clearFilters": "필터 지우기",
+    "applyFilters": "적용"
   },
   "liveClasses": {
     "title": "라이브 수업",
-    "subtitle": "최고의 강사에게 직접 배우세요",
+    "subtitle": "전 세계 강사와 학생들과 연결하세요",
     "tabs": {
       "all": "전체",
       "registered": "등록됨",
@@ -119,16 +175,42 @@
     "registered": "등록됨",
     "joinNow": "지금 참여",
     "addToCalendar": "캘린더에 추가",
+    "downloadICS": "ICS 파일 다운로드",
     "enableReminder": "알림 활성화",
     "reminderNote": "30분 전",
     "participants": "명 참가자",
     "instructor": "강사",
     "noClasses": "수업이 없습니다",
-    "upcoming": "예정"
+    "noRegisteredClasses": "등록된 수업이 없습니다",
+    "registerPrompt": "수업에 등록하여 학습을 시작하세요 ✨",
+    "noClassesMessage": "새 수업이 곧 업데이트됩니다 ✨",
+    "upcoming": "예정",
+    "live": "라이브",
+    "today": "오늘",
+    "tomorrow": "내일",
+    "integration": "통합 준비 완료",
+    "connectAccount": "계정 연결",
+    "controls": {
+      "mute": "음소거",
+      "unmute": "음소거 해제",
+      "videoOn": "카메라 켜기",
+      "videoOff": "카메라 끄기",
+      "shareScreen": "화면 공유",
+      "raiseHand": "손 들기",
+      "lowerHand": "손 내리기",
+      "openChat": "채팅 열기",
+      "record": "녹화 - 라이브러리에 저장",
+      "leave": "나가기"
+    },
+    "noInstructor": "현재 라이브 수업이 없습니다",
+    "classDetails": "수업 상세",
+    "duration": "시간",
+    "scheduledAt": "예정 시간"
   },
   "socialFeed": {
     "title": "학술 피드",
-    "createPost": "지식 공유...",
+    "subtitle": "글로벌 학술 커뮤니티와 지식을 연결하고 공유하세요",
+    "createPost": "커뮤니티와 지식 공유...",
     "appreciate": "감사",
     "comment": "댓글",
     "comments": "개의 댓글",
@@ -139,12 +221,49 @@
       "course": "코스",
       "research": "연구",
       "lecture": "강의"
-    }
+    },
+    "noPosts": "게시물이 아직 없습니다",
+    "beFirst": "커뮤니티에서 처음으로 지식을 공유하세요!",
+    "loadingPosts": "게시물 로딩 중...",
+    "reloadPosts": "게시물 새로고침",
+    "editPost": "편집",
+    "deletePost": "게시물 삭제",
+    "deleteConfirm": "게시물을 삭제하시겠습니까?",
+    "deleteWarning": "이 작업은 취소할 수 없습니다. 게시물은 모든 댓글과 반응과 함께 영구 삭제됩니다.",
+    "copiedLink": "게시물 링크 복사됨",
+    "copyFailed": "링크 복사 실패",
+    "reportSent": "신고가 전송되었습니다. 피드백 감사합니다!",
+    "anonymous": "익명",
+    "member": "FUN Academy 멤버",
+    "addImage": "사진",
+    "addVideo": "비디오",
+    "addLocation": "위치",
+    "getLocation": "위치 가져오기",
+    "post": "공유",
+    "posting": "게시 중...",
+    "loginToPost": "지식을 공유하려면 로그인",
+    "loginToPostDesc": "학술 커뮤니티에 참여하여 지식 공유를 시작하세요",
+    "loginToComment": "댓글을 달려면 로그인",
+    "writeComment": "댓글 쓰기...",
+    "send": "보내기",
+    "sending": "보내는 중...",
+    "noComments": "댓글이 아직 없습니다",
+    "beFirstComment": "첫 댓글을 달아보세요!",
+    "commentAdded": "댓글이 추가되었습니다",
+    "commentFailed": "댓글 추가 실패",
+    "createPostPlaceholder": "지식, 연구 또는 강의를 공유하세요...",
+    "postTypeLabel": "게시물 유형",
+    "enterLocation": "위치 입력...",
+    "imageTooLarge": "이미지는 5MB 미만이어야 합니다",
+    "videoTooLarge": "비디오는 50MB 미만이어야 합니다",
+    "postFailed": "게시 실패",
+    "locationFailed": "위치를 가져올 수 없습니다",
+    "browserNoLocation": "브라우저가 위치 정보를 지원하지 않습니다"
   },
   "profile": {
     "title": "개인 프로필",
     "soulJourney": "소울 저니",
-    "certificates": "SBT 인증서",
+    "certificates": "소울 인증서 (SBT)",
     "academicId": "학술 ID",
     "editProfile": "프로필 수정",
     "stats": {
@@ -153,21 +272,183 @@
       "hoursLearned": "학습 시간",
       "knowledgeScore": "지식 점수"
     },
-    "skills": "스킬",
-    "noCertificates": "아직 인증서가 없습니다"
+    "emptyStats": {
+      "courses": "시작 준비 완료 ✨",
+      "certificates": "당신을 기다립니다 🌟",
+      "hours": "여정이 시작됩니다 ⏳",
+      "score": "축적 중 💡"
+    },
+    "skills": "지식 영역",
+    "noCertificates": "첫 번째 인증서가 기다립니다 🌟",
+    "noCertificatesMessage": "코스를 완료하여 첫 번째 소울 인증서를 받으세요",
+    "exploreCourses": "코스 탐색",
+    "loadingProfile": "프로필 로딩 중...",
+    "pioneer": "FUN Academy 개척자",
+    "verifiedScholar": "인증된 학자",
+    "copiedAddress": "주소가 복사되었습니다!",
+    "connectWalletFull": "지갑을 연결하여 전체 액세스",
+    "logoutSuccess": "로그아웃 성공!",
+    "logoutError": "로그아웃 중 오류 발생",
+    "disconnectSuccess": "지갑 연결 해제됨!",
+    "sbtInfo": {
+      "title": "소울바운드 토큰(SBT)이란?",
+      "permanent": "영구적",
+      "permanentDesc": "학술 영혼에 영원히 연결됨",
+      "nonTransferable": "양도 불가",
+      "nonTransferableDesc": "진정한 가치 보장, 거래 불가",
+      "transparent": "투명",
+      "transparentDesc": "블록체인에서 공개적으로 검증 가능"
+    },
+    "journey": {
+      "joined": "FUN Academy 가입",
+      "acceptedLaw": "빛의 법칙 수락",
+      "firstCourse": "첫 번째 코스 완료",
+      "firstCert": "첫 번째 SBT 인증서 획득",
+      "waiting": "당신을 기다립니다 ✨"
+    },
+    "editModal": {
+      "title": "프로필 수정",
+      "avatar": "아바타",
+      "avatarUrl": "아바타 URL",
+      "fullName": "이름",
+      "academicTitle": "학술 직함",
+      "bio": "소개",
+      "wallet": "Web3 지갑",
+      "walletConnected": "연결됨",
+      "connectWallet": "지갑 연결",
+      "saving": "저장 중..."
+    }
   },
   "library": {
-    "title": "문서 라이브러리",
-    "subtitle": "학술 지식 저장소",
-    "searchPlaceholder": "문서 검색...",
+    "title": "지식 라이브러리",
+    "subtitle": "책, 연구 문서, 학술 이미지의 보물창고",
+    "searchPlaceholder": "책, 문서 검색...",
     "downloads": "다운로드",
-    "pages": "페이지"
+    "pages": "페이지",
+    "categories": {
+      "all": "전체",
+      "book": "책",
+      "document": "문서",
+      "image": "이미지",
+      "video": "비디오"
+    },
+    "loading": "리소스 로딩 중...",
+    "noResources": "리소스가 아직 없습니다",
+    "noResourcesMessage": "라이브러리가 구축 중입니다. 나중에 다시 확인해 주세요 ✨",
+    "viewMore": "더 많은 리소스 보기",
+    "author": "저자",
+    "uncategorized": "미분류"
   },
   "footer": {
-    "description": "글로벌 빛 지식 플랫폼",
-    "quickLinks": "빠른 링크",
+    "description": "FUN 생태계의 지식과 깨달음의 중심.",
+    "quote": "5D 시대 인류의 빛의 라이브러리",
+    "platform": "플랫폼",
     "resources": "리소스",
+    "ecosystem": "FUN 생태계",
+    "quickLinks": "빠른 링크",
     "connect": "연결",
-    "copyright": "© 2024 FUN Academy. All rights reserved."
+    "copyright": "© 2026 FUN Academy. All rights reserved.",
+    "privacy": "개인정보 보호정책",
+    "terms": "서비스 약관"
+  },
+  "globalSchools": {
+    "title": "글로벌 스쿨",
+    "subtitle": "전 세계 학교와 교육 기관 네트워크 탐색",
+    "searchPlaceholder": "학교, 기관 검색...",
+    "filters": "필터",
+    "allRegions": "모든 지역",
+    "allTypes": "모든 유형",
+    "clearFilters": "필터 지우기",
+    "organizations": "개 기관",
+    "featuredSchools": "주요 학교",
+    "featuredDesc": "전 세계에서",
+    "remoteSchools": "원격 학교",
+    "noOrganizations": "기관이 아직 없습니다",
+    "loading": "로딩 중...",
+    "error": "데이터 로딩 중 오류 발생",
+    "philosophy": {
+      "title": "평등의 철학",
+      "description": "FUN Academy는 전통적인 순위 시스템을 사용하지 않습니다. 대신 기여 점수를 측정합니다. 이는 각 기관이 글로벌 지식 커뮤니티에 가져오는 실제 가치를 반영합니다.",
+      "contribution": "기여 점수"
+    },
+    "institutionTypes": {
+      "university": "대학교",
+      "college": "전문대학",
+      "research": "연구소",
+      "online": "온라인 학교",
+      "corporate": "기업 교육",
+      "nonprofit": "비영리 단체"
+    }
+  },
+  "landing": {
+    "hero": {
+      "badge": "Web3 학술 플랫폼",
+      "title": "FUN ACADEMY",
+      "subtitle": "FUN 생태계의 지식과 깨달음의 중심",
+      "cta1": "지금 탐색",
+      "cta2": "비디오 라이브러리 보기",
+      "stakeholders": ["학생", "강사", "연구자", "기업"],
+      "stats": {
+        "countries": "국가",
+        "courses": "코스",
+        "certificates": "NFT 인증서"
+      }
+    },
+    "features": {
+      "title": "주요 기능",
+      "socialFeed": {
+        "title": "학술 소셜 네트워크",
+        "desc": "글로벌 학술 커뮤니티와 연결"
+      },
+      "videoLibrary": {
+        "title": "비디오 라이브러리",
+        "desc": "최고 대학의 고품질 코스"
+      },
+      "liveClasses": {
+        "title": "라이브 수업",
+        "desc": "강사와 직접 학습 및 교류"
+      },
+      "library": {
+        "title": "문서 라이브러리",
+        "desc": "책과 연구 문서의 보물창고"
+      }
+    }
+  },
+  "notFound": {
+    "title": "404",
+    "message": "이런! 페이지를 찾을 수 없습니다",
+    "backHome": "홈으로 돌아가기"
+  },
+  "videoDetail": {
+    "relatedVideos": "관련 비디오",
+    "comments": "댓글",
+    "writeComment": "댓글 쓰기...",
+    "noComments": "댓글이 아직 없습니다. 첫 번째가 되세요!",
+    "loginToComment": "댓글을 달려면 로그인",
+    "send": "보내기",
+    "sending": "보내는 중..."
+  },
+  "libraryDetail": {
+    "downloadNow": "지금 다운로드",
+    "openFile": "문서 열기",
+    "noFile": "파일 없음",
+    "details": "상세정보",
+    "author": "저자",
+    "category": "카테고리",
+    "pages": "페이지 수",
+    "downloads": "다운로드 수",
+    "rating": "평점"
+  },
+  "institutionDetail": {
+    "about": "소개",
+    "members": "멤버",
+    "courses": "코스",
+    "partnerships": "파트너",
+    "contact": "연락처",
+    "website": "웹사이트",
+    "location": "위치",
+    "founded": "설립년도",
+    "contributionScore": "기여 점수",
+    "verifiedInstitution": "인증된 기관"
   }
 }
