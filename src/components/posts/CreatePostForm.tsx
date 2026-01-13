@@ -16,19 +16,16 @@ import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useTranslation } from "@/i18n/useTranslation";
 
 interface CreatePostFormProps {
   onCreatePost: (content: string, postType: string, mediaUrl?: string, mediaType?: string, location?: string) => Promise<any>;
 }
 
-const postTypes = [
-  { value: "sharing", label: "Chia sẻ" },
-  { value: "course", label: "Khóa học" },
-  { value: "research", label: "Nghiên cứu" },
-  { value: "lecture", label: "Bài giảng" },
-];
+const postTypeValues = ["sharing", "course", "research", "lecture"] as const;
 
 export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { profile } = useProfile();
   const [content, setContent] = useState("");
@@ -59,7 +56,7 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
-        toast.error("Ảnh phải nhỏ hơn 5MB");
+        toast.error(t("socialFeed.imageTooLarge"));
         return;
       }
       // Clear video if selecting image
@@ -73,7 +70,7 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > 50 * 1024 * 1024) {
-        toast.error("Video phải nhỏ hơn 50MB");
+        toast.error(t("socialFeed.videoTooLarge"));
         return;
       }
       // Clear image if selecting video
@@ -106,7 +103,7 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
 
   const getCurrentLocation = () => {
     if (!navigator.geolocation) {
-      toast.error("Trình duyệt không hỗ trợ định vị");
+      toast.error(t("socialFeed.browserNoLocation"));
       return;
     }
 
@@ -131,7 +128,7 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
       },
       (error) => {
         console.error('Geolocation error:', error);
-        toast.error("Không thể lấy vị trí của bạn");
+        toast.error(t("socialFeed.locationFailed"));
         setIsGettingLocation(false);
       },
       { enableHighAccuracy: true, timeout: 10000 }
@@ -214,7 +211,7 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
       removeLocation();
     } catch (err) {
       console.error('Error creating post:', err);
-      toast.error('Không thể đăng bài');
+      toast.error(t("socialFeed.postFailed"));
     } finally {
       setIsSubmitting(false);
     }
@@ -229,10 +226,10 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
       >
         <Sparkles className="w-10 h-10 text-secondary mx-auto mb-3" />
         <h3 className="font-semibold text-foreground mb-1">
-          Đăng nhập để chia sẻ tri thức
+          {t("socialFeed.loginToPost")}
         </h3>
         <p className="text-sm text-muted-foreground">
-          Tham gia cộng đồng học thuật và bắt đầu chia sẻ kiến thức của bạn
+          {t("socialFeed.loginToPostDesc")}
         </p>
       </motion.div>
     );
@@ -254,7 +251,7 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
 
         <div className="flex-1 space-y-4">
           <Textarea
-            placeholder="Chia sẻ kiến thức, nghiên cứu hoặc bài học của bạn..."
+            placeholder={t("socialFeed.createPostPlaceholder")}
             value={content}
             onChange={(e) => setContent(e.target.value)}
             className="min-h-[100px] resize-none border-border focus:border-gold-muted bg-background"
@@ -300,7 +297,7 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
               <Input
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                placeholder="Nhập vị trí..."
+                placeholder={t("socialFeed.enterLocation")}
                 className="flex-1 border-border focus:border-gold-muted bg-background"
               />
               <button
@@ -318,12 +315,12 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
               {/* Post Type Selector */}
               <Select value={postType} onValueChange={setPostType}>
                 <SelectTrigger className="w-[130px] border-border bg-background h-9">
-                  <SelectValue placeholder="Loại bài viết" />
+                  <SelectValue placeholder={t("socialFeed.postTypeLabel")} />
                 </SelectTrigger>
                 <SelectContent>
-                  {postTypes.map((type) => (
-                    <SelectItem key={type.value} value={type.value}>
-                      {type.label}
+                  {postTypeValues.map((type) => (
+                    <SelectItem key={type} value={type}>
+                      {t(`socialFeed.postTypes.${type}`)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -345,7 +342,7 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
                 disabled={!!selectedVideo}
               >
                 <ImageIcon className="w-5 h-5 mr-1" />
-                <span className="hidden sm:inline text-xs">Ảnh</span>
+                <span className="hidden sm:inline text-xs">{t("socialFeed.addImage")}</span>
               </Button>
 
               {/* Video Upload */}
@@ -364,7 +361,7 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
                 disabled={!!selectedImage}
               >
                 <Video className="w-5 h-5 mr-1" />
-                <span className="hidden sm:inline text-xs">Video</span>
+                <span className="hidden sm:inline text-xs">{t("socialFeed.addVideo")}</span>
               </Button>
 
               {/* Location */}
@@ -387,7 +384,7 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
                   <MapPin className="w-5 h-5 mr-1" />
                 )}
                 <span className="hidden sm:inline text-xs">
-                  {showLocationInput ? 'Lấy vị trí' : 'Vị trí'}
+                  {showLocationInput ? t("socialFeed.getLocation") : t("socialFeed.addLocation")}
                 </span>
               </Button>
             </div>
@@ -402,7 +399,7 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
               ) : (
                 <Sparkles className="w-4 h-4 mr-2" />
               )}
-              Chia Sẻ
+              {isSubmitting ? t("socialFeed.posting") : t("socialFeed.post")}
             </Button>
           </div>
         </div>

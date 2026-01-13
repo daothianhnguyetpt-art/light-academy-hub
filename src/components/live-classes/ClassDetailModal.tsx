@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -25,6 +25,9 @@ import { LiveClass } from "@/hooks/useLiveClasses";
 import { useLiveClassRegistration } from "@/hooks/useLiveClassRegistration";
 import { addToGoogleCalendar, downloadICS, requestNotificationPermission } from "@/lib/calendar-utils";
 import { useAuth } from "@/hooks/useAuth";
+import { useTranslation } from "@/i18n/useTranslation";
+import { getDateLocale } from "@/lib/date-utils";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 interface ClassDetailModalProps {
   classItem: LiveClass | null;
@@ -33,6 +36,8 @@ interface ClassDetailModalProps {
 }
 
 export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModalProps) {
+  const { t } = useTranslation();
+  const { currentLanguage } = useLanguage();
   const { user } = useAuth();
   const [enableReminder, setEnableReminder] = useState(true);
   const [isRegistering, setIsRegistering] = useState(false);
@@ -47,7 +52,8 @@ export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModa
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('vi-VN', {
+    const locale = getDateLocale(String(currentLanguage));
+    return date.toLocaleDateString(locale.code || 'vi-VN', {
       weekday: 'long',
       day: 'numeric',
       month: 'long',
@@ -57,7 +63,8 @@ export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModa
 
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleTimeString('vi-VN', {
+    const locale = getDateLocale(String(currentLanguage));
+    return date.toLocaleTimeString(locale.code || 'vi-VN', {
       hour: '2-digit',
       minute: '2-digit',
     });
@@ -125,11 +132,11 @@ export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModa
         <DialogHeader>
           <div className="flex items-center gap-2 mb-2">
             <Badge variant="outline" className="text-xs">
-              {classItem.category || "Lớp học"}
+              {classItem.category || t("liveClasses.classDetails")}
             </Badge>
             {classItem.status === 'live' && (
               <Badge variant="destructive" className="text-xs">
-                🔴 Đang diễn ra
+                🔴 {t("liveClasses.live")}
               </Badge>
             )}
           </div>
@@ -149,10 +156,10 @@ export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModa
             </Avatar>
             <div>
               <p className="font-semibold text-foreground">
-                {classItem.instructor?.full_name || "Giảng viên FUN Academy"}
+                {classItem.instructor?.full_name || t("liveClasses.noInstructor")}
               </p>
               <p className="text-sm text-muted-foreground">
-                {classItem.instructor?.academic_title || "Giảng viên"}
+                {classItem.instructor?.academic_title || t("liveClasses.instructor")}
               </p>
             </div>
           </div>
@@ -160,7 +167,7 @@ export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModa
           {/* Description */}
           {classItem.description && (
             <div>
-              <h4 className="text-sm font-medium text-muted-foreground mb-2">Mô tả</h4>
+              <h4 className="text-sm font-medium text-muted-foreground mb-2">{t("globalSchools.philosophy.description") ? "Mô tả" : "Description"}</h4>
               <p className="text-foreground">{classItem.description}</p>
             </div>
           )}
@@ -169,21 +176,21 @@ export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModa
           <div className="grid grid-cols-3 gap-4">
             <div className="flex flex-col items-center p-3 rounded-lg bg-accent/30 border border-border">
               <Calendar className="w-5 h-5 text-secondary mb-2" />
-              <span className="text-xs text-muted-foreground">Ngày</span>
+              <span className="text-xs text-muted-foreground">{t("liveClasses.scheduledAt")}</span>
               <span className="text-sm font-medium text-foreground text-center">
                 {formatDate(classItem.scheduled_at).split(',')[0]}
               </span>
             </div>
             <div className="flex flex-col items-center p-3 rounded-lg bg-accent/30 border border-border">
               <Clock className="w-5 h-5 text-secondary mb-2" />
-              <span className="text-xs text-muted-foreground">Giờ bắt đầu</span>
+              <span className="text-xs text-muted-foreground">{t("liveClasses.duration")}</span>
               <span className="text-sm font-medium text-foreground">
                 {formatTime(classItem.scheduled_at)}
               </span>
             </div>
             <div className="flex flex-col items-center p-3 rounded-lg bg-accent/30 border border-border">
               <Users className="w-5 h-5 text-secondary mb-2" />
-              <span className="text-xs text-muted-foreground">Đã đăng ký</span>
+              <span className="text-xs text-muted-foreground">{t("liveClasses.registered")}</span>
               <span className="text-sm font-medium text-foreground">
                 {loading ? "..." : `${registrationCount}/${classItem.max_participants || "∞"}`}
               </span>
@@ -193,13 +200,13 @@ export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModa
           {/* Duration */}
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Clock className="w-4 h-4" />
-            <span>Thời lượng: {classItem.duration_minutes} phút</span>
+            <span>{t("liveClasses.duration")}: {classItem.duration_minutes} {t("common.minutes")}</span>
           </div>
 
           {/* Location */}
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <MapPin className="w-4 h-4" />
-            <span>FUN Academy Online (Link sẽ được gửi qua email)</span>
+            <span>FUN Academy Online</span>
           </div>
 
           {/* Reminder Option */}
@@ -212,7 +219,7 @@ export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModa
               />
               <label htmlFor="reminder" className="flex items-center gap-2 text-sm cursor-pointer">
                 {enableReminder ? <Bell className="w-4 h-4 text-secondary" /> : <BellOff className="w-4 h-4" />}
-                Nhận thông báo nhắc nhở trước 30 phút
+                {t("liveClasses.enableReminder")} ({t("liveClasses.reminderNote")})
               </label>
             </div>
           )}
@@ -221,7 +228,7 @@ export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModa
           {isRegistered && (
             <div className="flex items-center gap-2 p-3 rounded-lg bg-secondary/10 border border-secondary/30">
               <CheckCircle2 className="w-5 h-5 text-secondary" />
-              <span className="text-sm font-medium text-secondary">Bạn đã đăng ký lớp học này</span>
+              <span className="text-sm font-medium text-secondary">{t("liveClasses.registered")}</span>
             </div>
           )}
 
@@ -229,7 +236,7 @@ export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModa
           <div className="space-y-3 pt-2">
             {!user ? (
               <Button className="w-full" variant="gold" disabled>
-                Vui lòng đăng nhập để đăng ký
+                {t("socialFeed.loginToPost")}
               </Button>
             ) : isRegistered ? (
               <Button 
@@ -241,10 +248,10 @@ export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModa
                 {isRegistering ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Đang xử lý...
+                    {t("common.loading")}
                   </>
                 ) : (
-                  "Hủy đăng ký"
+                  t("liveClasses.unregister")
                 )}
               </Button>
             ) : (
@@ -257,12 +264,12 @@ export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModa
                 {isRegistering ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Đang đăng ký...
+                    {t("common.loading")}
                   </>
                 ) : isFull ? (
-                  "Lớp học đã đầy"
+                  t("liveClasses.noClasses")
                 ) : (
-                  "Đăng Ký Tham Gia"
+                  t("liveClasses.register")
                 )}
               </Button>
             )}
@@ -274,7 +281,7 @@ export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModa
                 onClick={handleAddToGoogleCalendar}
               >
                 <CalendarPlus className="w-4 h-4 mr-2" />
-                Google Calendar
+                {t("liveClasses.addToCalendar")}
               </Button>
               <Button 
                 variant="outline" 
@@ -282,7 +289,7 @@ export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModa
                 onClick={handleDownloadICS}
               >
                 <Download className="w-4 h-4 mr-2" />
-                Tải file .ics
+                {t("liveClasses.downloadICS")}
               </Button>
             </div>
           </div>

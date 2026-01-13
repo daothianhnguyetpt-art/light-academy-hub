@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useTranslation } from "@/i18n/useTranslation";
 
 interface EditPostModalProps {
   isOpen: boolean;
@@ -27,16 +28,12 @@ interface EditPostModalProps {
   onSave: (postId: string, content: string, postType: string) => Promise<boolean>;
 }
 
-const postTypes = [
-  { value: "sharing", label: "Chia sẻ" },
-  { value: "course", label: "Khóa học" },
-  { value: "research", label: "Nghiên cứu" },
-  { value: "lecture", label: "Bài giảng" },
-];
+const postTypeValues = ["sharing", "course", "research", "lecture"] as const;
 
 export function EditPostModal({ isOpen, onClose, post, onSave }: EditPostModalProps) {
+  const { t } = useTranslation();
   const [content, setContent] = useState(post.content);
-  const [postType, setPostType] = useState(post.post_type || "Sharing");
+  const [postType, setPostType] = useState(post.post_type || "sharing");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSave = async () => {
@@ -59,7 +56,7 @@ export function EditPostModal({ isOpen, onClose, post, onSave }: EditPostModalPr
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-foreground">
             <Pencil className="w-5 h-5 text-primary" />
-            Chỉnh sửa bài viết
+            {t("socialFeed.editPost")}
           </DialogTitle>
         </DialogHeader>
 
@@ -67,18 +64,18 @@ export function EditPostModal({ isOpen, onClose, post, onSave }: EditPostModalPr
           <Textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder="Nội dung bài viết..."
+            placeholder={t("socialFeed.createPostPlaceholder")}
             className="min-h-[150px] resize-none border-border focus:border-gold-muted bg-background"
           />
 
           <Select value={postType} onValueChange={setPostType}>
             <SelectTrigger className="w-full border-border bg-background">
-              <SelectValue placeholder="Loại bài viết" />
+              <SelectValue placeholder={t("socialFeed.postTypeLabel")} />
             </SelectTrigger>
             <SelectContent>
-              {postTypes.map((type) => (
-                <SelectItem key={type.value} value={type.value}>
-                  {type.label}
+              {postTypeValues.map((type) => (
+                <SelectItem key={type} value={type}>
+                  {t(`socialFeed.postTypes.${type}`)}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -86,7 +83,7 @@ export function EditPostModal({ isOpen, onClose, post, onSave }: EditPostModalPr
 
           <div className="flex justify-end gap-3 pt-2">
             <Button variant="outline" onClick={onClose} disabled={isSubmitting}>
-              Hủy
+              {t("common.cancel")}
             </Button>
             <Button 
               onClick={handleSave} 
@@ -98,7 +95,7 @@ export function EditPostModal({ isOpen, onClose, post, onSave }: EditPostModalPr
               ) : (
                 <Pencil className="w-4 h-4 mr-2" />
               )}
-              Lưu thay đổi
+              {t("common.save")}
             </Button>
           </div>
         </div>
