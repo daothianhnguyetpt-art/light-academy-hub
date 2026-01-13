@@ -48,7 +48,7 @@
     "library": "Library",
     "whitepaper": "Whitepaper"
   },
-  "auth": {
+"auth": {
     "welcomeBack": "Chào mừng trở lại",
     "createAccount": "Tạo tài khoản mới",
     "email": "Email",
@@ -84,7 +84,13 @@
     "invalidCredentials": "Email hoặc mật khẩu không đúng",
     "googleLoginFailed": "Đăng nhập Google thất bại",
     "walletConnectFailed": "Kết nối ví thất bại",
-    "installMetamask": "Vui lòng cài đặt MetaMask hoặc ví Web3 tương thích"
+    "installMetamask": "Vui lòng cài đặt MetaMask hoặc ví Web3 tương thích",
+    "chooseMethod": "Chọn Phương Thức",
+    "loginOrRegister": "Đăng nhập hoặc tạo tài khoản mới",
+    "emailLogin": "Đăng Nhập với Email",
+    "emailRegister": "Đăng Ký Tài Khoản Mới",
+    "orSeparator": "HOẶC",
+    "connectWalletSeparator": "KẾT NỐI VÍ"
   },
   "whitepaper": {
     "title": "WHITEPAPER",
@@ -201,7 +207,7 @@
     "duration": "Thời lượng",
     "scheduledAt": "Thời gian"
   },
-  "socialFeed": {
+"socialFeed": {
     "title": "Academic Feed",
     "subtitle": "Kết nối và chia sẻ tri thức với cộng đồng học thuật toàn cầu",
     "createPost": "Chia sẻ tri thức với cộng đồng...",
@@ -229,18 +235,30 @@
     "reportSent": "Đã gửi báo cáo. Cảm ơn bạn đã góp ý!",
     "anonymous": "Ẩn danh",
     "member": "FUN Academy Member",
-    "addImage": "Thêm ảnh",
-    "addVideo": "Thêm video",
-    "addLocation": "Thêm vị trí",
-    "post": "Đăng",
+    "addImage": "Ảnh",
+    "addVideo": "Video",
+    "addLocation": "Vị trí",
+    "getLocation": "Lấy vị trí",
+    "post": "Chia Sẻ",
     "posting": "Đang đăng...",
-    "loginToPost": "Đăng nhập để chia sẻ",
+    "loginToPost": "Đăng nhập để chia sẻ tri thức",
+    "loginToPostDesc": "Tham gia cộng đồng học thuật và bắt đầu chia sẻ kiến thức của bạn",
     "loginToComment": "Đăng nhập để bình luận",
     "writeComment": "Viết bình luận...",
     "send": "Gửi",
     "sending": "Đang gửi...",
     "noComments": "Chưa có bình luận nào",
-    "beFirstComment": "Hãy là người đầu tiên bình luận!"
+    "beFirstComment": "Hãy là người đầu tiên!",
+    "commentAdded": "Đã thêm bình luận",
+    "commentFailed": "Không thể thêm bình luận",
+    "createPostPlaceholder": "Chia sẻ kiến thức, nghiên cứu hoặc bài học của bạn...",
+    "postTypeLabel": "Loại bài viết",
+    "enterLocation": "Nhập vị trí...",
+    "imageTooLarge": "Ảnh phải nhỏ hơn 5MB",
+    "videoTooLarge": "Video phải nhỏ hơn 50MB",
+    "postFailed": "Không thể đăng bài",
+    "locationFailed": "Không thể lấy vị trí của bạn",
+    "browserNoLocation": "Trình duyệt không hỗ trợ định vị"
   },
   "profile": {
     "title": "Hồ Sơ Cá Nhân",

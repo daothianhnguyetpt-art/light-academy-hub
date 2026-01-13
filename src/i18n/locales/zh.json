@@ -20,7 +20,24 @@
     "back": "返回",
     "download": "下载",
     "register": "注册",
-    "unregister": "取消注册"
+    "unregister": "取消注册",
+    "report": "举报",
+    "reload": "重新加载",
+    "all": "全部",
+    "filters": "筛选",
+    "apply": "应用",
+    "clear": "清除筛选",
+    "noData": "暂无数据",
+    "or": "或",
+    "views": "次观看",
+    "minutes": "分钟",
+    "pages": "页",
+    "participants": "位参与者",
+    "leave": "离开",
+    "join": "加入",
+    "copied": "已复制",
+    "connectWallet": "连接钱包",
+    "verified": "已验证"
   },
   "nav": {
     "home": "首页",
@@ -47,12 +64,39 @@
     "alreadyHaveAccount": "已有账户？",
     "dontHaveAccount": "没有账户？",
     "forgotPassword": "忘记密码？",
-    "backToLightLaw": "返回光之法则"
+    "backToLightLaw": "返回光之法则",
+    "loggingIn": "登录中...",
+    "registering": "注册中...",
+    "loginToLight": "登录进入光明",
+    "registerToLight": "注册并进入光明",
+    "goldenAgeNetwork": "黄金时代5D社交网络",
+    "walletWeb3": "连接Web3钱包",
+    "installed": "已安装",
+    "noWallet": "没有钱包？点击下载",
+    "loginSuccess": "登录成功",
+    "loginSuccessMessage": "欢迎回到光明 ✨",
+    "registerSuccess": "注册成功",
+    "registerSuccessMessage": "欢迎进入光明 ✨",
+    "loginFailed": "登录失败",
+    "registerFailed": "注册失败",
+    "emailExists": "邮箱已存在",
+    "emailExistsMessage": "此邮箱已注册。请登录或使用其他邮箱。",
+    "invalidCredentials": "邮箱或密码不正确",
+    "googleLoginFailed": "Google登录失败",
+    "walletConnectFailed": "钱包连接失败",
+    "installMetamask": "请安装MetaMask或兼容的Web3钱包",
+    "chooseMethod": "选择方式",
+    "loginOrRegister": "登录或创建新账户",
+    "emailLogin": "使用邮箱登录",
+    "emailRegister": "创建新账户",
+    "orSeparator": "或",
+    "connectWalletSeparator": "连接钱包"
   },
   "whitepaper": {
     "title": "白皮书",
     "subtitle": "FUN ACADEMY – 全球光明知识平台",
     "downloadPdf": "下载PDF",
+    "tableOfContents": "目录",
     "sections": {
       "vision": "愿景",
       "visionSub": "我们的愿景",
@@ -81,34 +125,46 @@
   },
   "videoLibrary": {
     "title": "视频库",
-    "subtitle": "探索无限知识",
+    "subtitle": "来自世界顶级大学的高质量视频讲座",
     "filters": "筛选",
-    "searchPlaceholder": "搜索视频...",
+    "searchPlaceholder": "搜索视频、讲师...",
     "allCategories": "全部",
-    "noVideos": "未找到视频",
+    "noVideos": "暂无视频",
+    "noVideosFiltered": "未找到匹配的视频",
+    "noVideosMessage": "视频库正在更新中，请稍后再来！",
+    "changeFilters": "尝试更改筛选条件或搜索关键词。",
+    "loadingVideos": "加载视频中...",
+    "reloadVideos": "重新加载视频",
     "level": {
+      "label": "级别",
       "all": "所有级别",
       "beginner": "初级",
       "intermediate": "中级",
       "advanced": "高级"
     },
     "duration": {
+      "label": "时长",
       "all": "任意时长",
-      "short": "10分钟以内",
-      "medium": "10-30分钟",
-      "long": "30分钟以上"
+      "short": "30分钟以内",
+      "medium": "30-60分钟",
+      "long": "60分钟以上"
     },
     "rating": {
+      "label": "评分",
       "all": "任意评分",
       "above4": "4星以上",
       "above3": "3星以上"
     },
     "views": "次观看",
-    "minutes": "分钟"
+    "minutes": "分钟",
+    "instructor": "讲师",
+    "nftCertificate": "NFT证书",
+    "clearFilters": "清除筛选",
+    "applyFilters": "应用"
   },
   "liveClasses": {
     "title": "直播课程",
-    "subtitle": "与顶级讲师直接学习",
+    "subtitle": "与全球讲师和学员连接",
     "tabs": {
       "all": "全部",
       "registered": "已注册",
@@ -119,16 +175,42 @@
     "registered": "已报名",
     "joinNow": "立即加入",
     "addToCalendar": "添加到日历",
+    "downloadICS": "下载ICS文件",
     "enableReminder": "开启提醒",
     "reminderNote": "提前30分钟",
     "participants": "位参与者",
     "instructor": "讲师",
     "noClasses": "暂无课程",
-    "upcoming": "即将开始"
+    "noRegisteredClasses": "尚未注册任何课程",
+    "registerPrompt": "注册课程以开始学习 ✨",
+    "noClassesMessage": "新课程即将更新 ✨",
+    "upcoming": "即将开始",
+    "live": "直播中",
+    "today": "今天",
+    "tomorrow": "明天",
+    "integration": "集成就绪",
+    "connectAccount": "连接您的账户",
+    "controls": {
+      "mute": "静音",
+      "unmute": "取消静音",
+      "videoOn": "开启摄像头",
+      "videoOff": "关闭摄像头",
+      "shareScreen": "共享屏幕",
+      "raiseHand": "举手",
+      "lowerHand": "放下手",
+      "openChat": "打开聊天",
+      "record": "录制 - 保存到资料库",
+      "leave": "离开"
+    },
+    "noInstructor": "当前没有直播课程",
+    "classDetails": "课程详情",
+    "duration": "时长",
+    "scheduledAt": "计划时间"
   },
   "socialFeed": {
     "title": "学术动态",
-    "createPost": "分享知识...",
+    "subtitle": "与全球学术社区连接并分享知识",
+    "createPost": "与社区分享知识...",
     "appreciate": "欣赏",
     "comment": "评论",
     "comments": "条评论",
@@ -139,12 +221,49 @@
       "course": "课程",
       "research": "研究",
       "lecture": "讲座"
-    }
+    },
+    "noPosts": "暂无帖子",
+    "beFirst": "成为第一个与社区分享知识的人！",
+    "loadingPosts": "加载帖子中...",
+    "reloadPosts": "重新加载帖子",
+    "editPost": "编辑",
+    "deletePost": "删除帖子",
+    "deleteConfirm": "删除帖子？",
+    "deleteWarning": "此操作无法撤销。帖子将与所有评论和互动一起被永久删除。",
+    "copiedLink": "帖子链接已复制",
+    "copyFailed": "复制链接失败",
+    "reportSent": "举报已发送。感谢您的反馈！",
+    "anonymous": "匿名",
+    "member": "FUN Academy成员",
+    "addImage": "图片",
+    "addVideo": "视频",
+    "addLocation": "位置",
+    "getLocation": "获取位置",
+    "post": "分享",
+    "posting": "发布中...",
+    "loginToPost": "登录以分享知识",
+    "loginToPostDesc": "加入学术社区，开始分享您的知识",
+    "loginToComment": "登录以评论",
+    "writeComment": "写评论...",
+    "send": "发送",
+    "sending": "发送中...",
+    "noComments": "暂无评论",
+    "beFirstComment": "成为第一个评论的人！",
+    "commentAdded": "评论已添加",
+    "commentFailed": "添加评论失败",
+    "createPostPlaceholder": "分享您的知识、研究或课程...",
+    "postTypeLabel": "帖子类型",
+    "enterLocation": "输入位置...",
+    "imageTooLarge": "图片必须小于5MB",
+    "videoTooLarge": "视频必须小于50MB",
+    "postFailed": "发布失败",
+    "locationFailed": "无法获取您的位置",
+    "browserNoLocation": "浏览器不支持地理位置"
   },
   "profile": {
     "title": "个人资料",
     "soulJourney": "灵魂之旅",
-    "certificates": "SBT证书",
+    "certificates": "灵魂证书（SBT）",
     "academicId": "学术身份",
     "editProfile": "编辑资料",
     "stats": {
@@ -153,21 +272,183 @@
       "hoursLearned": "学习小时",
       "knowledgeScore": "知识得分"
     },
-    "skills": "技能",
-    "noCertificates": "暂无证书"
+    "emptyStats": {
+      "courses": "准备开始 ✨",
+      "certificates": "等待您 🌟",
+      "hours": "旅程开始 ⏳",
+      "score": "积累中 💡"
+    },
+    "skills": "知识领域",
+    "noCertificates": "您的第一个证书在等待 🌟",
+    "noCertificatesMessage": "完成课程以获得您的第一个灵魂证书",
+    "exploreCourses": "探索课程",
+    "loadingProfile": "加载资料中...",
+    "pioneer": "FUN Academy先驱",
+    "verifiedScholar": "认证学者",
+    "copiedAddress": "地址已复制！",
+    "connectWalletFull": "连接钱包以获取完整访问",
+    "logoutSuccess": "登出成功！",
+    "logoutError": "登出时发生错误",
+    "disconnectSuccess": "钱包已断开连接！",
+    "sbtInfo": {
+      "title": "什么是灵魂绑定代币（SBT）？",
+      "permanent": "永久",
+      "permanentDesc": "永远与您的学术灵魂绑定",
+      "nonTransferable": "不可转让",
+      "nonTransferableDesc": "确保真实价值，无法交易",
+      "transparent": "透明",
+      "transparentDesc": "在区块链上公开可验证"
+    },
+    "journey": {
+      "joined": "加入FUN Academy",
+      "acceptedLaw": "接受光之法则",
+      "firstCourse": "完成第一门课程",
+      "firstCert": "获得第一个SBT证书",
+      "waiting": "等待您 ✨"
+    },
+    "editModal": {
+      "title": "编辑资料",
+      "avatar": "头像",
+      "avatarUrl": "头像URL",
+      "fullName": "全名",
+      "academicTitle": "学术头衔",
+      "bio": "个人简介",
+      "wallet": "Web3钱包",
+      "walletConnected": "已连接",
+      "connectWallet": "连接钱包",
+      "saving": "保存中..."
+    }
   },
   "library": {
-    "title": "文档库",
-    "subtitle": "学术知识宝库",
-    "searchPlaceholder": "搜索文档...",
+    "title": "知识库",
+    "subtitle": "书籍、研究文档和学术图片的宝库",
+    "searchPlaceholder": "搜索书籍、文档...",
     "downloads": "次下载",
-    "pages": "页"
+    "pages": "页",
+    "categories": {
+      "all": "全部",
+      "book": "书籍",
+      "document": "文档",
+      "image": "图片",
+      "video": "视频"
+    },
+    "loading": "加载资源中...",
+    "noResources": "暂无资源",
+    "noResourcesMessage": "资料库正在建设中，请稍后再来 ✨",
+    "viewMore": "查看更多资源",
+    "author": "作者",
+    "uncategorized": "未分类"
   },
   "footer": {
-    "description": "全球光明知识平台",
-    "quickLinks": "快速链接",
+    "description": "FUN生态系统的知识与启蒙之心。",
+    "quote": "这是5D时代人类的光明图书馆",
+    "platform": "平台",
     "resources": "资源",
+    "ecosystem": "FUN生态系统",
+    "quickLinks": "快速链接",
     "connect": "联系我们",
-    "copyright": "© 2024 FUN Academy. 保留所有权利。"
+    "copyright": "© 2026 FUN Academy. 保留所有权利。",
+    "privacy": "隐私政策",
+    "terms": "服务条款"
+  },
+  "globalSchools": {
+    "title": "全球学校",
+    "subtitle": "探索全球学校和教育机构网络",
+    "searchPlaceholder": "搜索学校、机构...",
+    "filters": "筛选",
+    "allRegions": "所有地区",
+    "allTypes": "所有类型",
+    "clearFilters": "清除筛选",
+    "organizations": "个机构",
+    "featuredSchools": "精选学校",
+    "featuredDesc": "来自世界各地",
+    "remoteSchools": "远程学校",
+    "noOrganizations": "暂无机构",
+    "loading": "加载中...",
+    "error": "加载数据时发生错误",
+    "philosophy": {
+      "title": "平等理念",
+      "description": "FUN Academy不使用传统排名系统。相反，我们衡量贡献分数——反映每个机构为全球知识社区带来的真实价值。",
+      "contribution": "贡献分数"
+    },
+    "institutionTypes": {
+      "university": "大学",
+      "college": "学院",
+      "research": "研究所",
+      "online": "在线学校",
+      "corporate": "企业培训",
+      "nonprofit": "非营利组织"
+    }
+  },
+  "landing": {
+    "hero": {
+      "badge": "Web3学术平台",
+      "title": "FUN ACADEMY",
+      "subtitle": "FUN生态系统的知识与启蒙之心",
+      "cta1": "立即探索",
+      "cta2": "查看视频库",
+      "stakeholders": ["学生", "讲师", "研究者", "企业"],
+      "stats": {
+        "countries": "国家",
+        "courses": "课程",
+        "certificates": "NFT证书"
+      }
+    },
+    "features": {
+      "title": "主要功能",
+      "socialFeed": {
+        "title": "学术社交网络",
+        "desc": "与全球学术社区连接"
+      },
+      "videoLibrary": {
+        "title": "视频库",
+        "desc": "来自顶级大学的高质量课程"
+      },
+      "liveClasses": {
+        "title": "直播课程",
+        "desc": "与讲师直接学习和互动"
+      },
+      "library": {
+        "title": "文档库",
+        "desc": "书籍和研究文档的宝库"
+      }
+    }
+  },
+  "notFound": {
+    "title": "404",
+    "message": "哎呀！页面未找到",
+    "backHome": "返回首页"
+  },
+  "videoDetail": {
+    "relatedVideos": "相关视频",
+    "comments": "评论",
+    "writeComment": "写评论...",
+    "noComments": "暂无评论。成为第一个！",
+    "loginToComment": "登录以评论",
+    "send": "发送",
+    "sending": "发送中..."
+  },
+  "libraryDetail": {
+    "downloadNow": "立即下载",
+    "openFile": "打开文档",
+    "noFile": "暂无文件",
+    "details": "详情",
+    "author": "作者",
+    "category": "分类",
+    "pages": "页数",
+    "downloads": "下载次数",
+    "rating": "评分"
+  },
+  "institutionDetail": {
+    "about": "关于",
+    "members": "成员",
+    "courses": "课程",
+    "partnerships": "合作伙伴",
+    "contact": "联系方式",
+    "website": "网站",
+    "location": "地址",
+    "founded": "成立年份",
+    "contributionScore": "贡献分数",
+    "verifiedInstitution": "已认证机构"
   }
 }

@@ -48,7 +48,7 @@
     "library": "Library",
     "whitepaper": "Whitepaper"
   },
-  "auth": {
+"auth": {
     "welcomeBack": "Welcome back",
     "createAccount": "Create a new account",
     "email": "Email",
@@ -84,7 +84,13 @@
     "invalidCredentials": "Invalid email or password",
     "googleLoginFailed": "Google login failed",
     "walletConnectFailed": "Wallet connection failed",
-    "installMetamask": "Please install MetaMask or a compatible Web3 wallet"
+    "installMetamask": "Please install MetaMask or a compatible Web3 wallet",
+    "chooseMethod": "Choose Method",
+    "loginOrRegister": "Login or create a new account",
+    "emailLogin": "Login with Email",
+    "emailRegister": "Create New Account",
+    "orSeparator": "OR",
+    "connectWalletSeparator": "CONNECT WALLET"
   },
   "whitepaper": {
     "title": "WHITEPAPER",
@@ -201,7 +207,7 @@
     "duration": "Duration",
     "scheduledAt": "Scheduled at"
   },
-  "socialFeed": {
+"socialFeed": {
     "title": "Academic Feed",
     "subtitle": "Connect and share knowledge with the global academic community",
     "createPost": "Share knowledge with the community...",
@@ -229,18 +235,30 @@
     "reportSent": "Report sent. Thank you for your feedback!",
     "anonymous": "Anonymous",
     "member": "FUN Academy Member",
-    "addImage": "Add image",
-    "addVideo": "Add video",
-    "addLocation": "Add location",
-    "post": "Post",
+    "addImage": "Photo",
+    "addVideo": "Video",
+    "addLocation": "Location",
+    "getLocation": "Get location",
+    "post": "Share",
     "posting": "Posting...",
-    "loginToPost": "Login to share",
+    "loginToPost": "Login to share knowledge",
+    "loginToPostDesc": "Join the academic community and start sharing your knowledge",
     "loginToComment": "Login to comment",
     "writeComment": "Write a comment...",
     "send": "Send",
     "sending": "Sending...",
     "noComments": "No comments yet",
-    "beFirstComment": "Be the first to comment!"
+    "beFirstComment": "Be the first!",
+    "commentAdded": "Comment added",
+    "commentFailed": "Failed to add comment",
+    "createPostPlaceholder": "Share your knowledge, research or lessons...",
+    "postTypeLabel": "Post type",
+    "enterLocation": "Enter location...",
+    "imageTooLarge": "Image must be less than 5MB",
+    "videoTooLarge": "Video must be less than 50MB",
+    "postFailed": "Failed to create post",
+    "locationFailed": "Could not get your location",
+    "browserNoLocation": "Browser does not support geolocation"
   },
   "profile": {
     "title": "Personal Profile",

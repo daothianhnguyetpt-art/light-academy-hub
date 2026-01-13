@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Wallet, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/i18n/useTranslation";
 
 export type WalletType = "metamask" | "bitget" | "trust";
 
@@ -35,11 +36,13 @@ const wallets = [
 ];
 
 export function WalletOptions({ onConnect, isConnecting, connectingWallet }: WalletOptionsProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-3">
         <Wallet className="w-4 h-4 text-primary" />
-        <span className="text-sm font-medium text-foreground">Kết Nối Ví Web3</span>
+        <span className="text-sm font-medium text-foreground">{t('auth.walletWeb3')}</span>
       </div>
       
       {wallets.map((wallet, index) => {
@@ -74,7 +77,7 @@ export function WalletOptions({ onConnect, isConnecting, connectingWallet }: Wal
                 <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
               ) : isInstalled ? (
                 <span className="text-xs text-muted-foreground bg-secondary px-2 py-0.5 rounded">
-                  Đã cài
+                  {t('auth.installed')}
                 </span>
               ) : (
                 <ExternalLink className="w-4 h-4 text-muted-foreground" />
@@ -85,7 +88,7 @@ export function WalletOptions({ onConnect, isConnecting, connectingWallet }: Wal
       })}
       
       <p className="text-xs text-muted-foreground text-center pt-2">
-        Chưa có ví? Bấm vào để tải về
+        {t('auth.noWallet')}
       </p>
     </div>
   );

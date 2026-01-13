@@ -16,7 +16,9 @@ import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { toast } from "sonner";
 import { formatDistanceToNow } from "date-fns";
-import { vi } from "date-fns/locale";
+import { useTranslation } from "@/i18n/useTranslation";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { getDateLocale } from "@/lib/date-utils";
 
 interface Comment {
   id: string;
@@ -39,6 +41,8 @@ interface CommentSectionProps {
 export function CommentSection({ postId, commentsCount, onCommentAdded }: CommentSectionProps) {
   const { user } = useAuth();
   const { profile } = useProfile();
+  const { t } = useTranslation();
+  const { language } = useLanguage();
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -52,7 +56,7 @@ export function CommentSection({ postId, commentsCount, onCommentAdded }: Commen
 
   const formatTime = (dateStr: string) => {
     try {
-      return formatDistanceToNow(new Date(dateStr), { addSuffix: true, locale: vi });
+      return formatDistanceToNow(new Date(dateStr), { addSuffix: true, locale: getDateLocale(language) });
     } catch {
       return dateStr;
     }
@@ -116,10 +120,10 @@ export function CommentSection({ postId, commentsCount, onCommentAdded }: Commen
       setNewComment("");
       await fetchComments();
       onCommentAdded?.();
-      toast.success("Đã thêm bình luận");
+      toast.success(t('socialFeed.commentAdded'));
     } catch (err) {
       console.error('Error adding comment:', err);
-      toast.error("Không thể thêm bình luận");
+      toast.error(t('socialFeed.commentFailed'));
     } finally {
       setIsSubmitting(false);
     }
@@ -137,7 +141,7 @@ export function CommentSection({ postId, commentsCount, onCommentAdded }: Commen
         <SheetHeader>
           <SheetTitle className="flex items-center gap-2 text-foreground">
             <MessageCircle className="w-5 h-5" />
-            Bình luận ({comments.length})
+            {t('socialFeed.comment')} ({comments.length})
           </SheetTitle>
         </SheetHeader>
 
@@ -154,7 +158,7 @@ export function CommentSection({ postId, commentsCount, onCommentAdded }: Commen
               <div className="text-center py-8">
                 <MessageCircle className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
                 <p className="text-muted-foreground text-sm">
-                  Chưa có bình luận nào. Hãy là người đầu tiên!
+                  {t('socialFeed.noComments')}. {t('socialFeed.beFirstComment')}
                 </p>
               </div>
             )}
@@ -178,7 +182,7 @@ export function CommentSection({ postId, commentsCount, onCommentAdded }: Commen
                     <div className="bg-accent rounded-lg p-3">
                       <div className="flex items-center gap-2 mb-1">
                         <span className="font-medium text-sm text-foreground">
-                          {comment.author.full_name || "Ẩn danh"}
+                          {comment.author.full_name || t('socialFeed.anonymous')}
                         </span>
                         {comment.author.academic_title && (
                           <span className="text-xs text-muted-foreground">
@@ -211,7 +215,7 @@ export function CommentSection({ postId, commentsCount, onCommentAdded }: Commen
                 </Avatar>
                 <div className="flex-1 space-y-2">
                   <Textarea
-                    placeholder="Viết bình luận..."
+                    placeholder={t('socialFeed.writeComment')}
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
                     className="min-h-[80px] resize-none text-sm"
@@ -233,7 +237,7 @@ export function CommentSection({ postId, commentsCount, onCommentAdded }: Commen
                       ) : (
                         <>
                           <Send className="w-4 h-4 mr-1" />
-                          Gửi
+                          {t('socialFeed.send')}
                         </>
                       )}
                     </Button>
@@ -244,7 +248,7 @@ export function CommentSection({ postId, commentsCount, onCommentAdded }: Commen
           ) : (
             <div className="border-t border-border pt-4 mt-4 text-center">
               <p className="text-sm text-muted-foreground">
-                Đăng nhập để bình luận
+                {t('socialFeed.loginToComment')}
               </p>
             </div>
           )}
