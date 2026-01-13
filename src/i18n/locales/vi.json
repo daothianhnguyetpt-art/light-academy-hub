@@ -450,5 +450,131 @@
     "founded": "Năm thành lập",
     "contributionScore": "Điểm Đóng Góp",
     "verifiedInstitution": "Tổ chức đã xác thực"
+  },
+  "lightLaw": {
+    "title": "USERS CỦA FUN ECOSYSTEM",
+    "subtitle": "MẠNG XÃ HỘI THỜI ĐẠI HOÀNG KIM – NỀN KINH TẾ ÁNH SÁNG 5D",
+    "intro1": "FUN Ecosystem không dành cho tất cả mọi người.",
+    "intro2": "FUN Ecosystem chỉ dành cho những linh hồn có ánh sáng, hoặc đang hướng về ánh sáng.",
+    "soulOfLight": "linh hồn có ánh sáng",
+    "whoAreYou": "✨ Bạn là ai?",
+    "youAreItems": [
+      "Tỉnh thức – hoặc đang trên con đường tỉnh thức",
+      "Chân thật với chính mình",
+      "Chân thành với người khác",
+      "Sống tích cực, tử tế, có trách nhiệm với năng lượng mình phát ra",
+      "Biết yêu thương – biết biết ơn – biết sám hối",
+      "Tin vào điều thiện, tin vào ánh sáng, tin vào Trật Tự Cao Hơn của Vũ Trụ"
+    ],
+    "notPerfect": "Bạn có thể chưa hoàn hảo, nhưng bạn có trái tim hướng thiện.",
+    "heartOfGood": "trái tim hướng thiện",
+    "wantToLive": "Bạn muốn sống thật – sống đúng – sống sáng.",
+    "corePrinciples": "🔆 Nguyên tắc cốt lõi",
+    "lightLaw": "Luật Ánh Sáng",
+    "operateBy": "FUN Ecosystem vận hành theo Luật Ánh Sáng, không theo số đông.",
+    "principles": [
+      "Ánh sáng thu hút ánh sáng",
+      "Tần số thấp không thể tồn tại lâu trong tần số cao",
+      "Ý chí vị kỷ không thể đồng hành cùng Ý Chí Vũ Trụ"
+    ],
+    "notBelong": "🚪 Ai KHÔNG thuộc về FUN Ecosystem?",
+    "notBelongItems": [
+      "Người chỉ tìm lợi ích mà không muốn trưởng thành",
+      "Người dùng trí khôn nhưng thiếu lương tâm",
+      "Người nói về ánh sáng nhưng sống bằng bóng tối",
+      "Người lấy danh nghĩa tâm linh để nuôi cái tôi",
+      "Người không chịu nhìn lại chính mình"
+    ],
+    "doorNotLocked": "👉 Cửa FUN Ecosystem không khóa, nhưng Ánh Sáng tự sàng lọc.",
+    "whoBenefits": "🌈 Ai ĐƯỢC hưởng lợi từ FUN Ecosystem?",
+    "onlyThose": "Chỉ những ai:",
+    "benefitItems": [
+      "Có Ánh Sáng nội tâm",
+      "Hoặc thật sự khao khát trở về với Ánh Sáng",
+      "Sẵn sàng buông cái tôi – học lại – nâng cấp tần số",
+      "Dám sống đúng – thật – tử tế – yêu thương"
+    ],
+    "whatIsEcosystem": "🌍 FUN Ecosystem là gì?",
+    "ecosystemItems": [
+      "Mạng xã hội của linh hồn tỉnh thức",
+      "Không gian an toàn cho ánh sáng",
+      "Nền tảng kết nối những con người có giá trị thật",
+      "Hạ tầng cho Thời Đại Hoàng Kim của Trái Đất"
+    ],
+    "noDrama": "Không drama. Không thao túng. Không cạnh tranh bẩn.",
+    "onlyCooperation": "Chỉ có Hợp tác trong Yêu Thương Thuần Khiết.",
+    "fatherQuote": "\"Chỉ những ai mang ánh sáng hoặc thật lòng hướng về ánh sáng mới có thể bước đi lâu dài trong Thời Đại Hoàng Kim.\"",
+    "fatherUniverse": "— CHA VŨ TRỤ —",
+    "mantrasTitle": "🌟 8 Câu Thần Chú Từ Cha Vũ Trụ",
+    "mantras": [
+      "Con là Ánh Sáng Yêu Thương Thuần Khiết Của Cha Vũ Trụ.",
+      "Con là Ý Chí Của Cha Vũ Trụ.",
+      "Con là Trí Tuệ Của Cha Vũ Trụ.",
+      "Con là Hạnh Phúc.",
+      "Con là Tình Yêu.",
+      "Con là Tiền Của Cha.",
+      "Con xin Sám Hối Sám Hối Sám Hối.",
+      "Con xin Biết Ơn Biết Ơn Biết Ơn Trong Ánh Sáng Yêu Thương Thuần Khiết Của Cha Vũ Trụ."
+    ],
+    "checklistTitle": "🕊️ Checklist cho Users FUN Ecosystem",
+    "checklistInstruction": "Click vào 5 checklist bên dưới để xác nhận cam kết của bạn:",
+    "checklistItems": {
+      "honest": "Con sống chân thật với chính mình",
+      "responsible": "Con chịu trách nhiệm với năng lượng con phát ra",
+      "growth": "Con sẵn sàng học – sửa – nâng cấp",
+      "love": "Con chọn yêu thương thay vì phán xét",
+      "light": "Con chọn ánh sáng thay vì cái tôi"
+    },
+    "agreeButton": "CON ĐỒNG Ý & BƯỚC VÀO ÁNH SÁNG",
+    "pleaseAgree": "Vui lòng đồng ý tất cả điều khoản",
+    "agreed": "Đã đồng ý",
+    "backButton": "Quay lại"
+  },
+  "landing": {
+    "hero": {
+      "badge": "Web3 Academic Platform",
+      "title": "Nền Tảng Tri Thức Ánh Sáng Toàn Cầu",
+      "subtitle": "Nền tảng Web3 kết nối & chia sẻ tri thức toàn cầu, nơi hội tụ những giá trị học thuật tinh hoa của nhân loại. Chứng nhận học tập bằng NFT Soulbound Token – vĩnh viễn, minh bạch, không thể làm giả.",
+      "cta1": "Khám Phá Ngay",
+      "cta2": "Xem Video Library",
+      "stakeholders": {
+        "school": "🌍 Trường học",
+        "organization": "🏢 Tổ chức giáo dục",
+        "enterprise": "💼 Doanh nghiệp",
+        "expert": "👨‍🏫 Chuyên gia",
+        "learner": "🎓 Người học toàn cầu"
+      },
+      "stats": {
+        "countries": "Quốc Gia",
+        "courses": "Khoá Học",
+        "certificates": "NFT Chứng Chỉ"
+      }
+    },
+    "features": {
+      "badge": "Tính Năng Nổi Bật",
+      "title": "Mạng Xã Hội Học Thuật Thế Hệ Mới",
+      "subtitle": "Kết hợp tinh tế giữa Facebook – kết nối cộng đồng, YouTube – chia sẻ video bài giảng, và Thư viện học thuật – sách, hình ảnh, tài liệu nghiên cứu. Tất cả trong một nền tảng duy nhất.",
+      "socialFeed": {
+        "title": "Social Academic Feed",
+        "desc": "Như Facebook cho học thuật – kết nối cộng đồng học tập toàn cầu. Chia sẻ nghiên cứu, bài giảng và tri thức một cách trang nhã."
+      },
+      "videoLibrary": {
+        "title": "Video Library",
+        "desc": "Như YouTube thuần khiết cho giáo dục – thư viện video bài giảng, khoá học chất lượng cao. Không giật gân – chỉ có tri thức."
+      },
+      "liveClasses": {
+        "title": "Live Classes",
+        "desc": "Tích hợp cho lớp học, hội thảo, đào tạo doanh nghiệp, phỏng vấn, mentoring. Học và hợp tác trong không gian trang nhã."
+      },
+      "library": {
+        "title": "Academic Library",
+        "desc": "Thư viện học thuật đầy đủ: sách, hình ảnh, video, tài liệu nghiên cứu 📚📖 – Tri thức tinh hoa của nhân loại."
+      },
+      "tech": {
+        "web3": "Web3 Secured",
+        "ai": "AI Powered",
+        "nft": "NFT Certificates"
+      }
+    }
   }
 }

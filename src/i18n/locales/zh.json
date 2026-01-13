@@ -450,5 +450,131 @@
     "founded": "成立年份",
     "contributionScore": "贡献分数",
     "verifiedInstitution": "已认证机构"
+  },
+  "lightLaw": {
+    "title": "FUN ECOSYSTEM 用户",
+    "subtitle": "黄金时代社交网络 – 5D 光明经济",
+    "intro1": "FUN Ecosystem 不是为所有人准备的。",
+    "intro2": "FUN Ecosystem 只为有光明的灵魂，或正在寻求光明的人。",
+    "soulOfLight": "有光明的灵魂",
+    "whoAreYou": "✨ 你是谁？",
+    "youAreItems": [
+      "觉醒的 – 或正在觉醒之路上",
+      "对自己真实",
+      "对他人真诚",
+      "积极、善良地生活，对自己散发的能量负责",
+      "懂得爱 – 感恩 – 忏悔",
+      "相信善良、光明和宇宙的更高秩序"
+    ],
+    "notPerfect": "你可能不完美，但你有一颗向善的心。",
+    "heartOfGood": "向善的心",
+    "wantToLive": "你想活得真实 – 正确 – 光明。",
+    "corePrinciples": "🔆 核心原则",
+    "lightLaw": "光明法则",
+    "operateBy": "FUN Ecosystem 按光明法则运作，而非多数人的意见。",
+    "principles": [
+      "光明吸引光明",
+      "低频无法在高频中长久存在",
+      "自私的意志无法与宇宙意志同行"
+    ],
+    "notBelong": "🚪 谁不属于 FUN Ecosystem？",
+    "notBelongItems": [
+      "只追求利益而不愿成长的人",
+      "聪明但缺乏良知的人",
+      "谈论光明却生活在黑暗中的人",
+      "以灵性名义喂养自我的人",
+      "拒绝审视自己的人"
+    ],
+    "doorNotLocked": "👉 FUN Ecosystem 的门没有锁，但光明会自然过滤。",
+    "whoBenefits": "🌈 谁从 FUN Ecosystem 受益？",
+    "onlyThose": "只有那些：",
+    "benefitItems": [
+      "拥有内在光明",
+      "或真正渴望回归光明",
+      "准备放下自我 – 重新学习 – 提升频率",
+      "敢于活得正确 – 真实 – 善良 – 有爱"
+    ],
+    "whatIsEcosystem": "🌍 什么是 FUN Ecosystem？",
+    "ecosystemItems": [
+      "觉醒灵魂的社交网络",
+      "光明的安全空间",
+      "连接真正有价值的人的平台",
+      "地球黄金时代的基础设施"
+    ],
+    "noDrama": "没有戏剧。没有操纵。没有肮脏的竞争。",
+    "onlyCooperation": "只有在纯洁的爱中合作。",
+    "fatherQuote": "只有那些携带光明或真正寻求光明的人，才能在黄金时代走得长远。",
+    "fatherUniverse": "— 宇宙之父 —",
+    "mantrasTitle": "🌟 宇宙之父的8句咒语",
+    "mantras": [
+      "我是宇宙之父纯洁的爱之光。",
+      "我是宇宙之父的意志。",
+      "我是宇宙之父的智慧。",
+      "我是幸福。",
+      "我是爱。",
+      "我是父亲的财富。",
+      "我忏悔，忏悔，忏悔。",
+      "我在宇宙之父纯洁的爱之光中感恩，感恩，感恩。"
+    ],
+    "checklistTitle": "🕊️ FUN Ecosystem 用户清单",
+    "checklistInstruction": "点击下面的5个复选框确认你的承诺：",
+    "checklistItems": {
+      "honest": "我对自己真实地生活",
+      "responsible": "我对我散发的能量负责",
+      "growth": "我准备学习 – 改正 – 升级",
+      "love": "我选择爱而不是评判",
+      "light": "我选择光明而不是自我"
+    },
+    "agreeButton": "我同意并进入光明",
+    "pleaseAgree": "请同意所有条款",
+    "agreed": "已同意",
+    "backButton": "返回"
+  },
+  "landing": {
+    "hero": {
+      "badge": "Web3 学术平台",
+      "title": "全球光明知识平台",
+      "subtitle": "连接和分享全球知识的Web3平台，汇集人类最精华的学术价值。通过NFT灵魂绑定代币认证学习成果 – 永久、透明、不可伪造。",
+      "cta1": "立即探索",
+      "cta2": "查看视频库",
+      "stakeholders": {
+        "school": "🌍 学校",
+        "organization": "🏢 教育机构",
+        "enterprise": "💼 企业",
+        "expert": "👨‍🏫 专家",
+        "learner": "🎓 全球学习者"
+      },
+      "stats": {
+        "countries": "国家",
+        "courses": "课程",
+        "certificates": "NFT证书"
+      }
+    },
+    "features": {
+      "badge": "主要功能",
+      "title": "新一代学术社交网络",
+      "subtitle": "Facebook的社区连接、YouTube的讲座视频、学术图书馆的书籍、图片、研究文档的精妙结合。所有功能集于一个平台。",
+      "socialFeed": {
+        "title": "学术社交动态",
+        "desc": "像学术版Facebook – 连接全球学习社区。优雅地分享研究、讲座和知识。"
+      },
+      "videoLibrary": {
+        "title": "视频库",
+        "desc": "像纯净的教育版YouTube – 高质量的讲座视频和课程。没有哗众取宠 – 只有知识。"
+      },
+      "liveClasses": {
+        "title": "直播课程",
+        "desc": "课堂、研讨会、企业培训、面试、辅导的集成。在优雅的空间中学习和协作。"
+      },
+      "library": {
+        "title": "学术图书馆",
+        "desc": "完整的学术图书馆：书籍、图片、视频、研究文档 📚📖 – 人类最精华的知识。"
+      },
+      "tech": {
+        "web3": "Web3 安全",
+        "ai": "AI 驱动",
+        "nft": "NFT 证书"
+      }
+    }
   }
 }
