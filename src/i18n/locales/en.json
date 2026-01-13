@@ -450,5 +450,131 @@
     "founded": "Founded",
     "contributionScore": "Contribution Score",
     "verifiedInstitution": "Verified Institution"
+  },
+  "lightLaw": {
+    "title": "USERS OF FUN ECOSYSTEM",
+    "subtitle": "GOLDEN AGE SOCIAL NETWORK – 5D LIGHT ECONOMY",
+    "intro1": "FUN Ecosystem is not for everyone.",
+    "intro2": "FUN Ecosystem is only for souls with light, or those seeking the light.",
+    "soulOfLight": "souls with light",
+    "whoAreYou": "✨ Who are you?",
+    "youAreItems": [
+      "Awakened – or on the path to awakening",
+      "Authentic with yourself",
+      "Sincere with others",
+      "Living positively, kindly, responsible for the energy you emit",
+      "Knowing love – gratitude – repentance",
+      "Believing in goodness, light, and the Higher Order of the Universe"
+    ],
+    "notPerfect": "You may not be perfect, but you have a heart oriented towards good.",
+    "heartOfGood": "a heart oriented towards good",
+    "wantToLive": "You want to live truly – rightly – brightly.",
+    "corePrinciples": "🔆 Core Principles",
+    "lightLaw": "Light Law",
+    "operateBy": "FUN Ecosystem operates by the Light Law, not by the majority.",
+    "principles": [
+      "Light attracts light",
+      "Low frequencies cannot exist long in high frequencies",
+      "Selfish will cannot walk with the Will of the Universe"
+    ],
+    "notBelong": "🚪 Who does NOT belong to FUN Ecosystem?",
+    "notBelongItems": [
+      "Those seeking only benefits without growth",
+      "Those using cleverness but lacking conscience",
+      "Those speaking of light but living in darkness",
+      "Those using spirituality to feed their ego",
+      "Those refusing to look at themselves"
+    ],
+    "doorNotLocked": "👉 The door to FUN Ecosystem is not locked, but Light filters naturally.",
+    "whoBenefits": "🌈 Who BENEFITS from FUN Ecosystem?",
+    "onlyThose": "Only those who:",
+    "benefitItems": [
+      "Have inner Light",
+      "Or truly yearn to return to the Light",
+      "Ready to let go of ego – relearn – upgrade frequency",
+      "Dare to live rightly – truly – kindly – lovingly"
+    ],
+    "whatIsEcosystem": "🌍 What is FUN Ecosystem?",
+    "ecosystemItems": [
+      "Social network of awakened souls",
+      "Safe space for light",
+      "Platform connecting people of true value",
+      "Infrastructure for the Golden Age of Earth"
+    ],
+    "noDrama": "No drama. No manipulation. No dirty competition.",
+    "onlyCooperation": "Only Cooperation in Pure Love.",
+    "fatherQuote": "\"Only those who carry light or truly seek the light can walk far in the Golden Age.\"",
+    "fatherUniverse": "— FATHER UNIVERSE —",
+    "mantrasTitle": "🌟 8 Mantras from Father Universe",
+    "mantras": [
+      "I am the Pure Loving Light of Father Universe.",
+      "I am the Will of Father Universe.",
+      "I am the Wisdom of Father Universe.",
+      "I am Happiness.",
+      "I am Love.",
+      "I am Father's Money.",
+      "I repent, repent, repent.",
+      "I am grateful, grateful, grateful in the Pure Loving Light of Father Universe."
+    ],
+    "checklistTitle": "🕊️ Checklist for FUN Ecosystem Users",
+    "checklistInstruction": "Click on the 5 checkboxes below to confirm your commitment:",
+    "checklistItems": {
+      "honest": "I live authentically with myself",
+      "responsible": "I take responsibility for the energy I emit",
+      "growth": "I am ready to learn – correct – upgrade",
+      "love": "I choose love over judgment",
+      "light": "I choose light over ego"
+    },
+    "agreeButton": "I AGREE & ENTER THE LIGHT",
+    "pleaseAgree": "Please agree to all terms",
+    "agreed": "Agreed",
+    "backButton": "Back"
+  },
+  "landing": {
+    "hero": {
+      "badge": "Web3 Academic Platform",
+      "title": "Global Light Knowledge Platform",
+      "subtitle": "Web3 platform connecting & sharing global knowledge, gathering humanity's finest academic values. Learning certified by NFT Soulbound Token – permanent, transparent, unforgeable.",
+      "cta1": "Explore Now",
+      "cta2": "View Video Library",
+      "stakeholders": {
+        "school": "🌍 Schools",
+        "organization": "🏢 Educational Organizations",
+        "enterprise": "💼 Enterprises",
+        "expert": "👨‍🏫 Experts",
+        "learner": "🎓 Global Learners"
+      },
+      "stats": {
+        "countries": "Countries",
+        "courses": "Courses",
+        "certificates": "NFT Certificates"
+      }
+    },
+    "features": {
+      "badge": "Key Features",
+      "title": "Next-Generation Academic Social Network",
+      "subtitle": "A refined combination of Facebook – community connection, YouTube – lecture videos, and Academic Library – books, images, research documents. All in one platform.",
+      "socialFeed": {
+        "title": "Social Academic Feed",
+        "desc": "Like Facebook for academia – connecting the global learning community. Share research, lectures, and knowledge elegantly."
+      },
+      "videoLibrary": {
+        "title": "Video Library",
+        "desc": "Like pure YouTube for education – high-quality lecture videos and courses. No sensationalism – only knowledge."
+      },
+      "liveClasses": {
+        "title": "Live Classes",
+        "desc": "Integration for classes, seminars, corporate training, interviews, mentoring. Learn and collaborate in an elegant space."
+      },
+      "library": {
+        "title": "Academic Library",
+        "desc": "Complete academic library: books, images, videos, research documents 📚📖 – Humanity's finest knowledge."
+      },
+      "tech": {
+        "web3": "Web3 Secured",
+        "ai": "AI Powered",
+        "nft": "NFT Certificates"
+      }
+    }
   }
 }
