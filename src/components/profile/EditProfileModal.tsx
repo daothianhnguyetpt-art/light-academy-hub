@@ -14,6 +14,7 @@ import { Profile } from "@/hooks/useProfile";
 import { WalletType } from "@/components/auth/WalletOptions";
 import { Pencil, Wallet, Loader2, X, Link as LinkIcon } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslation } from "@/i18n/useTranslation";
 
 interface EditProfileModalProps {
   open: boolean;
@@ -32,6 +33,7 @@ export function EditProfileModal({
   onConnectWallet,
   currentWalletAddress,
 }: EditProfileModalProps) {
+  const { t } = useTranslation();
   const [fullName, setFullName] = useState("");
   const [academicTitle, setAcademicTitle] = useState("");
   const [bio, setBio] = useState("");
@@ -69,7 +71,7 @@ export function EditProfileModal({
         onOpenChange(false);
       }
     } catch (error) {
-      toast.error("Không thể cập nhật hồ sơ");
+      toast.error(t("profile.editModal.updateFailed") || "Update failed");
     } finally {
       setIsSubmitting(false);
     }
@@ -78,9 +80,9 @@ export function EditProfileModal({
   const handleConnectWallet = async () => {
     try {
       await onConnectWallet();
-      toast.success("Đã kết nối ví thành công!");
+      toast.success(t("profile.editModal.walletConnected") || "Wallet connected!");
     } catch (error) {
-      toast.error("Không thể kết nối ví");
+      toast.error(t("auth.walletConnectFailed"));
     }
   };
 
@@ -92,7 +94,7 @@ export function EditProfileModal({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Pencil className="w-5 h-5 text-primary" />
-            Chỉnh Sửa Hồ Sơ
+            {t("profile.editModal.title")}
           </DialogTitle>
         </DialogHeader>
 
@@ -110,7 +112,7 @@ export function EditProfileModal({
               <div className="w-full space-y-2">
                 <div className="flex items-center gap-2">
                   <Input
-                    placeholder="Nhập URL ảnh đại diện..."
+                    placeholder={t("profile.editModal.avatarUrl")}
                     value={avatarUrl}
                     onChange={(e) => setAvatarUrl(e.target.value)}
                     className="flex-1"
@@ -124,7 +126,7 @@ export function EditProfileModal({
                   </Button>
                 </div>
                 <p className="text-xs text-muted-foreground text-center">
-                  Dán URL ảnh từ internet (jpg, png, webp)
+                  {t("profile.editModal.avatarHint") || "Paste image URL (jpg, png, webp)"}
                 </p>
               </div>
             ) : (
@@ -135,7 +137,7 @@ export function EditProfileModal({
                 className="border-gold-muted hover:bg-accent"
               >
                 <LinkIcon className="w-4 h-4 mr-2" />
-                Thay Đổi Ảnh
+                {t("profile.editModal.changeAvatar") || "Change Avatar"}
               </Button>
             )}
           </div>
@@ -143,43 +145,43 @@ export function EditProfileModal({
           {/* Form Fields */}
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="fullName">Tên Hiển Thị</Label>
+              <Label htmlFor="fullName">{t("profile.editModal.fullName")}</Label>
               <Input
                 id="fullName"
-                placeholder="Nguyễn Văn A"
+                placeholder={t("auth.fullName")}
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="academicTitle">Danh Hiệu Học Thuật</Label>
+              <Label htmlFor="academicTitle">{t("profile.editModal.academicTitle")}</Label>
               <Input
                 id="academicTitle"
-                placeholder="Tiên Phong Web3, Học Giả Blockchain..."
+                placeholder={t("profile.pioneer")}
                 value={academicTitle}
                 onChange={(e) => setAcademicTitle(e.target.value)}
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="bio">Giới Thiệu Bản Thân</Label>
+              <Label htmlFor="bio">{t("profile.editModal.bio")}</Label>
               <Textarea
                 id="bio"
-                placeholder="Chia sẻ về hành trình học tập và đam mê của bạn..."
+                placeholder={t("profile.editModal.bioPlaceholder") || "Share your learning journey..."}
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
                 rows={3}
               />
               <p className="text-xs text-muted-foreground">
-                💡 Mẹo: Liệt kê các lĩnh vực quan tâm, cách nhau bằng dấu phẩy
+                {t("profile.editModal.bioTip") || "💡 Tip: List your interests, separated by commas"}
               </p>
             </div>
           </div>
 
           {/* Wallet Section */}
           <div className="space-y-2 pt-2 border-t border-border">
-            <Label>Địa Chỉ Ví</Label>
+            <Label>{t("profile.editModal.wallet")}</Label>
             {displayWallet ? (
               <div className="flex items-center gap-2 p-3 rounded-lg bg-accent/50 border border-border">
                 <Wallet className="w-4 h-4 text-secondary" />
@@ -194,11 +196,11 @@ export function EditProfileModal({
                 className="w-full border-gold-muted hover:bg-accent"
               >
                 <Wallet className="w-4 h-4 mr-2" />
-                Kết Nối Ví Web3
+                {t("profile.editModal.connectWallet")}
               </Button>
             )}
             <p className="text-xs text-muted-foreground">
-              Ví dùng để nhận và lưu trữ Chứng Chỉ Linh Hồn (SBT)
+              {t("profile.editModal.walletHint") || "Wallet for receiving and storing Soul Certificates (SBT)"}
             </p>
           </div>
         </div>
@@ -210,7 +212,7 @@ export function EditProfileModal({
             onClick={() => onOpenChange(false)}
             disabled={isSubmitting}
           >
-            Hủy
+            {t("common.cancel")}
           </Button>
           <Button
             onClick={handleSubmit}
@@ -220,10 +222,10 @@ export function EditProfileModal({
             {isSubmitting ? (
               <>
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                Đang lưu...
+                {t("profile.editModal.saving")}
               </>
             ) : (
-              "Lưu Thay Đổi"
+              t("common.save")
             )}
           </Button>
         </div>
