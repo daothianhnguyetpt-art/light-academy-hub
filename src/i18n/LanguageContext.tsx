@@ -24,6 +24,7 @@ export const availableLanguages: Language[] = [
   { code: 'ko', name: 'Korean', nativeName: '한국어', flag: '🇰🇷' },
 ];
 
+// Locale type definitions - all locales must have same structure as vi
 const locales: Record<LanguageCode, typeof vi> = {
   vi,
   en,
