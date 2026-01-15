@@ -575,6 +575,227 @@
         "ai": "AI 파워드",
         "nft": "NFT 인증서"
       }
+    },
+    "democratization": {
+      "badge": "국경 없는 지식",
+      "title": "지식의 민주화",
+      "titleHighlight": "글로벌",
+      "subtitle": "모든 지리적, 제도적, 전통적 교육 시스템의 경계를 초월합니다. 지식은 모든 사람의 권리입니다.",
+      "points": {
+        "university": {
+          "title": "명문 대학",
+          "desc": "지리적 제한 없이 전 세계 학생에게 개방"
+        },
+        "remote": {
+          "title": "원격 지역",
+          "desc": "누구나와 마찬가지로 세계 지식에 접근할 기회"
+        },
+        "learners": {
+          "title": "어디서나 학습자",
+          "desc": "인류 최고의 지식에 접근할 권리"
+        }
+      },
+      "statement": "FUN ACADEMY는 차별하지 않습니다:",
+      "items": ["국적", "사회 계층", "경제적 상태", "교육 시스템"]
+    },
+    "web3": {
+      "badge": "소울바운드 토큰 (SBT)",
+      "title": "학술 NFT &",
+      "titleHighlight": "아카데믹 패스포트",
+      "description": "모든 학습 결과, 실습 과정, 학위 및 인증서는 소울바운드 토큰 (SBT)으로 기록됩니다 – 각 개인의 진정한 학술적 가치를 나타내는 양도 불가능한 NFT.",
+      "features": {
+        "immutable": {
+          "title": "변경 불가",
+          "desc": "학습 데이터가 블록체인에 영구 기록"
+        },
+        "nonTransferable": {
+          "title": "양도 불가",
+          "desc": "토큰이 영혼에 연결, 판매 또는 교환 불가"
+        },
+        "antiFake": {
+          "title": "위조 불가",
+          "desc": "인증서가 스마트 계약으로 검증"
+        },
+        "permanent": {
+          "title": "영구 보존",
+          "desc": "각 영혼의 학술적 가치가 영원히 보존"
+        }
+      },
+      "certificate": {
+        "title": "소울바운드 토큰",
+        "subtitle": "학술 인증서",
+        "holder": "보유자",
+        "course": "코스",
+        "issued": "발행일",
+        "score": "점수",
+        "verified": "블록체인 검증됨",
+        "tokenId": "토큰 ID"
+      }
+    },
+    "ecosystem": {
+      "badge": "FUN 에코시스템",
+      "quote1": "이것은 단순한 교육 플랫폼이 아닙니다.",
+      "quote2": "이것은 인류의 빛의 도서관",
+      "quote3": "5D 시대의.",
+      "roles": {
+        "heart": {
+          "title": "지식의 심장",
+          "desc": "FUN 에코시스템의 계몽"
+        },
+        "nurture": {
+          "title": "깨어난 인간 양성",
+          "desc": "능력 있음 – 가치 있음"
+        },
+        "foundation": {
+          "title": "새로운 세계의 기반",
+          "desc": "지식은 빛이며, 통제 도구가 아닙니다"
+        }
+      },
+      "connect": "FUN 에코시스템에 연결",
+      "platforms": ["FUN Profile", "FUN Play", "FUN Planet", "FUN Invest", "FUN Life"],
+      "central": "FUN Academy",
+      "centralDesc": "– 에코시스템의 심장"
     }
+  },
+  "whitepaper": {
+    "back": "뒤로",
+    "title": "백서",
+    "downloadPdf": "PDF",
+    "hero": {
+      "badge": "FUN ACADEMY",
+      "title": "백서",
+      "subtitle": "Web3의 글로벌 빛의 지식 플랫폼"
+    },
+    "toc": "목차",
+    "sections": {
+      "vision": { "title": "비전", "sub": "우리의 비전" },
+      "mission": { "title": "미션", "sub": "우리의 미션" },
+      "problem": { "title": "현재 교육 문제", "sub": "현재 과제" },
+      "solution": { "title": "FUN ACADEMY 솔루션", "sub": "우리의 접근" },
+      "technology": { "title": "기술 아키텍처", "sub": "기술 스택" },
+      "sbt": { "title": "NFT & 소울바운드 토큰", "sub": "디지털 자격증" },
+      "values": { "title": "핵심 가치", "sub": "우리의 신념" },
+      "stakeholders": { "title": "이해관계자", "sub": "수혜자" },
+      "ecosystem": { "title": "FUN 에코시스템에서의 역할", "sub": "에코시스템 역할" }
+    },
+    "vision": {
+      "quote": "글로벌 빛의 지식 도서관 – 지식이 독점되지 않는 곳, 학술적 가치가 영구히 기록되는 곳.",
+      "description": "FUN ACADEMY는 사람들이 깨어남을 위해 배우고 – 봉사하고 – 창조하는 장소로 태어났습니다. 통제되거나 경쟁하기 위해서가 아닙니다.",
+      "newWorld": "새로운 세계 (5D 새 지구):",
+      "points": ["지식은 빛", "학습은 영혼의 여정", "기술은 도구", "순수한 사랑이 기반"]
+    },
+    "mission": {
+      "intro": "FUN ACADEMY의 미션:",
+      "points": [
+        "지식의 글로벌 민주화",
+        "교육 시스템 – 기업 – 개인 연결",
+        "각 영혼의 평생 학술 가치 보존",
+        "AI & Web3를 지원에 적용, 조작이 아닌",
+        "깨어난 인간 양성 – 능력 있음 – 우주 윤리 있음"
+      ]
+    },
+    "problem": {
+      "intro": "구 교육 시스템이 직면:",
+      "items": [
+        "지식이 파편화 & 독점",
+        "학위가 실제 능력을 반영하지 않음",
+        "학습 기록이 쉽게 편집됨 – 분실 – 상호 연결 없음",
+        "학습자가 경직된 경로로 강제됨",
+        "기술이 평가 – 통제에 사용, 계몽이 아닌"
+      ],
+      "conclusion": "인류는 깨어남의 시대에 적합한 새로운 학술 플랫폼이 필요합니다."
+    },
+    "solution": {
+      "intro": "FUN ACADEMY는 포괄적인 학술 에코시스템을 제공:",
+      "items": [
+        { "title": "Web3 학술 소셜 네트워크", "desc": "학교 – 강사 – 학생 – 기업 연결. 코스, 강의, 연구, 실제 경험 공유." },
+        { "title": "디지털 지식 라이브러리", "desc": "책, 비디오, 이미지, 강의, 연구 문서. 검색하기 쉬움 – 접근하기 쉬움 – AI로 개인화." },
+        { "title": "온라인 학습 – 회의 – 실습", "desc": "라이브 수업, 세미나, 기업 교육, 1대1/그룹 멘토링. Zoom처럼 통합되어 에코시스템 내에." }
+      ]
+    },
+    "technology": {
+      "ai": {
+        "title": "AI – 지원 지능",
+        "items": ["적합한 학습 경로 제안", "지식 검색 지원", "학습 진행 분석", "실습 & 피드백 지원"]
+      },
+      "web3": {
+        "title": "Web3 – 신뢰 인프라",
+        "items": ["분산형 학술 기록", "투명 – 불변 – 위조 불가", "데이터 소유권은 학습자에게"]
+      }
+    },
+    "sbt": {
+      "intro": "모든 학습 결과(학습 과정, 실습, 채점, 학위, 인증서)는 소울바운드 토큰 (SBT)으로 발행:",
+      "features": [
+        { "text": "양도 불가", "type": "error" },
+        { "text": "변경 불가", "type": "error" },
+        { "text": "매매 불가", "type": "error" },
+        { "text": "블록체인에 영구 저장", "type": "gold" }
+      ],
+      "passport": {
+        "title": "아카데믹 소울 패스포트",
+        "desc": "각 사람의 \"학술 영혼 기록\""
+      }
+    },
+    "values": {
+      "items": [
+        "지식은 빛",
+        "순수한 사랑 속에서 협력",
+        "투명 – 정직 – 지속 가능",
+        "기술은 인류에 봉사",
+        "평생 학습 – 평생 깨어남"
+      ]
+    },
+    "stakeholders": {
+      "items": [
+        "학교 & 대학",
+        "교육 기관",
+        "교육 기업",
+        "강사 – 전문가",
+        "글로벌 학습자",
+        "FUN 에코시스템 커뮤니티"
+      ]
+    },
+    "ecosystemSection": {
+      "central": "FUN ACADEMY는 지식과 계몽의 중심",
+      "hubTitle": "FUN ACADEMY",
+      "hubDesc": "인류를 양성하는 플랫폼",
+      "platforms": [
+        { "name": "FUN Profile", "desc": "Web3 아이덴티티" },
+        { "name": "FUN Play", "desc": "엔터테인먼트 & 게이미피케이션" },
+        { "name": "FUN Planet", "desc": "메타버스 & 가상 세계" },
+        { "name": "FUN Invest", "desc": "투자 & 금융" },
+        { "name": "FUN Life", "desc": "라이프 & 헬스" }
+      ]
+    },
+    "cta": {
+      "title": "FUN ACADEMY에 참여할 준비가 되셨나요?",
+      "subtitle": "오늘 빛의 지식 여정을 시작하세요.",
+      "explore": "플랫폼 탐색",
+      "back": "홈으로 돌아가기"
+    }
+  },
+  "footer": {
+    "description": "FUN 에코시스템의 지식과 계몽의 심장.",
+    "quote": "이것은 5D 시대 인류의 빛의 도서관입니다",
+    "platform": "플랫폼",
+    "resources": "리소스",
+    "ecosystem": "FUN 에코시스템",
+    "links": {
+      "socialFeed": "소셜 피드",
+      "videoLibrary": "비디오 라이브러리",
+      "liveClasses": "라이브 수업",
+      "academicProfile": "학술 프로필",
+      "whitepaper": "백서",
+      "documentation": "문서",
+      "helpCenter": "헬프 센터",
+      "community": "커뮤니티",
+      "funToken": "FUN 토큰",
+      "funMarketplace": "FUN 마켓플레이스",
+      "funDao": "FUN DAO",
+      "partners": "파트너"
+    },
+    "copyright": "© 2026 FUN Academy. All rights reserved.",
+    "privacy": "개인정보 처리방침",
+    "terms": "이용약관"
   }
 }
