@@ -575,6 +575,227 @@
         "ai": "AI 驱动",
         "nft": "NFT 证书"
       }
+    },
+    "democratization": {
+      "badge": "知识无国界",
+      "title": "知识民主化",
+      "titleHighlight": "全球化",
+      "subtitle": "超越所有地理、制度和传统教育体系的界限。知识是每个人的权利。",
+      "points": {
+        "university": {
+          "title": "名牌大学",
+          "desc": "向全球学生开放，不受地理限制"
+        },
+        "remote": {
+          "title": "偏远地区",
+          "desc": "有机会像任何人一样获取世界知识"
+        },
+        "learners": {
+          "title": "各地学习者",
+          "desc": "都有权获取人类最精华的知识"
+        }
+      },
+      "statement": "FUN ACADEMY 不歧视：",
+      "items": ["国籍", "社会阶层", "经济状况", "教育体系"]
+    },
+    "web3": {
+      "badge": "灵魂绑定代币 (SBT)",
+      "title": "学术NFT &",
+      "titleHighlight": "学术护照",
+      "description": "所有学习成果、实践过程、学位和证书都记录为灵魂绑定代币 (SBT) – 不可转让的NFT，代表每个人真正的学术价值。",
+      "features": {
+        "immutable": {
+          "title": "不可更改",
+          "desc": "学习数据永久记录在区块链上"
+        },
+        "nonTransferable": {
+          "title": "不可转让",
+          "desc": "代币绑定灵魂，不能出售或交换"
+        },
+        "antiFake": {
+          "title": "不可伪造",
+          "desc": "证书由智能合约验证"
+        },
+        "permanent": {
+          "title": "永久保存",
+          "desc": "每个灵魂的学术价值永远保存"
+        }
+      },
+      "certificate": {
+        "title": "灵魂绑定代币",
+        "subtitle": "学术证书",
+        "holder": "持有者",
+        "course": "课程",
+        "issued": "颁发日期",
+        "score": "分数",
+        "verified": "区块链已验证",
+        "tokenId": "代币ID"
+      }
+    },
+    "ecosystem": {
+      "badge": "FUN 生态系统",
+      "quote1": "这不仅仅是一个教育平台。",
+      "quote2": "这是人类的光明图书馆",
+      "quote3": "在5D时代。",
+      "roles": {
+        "heart": {
+          "title": "知识之心",
+          "desc": "FUN生态系统的启蒙"
+        },
+        "nurture": {
+          "title": "培养觉醒的人",
+          "desc": "有能力 – 有价值"
+        },
+        "foundation": {
+          "title": "新世界的基础",
+          "desc": "知识是光明，不是控制工具"
+        }
+      },
+      "connect": "连接FUN生态系统",
+      "platforms": ["FUN Profile", "FUN Play", "FUN Planet", "FUN Invest", "FUN Life"],
+      "central": "FUN Academy",
+      "centralDesc": "– 生态系统之心"
     }
+  },
+  "whitepaper": {
+    "back": "返回",
+    "title": "白皮书",
+    "downloadPdf": "PDF",
+    "hero": {
+      "badge": "FUN ACADEMY",
+      "title": "白皮书",
+      "subtitle": "Web3上的全球光明知识平台"
+    },
+    "toc": "目录",
+    "sections": {
+      "vision": { "title": "愿景", "sub": "我们的愿景" },
+      "mission": { "title": "使命", "sub": "我们的使命" },
+      "problem": { "title": "当前教育问题", "sub": "当前挑战" },
+      "solution": { "title": "FUN ACADEMY解决方案", "sub": "我们的方法" },
+      "technology": { "title": "技术架构", "sub": "技术栈" },
+      "sbt": { "title": "NFT & 灵魂绑定代币", "sub": "数字证书" },
+      "values": { "title": "核心价值观", "sub": "我们的信念" },
+      "stakeholders": { "title": "利益相关者", "sub": "受益者" },
+      "ecosystem": { "title": "在FUN生态系统中的角色", "sub": "生态系统角色" }
+    },
+    "vision": {
+      "quote": "全球光明知识图书馆 – 知识不被垄断的地方，学术价值被永久记录的地方。",
+      "description": "FUN ACADEMY的诞生是为了成为一个人们学习觉醒 – 服务 – 创造的地方，而不是被控制或竞争。",
+      "newWorld": "新世界 (5D新地球)：",
+      "points": ["知识是光明", "学习是灵魂之旅", "技术是工具", "纯爱是基础"]
+    },
+    "mission": {
+      "intro": "FUN ACADEMY的使命：",
+      "points": [
+        "知识全球民主化",
+        "连接教育系统 – 企业 – 个人",
+        "为每个灵魂保存终身学术价值",
+        "应用AI & Web3来支持，而不是操纵",
+        "培养觉醒的人 – 有能力 – 有宇宙道德"
+      ]
+    },
+    "problem": {
+      "intro": "旧教育系统面临：",
+      "items": [
+        "知识碎片化 & 被垄断",
+        "学位不反映实际能力",
+        "学习记录容易被编辑 – 丢失 – 不互通",
+        "学习者被迫走僵化的路径",
+        "技术被用来评估 – 控制，而不是启蒙"
+      ],
+      "conclusion": "人类需要一个适合觉醒时代的新学术平台。"
+    },
+    "solution": {
+      "intro": "FUN ACADEMY提供全面的学术生态系统：",
+      "items": [
+        { "title": "Web3学术社交网络", "desc": "连接学校 – 讲师 – 学生 – 企业。分享课程、讲座、研究、实际经验。" },
+        { "title": "数字知识库", "desc": "书籍、视频、图片、讲座、研究文档。易于搜索 – 易于访问 – AI个性化。" },
+        { "title": "在线学习 – 会议 – 实践", "desc": "直播课程、研讨会、企业培训、1对1/小组辅导。像Zoom一样集成但在生态系统内。" }
+      ]
+    },
+    "technology": {
+      "ai": {
+        "title": "AI – 支持性智能",
+        "items": ["推荐合适的学习路径", "支持知识搜索", "分析学习进度", "支持实践 & 反馈"]
+      },
+      "web3": {
+        "title": "Web3 – 信任基础设施",
+        "items": ["去中心化学术记录", "透明 – 不可变 – 不可伪造", "数据所有权属于学习者"]
+      }
+    },
+    "sbt": {
+      "intro": "所有学习成果（学习过程、实践、评分、学位、证书）都以灵魂绑定代币 (SBT) 形式发行：",
+      "features": [
+        { "text": "不可转让", "type": "error" },
+        { "text": "不可更改", "type": "error" },
+        { "text": "不可买卖", "type": "error" },
+        { "text": "永久存储在区块链上", "type": "gold" }
+      ],
+      "passport": {
+        "title": "学术灵魂护照",
+        "desc": "每个人的\"学术灵魂记录\""
+      }
+    },
+    "values": {
+      "items": [
+        "知识是光明",
+        "在纯爱中合作",
+        "透明 – 诚实 – 可持续",
+        "技术服务人类",
+        "终身学习 – 终身觉醒"
+      ]
+    },
+    "stakeholders": {
+      "items": [
+        "学校 & 大学",
+        "教育机构",
+        "培训企业",
+        "讲师 – 专家",
+        "全球学习者",
+        "FUN生态系统社区"
+      ]
+    },
+    "ecosystemSection": {
+      "central": "FUN ACADEMY是知识与启蒙中心",
+      "hubTitle": "FUN ACADEMY",
+      "hubDesc": "培养人类的平台",
+      "platforms": [
+        { "name": "FUN Profile", "desc": "Web3身份" },
+        { "name": "FUN Play", "desc": "娱乐 & 游戏化" },
+        { "name": "FUN Planet", "desc": "元宇宙 & 虚拟世界" },
+        { "name": "FUN Invest", "desc": "投资 & 金融" },
+        { "name": "FUN Life", "desc": "生活 & 健康" }
+      ]
+    },
+    "cta": {
+      "title": "准备加入FUN ACADEMY？",
+      "subtitle": "今天就开始你的光明知识之旅。",
+      "explore": "探索平台",
+      "back": "返回首页"
+    }
+  },
+  "footer": {
+    "description": "FUN生态系统的知识与启蒙之心。",
+    "quote": "这是5D时代人类的光明图书馆",
+    "platform": "平台",
+    "resources": "资源",
+    "ecosystem": "FUN 生态系统",
+    "links": {
+      "socialFeed": "社交动态",
+      "videoLibrary": "视频库",
+      "liveClasses": "直播课程",
+      "academicProfile": "学术档案",
+      "whitepaper": "白皮书",
+      "documentation": "文档",
+      "helpCenter": "帮助中心",
+      "community": "社区",
+      "funToken": "FUN 代币",
+      "funMarketplace": "FUN 市场",
+      "funDao": "FUN DAO",
+      "partners": "合作伙伴"
+    },
+    "copyright": "© 2026 FUN Academy. 保留所有权利。",
+    "privacy": "隐私政策",
+    "terms": "服务条款"
   }
 }

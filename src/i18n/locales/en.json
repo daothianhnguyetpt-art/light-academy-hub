@@ -575,6 +575,227 @@
         "ai": "AI Powered",
         "nft": "NFT Certificates"
       }
+    },
+    "democratization": {
+      "badge": "Knowledge Without Borders",
+      "title": "Democratizing Knowledge",
+      "titleHighlight": "Globally",
+      "subtitle": "Transcending all geographical, institutional, and traditional education system boundaries. Knowledge is everyone's right.",
+      "points": {
+        "university": {
+          "title": "Prestigious Universities",
+          "desc": "Present to reach global students without geographical limits"
+        },
+        "remote": {
+          "title": "Remote Areas",
+          "desc": "Have the opportunity to access world knowledge like anyone else"
+        },
+        "learners": {
+          "title": "Learners Everywhere",
+          "desc": "All have the right to access humanity's finest knowledge"
+        }
+      },
+      "statement": "FUN ACADEMY does not discriminate:",
+      "items": ["Nationality", "Social Class", "Economic Status", "Education System"]
+    },
+    "web3": {
+      "badge": "Soulbound Token (SBT)",
+      "title": "Academic NFT &",
+      "titleHighlight": "Academic Passport",
+      "description": "All learning outcomes, practice processes, degrees and certificates are recorded as Soulbound Tokens (SBT) – non-transferable NFTs representing each individual's true academic value.",
+      "features": {
+        "immutable": {
+          "title": "Immutable",
+          "desc": "Learning data permanently recorded on blockchain"
+        },
+        "nonTransferable": {
+          "title": "Non-Transferable",
+          "desc": "Token bound to soul, cannot be sold or exchanged"
+        },
+        "antiFake": {
+          "title": "Unforgeable",
+          "desc": "Certificates verified by smart contracts"
+        },
+        "permanent": {
+          "title": "Permanently Preserved",
+          "desc": "Each soul's academic value preserved forever"
+        }
+      },
+      "certificate": {
+        "title": "Soulbound Token",
+        "subtitle": "Academic Certificate",
+        "holder": "Holder",
+        "course": "Course",
+        "issued": "Issued",
+        "score": "Score",
+        "verified": "Verified on Blockchain",
+        "tokenId": "Token ID"
+      }
+    },
+    "ecosystem": {
+      "badge": "FUN Ecosystem",
+      "quote1": "This is not just an education platform.",
+      "quote2": "This is the Light Library of Humanity",
+      "quote3": "in the 5D Era.",
+      "roles": {
+        "heart": {
+          "title": "Heart of Knowledge",
+          "desc": "Enlightenment of FUN Ecosystem"
+        },
+        "nurture": {
+          "title": "Nurturing Awakened Humans",
+          "desc": "With capability – with value"
+        },
+        "foundation": {
+          "title": "Foundation for the New World",
+          "desc": "Knowledge is light, not a tool of control"
+        }
+      },
+      "connect": "Connect with FUN Ecosystem",
+      "platforms": ["FUN Profile", "FUN Play", "FUN Planet", "FUN Invest", "FUN Life"],
+      "central": "FUN Academy",
+      "centralDesc": "– Heart of the Ecosystem"
     }
+  },
+  "whitepaper": {
+    "back": "Back",
+    "title": "Whitepaper",
+    "downloadPdf": "PDF",
+    "hero": {
+      "badge": "FUN ACADEMY",
+      "title": "WHITEPAPER",
+      "subtitle": "The Global Light Knowledge Platform on Web3"
+    },
+    "toc": "Table of Contents",
+    "sections": {
+      "vision": { "title": "Vision", "sub": "Our Vision" },
+      "mission": { "title": "Mission", "sub": "Our Mission" },
+      "problem": { "title": "Current Education Problems", "sub": "Current Problems" },
+      "solution": { "title": "FUN ACADEMY Solutions", "sub": "Our Solutions" },
+      "technology": { "title": "Technology Architecture", "sub": "Technology Stack" },
+      "sbt": { "title": "NFT & Soulbound Token (SBT)", "sub": "Digital Credentials" },
+      "values": { "title": "Core Values", "sub": "What We Believe" },
+      "stakeholders": { "title": "Stakeholders", "sub": "Who Benefits" },
+      "ecosystem": { "title": "Role in FUN Ecosystem", "sub": "Ecosystem Role" }
+    },
+    "vision": {
+      "quote": "The Global Light Knowledge Library – where knowledge is not monopolized, where academic value is recorded forever.",
+      "description": "FUN ACADEMY was born to become a place where humans learn to awaken – serve – create, not to be controlled or compete.",
+      "newWorld": "New World (New Earth 5D):",
+      "points": ["Knowledge is light", "Learning is a soul journey", "Technology is a tool", "Pure love is the foundation"]
+    },
+    "mission": {
+      "intro": "FUN ACADEMY's mission:",
+      "points": [
+        "Democratize global knowledge",
+        "Connect education systems – enterprises – individuals",
+        "Preserve lifelong academic value for each soul",
+        "Apply AI & Web3 to support, not manipulate",
+        "Nurture awakened humans – with capability – with cosmic ethics"
+      ]
+    },
+    "problem": {
+      "intro": "The old education system faces:",
+      "items": [
+        "Knowledge is fragmented & monopolized",
+        "Degrees don't reflect actual competence",
+        "Learning records are easily edited – lost – not interconnected",
+        "Learners are forced into rigid pathways",
+        "Technology is used to evaluate – control, not to enlighten"
+      ],
+      "conclusion": "Humanity needs a new academic platform suited for the age of awakening."
+    },
+    "solution": {
+      "intro": "FUN ACADEMY provides a comprehensive academic ecosystem:",
+      "items": [
+        { "title": "Web3 Academic Social Network", "desc": "Connecting schools – instructors – students – enterprises. Share courses, lectures, research, real-world experience." },
+        { "title": "Digital Knowledge Library", "desc": "Books, videos, images, lectures, research documents. Easy to search – easy to access – personalized by AI." },
+        { "title": "Learn – Meet – Practice Online", "desc": "Live classes, seminars, corporate training, 1-1/group mentoring. Integrated like Zoom but within the ecosystem." }
+      ]
+    },
+    "technology": {
+      "ai": {
+        "title": "AI – Supportive Intelligence",
+        "items": ["Suggest suitable learning paths", "Support knowledge search", "Analyze learning progress", "Support practice & feedback"]
+      },
+      "web3": {
+        "title": "Web3 – Trust Infrastructure",
+        "items": ["Decentralized academic records", "Transparent – immutable – unforgeable", "Data ownership belongs to learners"]
+      }
+    },
+    "sbt": {
+      "intro": "All learning outcomes (learning process, practice, grading, degrees, certificates) are issued as Soulbound Tokens (SBT):",
+      "features": [
+        { "text": "Non-Transferable", "type": "error" },
+        { "text": "Immutable", "type": "error" },
+        { "text": "Cannot be bought or sold", "type": "error" },
+        { "text": "Permanently stored on blockchain", "type": "gold" }
+      ],
+      "passport": {
+        "title": "Academic Soul Passport",
+        "desc": "The \"academic soul record\" of each person"
+      }
+    },
+    "values": {
+      "items": [
+        "Knowledge is light",
+        "Cooperation in pure love",
+        "Transparent – Honest – Sustainable",
+        "Technology serves humanity",
+        "Lifelong learning – Lifelong awakening"
+      ]
+    },
+    "stakeholders": {
+      "items": [
+        "Schools & Universities",
+        "Educational Organizations",
+        "Training Enterprises",
+        "Instructors – Experts",
+        "Global Learners",
+        "FUN Ecosystem Community"
+      ]
+    },
+    "ecosystemSection": {
+      "central": "FUN ACADEMY is the Center of Knowledge & Enlightenment",
+      "hubTitle": "FUN ACADEMY",
+      "hubDesc": "Platform nurturing humanity",
+      "platforms": [
+        { "name": "FUN Profile", "desc": "Web3 Identity" },
+        { "name": "FUN Play", "desc": "Entertainment & Gamification" },
+        { "name": "FUN Planet", "desc": "Metaverse & Virtual World" },
+        { "name": "FUN Invest", "desc": "Investment & Finance" },
+        { "name": "FUN Life", "desc": "Life & Health" }
+      ]
+    },
+    "cta": {
+      "title": "Ready to join FUN ACADEMY?",
+      "subtitle": "Start your light knowledge journey today.",
+      "explore": "Explore Platform",
+      "back": "Back to Home"
+    }
+  },
+  "footer": {
+    "description": "The heart of knowledge & enlightenment of FUN Ecosystem.",
+    "quote": "This is the Light Library of Humanity in the 5D Era",
+    "platform": "Platform",
+    "resources": "Resources",
+    "ecosystem": "FUN Ecosystem",
+    "links": {
+      "socialFeed": "Social Feed",
+      "videoLibrary": "Video Library",
+      "liveClasses": "Live Classes",
+      "academicProfile": "Academic Profile",
+      "whitepaper": "Whitepaper",
+      "documentation": "Documentation",
+      "helpCenter": "Help Center",
+      "community": "Community",
+      "funToken": "FUN Token",
+      "funMarketplace": "FUN Marketplace",
+      "funDao": "FUN DAO",
+      "partners": "Partners"
+    },
+    "copyright": "© 2026 FUN Academy. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
   }
 }

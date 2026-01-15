@@ -575,6 +575,227 @@
         "ai": "AI パワード",
         "nft": "NFT 証明書"
       }
+    },
+    "democratization": {
+      "badge": "国境なき知識",
+      "title": "知識の民主化",
+      "titleHighlight": "グローバル",
+      "subtitle": "すべての地理的、制度的、伝統的な教育システムの境界を超えて。知識はすべての人の権利です。",
+      "points": {
+        "university": {
+          "title": "名門大学",
+          "desc": "地理的制限なく世界の学生に開放"
+        },
+        "remote": {
+          "title": "遠隔地",
+          "desc": "誰もと同じように世界の知識にアクセスする機会"
+        },
+        "learners": {
+          "title": "どこでも学習者",
+          "desc": "人類最高の知識にアクセスする権利"
+        }
+      },
+      "statement": "FUN ACADEMY は差別しません：",
+      "items": ["国籍", "社会階層", "経済状況", "教育制度"]
+    },
+    "web3": {
+      "badge": "ソウルバウンドトークン (SBT)",
+      "title": "学術NFT &",
+      "titleHighlight": "アカデミックパスポート",
+      "description": "すべての学習成果、実践プロセス、学位、証明書はソウルバウンドトークン (SBT) として記録されます – 各個人の真の学術的価値を表す譲渡不可能なNFT。",
+      "features": {
+        "immutable": {
+          "title": "変更不可",
+          "desc": "学習データはブロックチェーン上に永久に記録"
+        },
+        "nonTransferable": {
+          "title": "譲渡不可",
+          "desc": "トークンは魂に紐付き、売買や交換不可"
+        },
+        "antiFake": {
+          "title": "偽造不可",
+          "desc": "証明書はスマートコントラクトで検証"
+        },
+        "permanent": {
+          "title": "永久保存",
+          "desc": "各魂の学術的価値は永久に保存"
+        }
+      },
+      "certificate": {
+        "title": "ソウルバウンドトークン",
+        "subtitle": "学術証明書",
+        "holder": "保有者",
+        "course": "コース",
+        "issued": "発行日",
+        "score": "スコア",
+        "verified": "ブロックチェーン検証済み",
+        "tokenId": "トークンID"
+      }
+    },
+    "ecosystem": {
+      "badge": "FUN エコシステム",
+      "quote1": "これは単なる教育プラットフォームではありません。",
+      "quote2": "これは人類の光の図書館",
+      "quote3": "5D時代の。",
+      "roles": {
+        "heart": {
+          "title": "知識の心臓",
+          "desc": "FUNエコシステムの啓蒙"
+        },
+        "nurture": {
+          "title": "覚醒した人間を育てる",
+          "desc": "能力あり – 価値あり"
+        },
+        "foundation": {
+          "title": "新世界の基盤",
+          "desc": "知識は光であり、支配の道具ではない"
+        }
+      },
+      "connect": "FUNエコシステムに接続",
+      "platforms": ["FUN Profile", "FUN Play", "FUN Planet", "FUN Invest", "FUN Life"],
+      "central": "FUN Academy",
+      "centralDesc": "– エコシステムの心臓"
     }
+  },
+  "whitepaper": {
+    "back": "戻る",
+    "title": "ホワイトペーパー",
+    "downloadPdf": "PDF",
+    "hero": {
+      "badge": "FUN ACADEMY",
+      "title": "ホワイトペーパー",
+      "subtitle": "Web3上のグローバル光の知識プラットフォーム"
+    },
+    "toc": "目次",
+    "sections": {
+      "vision": { "title": "ビジョン", "sub": "私たちのビジョン" },
+      "mission": { "title": "ミッション", "sub": "私たちのミッション" },
+      "problem": { "title": "現在の教育問題", "sub": "現在の課題" },
+      "solution": { "title": "FUN ACADEMYソリューション", "sub": "私たちのアプローチ" },
+      "technology": { "title": "テクノロジーアーキテクチャ", "sub": "技術スタック" },
+      "sbt": { "title": "NFT & ソウルバウンドトークン", "sub": "デジタル認証" },
+      "values": { "title": "コアバリュー", "sub": "私たちの信念" },
+      "stakeholders": { "title": "ステークホルダー", "sub": "受益者" },
+      "ecosystem": { "title": "FUNエコシステムでの役割", "sub": "エコシステムの役割" }
+    },
+    "vision": {
+      "quote": "グローバル光の知識図書館 – 知識が独占されない場所、学術的価値が永久に記録される場所。",
+      "description": "FUN ACADEMYは、人々が覚醒のために学び – 奉仕し – 創造する場所として生まれました。支配されたり競争するためではありません。",
+      "newWorld": "新世界 (5D新地球)：",
+      "points": ["知識は光", "学習は魂の旅", "テクノロジーは道具", "純粋な愛が基盤"]
+    },
+    "mission": {
+      "intro": "FUN ACADEMYのミッション：",
+      "points": [
+        "知識のグローバル民主化",
+        "教育システム – 企業 – 個人を接続",
+        "各魂の生涯学術価値を保存",
+        "AI & Web3を支援に活用、操作ではなく",
+        "覚醒した人間を育てる – 能力あり – 宇宙倫理あり"
+      ]
+    },
+    "problem": {
+      "intro": "旧教育システムが直面：",
+      "items": [
+        "知識が断片化 & 独占",
+        "学位が実際の能力を反映しない",
+        "学習記録が編集されやすい – 紛失 – 相互接続なし",
+        "学習者が硬直したパスに強制される",
+        "テクノロジーが評価 – 制御に使用、啓蒙ではなく"
+      ],
+      "conclusion": "人類は覚醒の時代に適した新しい学術プラットフォームが必要です。"
+    },
+    "solution": {
+      "intro": "FUN ACADEMYは包括的な学術エコシステムを提供：",
+      "items": [
+        { "title": "Web3学術ソーシャルネットワーク", "desc": "学校 – 講師 – 学生 – 企業を接続。コース、講義、研究、実体験を共有。" },
+        { "title": "デジタル知識ライブラリ", "desc": "書籍、動画、画像、講義、研究文書。検索しやすい – アクセスしやすい – AIでパーソナライズ。" },
+        { "title": "オンライン学習 – 会議 – 実践", "desc": "ライブ授業、セミナー、企業研修、1対1/グループメンタリング。Zoomのように統合されエコシステム内に。" }
+      ]
+    },
+    "technology": {
+      "ai": {
+        "title": "AI – 支援知能",
+        "items": ["適切な学習パスを提案", "知識検索をサポート", "学習進捗を分析", "実践 & フィードバックをサポート"]
+      },
+      "web3": {
+        "title": "Web3 – 信頼インフラ",
+        "items": ["分散型学術記録", "透明 – 不変 – 偽造不可", "データ所有権は学習者に"]
+      }
+    },
+    "sbt": {
+      "intro": "すべての学習成果（学習プロセス、実践、採点、学位、証明書）はソウルバウンドトークン (SBT) として発行：",
+      "features": [
+        { "text": "譲渡不可", "type": "error" },
+        { "text": "変更不可", "type": "error" },
+        { "text": "売買不可", "type": "error" },
+        { "text": "ブロックチェーンに永久保存", "type": "gold" }
+      ],
+      "passport": {
+        "title": "アカデミック・ソウル・パスポート",
+        "desc": "各人の「学術魂の記録」"
+      }
+    },
+    "values": {
+      "items": [
+        "知識は光",
+        "純粋な愛の中で協力",
+        "透明 – 正直 – 持続可能",
+        "テクノロジーは人類に奉仕",
+        "生涯学習 – 生涯覚醒"
+      ]
+    },
+    "stakeholders": {
+      "items": [
+        "学校 & 大学",
+        "教育機関",
+        "研修企業",
+        "講師 – 専門家",
+        "グローバル学習者",
+        "FUNエコシステムコミュニティ"
+      ]
+    },
+    "ecosystemSection": {
+      "central": "FUN ACADEMYは知識と啓蒙の中心",
+      "hubTitle": "FUN ACADEMY",
+      "hubDesc": "人類を育てるプラットフォーム",
+      "platforms": [
+        { "name": "FUN Profile", "desc": "Web3アイデンティティ" },
+        { "name": "FUN Play", "desc": "エンターテインメント & ゲーミフィケーション" },
+        { "name": "FUN Planet", "desc": "メタバース & バーチャルワールド" },
+        { "name": "FUN Invest", "desc": "投資 & ファイナンス" },
+        { "name": "FUN Life", "desc": "ライフ & ヘルス" }
+      ]
+    },
+    "cta": {
+      "title": "FUN ACADEMYに参加する準備はできましたか？",
+      "subtitle": "今日から光の知識の旅を始めましょう。",
+      "explore": "プラットフォームを探索",
+      "back": "ホームに戻る"
+    }
+  },
+  "footer": {
+    "description": "FUNエコシステムの知識と啓蒙の心臓。",
+    "quote": "これは5D時代の人類の光の図書館です",
+    "platform": "プラットフォーム",
+    "resources": "リソース",
+    "ecosystem": "FUN エコシステム",
+    "links": {
+      "socialFeed": "ソーシャルフィード",
+      "videoLibrary": "ビデオライブラリ",
+      "liveClasses": "ライブ授業",
+      "academicProfile": "学術プロフィール",
+      "whitepaper": "ホワイトペーパー",
+      "documentation": "ドキュメント",
+      "helpCenter": "ヘルプセンター",
+      "community": "コミュニティ",
+      "funToken": "FUN トークン",
+      "funMarketplace": "FUN マーケットプレイス",
+      "funDao": "FUN DAO",
+      "partners": "パートナー"
+    },
+    "copyright": "© 2026 FUN Academy. All rights reserved.",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約"
   }
 }

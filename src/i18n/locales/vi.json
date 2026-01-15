@@ -575,6 +575,227 @@
         "ai": "AI Powered",
         "nft": "NFT Certificates"
       }
+    },
+    "democratization": {
+      "badge": "Tri Thức Không Biên Giới",
+      "title": "Dân Chủ Hoá Tri Thức",
+      "titleHighlight": "Toàn Cầu",
+      "subtitle": "Vượt qua mọi biên giới địa lý, thể chế và hệ thống giáo dục truyền thống. Tri thức là quyền của mọi người.",
+      "points": {
+        "university": {
+          "title": "Đại học danh tiếng",
+          "desc": "Hiện diện để tiếp cận sinh viên toàn cầu không giới hạn địa lý"
+        },
+        "remote": {
+          "title": "Vùng sâu vùng xa",
+          "desc": "Có cơ hội tiếp cận tri thức thế giới như bất kỳ ai"
+        },
+        "learners": {
+          "title": "Người học mọi nơi",
+          "desc": "Đều có quyền tiếp cận tri thức tinh hoa của nhân loại"
+        }
+      },
+      "statement": "FUN ACADEMY không phân biệt:",
+      "items": ["Quốc gia", "Giai cấp", "Điều kiện kinh tế", "Hệ thống giáo dục"]
+    },
+    "web3": {
+      "badge": "Soulbound Token (SBT)",
+      "title": "NFT Học Thuật &",
+      "titleHighlight": "Academic Passport",
+      "description": "Mọi kết quả học tập, quá trình thực hành, bằng cấp và chứng chỉ đều được ghi nhận bằng Soulbound Token (SBT) – loại NFT không thể chuyển nhượng, đại diện cho giá trị học thuật thực sự của mỗi cá nhân.",
+      "features": {
+        "immutable": {
+          "title": "Không thể chỉnh sửa",
+          "desc": "Dữ liệu học tập được ghi nhận vĩnh viễn trên blockchain"
+        },
+        "nonTransferable": {
+          "title": "Không thể chuyển nhượng",
+          "desc": "Token gắn liền với linh hồn, không thể bán hoặc trao đổi"
+        },
+        "antiFake": {
+          "title": "Không thể làm giả",
+          "desc": "Chứng chỉ được xác thực bởi smart contract"
+        },
+        "permanent": {
+          "title": "Lưu giữ vĩnh viễn",
+          "desc": "Giá trị học thuật của mỗi linh hồn được bảo toàn mãi mãi"
+        }
+      },
+      "certificate": {
+        "title": "Soulbound Token",
+        "subtitle": "Academic Certificate",
+        "holder": "Holder",
+        "course": "Course",
+        "issued": "Issued",
+        "score": "Score",
+        "verified": "Verified on Blockchain",
+        "tokenId": "Token ID"
+      }
+    },
+    "ecosystem": {
+      "badge": "FUN Ecosystem",
+      "quote1": "Đây không chỉ là một platform giáo dục.",
+      "quote2": "Đây là Thư Viện Ánh Sáng của Nhân Loại",
+      "quote3": "trong Kỷ Nguyên 5D.",
+      "roles": {
+        "heart": {
+          "title": "Trái tim tri thức",
+          "desc": "Khai sáng của FUN Ecosystem"
+        },
+        "nurture": {
+          "title": "Nuôi dưỡng con người tỉnh thức",
+          "desc": "Có năng lực – có giá trị"
+        },
+        "foundation": {
+          "title": "Nền móng cho Thế Giới Mới",
+          "desc": "Tri thức là ánh sáng, không phải công cụ kiểm soát"
+        }
+      },
+      "connect": "Kết nối với FUN Ecosystem",
+      "platforms": ["FUN Profile", "FUN Play", "FUN Planet", "FUN Invest", "FUN Life"],
+      "central": "FUN Academy",
+      "centralDesc": "– Trái tim của Ecosystem"
     }
+  },
+  "whitepaper": {
+    "back": "Quay lại",
+    "title": "Whitepaper",
+    "downloadPdf": "PDF",
+    "hero": {
+      "badge": "FUN ACADEMY",
+      "title": "WHITEPAPER",
+      "subtitle": "The Global Light Knowledge Platform on Web3"
+    },
+    "toc": "Mục Lục",
+    "sections": {
+      "vision": { "title": "Tầm Nhìn", "sub": "Vision" },
+      "mission": { "title": "Sứ Mệnh", "sub": "Mission" },
+      "problem": { "title": "Vấn Đề Của Giáo Dục Hiện Tại", "sub": "Current Problems" },
+      "solution": { "title": "Giải Pháp Của FUN ACADEMY", "sub": "Our Solutions" },
+      "technology": { "title": "Kiến Trúc Công Nghệ", "sub": "Technology Stack" },
+      "sbt": { "title": "NFT & Soulbound Token (SBT)", "sub": "Digital Credentials" },
+      "values": { "title": "Giá Trị Cốt Lõi", "sub": "Core Values" },
+      "stakeholders": { "title": "Đối Tượng Tham Gia", "sub": "Stakeholders" },
+      "ecosystem": { "title": "Vai Trò Trong FUN Ecosystem", "sub": "Ecosystem Role" }
+    },
+    "vision": {
+      "quote": "Thư viện Tri Thức Ánh Sáng Toàn Cầu – nơi tri thức không bị độc quyền, nơi giá trị học thuật được ghi nhận vĩnh viễn.",
+      "description": "FUN ACADEMY được sinh ra để trở thành nơi con người học để tỉnh thức – phụng sự – sáng tạo, chứ không học để bị kiểm soát hay cạnh tranh.",
+      "newWorld": "Thế Giới Mới (New Earth 5D):",
+      "points": ["Tri thức là ánh sáng", "Học tập là hành trình linh hồn", "Công nghệ là công cụ", "Tình yêu thuần khiết là nền móng"]
+    },
+    "mission": {
+      "intro": "FUN ACADEMY mang sứ mệnh:",
+      "points": [
+        "Dân chủ hoá tri thức toàn cầu",
+        "Kết nối các hệ thống giáo dục – doanh nghiệp – cá nhân",
+        "Bảo toàn giá trị học thuật suốt đời cho mỗi linh hồn",
+        "Ứng dụng AI & Web3 để hỗ trợ, không thao túng",
+        "Nuôi dưỡng thế hệ con người tỉnh thức – có năng lực – có đạo đức vũ trụ"
+      ]
+    },
+    "problem": {
+      "intro": "Hệ thống giáo dục cũ đang đối mặt với:",
+      "items": [
+        "Tri thức bị phân mảnh & độc quyền",
+        "Bằng cấp không phản ánh đúng năng lực thực",
+        "Hồ sơ học tập dễ bị chỉnh sửa – mất mát – không liên thông",
+        "Người học bị ép theo một lộ trình cứng nhắc",
+        "Công nghệ được dùng để đánh giá – kiểm soát, thay vì khai mở"
+      ],
+      "conclusion": "Nhân loại cần một nền tảng học thuật mới, phù hợp với kỷ nguyên tỉnh thức."
+    },
+    "solution": {
+      "intro": "FUN ACADEMY cung cấp một hệ sinh thái học thuật toàn diện:",
+      "items": [
+        { "title": "Mạng xã hội học thuật Web3", "desc": "Kết nối trường học – giảng viên – sinh viên – doanh nghiệp. Chia sẻ khóa học, bài giảng, nghiên cứu, kinh nghiệm thực tế." },
+        { "title": "Thư viện tri thức số hoá", "desc": "Sách, video, hình ảnh, bài giảng, tài liệu nghiên cứu. Dễ tìm kiếm – dễ truy cập – cá nhân hoá bằng AI." },
+        { "title": "Học – Họp – Thực hành trực tuyến", "desc": "Lớp học live, hội thảo, đào tạo doanh nghiệp, mentoring 1–1 / nhóm. Tích hợp như Zoom nhưng nằm trong hệ sinh thái." }
+      ]
+    },
+    "technology": {
+      "ai": {
+        "title": "AI – Trí tuệ hỗ trợ",
+        "items": ["Gợi ý lộ trình học phù hợp", "Hỗ trợ tìm kiếm tri thức", "Phân tích tiến trình học tập", "Hỗ trợ thực hành & phản hồi"]
+      },
+      "web3": {
+        "title": "Web3 – Hạ tầng niềm tin",
+        "items": ["Hồ sơ học thuật phi tập trung", "Minh bạch – bất biến – không thể làm giả", "Quyền sở hữu dữ liệu thuộc về người học"]
+      }
+    },
+    "sbt": {
+      "intro": "Mọi kết quả học tập (quá trình học, thực hành, chấm điểm, bằng cấp, chứng chỉ) đều được phát hành dưới dạng Soulbound Token (SBT):",
+      "features": [
+        { "text": "Không chuyển nhượng", "type": "error" },
+        { "text": "Không chỉnh sửa", "type": "error" },
+        { "text": "Không thể mua bán", "type": "error" },
+        { "text": "Lưu giữ vĩnh viễn trên blockchain", "type": "gold" }
+      ],
+      "passport": {
+        "title": "Academic Soul Passport",
+        "desc": "\"Hồ sơ linh hồn học thuật\" của mỗi con người"
+      }
+    },
+    "values": {
+      "items": [
+        "Tri thức là ánh sáng",
+        "Hợp tác trong yêu thương thuần khiết",
+        "Minh bạch – Trung thực – Bền vững",
+        "Công nghệ phục vụ con người",
+        "Học tập suốt đời – Thức tỉnh suốt đời"
+      ]
+    },
+    "stakeholders": {
+      "items": [
+        "Trường học & Đại học",
+        "Tổ chức giáo dục",
+        "Doanh nghiệp đào tạo",
+        "Giảng viên – Chuyên gia",
+        "Người học toàn cầu",
+        "Cộng đồng FUN Ecosystem"
+      ]
+    },
+    "ecosystemSection": {
+      "central": "FUN ACADEMY là Trung tâm Tri Thức & Khai Sáng",
+      "hubTitle": "FUN ACADEMY",
+      "hubDesc": "Nền tảng nuôi dưỡng con người",
+      "platforms": [
+        { "name": "FUN Profile", "desc": "Hồ sơ định danh Web3" },
+        { "name": "FUN Play", "desc": "Giải trí & Gamification" },
+        { "name": "FUN Planet", "desc": "Metaverse & Virtual World" },
+        { "name": "FUN Invest", "desc": "Đầu tư & Tài chính" },
+        { "name": "FUN Life", "desc": "Đời sống & Sức khỏe" }
+      ]
+    },
+    "cta": {
+      "title": "Sẵn sàng tham gia FUN ACADEMY?",
+      "subtitle": "Hãy bắt đầu hành trình tri thức ánh sáng của bạn ngay hôm nay.",
+      "explore": "Khám Phá Nền Tảng",
+      "back": "Quay Lại Trang Chủ"
+    }
+  },
+  "footer": {
+    "description": "Trái tim tri thức & khai sáng của FUN Ecosystem.",
+    "quote": "Đây là Thư Viện Ánh Sáng của Nhân Loại trong Kỷ Nguyên 5D",
+    "platform": "Platform",
+    "resources": "Resources",
+    "ecosystem": "FUN Ecosystem",
+    "links": {
+      "socialFeed": "Social Feed",
+      "videoLibrary": "Video Library",
+      "liveClasses": "Live Classes",
+      "academicProfile": "Academic Profile",
+      "whitepaper": "Whitepaper",
+      "documentation": "Documentation",
+      "helpCenter": "Help Center",
+      "community": "Community",
+      "funToken": "FUN Token",
+      "funMarketplace": "FUN Marketplace",
+      "funDao": "FUN DAO",
+      "partners": "Partners"
+    },
+    "copyright": "© 2026 FUN Academy. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
   }
 }
