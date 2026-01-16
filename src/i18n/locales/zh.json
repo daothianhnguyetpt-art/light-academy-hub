@@ -82,7 +82,37 @@
     "roleChanged": "角色已更改",
     "roleChangedDesc": "用户角色已更新",
     "fetchUsersFailed": "无法加载用户",
-    "roles": { "admin": "管理员", "moderator": "版主", "educator": "讲师", "learner": "学员" }
+    "roles": { "admin": "管理员", "moderator": "版主", "educator": "讲师", "learner": "学员" },
+    "rewards": {
+      "title": "奖励管理",
+      "description": "向用户授予积分、徽章和证书",
+      "grantReward": "授予奖励",
+      "selectUser": "选择用户",
+      "selectUserPlaceholder": "选择用户...",
+      "selectUserAndTitle": "请选择用户并输入标题",
+      "rewardType": "奖励类型",
+      "types": {
+        "points": "积分",
+        "badge": "徽章",
+        "certificate": "证书"
+      },
+      "titlePlaceholder": "例如：一月最佳学员",
+      "pointsAmount": "积分数量",
+      "badgeIcon": "徽章图标",
+      "badgeColor": "徽章颜色",
+      "descriptionPlaceholder": "奖励原因...",
+      "rewardGranted": "奖励授予成功！",
+      "rewardFailed": "授予奖励失败",
+      "rewardDeleted": "奖励已删除",
+      "deleteWarning": "此奖励将被永久删除。",
+      "noRewards": "暂无奖励",
+      "recipient": "接收者",
+      "details": "详情",
+      "grantedBy": "授予者",
+      "date": "日期",
+      "points": "积分",
+      "totalPoints": "总积分"
+    }
   },
   "nav": {
     "funAcademy": "FUN Academy",
@@ -334,6 +364,9 @@
     "browserNoLocation": "浏览器不支持地理位置"
   },
   "profile": {
+    "rewards": {
+      "title": "我的奖励"
+    },
     "title": "个人资料",
     "soulJourney": "灵魂之旅",
     "certificates": "灵魂证书（SBT）",
