@@ -18,6 +18,7 @@ import Whitepaper from "./pages/Whitepaper";
 import Profile from "./pages/Profile";
 import LightLaw from "./pages/LightLaw";
 import Auth from "./pages/Auth";
+import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,7 @@ const App = () => (
               <Route path="/library/:id" element={<LibraryDetail />} />
               <Route path="/whitepaper" element={<Whitepaper />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/admin" element={<AdminDashboard />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
