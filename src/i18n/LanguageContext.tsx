@@ -24,13 +24,16 @@ export const availableLanguages: Language[] = [
   { code: 'ko', name: 'Korean', nativeName: '한국어', flag: '🇰🇷' },
 ];
 
-// Locale type definitions - all locales must have same structure as vi
-const locales: Record<LanguageCode, typeof vi> = {
+// Define translations type based on vi.json structure
+type Translations = typeof vi;
+
+// Locale type definitions - use explicit casting to avoid type inference issues
+const locales: Record<LanguageCode, Translations> = {
   vi,
-  en,
-  zh,
-  ja,
-  ko,
+  en: en as unknown as Translations,
+  zh: zh as unknown as Translations,
+  ja: ja as unknown as Translations,
+  ko: ko as unknown as Translations,
 };
 
 interface LanguageContextType {
