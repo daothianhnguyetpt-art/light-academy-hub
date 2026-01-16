@@ -17,6 +17,8 @@ export interface LiveClass {
   duration_minutes: number | null;
   max_participants: number | null;
   meeting_url: string | null;
+  meeting_platform: string | null;
+  livestream_url: string | null;
   category: string | null;
   status: string | null;
   created_at: string | null;

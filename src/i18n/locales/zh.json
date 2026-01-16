@@ -170,12 +170,19 @@
     "tabs": {
       "all": "全部",
       "registered": "已注册",
-      "live": "直播中"
+      "live": "直播中",
+      "livestream": "直播"
     },
     "register": "报名参加",
     "unregister": "取消报名",
     "registered": "已报名",
     "joinNow": "立即加入",
+    "joinZoom": "加入Zoom",
+    "joinMeet": "加入Google Meet",
+    "watchLive": "观看直播",
+    "clickToJoin": "点击加入",
+    "noMeetingUrl": "暂无会议链接",
+    "noActiveClass": "暂无进行中的课程",
     "addToCalendar": "添加到日历",
     "downloadICS": "下载ICS文件",
     "enableReminder": "开启提醒",
@@ -192,6 +199,12 @@
     "tomorrow": "明天",
     "integration": "集成就绪",
     "connectAccount": "连接您的账户",
+    "platforms": {
+      "zoom": "Zoom",
+      "googleMeet": "Google Meet",
+      "youtube": "YouTube直播",
+      "facebook": "Facebook直播"
+    },
     "controls": {
       "mute": "静音",
       "unmute": "取消静音",
@@ -207,7 +220,20 @@
     "noInstructor": "当前没有直播课程",
     "classDetails": "课程详情",
     "duration": "时长",
-    "scheduledAt": "计划时间"
+    "scheduledAt": "计划时间",
+    "noRegistered": "尚未注册任何课程",
+    "noRegisteredDescription": "注册课程以开始学习 ✨",
+    "noClassesDescription": "新课程即将更新 ✨",
+    "upcomingClasses": "即将开始的课程",
+    "liveNow": "直播中",
+    "liveBadge": "直播",
+    "class": "课程",
+    "viewAll": "查看全部",
+    "integrations": {
+      "title": "支持的平台",
+      "connect": "点击加入",
+      "watchLive": "观看直播"
+    }
   },
   "socialFeed": {
     "title": "学术动态",

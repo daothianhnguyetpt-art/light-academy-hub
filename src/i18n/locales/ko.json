@@ -170,12 +170,19 @@
     "tabs": {
       "all": "전체",
       "registered": "등록됨",
-      "live": "라이브"
+      "live": "라이브",
+      "livestream": "라이브 스트림"
     },
     "register": "등록하기",
     "unregister": "등록 취소",
     "registered": "등록됨",
     "joinNow": "지금 참여",
+    "joinZoom": "Zoom 참여",
+    "joinMeet": "Google Meet 참여",
+    "watchLive": "라이브 시청",
+    "clickToJoin": "클릭하여 참여",
+    "noMeetingUrl": "미팅 링크 없음",
+    "noActiveClass": "진행 중인 수업이 없습니다",
     "addToCalendar": "캘린더에 추가",
     "downloadICS": "ICS 파일 다운로드",
     "enableReminder": "알림 활성화",
@@ -192,6 +199,12 @@
     "tomorrow": "내일",
     "integration": "통합 준비 완료",
     "connectAccount": "계정 연결",
+    "platforms": {
+      "zoom": "Zoom",
+      "googleMeet": "Google Meet",
+      "youtube": "YouTube 라이브",
+      "facebook": "Facebook 라이브"
+    },
     "controls": {
       "mute": "음소거",
       "unmute": "음소거 해제",
@@ -207,7 +220,20 @@
     "noInstructor": "현재 라이브 수업이 없습니다",
     "classDetails": "수업 상세",
     "duration": "시간",
-    "scheduledAt": "예정 시간"
+    "scheduledAt": "예정 시간",
+    "noRegistered": "등록된 수업이 없습니다",
+    "noRegisteredDescription": "수업에 등록하여 학습을 시작하세요 ✨",
+    "noClassesDescription": "새 수업이 곧 업데이트됩니다 ✨",
+    "upcomingClasses": "예정된 수업",
+    "liveNow": "라이브 중",
+    "liveBadge": "라이브",
+    "class": "수업",
+    "viewAll": "전체 보기",
+    "integrations": {
+      "title": "지원 플랫폼",
+      "connect": "클릭하여 참여",
+      "watchLive": "라이브 스트림 시청"
+    }
   },
   "socialFeed": {
     "title": "학술 피드",
