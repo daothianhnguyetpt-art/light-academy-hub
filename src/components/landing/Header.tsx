@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Menu, X, Wallet, LogOut, User, ChevronDown, Sparkles } from "lucide-react";
+import { Menu, X, Wallet, LogOut, User, ChevronDown, Sparkles, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
@@ -25,6 +25,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { useAuth } from "@/hooks/useAuth";
+import { useAdmin } from "@/hooks/useAdmin";
 import { AuthDialog } from "@/components/auth/AuthDialog";
 import { WalletType } from "@/components/auth/WalletOptions";
 import { LanguageSelector } from "@/components/LanguageSelector";
@@ -66,6 +67,7 @@ export function Header({
   const [isFunAcademyOpen, setIsFunAcademyOpen] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const { user, loading, signOut } = useAuth();
+  const { isAdmin } = useAdmin();
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -182,6 +184,15 @@ export function Header({
                         <User className="w-4 h-4 mr-2" />
                         {t("common.myProfile")}
                       </DropdownMenuItem>
+                      {isAdmin && (
+                        <>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem onClick={() => navigate("/admin")}>
+                            <Shield className="w-4 h-4 mr-2" />
+                            {t("admin.dashboard")}
+                          </DropdownMenuItem>
+                        </>
+                      )}
                       <DropdownMenuSeparator />
                       <DropdownMenuItem onClick={handleSignOut}>
                         <LogOut className="w-4 h-4 mr-2" />
