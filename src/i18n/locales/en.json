@@ -40,13 +40,15 @@
     "verified": "Verified"
   },
   "nav": {
-    "home": "Home",
-    "globalSchools": "Global Schools",
+    "funAcademy": "FUN Academy",
+    "aboutFunAcademy": "About FUN Academy",
+    "lightLaw": "Light Law",
+    "whitepaper": "Whitepaper",
     "socialFeed": "Social Feed",
     "videoLibrary": "Video Library",
     "liveClasses": "Live Classes",
     "library": "Library",
-    "whitepaper": "Whitepaper"
+    "globalSchools": "Global Schools"
   },
 "auth": {
     "welcomeBack": "Welcome back",

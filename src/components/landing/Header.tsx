@@ -11,6 +11,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { useAuth } from "@/hooks/useAuth";
 import { AuthDialog } from "@/components/auth/AuthDialog";
 import { WalletType } from "@/components/auth/WalletOptions";
@@ -26,16 +39,20 @@ interface HeaderProps {
   connectingWalletType?: WalletType | null;
 }
 
-type NavLinkKey = 'home' | 'globalSchools' | 'socialFeed' | 'videoLibrary' | 'liveClasses' | 'library' | 'whitepaper';
+// FUN Academy dropdown items
+const funAcademyItems = [
+  { href: "/", key: "aboutFunAcademy" },
+  { href: "/light-law", key: "lightLaw" },
+  { href: "/whitepaper", key: "whitepaper" },
+];
 
-const navLinkKeys: { href: string; key: NavLinkKey }[] = [
-  { href: "/", key: "home" },
-  { href: "/global-schools", key: "globalSchools" },
+// Main navigation links
+const mainNavLinks = [
   { href: "/social-feed", key: "socialFeed" },
   { href: "/video-library", key: "videoLibrary" },
   { href: "/live-classes", key: "liveClasses" },
   { href: "/library", key: "library" },
-  { href: "/whitepaper", key: "whitepaper" },
+  { href: "/global-schools", key: "globalSchools" },
 ];
 
 export function Header({ 
@@ -46,6 +63,7 @@ export function Header({
   connectingWalletType = null,
 }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isFunAcademyOpen, setIsFunAcademyOpen] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const { user, loading, signOut } = useAuth();
   const { t } = useTranslation();
@@ -87,7 +105,37 @@ export function Header({
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1">
-              {navLinkKeys.map((link) => (
+              {/* FUN Academy Dropdown */}
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors bg-transparent hover:bg-accent/50">
+                      {t("nav.funAcademy")}
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid gap-1 p-2 w-[200px]">
+                        {funAcademyItems.map((item) => (
+                          <li key={item.href}>
+                            <NavigationMenuLink asChild>
+                              <Link
+                                to={item.href}
+                                className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                              >
+                                <div className="text-sm font-medium leading-none">
+                                  {t(`nav.${item.key}`)}
+                                </div>
+                              </Link>
+                            </NavigationMenuLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
+
+              {/* Main Links */}
+              {mainNavLinks.map((link) => (
                 <Link
                   key={link.href}
                   to={link.href}
@@ -121,12 +169,12 @@ export function Header({
                     <DropdownMenuContent align="end" className="w-48">
                       <DropdownMenuItem onClick={() => navigate("/profile")}>
                         <User className="w-4 h-4 mr-2" />
-                        Hồ Sơ
+                        {t("common.myProfile")}
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem onClick={handleSignOut}>
                         <LogOut className="w-4 h-4 mr-2" />
-                        Đăng Xuất
+                        {t("common.logout")}
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -143,12 +191,12 @@ export function Header({
                     <DropdownMenuContent align="end" className="w-48">
                       <DropdownMenuItem onClick={() => navigate("/profile")}>
                         <User className="w-4 h-4 mr-2" />
-                        Hồ Sơ
+                        {t("common.myProfile")}
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem onClick={() => window.location.reload()}>
                         <LogOut className="w-4 h-4 mr-2" />
-                        Ngắt Kết Nối
+                        {t("common.disconnect")}
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -160,7 +208,7 @@ export function Header({
                     className="flex items-center gap-2"
                   >
                     <Sparkles className="w-4 h-4" />
-                    Đăng Nhập
+                    {t("common.login")}
                   </Button>
                 )}
               </div>
@@ -184,7 +232,31 @@ export function Header({
               className="lg:hidden pb-4 border-t border-border/50 mt-2"
             >
               <div className="flex flex-col gap-1 pt-4">
-                {navLinkKeys.map((link) => (
+                {/* FUN Academy Collapsible */}
+                <Collapsible open={isFunAcademyOpen} onOpenChange={setIsFunAcademyOpen}>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-md transition-colors">
+                    <span>{t("nav.funAcademy")}</span>
+                    <ChevronDown className={cn(
+                      "w-4 h-4 transition-transform",
+                      isFunAcademyOpen && "rotate-180"
+                    )} />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="pl-4">
+                    {funAcademyItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        to={item.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="block px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-md transition-colors"
+                      >
+                        {t(`nav.${item.key}`)}
+                      </Link>
+                    ))}
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* Main Links */}
+                {mainNavLinks.map((link) => (
                   <Link
                     key={link.href}
                     to={link.href}
@@ -207,7 +279,7 @@ export function Header({
                         className="flex items-center gap-2 px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-md transition-colors"
                       >
                         <User className="w-4 h-4" />
-                        Hồ Sơ của tôi
+                        {t("common.myProfile")}
                       </Link>
                       <Button
                         variant="ghost"
@@ -218,7 +290,7 @@ export function Header({
                         className="w-full justify-start gap-2 mt-2"
                       >
                         <LogOut className="w-4 h-4" />
-                        Đăng Xuất
+                        {t("common.logout")}
                       </Button>
                     </>
                   ) : isWalletConnected && walletAddress ? (
@@ -233,7 +305,7 @@ export function Header({
                         className="flex items-center gap-2 px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-md transition-colors"
                       >
                         <User className="w-4 h-4" />
-                        Hồ Sơ
+                        {t("common.myProfile")}
                       </Link>
                     </>
                   ) : (
@@ -246,7 +318,7 @@ export function Header({
                       className="w-full justify-center gap-2"
                     >
                       <Sparkles className="w-4 h-4" />
-                      Đăng Nhập
+                      {t("common.login")}
                     </Button>
                   )}
                 </div>

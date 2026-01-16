@@ -40,13 +40,15 @@
     "verified": "認証済み"
   },
   "nav": {
-    "home": "ホーム",
-    "globalSchools": "グローバルスクール",
+    "funAcademy": "FUN Academy",
+    "aboutFunAcademy": "FUN Academyについて",
+    "lightLaw": "光の法則",
+    "whitepaper": "ホワイトペーパー",
     "socialFeed": "ソーシャルフィード",
     "videoLibrary": "動画ライブラリ",
     "liveClasses": "ライブ授業",
     "library": "ライブラリ",
-    "whitepaper": "ホワイトペーパー"
+    "globalSchools": "グローバルスクール"
   },
   "auth": {
     "welcomeBack": "おかえりなさい",

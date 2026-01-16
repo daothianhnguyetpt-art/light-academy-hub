@@ -57,12 +57,12 @@ export default function LightLaw() {
   const handleEnter = () => {
     if (allChecked) {
       localStorage.setItem("light_law_accepted", "true");
-      navigate("/auth");
+      navigate("/social-feed");
     }
   };
 
   const handleGuest = () => {
-    navigate("/");
+    navigate("/social-feed");
   };
 
   return (
