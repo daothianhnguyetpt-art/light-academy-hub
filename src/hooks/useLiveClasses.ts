@@ -46,7 +46,7 @@ export function useLiveClasses() {
             id, full_name, avatar_url, academic_title
           )
         `)
-        .gte('scheduled_at', new Date().toISOString())
+        .or(`status.eq.live,scheduled_at.gte.${new Date().toISOString()}`)
         .order('scheduled_at', { ascending: true });
 
       if (fetchError) throw fetchError;
