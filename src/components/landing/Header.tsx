@@ -90,18 +90,29 @@ export function Header({
         className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-border/30"
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-2">
-              <img 
-                src={funAcademyLogo} 
-                alt="FUN Academy" 
-                className="w-10 h-10 rounded-full object-cover"
-              />
-              <span className="font-display font-semibold text-xl text-foreground hidden sm:block">
-                FUN Academy
-              </span>
-            </Link>
+          <div className="flex items-center justify-between min-h-16 py-2 lg:py-0">
+            {/* Logo + Mobile Menu Button Container */}
+            <div className="flex flex-col items-start">
+              <Link to="/" className="flex items-center gap-2">
+                <img 
+                  src={funAcademyLogo} 
+                  alt="FUN Academy" 
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+                <span className="font-display font-semibold text-xl text-foreground hidden sm:block">
+                  FUN Academy
+                </span>
+              </Link>
+              
+              {/* Mobile Menu Button - Below logo */}
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="lg:hidden flex items-center gap-1 mt-1 p-1 text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-md transition-colors"
+              >
+                {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+                <span className="text-xs font-medium">Menu</span>
+              </button>
+            </div>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1">
@@ -213,13 +224,6 @@ export function Header({
                 )}
               </div>
 
-              {/* Mobile Menu Button */}
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="lg:hidden p-2 text-foreground hover:bg-accent/50 rounded-md transition-colors"
-              >
-                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
             </div>
           </div>
 
