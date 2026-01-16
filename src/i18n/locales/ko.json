@@ -40,13 +40,15 @@
     "verified": "인증됨"
   },
   "nav": {
-    "home": "홈",
-    "globalSchools": "글로벌 스쿨",
+    "funAcademy": "FUN Academy",
+    "aboutFunAcademy": "FUN Academy 소개",
+    "lightLaw": "빛의 법칙",
+    "whitepaper": "백서",
     "socialFeed": "소셜 피드",
     "videoLibrary": "비디오 라이브러리",
     "liveClasses": "라이브 수업",
     "library": "라이브러리",
-    "whitepaper": "백서"
+    "globalSchools": "글로벌 스쿨"
   },
   "auth": {
     "welcomeBack": "다시 오신 것을 환영합니다",

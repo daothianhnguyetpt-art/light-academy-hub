@@ -40,13 +40,15 @@
     "verified": "Đã xác thực"
   },
   "nav": {
-    "home": "Trang Chủ",
-    "globalSchools": "Global Schools",
-    "socialFeed": "Social Feed",
-    "videoLibrary": "Video Library",
-    "liveClasses": "Live Classes",
-    "library": "Library",
-    "whitepaper": "Whitepaper"
+    "funAcademy": "FUN Academy",
+    "aboutFunAcademy": "Về FUN Academy",
+    "lightLaw": "Luật Ánh Sáng",
+    "whitepaper": "Whitepaper",
+    "socialFeed": "Bảng Tin",
+    "videoLibrary": "Thư Viện Video",
+    "liveClasses": "Lớp Học Trực Tuyến",
+    "library": "Thư Viện",
+    "globalSchools": "Global Schools"
   },
 "auth": {
     "welcomeBack": "Chào mừng trở lại",

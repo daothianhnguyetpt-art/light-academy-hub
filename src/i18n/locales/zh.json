@@ -40,13 +40,15 @@
     "verified": "已验证"
   },
   "nav": {
-    "home": "首页",
-    "globalSchools": "全球学校",
+    "funAcademy": "FUN Academy",
+    "aboutFunAcademy": "关于FUN Academy",
+    "lightLaw": "光明法则",
+    "whitepaper": "白皮书",
     "socialFeed": "社交动态",
     "videoLibrary": "视频库",
     "liveClasses": "直播课程",
     "library": "资料库",
-    "whitepaper": "白皮书"
+    "globalSchools": "全球学校"
   },
   "auth": {
     "welcomeBack": "欢迎回来",
