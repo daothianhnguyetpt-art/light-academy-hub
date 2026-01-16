@@ -87,6 +87,36 @@
       "moderator": "Moderator",
       "educator": "Giảng viên",
       "learner": "Học viên"
+    },
+    "rewards": {
+      "title": "Quản Lý Phần Thưởng",
+      "description": "Tặng thưởng điểm, huy hiệu và chứng chỉ cho người dùng",
+      "grantReward": "Tặng Thưởng",
+      "selectUser": "Chọn người dùng",
+      "selectUserPlaceholder": "Chọn người dùng...",
+      "selectUserAndTitle": "Vui lòng chọn người dùng và nhập tiêu đề",
+      "rewardType": "Loại phần thưởng",
+      "types": {
+        "points": "Điểm",
+        "badge": "Huy hiệu",
+        "certificate": "Chứng chỉ"
+      },
+      "titlePlaceholder": "Ví dụ: Top Learner tháng 1",
+      "pointsAmount": "Số điểm",
+      "badgeIcon": "Biểu tượng huy hiệu",
+      "badgeColor": "Màu huy hiệu",
+      "descriptionPlaceholder": "Lý do tặng thưởng...",
+      "rewardGranted": "Đã tặng thưởng thành công!",
+      "rewardFailed": "Không thể tặng thưởng",
+      "rewardDeleted": "Đã xóa phần thưởng",
+      "deleteWarning": "Phần thưởng này sẽ bị xóa vĩnh viễn.",
+      "noRewards": "Chưa có phần thưởng nào",
+      "recipient": "Người nhận",
+      "details": "Chi tiết",
+      "grantedBy": "Được tặng bởi",
+      "date": "Ngày",
+      "points": "điểm",
+      "totalPoints": "Tổng điểm"
     }
   },
   "nav": {
@@ -339,6 +369,9 @@
     "browserNoLocation": "Trình duyệt không hỗ trợ định vị"
   },
   "profile": {
+    "rewards": {
+      "title": "Phần Thưởng Của Tôi"
+    },
     "title": "Hồ Sơ Cá Nhân",
     "soulJourney": "Hành Trình Linh Hồn",
     "certificates": "Chứng Chỉ Linh Hồn (SBT)",

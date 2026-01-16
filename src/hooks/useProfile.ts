@@ -14,6 +14,7 @@ export interface Profile {
   verification_level: string | null;
   light_law_accepted_at: string | null;
   primary_institution_id: string | null;
+  total_points: number | null;
   created_at: string | null;
   updated_at: string | null;
 }

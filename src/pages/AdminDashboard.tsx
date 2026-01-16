@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Shield, Radio, Users, Plus, Loader2, ArrowLeft } from "lucide-react";
+import { Shield, Radio, Users, Plus, Loader2, ArrowLeft, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTranslation } from "@/i18n";
@@ -11,6 +11,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { LivestreamForm } from "@/components/admin/LivestreamForm";
 import { LivestreamTable } from "@/components/admin/LivestreamTable";
 import { UserManagementTable } from "@/components/admin/UserManagementTable";
+import { RewardForm } from "@/components/admin/RewardForm";
+import { RewardHistoryTable } from "@/components/admin/RewardHistoryTable";
 
 export default function AdminDashboard() {
   const { t } = useTranslation();
@@ -22,6 +24,8 @@ export default function AdminDashboard() {
   const [loadingClasses, setLoadingClasses] = useState(true);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingClass, setEditingClass] = useState<any>(null);
+  const [isRewardFormOpen, setIsRewardFormOpen] = useState(false);
+  const [rewardRefreshKey, setRewardRefreshKey] = useState(0);
 
   const fetchClasses = async () => {
     try {
@@ -111,7 +115,7 @@ export default function AdminDashboard() {
           transition={{ duration: 0.5 }}
         >
           <Tabs defaultValue="livestream" className="space-y-6">
-            <TabsList className="grid w-full max-w-md grid-cols-2">
+            <TabsList className="grid w-full max-w-2xl grid-cols-3">
               <TabsTrigger value="livestream" className="gap-2">
                 <Radio className="w-4 h-4" />
                 {t("admin.livestreamManagement")}
@@ -119,6 +123,10 @@ export default function AdminDashboard() {
               <TabsTrigger value="users" className="gap-2">
                 <Users className="w-4 h-4" />
                 {t("admin.userManagement")}
+              </TabsTrigger>
+              <TabsTrigger value="rewards" className="gap-2">
+                <Gift className="w-4 h-4" />
+                {t("admin.rewards.title")}
               </TabsTrigger>
             </TabsList>
 
@@ -161,6 +169,24 @@ export default function AdminDashboard() {
 
               <UserManagementTable />
             </TabsContent>
+
+            {/* Rewards Management Tab */}
+            <TabsContent value="rewards" className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-lg font-semibold">{t("admin.rewards.title")}</h2>
+                  <p className="text-sm text-muted-foreground">
+                    {t("admin.rewards.description")}
+                  </p>
+                </div>
+                <Button onClick={() => setIsRewardFormOpen(true)} className="gap-2">
+                  <Gift className="w-4 h-4" />
+                  {t("admin.rewards.grantReward")}
+                </Button>
+              </div>
+
+              <RewardHistoryTable key={rewardRefreshKey} />
+            </TabsContent>
           </Tabs>
         </motion.div>
       </main>
@@ -173,6 +199,16 @@ export default function AdminDashboard() {
         onSuccess={() => {
           fetchClasses();
           handleFormClose();
+        }}
+      />
+
+      {/* Reward Form Modal */}
+      <RewardForm
+        open={isRewardFormOpen}
+        onOpenChange={setIsRewardFormOpen}
+        onSuccess={() => {
+          setRewardRefreshKey((k) => k + 1);
+          setIsRewardFormOpen(false);
         }}
       />
     </div>

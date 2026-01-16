@@ -82,7 +82,37 @@
     "roleChanged": "権限変更完了",
     "roleChangedDesc": "ユーザー権限が更新されました",
     "fetchUsersFailed": "ユーザー読み込み失敗",
-    "roles": { "admin": "管理者", "moderator": "モデレーター", "educator": "講師", "learner": "学習者" }
+    "roles": { "admin": "管理者", "moderator": "モデレーター", "educator": "講師", "learner": "学習者" },
+    "rewards": {
+      "title": "報酬管理",
+      "description": "ユーザーにポイント、バッジ、証明書を付与",
+      "grantReward": "報酬を付与",
+      "selectUser": "ユーザーを選択",
+      "selectUserPlaceholder": "ユーザーを選択...",
+      "selectUserAndTitle": "ユーザーを選択してタイトルを入力してください",
+      "rewardType": "報酬タイプ",
+      "types": {
+        "points": "ポイント",
+        "badge": "バッジ",
+        "certificate": "証明書"
+      },
+      "titlePlaceholder": "例：1月のトップ学習者",
+      "pointsAmount": "ポイント数",
+      "badgeIcon": "バッジアイコン",
+      "badgeColor": "バッジの色",
+      "descriptionPlaceholder": "報酬の理由...",
+      "rewardGranted": "報酬が付与されました！",
+      "rewardFailed": "報酬の付与に失敗しました",
+      "rewardDeleted": "報酬が削除されました",
+      "deleteWarning": "この報酬は完全に削除されます。",
+      "noRewards": "まだ報酬がありません",
+      "recipient": "受取人",
+      "details": "詳細",
+      "grantedBy": "付与者",
+      "date": "日付",
+      "points": "ポイント",
+      "totalPoints": "合計ポイント"
+    }
   },
   "nav": {
     "funAcademy": "FUN Academy",
@@ -334,6 +364,9 @@
     "browserNoLocation": "ブラウザは位置情報をサポートしていません"
   },
   "profile": {
+    "rewards": {
+      "title": "私の報酬"
+    },
     "title": "個人プロフィール",
     "soulJourney": "ソウルジャーニー",
     "certificates": "ソウル証明書（SBT）",

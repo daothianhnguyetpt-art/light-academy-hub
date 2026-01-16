@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/landing/Header";
@@ -6,6 +6,7 @@ import { Footer } from "@/components/landing/Footer";
 import { useWallet } from "@/hooks/useWallet";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
+import { useRewards } from "@/hooks/useRewards";
 import { EditProfileModal } from "@/components/profile/EditProfileModal";
 import { useTranslation } from "@/i18n/useTranslation";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -28,7 +29,9 @@ import {
   Info,
   Clock,
   Heart,
-  Pencil
+  Pencil,
+  Gift,
+  FileText
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -46,7 +49,14 @@ export default function Profile() {
   const { isConnected, address, connectWallet, disconnectWallet } = useWallet();
   const { user, signOut } = useAuth();
   const { profile, certificates, stats, loading, updateProfile } = useProfile();
+  const { userRewards, fetchUserRewards } = useRewards();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      fetchUserRewards();
+    }
+  }, [user, fetchUserRewards]);
 
   const dateLocale = getDateLocale(language);
 
@@ -336,6 +346,82 @@ export default function Profile() {
                 </div>
               </div>
             </motion.div>
+
+            {/* Rewards Section */}
+            {userRewards.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 }}
+                className="academic-card p-6 mb-8"
+              >
+                <h2 className="font-display text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <Gift className="w-5 h-5 text-gold" />
+                  {t("profile.rewards.title")}
+                  {profile?.total_points ? (
+                    <span className="ml-auto text-sm font-normal text-gold">
+                      ⭐ {profile.total_points} {t("admin.rewards.points")}
+                    </span>
+                  ) : null}
+                </h2>
+                
+                {/* Badges */}
+                {userRewards.filter(r => r.reward_type === 'badge').length > 0 && (
+                  <div className="mb-4">
+                    <p className="text-sm text-muted-foreground mb-2">{t("admin.rewards.types.badge")}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {userRewards
+                        .filter(r => r.reward_type === 'badge')
+                        .map((reward) => (
+                          <Tooltip key={reward.id}>
+                            <TooltipTrigger asChild>
+                              <div className={`px-3 py-1.5 rounded-full flex items-center gap-1.5 text-sm font-medium text-white ${
+                                reward.badge_color === 'gold' ? 'bg-yellow-500' :
+                                reward.badge_color === 'silver' ? 'bg-gray-400' :
+                                reward.badge_color === 'bronze' ? 'bg-orange-600' :
+                                reward.badge_color === 'blue' ? 'bg-blue-500' :
+                                reward.badge_color === 'green' ? 'bg-green-500' :
+                                reward.badge_color === 'purple' ? 'bg-purple-500' : 'bg-gray-500'
+                              }`}>
+                                <Award className="w-3.5 h-3.5" />
+                                {reward.title}
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              {reward.description || reward.title}
+                            </TooltipContent>
+                          </Tooltip>
+                        ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Certificates from rewards */}
+                {userRewards.filter(r => r.reward_type === 'certificate').length > 0 && (
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-2">{t("admin.rewards.types.certificate")}</p>
+                    <div className="space-y-2">
+                      {userRewards
+                        .filter(r => r.reward_type === 'certificate')
+                        .map((reward) => (
+                          <div 
+                            key={reward.id}
+                            className="flex items-center gap-3 p-3 rounded-lg bg-accent/50 border border-border"
+                          >
+                            <FileText className="w-5 h-5 text-green-500" />
+                            <div>
+                              <p className="font-medium text-foreground">{reward.title}</p>
+                              <p className="text-xs text-muted-foreground">
+                                {format(new Date(reward.created_at), 'd MMM yyyy', { locale: dateLocale })}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                )}
+              </motion.div>
+            )}
 
             {/* Skills */}
             <motion.div

@@ -87,6 +87,36 @@
       "moderator": "Moderator",
       "educator": "Educator",
       "learner": "Learner"
+    },
+    "rewards": {
+      "title": "Reward Management",
+      "description": "Grant points, badges and certificates to users",
+      "grantReward": "Grant Reward",
+      "selectUser": "Select user",
+      "selectUserPlaceholder": "Select a user...",
+      "selectUserAndTitle": "Please select a user and enter a title",
+      "rewardType": "Reward type",
+      "types": {
+        "points": "Points",
+        "badge": "Badge",
+        "certificate": "Certificate"
+      },
+      "titlePlaceholder": "e.g., Top Learner January",
+      "pointsAmount": "Points amount",
+      "badgeIcon": "Badge icon",
+      "badgeColor": "Badge color",
+      "descriptionPlaceholder": "Reason for the reward...",
+      "rewardGranted": "Reward granted successfully!",
+      "rewardFailed": "Failed to grant reward",
+      "rewardDeleted": "Reward deleted",
+      "deleteWarning": "This reward will be permanently deleted.",
+      "noRewards": "No rewards yet",
+      "recipient": "Recipient",
+      "details": "Details",
+      "grantedBy": "Granted by",
+      "date": "Date",
+      "points": "points",
+      "totalPoints": "Total Points"
     }
   },
   "nav": {
@@ -339,6 +369,9 @@
     "browserNoLocation": "Browser does not support geolocation"
   },
   "profile": {
+    "rewards": {
+      "title": "My Rewards"
+    },
     "title": "Personal Profile",
     "soulJourney": "Soul Journey",
     "certificates": "Soul Certificates (SBT)",

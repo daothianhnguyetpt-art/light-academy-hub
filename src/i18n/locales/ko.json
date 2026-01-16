@@ -82,7 +82,37 @@
     "roleChanged": "역할 변경됨",
     "roleChangedDesc": "사용자 역할이 업데이트되었습니다",
     "fetchUsersFailed": "사용자 로드 실패",
-    "roles": { "admin": "관리자", "moderator": "중재자", "educator": "강사", "learner": "학습자" }
+    "roles": { "admin": "관리자", "moderator": "중재자", "educator": "강사", "learner": "학습자" },
+    "rewards": {
+      "title": "보상 관리",
+      "description": "사용자에게 포인트, 배지 및 인증서 부여",
+      "grantReward": "보상 부여",
+      "selectUser": "사용자 선택",
+      "selectUserPlaceholder": "사용자 선택...",
+      "selectUserAndTitle": "사용자를 선택하고 제목을 입력하세요",
+      "rewardType": "보상 유형",
+      "types": {
+        "points": "포인트",
+        "badge": "배지",
+        "certificate": "인증서"
+      },
+      "titlePlaceholder": "예: 1월 최고 학습자",
+      "pointsAmount": "포인트 수량",
+      "badgeIcon": "배지 아이콘",
+      "badgeColor": "배지 색상",
+      "descriptionPlaceholder": "보상 사유...",
+      "rewardGranted": "보상이 부여되었습니다!",
+      "rewardFailed": "보상 부여 실패",
+      "rewardDeleted": "보상이 삭제되었습니다",
+      "deleteWarning": "이 보상은 영구적으로 삭제됩니다.",
+      "noRewards": "아직 보상이 없습니다",
+      "recipient": "수신자",
+      "details": "상세",
+      "grantedBy": "부여자",
+      "date": "날짜",
+      "points": "포인트",
+      "totalPoints": "총 포인트"
+    }
   },
   "nav": {
     "funAcademy": "FUN Academy",
@@ -334,6 +364,9 @@
     "browserNoLocation": "브라우저가 위치 정보를 지원하지 않습니다"
   },
   "profile": {
+    "rewards": {
+      "title": "내 보상"
+    },
     "title": "개인 프로필",
     "soulJourney": "소울 저니",
     "certificates": "소울 인증서 (SBT)",

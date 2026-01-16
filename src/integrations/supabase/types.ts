@@ -773,6 +773,7 @@ export type Database = {
           knowledge_score: number | null
           light_law_accepted_at: string | null
           primary_institution_id: string | null
+          total_points: number | null
           updated_at: string | null
           verification_level: string | null
           wallet_address: string | null
@@ -787,6 +788,7 @@ export type Database = {
           knowledge_score?: number | null
           light_law_accepted_at?: string | null
           primary_institution_id?: string | null
+          total_points?: number | null
           updated_at?: string | null
           verification_level?: string | null
           wallet_address?: string | null
@@ -801,6 +803,7 @@ export type Database = {
           knowledge_score?: number | null
           light_law_accepted_at?: string | null
           primary_institution_id?: string | null
+          total_points?: number | null
           updated_at?: string | null
           verification_level?: string | null
           wallet_address?: string | null
@@ -811,6 +814,60 @@ export type Database = {
             columns: ["primary_institution_id"]
             isOneToOne: false
             referencedRelation: "institutions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_rewards: {
+        Row: {
+          awarded_by: string | null
+          badge_color: string | null
+          badge_icon: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          points_amount: number | null
+          reward_type: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          awarded_by?: string | null
+          badge_color?: string | null
+          badge_icon?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          points_amount?: number | null
+          reward_type: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          awarded_by?: string | null
+          badge_color?: string | null
+          badge_icon?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          points_amount?: number | null
+          reward_type?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_rewards_awarded_by_fkey"
+            columns: ["awarded_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_rewards_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
