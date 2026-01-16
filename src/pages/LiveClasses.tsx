@@ -7,6 +7,16 @@ import { useLiveClasses, LiveClass } from "@/hooks/useLiveClasses";
 import { useMyRegistrations } from "@/hooks/useLiveClassRegistration";
 import { ClassDetailModal } from "@/components/live-classes/ClassDetailModal";
 import { checkReminders } from "@/lib/calendar-utils";
+import { 
+  joinMeeting, 
+  getYoutubeEmbedUrl, 
+  getFacebookEmbedUrl,
+  getPlatformDisplayName,
+  getPlatformColorClass,
+  getPlatformIcon,
+  isLivestreamPlatform,
+  isMeetingPlatform
+} from "@/lib/meeting-utils";
 import { useTranslation } from "@/i18n/useTranslation";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { getDateLocale } from "@/lib/date-utils";
@@ -28,7 +38,9 @@ import {
   Circle,
   Loader2,
   Sparkles,
-  CheckCircle2
+  CheckCircle2,
+  Play,
+  ExternalLink
 } from "lucide-react";
 import {
   Tooltip,
@@ -60,6 +72,7 @@ export default function LiveClasses() {
   const [selectedClass, setSelectedClass] = useState<LiveClass | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<string>("all");
+  const [selectedLivestream, setSelectedLivestream] = useState<LiveClass | null>(null);
 
   const dateLocale = getDateLocale(language);
 
@@ -93,8 +106,27 @@ export default function LiveClasses() {
     if (activeTab === "live") {
       return classItem.status === "live";
     }
+    if (activeTab === "livestream") {
+      return isLivestreamPlatform(classItem.meeting_platform);
+    }
     return true;
   });
+
+  // Get livestream classes for the embed section
+  const livestreamClasses = classes.filter((c) => 
+    isLivestreamPlatform(c.meeting_platform) && c.status === 'live'
+  );
+
+  // Handle joining a meeting
+  const handleJoinMeeting = (classItem: LiveClass | null) => {
+    if (!classItem?.meeting_url) return;
+    
+    if (isLivestreamPlatform(classItem.meeting_platform)) {
+      setSelectedLivestream(classItem);
+    } else {
+      joinMeeting(classItem.meeting_url);
+    }
+  };
 
   const handleClassClick = (classItem: LiveClass) => {
     setSelectedClass(classItem);
@@ -297,7 +329,7 @@ export default function LiveClasses() {
                 </div>
               </motion.div>
 
-              {/* Integration Info */}
+              {/* Integration Info - Now Clickable */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -305,27 +337,131 @@ export default function LiveClasses() {
                 className="mt-6 p-6 academic-card"
               >
                 <h3 className="font-semibold text-foreground mb-3">{t("liveClasses.integrations.title")}</h3>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div className="flex items-center gap-3 p-4 rounded-lg bg-accent/50 border border-border">
-                    <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold">
+                
+                {/* Meeting Platforms */}
+                <div className="grid sm:grid-cols-2 gap-4 mb-4">
+                  <button 
+                    onClick={() => handleJoinMeeting(liveClass?.meeting_platform === 'zoom' ? liveClass : null)}
+                    disabled={!liveClass || liveClass.meeting_platform !== 'zoom'}
+                    className="flex items-center gap-3 p-4 rounded-lg bg-accent/50 border border-border hover:border-blue-500 hover:bg-blue-500/10 transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-blue-500 flex items-center justify-center text-white font-bold">
                       Z
                     </div>
-                    <div>
+                    <div className="text-left flex-1">
                       <p className="font-medium text-foreground">Zoom</p>
-                      <p className="text-xs text-muted-foreground">{t("liveClasses.integrations.connect")}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {liveClass?.meeting_platform === 'zoom' ? t("liveClasses.clickToJoin") : t("liveClasses.noActiveClass")}
+                      </p>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-3 p-4 rounded-lg bg-accent/50 border border-border">
-                    <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center text-secondary-foreground font-bold">
+                    {liveClass?.meeting_platform === 'zoom' && (
+                      <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-blue-500 transition-colors" />
+                    )}
+                  </button>
+                  
+                  <button 
+                    onClick={() => handleJoinMeeting(liveClass?.meeting_platform === 'google_meet' ? liveClass : null)}
+                    disabled={!liveClass || liveClass.meeting_platform !== 'google_meet'}
+                    className="flex items-center gap-3 p-4 rounded-lg bg-accent/50 border border-border hover:border-green-500 hover:bg-green-500/10 transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-green-500 flex items-center justify-center text-white font-bold">
                       G
                     </div>
-                    <div>
+                    <div className="text-left flex-1">
                       <p className="font-medium text-foreground">Google Meet</p>
-                      <p className="text-xs text-muted-foreground">{t("liveClasses.integrations.connect")}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {liveClass?.meeting_platform === 'google_meet' ? t("liveClasses.clickToJoin") : t("liveClasses.noActiveClass")}
+                      </p>
                     </div>
-                  </div>
+                    {liveClass?.meeting_platform === 'google_meet' && (
+                      <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-green-500 transition-colors" />
+                    )}
+                  </button>
+                </div>
+
+                {/* Livestream Platforms */}
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <button 
+                    onClick={() => {
+                      const ytClass = classes.find(c => c.meeting_platform === 'youtube' && c.status === 'live');
+                      if (ytClass) setSelectedLivestream(ytClass);
+                    }}
+                    className="flex items-center gap-3 p-4 rounded-lg bg-accent/50 border border-border hover:border-red-500 hover:bg-red-500/10 transition-all group"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-red-600 flex items-center justify-center text-white">
+                      <Play className="w-5 h-5" />
+                    </div>
+                    <div className="text-left flex-1">
+                      <p className="font-medium text-foreground">{t("liveClasses.platforms.youtube")}</p>
+                      <p className="text-xs text-muted-foreground">{t("liveClasses.integrations.watchLive")}</p>
+                    </div>
+                  </button>
+                  
+                  <button 
+                    onClick={() => {
+                      const fbClass = classes.find(c => c.meeting_platform === 'facebook' && c.status === 'live');
+                      if (fbClass) setSelectedLivestream(fbClass);
+                    }}
+                    className="flex items-center gap-3 p-4 rounded-lg bg-accent/50 border border-border hover:border-blue-600 hover:bg-blue-600/10 transition-all group"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold">
+                      f
+                    </div>
+                    <div className="text-left flex-1">
+                      <p className="font-medium text-foreground">{t("liveClasses.platforms.facebook")}</p>
+                      <p className="text-xs text-muted-foreground">{t("liveClasses.integrations.watchLive")}</p>
+                    </div>
+                  </button>
                 </div>
               </motion.div>
+
+              {/* Livestream Embed Player */}
+              {selectedLivestream && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-6 academic-card overflow-hidden"
+                >
+                  <div className="p-4 border-b border-border flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Badge variant="destructive" className="text-xs">
+                        🔴 {t("liveClasses.liveBadge")}
+                      </Badge>
+                      <span className="font-medium text-foreground">{selectedLivestream.title}</span>
+                    </div>
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={() => setSelectedLivestream(null)}
+                    >
+                      ✕
+                    </Button>
+                  </div>
+                  <div className="aspect-video bg-foreground/5">
+                    {selectedLivestream.meeting_platform === 'youtube' && selectedLivestream.livestream_url && (
+                      <iframe 
+                        src={getYoutubeEmbedUrl(selectedLivestream.livestream_url) || ''}
+                        className="w-full h-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    )}
+                    {selectedLivestream.meeting_platform === 'facebook' && selectedLivestream.livestream_url && (
+                      <iframe 
+                        src={getFacebookEmbedUrl(selectedLivestream.livestream_url)}
+                        className="w-full h-full"
+                        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                        allowFullScreen
+                      />
+                    )}
+                    {!selectedLivestream.livestream_url && (
+                      <div className="w-full h-full flex items-center justify-center text-muted-foreground">
+                        <p>{t("liveClasses.noMeetingUrl")}</p>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              )}
             </div>
 
             {/* Sidebar - Upcoming Classes */}
@@ -344,7 +480,7 @@ export default function LiveClasses() {
 
                 {/* Filter Tabs */}
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-4">
-                  <TabsList className="w-full grid grid-cols-3">
+                  <TabsList className="w-full grid grid-cols-4">
                     <TabsTrigger value="all" className="text-xs">
                       {t("liveClasses.tabs.all")}
                     </TabsTrigger>
@@ -353,6 +489,9 @@ export default function LiveClasses() {
                     </TabsTrigger>
                     <TabsTrigger value="live" className="text-xs">
                       {t("liveClasses.tabs.live")}
+                    </TabsTrigger>
+                    <TabsTrigger value="livestream" className="text-xs">
+                      {t("liveClasses.tabs.livestream")}
                     </TabsTrigger>
                   </TabsList>
                 </Tabs>

@@ -170,12 +170,19 @@
     "tabs": {
       "all": "Tất cả",
       "registered": "Đã đăng ký",
-      "live": "Đang diễn ra"
+      "live": "Đang diễn ra",
+      "livestream": "Phát Trực Tiếp"
     },
     "register": "Đăng Ký Tham Gia",
     "unregister": "Hủy Đăng Ký",
     "registered": "Đã đăng ký",
     "joinNow": "Tham Gia Ngay",
+    "joinZoom": "Tham Gia Zoom",
+    "joinMeet": "Tham Gia Google Meet",
+    "watchLive": "Xem Trực Tiếp",
+    "clickToJoin": "Nhấn để tham gia",
+    "noMeetingUrl": "Chưa có link tham gia",
+    "noActiveClass": "Chưa có lớp đang diễn ra",
     "addToCalendar": "Thêm vào lịch",
     "downloadICS": "Tải file ICS",
     "enableReminder": "Nhận thông báo nhắc nhở",
@@ -192,6 +199,12 @@
     "tomorrow": "Ngày mai",
     "integration": "Tích hợp sẵn sàng",
     "connectAccount": "Kết nối tài khoản của bạn",
+    "platforms": {
+      "zoom": "Zoom",
+      "googleMeet": "Google Meet",
+      "youtube": "YouTube Live",
+      "facebook": "Facebook Live"
+    },
     "controls": {
       "mute": "Tắt micro",
       "unmute": "Bật micro",
@@ -207,7 +220,20 @@
     "noInstructor": "Chưa có lớp học đang diễn ra",
     "classDetails": "Chi tiết lớp học",
     "duration": "Thời lượng",
-    "scheduledAt": "Thời gian"
+    "scheduledAt": "Thời gian",
+    "noRegistered": "Chưa đăng ký lớp nào",
+    "noRegisteredDescription": "Hãy đăng ký lớp học để bắt đầu học tập ✨",
+    "noClassesDescription": "Các lớp học mới sẽ được cập nhật sớm ✨",
+    "upcomingClasses": "Lớp Học Sắp Tới",
+    "liveNow": "Đang phát",
+    "liveBadge": "Đang Phát",
+    "class": "Lớp học",
+    "viewAll": "Xem tất cả",
+    "integrations": {
+      "title": "Nền tảng hỗ trợ",
+      "connect": "Nhấn để tham gia",
+      "watchLive": "Xem phát trực tiếp"
+    }
   },
 "socialFeed": {
     "title": "Academic Feed",

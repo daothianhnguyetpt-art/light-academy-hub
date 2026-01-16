@@ -170,12 +170,19 @@
     "tabs": {
       "all": "すべて",
       "registered": "登録済み",
-      "live": "ライブ中"
+      "live": "ライブ中",
+      "livestream": "ライブ配信"
     },
     "register": "参加登録",
     "unregister": "登録解除",
     "registered": "登録済み",
     "joinNow": "今すぐ参加",
+    "joinZoom": "Zoomに参加",
+    "joinMeet": "Google Meetに参加",
+    "watchLive": "ライブ視聴",
+    "clickToJoin": "クリックして参加",
+    "noMeetingUrl": "ミーティングリンクなし",
+    "noActiveClass": "現在進行中の授業はありません",
     "addToCalendar": "カレンダーに追加",
     "downloadICS": "ICSファイルをダウンロード",
     "enableReminder": "リマインダーを有効",
@@ -192,6 +199,12 @@
     "tomorrow": "明日",
     "integration": "統合準備完了",
     "connectAccount": "アカウントを接続",
+    "platforms": {
+      "zoom": "Zoom",
+      "googleMeet": "Google Meet",
+      "youtube": "YouTubeライブ",
+      "facebook": "Facebookライブ"
+    },
     "controls": {
       "mute": "ミュート",
       "unmute": "ミュート解除",
@@ -207,7 +220,20 @@
     "noInstructor": "現在ライブ授業はありません",
     "classDetails": "授業詳細",
     "duration": "時間",
-    "scheduledAt": "予定時間"
+    "scheduledAt": "予定時間",
+    "noRegistered": "登録済みの授業がありません",
+    "noRegisteredDescription": "授業に登録して学習を始めましょう ✨",
+    "noClassesDescription": "新しい授業が近日公開予定です ✨",
+    "upcomingClasses": "開催予定の授業",
+    "liveNow": "ライブ中",
+    "liveBadge": "ライブ",
+    "class": "授業",
+    "viewAll": "すべて見る",
+    "integrations": {
+      "title": "対応プラットフォーム",
+      "connect": "クリックして参加",
+      "watchLive": "ライブ配信を視聴"
+    }
   },
   "socialFeed": {
     "title": "アカデミックフィード",

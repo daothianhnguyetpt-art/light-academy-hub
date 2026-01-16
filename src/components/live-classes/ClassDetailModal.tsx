@@ -19,11 +19,14 @@ import {
   BellOff,
   Loader2,
   MapPin,
-  CheckCircle2
+  CheckCircle2,
+  ExternalLink,
+  Play
 } from "lucide-react";
 import { LiveClass } from "@/hooks/useLiveClasses";
 import { useLiveClassRegistration } from "@/hooks/useLiveClassRegistration";
 import { addToGoogleCalendar, downloadICS, requestNotificationPermission } from "@/lib/calendar-utils";
+import { joinMeeting, getPlatformDisplayName, isLivestreamPlatform, isMeetingPlatform } from "@/lib/meeting-utils";
 import { useAuth } from "@/hooks/useAuth";
 import { useTranslation } from "@/i18n/useTranslation";
 import { getDateLocale } from "@/lib/date-utils";
@@ -203,11 +206,37 @@ export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModa
             <span>{t("liveClasses.duration")}: {classItem.duration_minutes} {t("common.minutes")}</span>
           </div>
 
-          {/* Location */}
+          {/* Location / Platform */}
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <MapPin className="w-4 h-4" />
-            <span>FUN Academy Online</span>
+            <span>
+              {classItem.meeting_platform ? getPlatformDisplayName(classItem.meeting_platform) : 'FUN Academy Online'}
+            </span>
           </div>
+
+          {/* Join Meeting Button - Show when class is live and has meeting URL */}
+          {classItem.status === 'live' && classItem.meeting_url && isMeetingPlatform(classItem.meeting_platform) && (
+            <Button 
+              variant="gold"
+              className="w-full"
+              onClick={() => joinMeeting(classItem.meeting_url)}
+            >
+              <ExternalLink className="w-4 h-4 mr-2" />
+              {classItem.meeting_platform === 'zoom' ? t("liveClasses.joinZoom") : t("liveClasses.joinMeet")}
+            </Button>
+          )}
+
+          {/* Watch Livestream Button - Show for YouTube/Facebook */}
+          {classItem.status === 'live' && classItem.livestream_url && isLivestreamPlatform(classItem.meeting_platform) && (
+            <Button 
+              variant="gold"
+              className="w-full"
+              onClick={() => window.open(classItem.livestream_url || '', '_blank')}
+            >
+              <Play className="w-4 h-4 mr-2" />
+              {t("liveClasses.watchLive")} - {getPlatformDisplayName(classItem.meeting_platform)}
+            </Button>
+          )}
 
           {/* Reminder Option */}
           {!isRegistered && user && (

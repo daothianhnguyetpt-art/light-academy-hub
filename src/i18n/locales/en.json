@@ -170,12 +170,19 @@
     "tabs": {
       "all": "All",
       "registered": "Registered",
-      "live": "Live Now"
+      "live": "Live Now",
+      "livestream": "Livestream"
     },
     "register": "Register",
     "unregister": "Unregister",
     "registered": "Registered",
     "joinNow": "Join Now",
+    "joinZoom": "Join Zoom",
+    "joinMeet": "Join Google Meet",
+    "watchLive": "Watch Live",
+    "clickToJoin": "Click to join",
+    "noMeetingUrl": "No meeting link",
+    "noActiveClass": "No active class",
     "addToCalendar": "Add to calendar",
     "downloadICS": "Download ICS",
     "enableReminder": "Enable reminder",
@@ -192,6 +199,12 @@
     "tomorrow": "Tomorrow",
     "integration": "Ready integrations",
     "connectAccount": "Connect your account",
+    "platforms": {
+      "zoom": "Zoom",
+      "googleMeet": "Google Meet",
+      "youtube": "YouTube Live",
+      "facebook": "Facebook Live"
+    },
     "controls": {
       "mute": "Mute",
       "unmute": "Unmute",
@@ -207,7 +220,20 @@
     "noInstructor": "No live class currently",
     "classDetails": "Class Details",
     "duration": "Duration",
-    "scheduledAt": "Scheduled at"
+    "scheduledAt": "Scheduled at",
+    "noRegistered": "No registered classes",
+    "noRegisteredDescription": "Register for classes to start learning ✨",
+    "noClassesDescription": "New classes will be updated soon ✨",
+    "upcomingClasses": "Upcoming Classes",
+    "liveNow": "Live Now",
+    "liveBadge": "LIVE",
+    "class": "Class",
+    "viewAll": "View all",
+    "integrations": {
+      "title": "Supported Platforms",
+      "connect": "Click to join",
+      "watchLive": "Watch livestream"
+    }
   },
 "socialFeed": {
     "title": "Academic Feed",
