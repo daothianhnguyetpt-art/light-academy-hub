@@ -98,6 +98,18 @@ export default function LiveClasses() {
     return () => clearInterval(interval);
   }, []);
 
+  // Auto-select active livestream when page loads
+  useEffect(() => {
+    if (classes.length > 0 && !selectedLivestream) {
+      const activeLivestream = classes.find(
+        c => c.status === 'live' && isLivestreamPlatform(c.meeting_platform)
+      );
+      if (activeLivestream) {
+        setSelectedLivestream(activeLivestream);
+      }
+    }
+  }, [classes, selectedLivestream]);
+
   // Filter classes based on active tab
   const filteredClasses = classes.filter((classItem) => {
     if (activeTab === "registered") {
