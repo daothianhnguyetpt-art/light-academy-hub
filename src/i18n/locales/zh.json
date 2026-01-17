@@ -57,6 +57,8 @@
     "durationMinutes": "时长(分钟)",
     "meetingUrl": "会议链接",
     "livestreamUrl": "直播链接",
+    "recordingUrl": "录制视频链接",
+    "recordingUrlHint": "直播结束后的录制视频链接",
     "category": "类别",
     "maxParticipants": "最大人数",
     "scheduled": "已安排",
@@ -246,7 +248,8 @@
       "all": "全部",
       "registered": "已注册",
       "live": "直播中",
-      "livestream": "直播"
+      "livestream": "直播",
+      "completed": "已结束"
     },
     "register": "报名参加",
     "unregister": "取消报名",
@@ -304,10 +307,30 @@
     "liveBadge": "直播",
     "class": "课程",
     "viewAll": "查看全部",
+    "completedBadge": "已结束",
+    "hasRecording": "有录播",
+    "watchRecording": "观看回放",
+    "recording": "录播视频",
+    "noCompletedClasses": "暂无已结束的课程",
+    "noCompletedDescription": "已结束的课程将在此显示",
     "integrations": {
       "title": "支持的平台",
       "connect": "点击加入",
       "watchLive": "观看直播"
+    },
+    "admin": {
+      "panelTitle": "直播管理",
+      "addNew": "添加新直播",
+      "noActiveLive": "暂无进行中的直播",
+      "endLive": "结束直播",
+      "endLivestream": "结束直播",
+      "endLivestreamDesc": "直播 \"{title}\" 将被标记为已结束。",
+      "recordingUrl": "录制视频链接",
+      "recordingUrlHint": "输入YouTube或Facebook视频链接",
+      "noRecording": "没有录制视频",
+      "confirmEnd": "确认结束",
+      "endSuccess": "直播已结束",
+      "endSuccessDesc": "直播已被标记为已结束"
     }
   },
   "socialFeed": {

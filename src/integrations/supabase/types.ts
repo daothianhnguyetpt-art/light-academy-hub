@@ -608,6 +608,7 @@ export type Database = {
           max_participants: number | null
           meeting_platform: string | null
           meeting_url: string | null
+          recording_url: string | null
           scheduled_at: string
           status: string | null
           title: string
@@ -623,6 +624,7 @@ export type Database = {
           max_participants?: number | null
           meeting_platform?: string | null
           meeting_url?: string | null
+          recording_url?: string | null
           scheduled_at: string
           status?: string | null
           title: string
@@ -638,6 +640,7 @@ export type Database = {
           max_participants?: number | null
           meeting_platform?: string | null
           meeting_url?: string | null
+          recording_url?: string | null
           scheduled_at?: string
           status?: string | null
           title?: string

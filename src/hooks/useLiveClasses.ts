@@ -22,6 +22,7 @@ export interface LiveClass {
   category: string | null;
   status: string | null;
   created_at: string | null;
+  recording_url: string | null;
   // Joined data
   instructor?: LiveClassInstructor | null;
   registration_count?: number;
@@ -97,6 +98,28 @@ export function useLiveClasses() {
     }
   }, []);
 
+  const fetchCompletedClasses = useCallback(async () => {
+    try {
+      const { data, error: fetchError } = await supabase
+        .from('live_classes')
+        .select(`
+          *,
+          instructor:profiles!live_classes_instructor_id_fkey(
+            id, full_name, avatar_url, academic_title
+          )
+        `)
+        .eq('status', 'completed')
+        .order('scheduled_at', { ascending: false });
+
+      if (fetchError) throw fetchError;
+
+      return data || [];
+    } catch (err) {
+      console.error('Error fetching completed classes:', err);
+      return [];
+    }
+  }, []);
+
   useEffect(() => {
     fetchClasses();
   }, [fetchClasses]);
@@ -107,5 +130,6 @@ export function useLiveClasses() {
     error,
     fetchClasses,
     fetchLiveNow,
+    fetchCompletedClasses,
   };
 }

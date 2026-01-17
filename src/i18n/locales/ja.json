@@ -57,6 +57,8 @@
     "durationMinutes": "時間(分)",
     "meetingUrl": "ミーティングURL",
     "livestreamUrl": "配信URL",
+    "recordingUrl": "録画URL",
+    "recordingUrlHint": "配信終了後の録画動画リンク",
     "category": "カテゴリ",
     "maxParticipants": "最大参加者数",
     "scheduled": "予定",
@@ -246,7 +248,8 @@
       "all": "すべて",
       "registered": "登録済み",
       "live": "ライブ中",
-      "livestream": "ライブ配信"
+      "livestream": "ライブ配信",
+      "completed": "終了済み"
     },
     "register": "参加登録",
     "unregister": "登録解除",
@@ -304,10 +307,30 @@
     "liveBadge": "ライブ",
     "class": "授業",
     "viewAll": "すべて見る",
+    "completedBadge": "終了",
+    "hasRecording": "録画あり",
+    "watchRecording": "視聴する",
+    "recording": "録画",
+    "noCompletedClasses": "終了した授業はありません",
+    "noCompletedDescription": "終了した授業がここに表示されます",
     "integrations": {
       "title": "対応プラットフォーム",
       "connect": "クリックして参加",
       "watchLive": "ライブ配信を視聴"
+    },
+    "admin": {
+      "panelTitle": "ライブ管理",
+      "addNew": "新規追加",
+      "noActiveLive": "進行中のライブはありません",
+      "endLive": "配信終了",
+      "endLivestream": "ライブ終了",
+      "endLivestreamDesc": "「{title}」を終了としてマークします。",
+      "recordingUrl": "録画URL",
+      "recordingUrlHint": "YouTubeまたはFacebook動画URLを入力",
+      "noRecording": "録画なし",
+      "confirmEnd": "終了を確認",
+      "endSuccess": "ライブが終了しました",
+      "endSuccessDesc": "配信が終了としてマークされました"
     }
   },
   "socialFeed": {
