@@ -5,7 +5,9 @@ import { Footer } from "@/components/landing/Footer";
 import { useWallet } from "@/hooks/useWallet";
 import { useLiveClasses, LiveClass } from "@/hooks/useLiveClasses";
 import { useMyRegistrations } from "@/hooks/useLiveClassRegistration";
+import { useAdmin } from "@/hooks/useAdmin";
 import { ClassDetailModal } from "@/components/live-classes/ClassDetailModal";
+import { AdminQuickPanel } from "@/components/live-classes/AdminQuickPanel";
 import { checkReminders } from "@/lib/calendar-utils";
 import { 
   joinMeeting, 
@@ -40,7 +42,8 @@ import {
   Sparkles,
   CheckCircle2,
   Play,
-  ExternalLink
+  ExternalLink,
+  Film
 } from "lucide-react";
 import {
   Tooltip,
@@ -63,8 +66,9 @@ export default function LiveClasses() {
   const { t } = useTranslation();
   const { language } = useLanguage();
   const { isConnected, address, connectWallet } = useWallet();
-  const { classes, loading, error, fetchClasses } = useLiveClasses();
+  const { classes, loading, error, fetchClasses, fetchCompletedClasses } = useLiveClasses();
   const { registeredClassIds, loading: loadingRegistrations } = useMyRegistrations();
+  const { isAdmin } = useAdmin();
   
   const [isMuted, setIsMuted] = useState(true);
   const [isVideoOn, setIsVideoOn] = useState(false);
@@ -73,6 +77,8 @@ export default function LiveClasses() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<string>("all");
   const [selectedLivestream, setSelectedLivestream] = useState<LiveClass | null>(null);
+  const [completedClasses, setCompletedClasses] = useState<LiveClass[]>([]);
+  const [selectedRecording, setSelectedRecording] = useState<LiveClass | null>(null);
 
   const dateLocale = getDateLocale(language);
 
@@ -110,19 +116,28 @@ export default function LiveClasses() {
     }
   }, [classes, selectedLivestream]);
 
+  // Fetch completed classes when tab changes
+  useEffect(() => {
+    if (activeTab === "completed") {
+      fetchCompletedClasses().then((data) => setCompletedClasses(data as LiveClass[]));
+    }
+  }, [activeTab, fetchCompletedClasses]);
+
   // Filter classes based on active tab
-  const filteredClasses = classes.filter((classItem) => {
-    if (activeTab === "registered") {
-      return registeredClassIds.includes(classItem.id);
-    }
-    if (activeTab === "live") {
-      return classItem.status === "live";
-    }
-    if (activeTab === "livestream") {
-      return isLivestreamPlatform(classItem.meeting_platform);
-    }
-    return true;
-  });
+  const filteredClasses = activeTab === "completed" 
+    ? completedClasses
+    : classes.filter((classItem) => {
+        if (activeTab === "registered") {
+          return registeredClassIds.includes(classItem.id);
+        }
+        if (activeTab === "live") {
+          return classItem.status === "live";
+        }
+        if (activeTab === "livestream") {
+          return isLivestreamPlatform(classItem.meeting_platform);
+        }
+        return true;
+      });
 
   // Get livestream classes for the embed section
   const livestreamClasses = classes.filter((c) => 
@@ -150,6 +165,23 @@ export default function LiveClasses() {
     setSelectedClass(null);
     // Refresh classes to update registration counts
     fetchClasses();
+    if (activeTab === "completed") {
+      fetchCompletedClasses().then((data) => setCompletedClasses(data as LiveClass[]));
+    }
+  };
+
+  // Handle watching a recording
+  const handleWatchRecording = (classItem: LiveClass) => {
+    if (!classItem.recording_url) return;
+    
+    // Check if it's a YouTube/Facebook video that can be embedded
+    if (classItem.recording_url.includes('youtube.com') || 
+        classItem.recording_url.includes('youtu.be') ||
+        classItem.recording_url.includes('facebook.com')) {
+      setSelectedRecording(classItem);
+    } else {
+      window.open(classItem.recording_url, '_blank');
+    }
   };
 
   const liveClass = classes.find(c => c.status === 'live');
@@ -180,6 +212,10 @@ export default function LiveClasses() {
                 </p>
               </motion.div>
 
+              {/* Admin Quick Panel */}
+              {isAdmin && (
+                <AdminQuickPanel liveClass={liveClass} onRefresh={fetchClasses} />
+              )}
               {/* Meeting Room Preview */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -492,7 +528,7 @@ export default function LiveClasses() {
 
                 {/* Filter Tabs */}
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-4">
-                  <TabsList className="w-full grid grid-cols-4">
+                  <TabsList className="w-full grid grid-cols-5">
                     <TabsTrigger value="all" className="text-xs">
                       {t("liveClasses.tabs.all")}
                     </TabsTrigger>
@@ -504,6 +540,10 @@ export default function LiveClasses() {
                     </TabsTrigger>
                     <TabsTrigger value="livestream" className="text-xs">
                       {t("liveClasses.tabs.livestream")}
+                    </TabsTrigger>
+                    <TabsTrigger value="completed" className="text-xs flex items-center gap-1">
+                      <Film className="w-3 h-3" />
+                      {t("liveClasses.tabs.completed")}
                     </TabsTrigger>
                   </TabsList>
                 </Tabs>
@@ -519,11 +559,17 @@ export default function LiveClasses() {
                   <div className="academic-card p-6 text-center">
                     <Sparkles className="w-10 h-10 text-gold mx-auto mb-3" />
                     <h3 className="font-semibold text-foreground mb-1">
-                      {activeTab === "registered" ? t("liveClasses.noRegistered") : t("liveClasses.noClasses")}
+                      {activeTab === "registered" 
+                        ? t("liveClasses.noRegistered") 
+                        : activeTab === "completed"
+                        ? t("liveClasses.noCompletedClasses")
+                        : t("liveClasses.noClasses")}
                     </h3>
                     <p className="text-sm text-muted-foreground">
                       {activeTab === "registered" 
                         ? t("liveClasses.noRegisteredDescription") 
+                        : activeTab === "completed"
+                        ? t("liveClasses.noCompletedDescription")
                         : t("liveClasses.noClassesDescription")}
                     </p>
                   </div>
@@ -545,14 +591,26 @@ export default function LiveClasses() {
                               <span className={`px-2 py-0.5 rounded text-xs font-medium ${
                                 classItem.status === 'live' 
                                   ? "bg-destructive/10 text-destructive" 
+                                  : classItem.status === 'completed'
+                                  ? "bg-muted text-muted-foreground"
                                   : "bg-accent text-foreground"
                               }`}>
-                                {classItem.status === 'live' ? `🔴 ${t("liveClasses.liveNow")}` : classItem.category || t("liveClasses.class")}
+                                {classItem.status === 'live' 
+                                  ? `🔴 ${t("liveClasses.liveNow")}` 
+                                  : classItem.status === 'completed'
+                                  ? `📹 ${t("liveClasses.completedBadge")}`
+                                  : classItem.category || t("liveClasses.class")}
                               </span>
-                              {isRegistered && (
+                              {isRegistered && classItem.status !== 'completed' && (
                                 <Badge variant="outline" className="text-xs text-secondary border-secondary/50 flex items-center gap-1">
                                   <CheckCircle2 className="w-3 h-3" />
                                   {t("liveClasses.registered")}
+                                </Badge>
+                              )}
+                              {classItem.status === 'completed' && classItem.recording_url && (
+                                <Badge variant="outline" className="text-xs text-primary border-primary/50 flex items-center gap-1">
+                                  <Film className="w-3 h-3" />
+                                  {t("liveClasses.hasRecording")}
                                 </Badge>
                               )}
                             </div>
@@ -580,10 +638,25 @@ export default function LiveClasses() {
                               <Clock className="w-3.5 h-3.5" />
                               {formatScheduledDate(classItem.scheduled_at)}
                             </span>
-                            <span className="flex items-center gap-1">
-                              <Users className="w-3.5 h-3.5" />
-                              {classItem.registration_count || 0}/{classItem.max_participants || "∞"}
-                            </span>
+                            {classItem.status === 'completed' && classItem.recording_url ? (
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="h-7 text-xs gap-1 border-primary/50 text-primary hover:bg-primary/10"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleWatchRecording(classItem);
+                                }}
+                              >
+                                <Play className="w-3 h-3" />
+                                {t("liveClasses.watchRecording")}
+                              </Button>
+                            ) : (
+                              <span className="flex items-center gap-1">
+                                <Users className="w-3.5 h-3.5" />
+                                {classItem.registration_count || 0}/{classItem.max_participants || "∞"}
+                              </span>
+                            )}
                           </div>
                         </div>
                       );
@@ -612,6 +685,58 @@ export default function LiveClasses() {
         isOpen={isModalOpen}
         onClose={handleModalClose}
       />
+
+      {/* Recording Embed Player */}
+      {selectedRecording && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
+          onClick={() => setSelectedRecording(null)}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="w-full max-w-4xl bg-card rounded-xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-4 border-b border-border flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Badge variant="secondary" className="text-xs">
+                  📹 {t("liveClasses.recording")}
+                </Badge>
+                <span className="font-medium text-foreground">{selectedRecording.title}</span>
+              </div>
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => setSelectedRecording(null)}
+              >
+                ✕
+              </Button>
+            </div>
+            <div className="aspect-video bg-foreground/5">
+              {(selectedRecording.recording_url?.includes('youtube.com') || 
+                selectedRecording.recording_url?.includes('youtu.be')) && (
+                <iframe 
+                  src={getYoutubeEmbedUrl(selectedRecording.recording_url) || ''}
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              )}
+              {selectedRecording.recording_url?.includes('facebook.com') && (
+                <iframe 
+                  src={getFacebookEmbedUrl(selectedRecording.recording_url)}
+                  className="w-full h-full"
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              )}
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   );
 }

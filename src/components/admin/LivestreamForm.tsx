@@ -37,6 +37,7 @@ export function LivestreamForm({ open, onOpenChange, editingClass, onSuccess }: 
     meeting_platform: editingClass?.meeting_platform || "youtube",
     meeting_url: editingClass?.meeting_url || "",
     livestream_url: editingClass?.livestream_url || "",
+    recording_url: editingClass?.recording_url || "",
     scheduled_at: editingClass?.scheduled_at 
       ? new Date(editingClass.scheduled_at).toISOString().slice(0, 16) 
       : "",
@@ -181,6 +182,19 @@ export function LivestreamForm({ open, onOpenChange, editingClass, onSuccess }: 
               placeholder="https://youtube.com/watch?v=..."
             />
           </div>
+
+          {formData.status === "completed" && (
+            <div>
+              <Label htmlFor="recording_url">{t("admin.recordingUrl")}</Label>
+              <Input
+                id="recording_url"
+                value={formData.recording_url}
+                onChange={(e) => setFormData({ ...formData, recording_url: e.target.value })}
+                placeholder="https://youtube.com/watch?v=... (video đã ghi lại)"
+              />
+              <p className="text-xs text-muted-foreground mt-1">{t("admin.recordingUrlHint")}</p>
+            </div>
+          )}
 
           <div className="grid grid-cols-2 gap-4">
             <div>

@@ -57,6 +57,8 @@
     "durationMinutes": "시간(분)",
     "meetingUrl": "미팅 URL",
     "livestreamUrl": "라이브 URL",
+    "recordingUrl": "녹화 URL",
+    "recordingUrlHint": "방송 종료 후 녹화 동영상 링크",
     "category": "카테고리",
     "maxParticipants": "최대 참가자",
     "scheduled": "예정됨",
@@ -246,7 +248,8 @@
       "all": "전체",
       "registered": "등록됨",
       "live": "라이브",
-      "livestream": "라이브 스트림"
+      "livestream": "라이브 스트림",
+      "completed": "종료됨"
     },
     "register": "등록하기",
     "unregister": "등록 취소",
@@ -304,10 +307,30 @@
     "liveBadge": "라이브",
     "class": "수업",
     "viewAll": "전체 보기",
+    "completedBadge": "종료됨",
+    "hasRecording": "녹화 있음",
+    "watchRecording": "다시보기",
+    "recording": "녹화",
+    "noCompletedClasses": "종료된 수업이 없습니다",
+    "noCompletedDescription": "종료된 수업이 여기에 표시됩니다",
     "integrations": {
       "title": "지원 플랫폼",
       "connect": "클릭하여 참여",
       "watchLive": "라이브 스트림 시청"
+    },
+    "admin": {
+      "panelTitle": "라이브 관리",
+      "addNew": "새로 추가",
+      "noActiveLive": "진행 중인 라이브가 없습니다",
+      "endLive": "방송 종료",
+      "endLivestream": "라이브 종료",
+      "endLivestreamDesc": "\"{title}\" 방송이 종료됨으로 표시됩니다.",
+      "recordingUrl": "녹화 URL",
+      "recordingUrlHint": "YouTube 또는 Facebook 동영상 URL 입력",
+      "noRecording": "녹화 없음",
+      "confirmEnd": "종료 확인",
+      "endSuccess": "라이브가 종료되었습니다",
+      "endSuccessDesc": "방송이 종료됨으로 표시되었습니다"
     }
   },
   "socialFeed": {

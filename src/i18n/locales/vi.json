@@ -57,6 +57,8 @@
     "durationMinutes": "Thời lượng (phút)",
     "meetingUrl": "Link họp (Zoom/Meet)",
     "livestreamUrl": "Link Livestream (YouTube/FB)",
+    "recordingUrl": "Link Video Ghi Lại",
+    "recordingUrlHint": "Link video đã ghi lại sau khi kết thúc livestream",
     "category": "Danh mục",
     "maxParticipants": "Số người tối đa",
     "scheduled": "Đã lên lịch",
@@ -251,7 +253,8 @@
       "all": "Tất cả",
       "registered": "Đã đăng ký",
       "live": "Đang diễn ra",
-      "livestream": "Phát Trực Tiếp"
+      "livestream": "Phát Trực Tiếp",
+      "completed": "Đã kết thúc"
     },
     "register": "Đăng Ký Tham Gia",
     "unregister": "Hủy Đăng Ký",
@@ -309,10 +312,30 @@
     "liveBadge": "Đang Phát",
     "class": "Lớp học",
     "viewAll": "Xem tất cả",
+    "completedBadge": "Đã kết thúc",
+    "hasRecording": "Có video",
+    "watchRecording": "Xem lại",
+    "recording": "Video ghi lại",
+    "noCompletedClasses": "Chưa có lớp học nào kết thúc",
+    "noCompletedDescription": "Các buổi học đã kết thúc sẽ hiển thị tại đây",
     "integrations": {
       "title": "Nền tảng hỗ trợ",
       "connect": "Nhấn để tham gia",
       "watchLive": "Xem phát trực tiếp"
+    },
+    "admin": {
+      "panelTitle": "Quản lý Livestream",
+      "addNew": "Thêm mới",
+      "noActiveLive": "Chưa có buổi phát nào đang diễn ra",
+      "endLive": "Kết thúc phát",
+      "endLivestream": "Kết thúc Livestream",
+      "endLivestreamDesc": "Buổi phát \"{title}\" sẽ được chuyển sang trạng thái đã kết thúc.",
+      "recordingUrl": "Link video ghi lại",
+      "recordingUrlHint": "Nhập link YouTube hoặc Facebook video đã ghi lại",
+      "noRecording": "Không có video ghi lại",
+      "confirmEnd": "Xác nhận kết thúc",
+      "endSuccess": "Đã kết thúc livestream",
+      "endSuccessDesc": "Buổi phát đã được chuyển sang trạng thái đã kết thúc"
     }
   },
 "socialFeed": {

@@ -57,6 +57,8 @@
     "durationMinutes": "Duration (minutes)",
     "meetingUrl": "Meeting URL (Zoom/Meet)",
     "livestreamUrl": "Livestream URL (YouTube/FB)",
+    "recordingUrl": "Recording URL",
+    "recordingUrlHint": "Link to recorded video after livestream ends",
     "category": "Category",
     "maxParticipants": "Max Participants",
     "scheduled": "Scheduled",
@@ -251,7 +253,8 @@
       "all": "All",
       "registered": "Registered",
       "live": "Live Now",
-      "livestream": "Livestream"
+      "livestream": "Livestream",
+      "completed": "Completed"
     },
     "register": "Register",
     "unregister": "Unregister",
@@ -309,10 +312,30 @@
     "liveBadge": "LIVE",
     "class": "Class",
     "viewAll": "View all",
+    "completedBadge": "Completed",
+    "hasRecording": "Has recording",
+    "watchRecording": "Watch",
+    "recording": "Recording",
+    "noCompletedClasses": "No completed classes",
+    "noCompletedDescription": "Completed classes will appear here",
     "integrations": {
       "title": "Supported Platforms",
       "connect": "Click to join",
       "watchLive": "Watch livestream"
+    },
+    "admin": {
+      "panelTitle": "Livestream Management",
+      "addNew": "Add New",
+      "noActiveLive": "No active livestream",
+      "endLive": "End Live",
+      "endLivestream": "End Livestream",
+      "endLivestreamDesc": "The session \"{title}\" will be marked as completed.",
+      "recordingUrl": "Recording URL",
+      "recordingUrlHint": "Enter YouTube or Facebook video URL",
+      "noRecording": "No recording available",
+      "confirmEnd": "Confirm End",
+      "endSuccess": "Livestream ended",
+      "endSuccessDesc": "The session has been marked as completed"
     }
   },
 "socialFeed": {
