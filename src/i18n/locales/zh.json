@@ -56,6 +56,8 @@
     "scheduledAt": "计划时间",
     "durationMinutes": "时长(分钟)",
     "meetingUrl": "会议链接",
+    "meetingId": "会议ID",
+    "meetingPassword": "会议密码",
     "livestreamUrl": "直播链接",
     "recordingUrl": "录制视频链接",
     "recordingUrlHint": "直播结束后的录制视频链接",
@@ -320,6 +322,10 @@
       "connect": "点击加入",
       "watchLive": "观看直播"
     },
+    "zoomInfo": "Zoom会议信息",
+    "meetingId": "会议ID",
+    "meetingPassword": "密码",
+    "joinZoomNow": "立即加入Zoom!",
     "admin": {
       "panelTitle": "直播管理",
       "addNew": "添加新直播",

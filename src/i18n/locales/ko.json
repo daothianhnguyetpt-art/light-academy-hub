@@ -56,6 +56,8 @@
     "scheduledAt": "예정 시간",
     "durationMinutes": "시간(분)",
     "meetingUrl": "미팅 URL",
+    "meetingId": "미팅 ID",
+    "meetingPassword": "비밀번호",
     "livestreamUrl": "라이브 URL",
     "recordingUrl": "녹화 URL",
     "recordingUrlHint": "방송 종료 후 녹화 동영상 링크",
@@ -320,6 +322,10 @@
       "connect": "클릭하여 참여",
       "watchLive": "라이브 스트림 시청"
     },
+    "zoomInfo": "Zoom 회의 정보",
+    "meetingId": "회의 ID",
+    "meetingPassword": "비밀번호",
+    "joinZoomNow": "지금 Zoom 참여!",
     "admin": {
       "panelTitle": "라이브 관리",
       "addNew": "새로 추가",

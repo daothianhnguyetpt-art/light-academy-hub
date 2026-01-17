@@ -56,6 +56,8 @@
     "scheduledAt": "Thời gian",
     "durationMinutes": "Thời lượng (phút)",
     "meetingUrl": "Link họp (Zoom/Meet)",
+    "meetingId": "ID phòng họp",
+    "meetingPassword": "Mật khẩu phòng",
     "livestreamUrl": "Link Livestream (YouTube/FB)",
     "recordingUrl": "Link Video Ghi Lại",
     "recordingUrlHint": "Link video đã ghi lại sau khi kết thúc livestream",
@@ -325,6 +327,10 @@
       "connect": "Nhấn để tham gia",
       "watchLive": "Xem phát trực tiếp"
     },
+    "zoomInfo": "Thông tin phòng Zoom",
+    "meetingId": "ID phòng",
+    "meetingPassword": "Mật khẩu",
+    "joinZoomNow": "Vào phòng Zoom ngay!",
     "admin": {
       "panelTitle": "Quản lý Livestream",
       "addNew": "Thêm mới",
