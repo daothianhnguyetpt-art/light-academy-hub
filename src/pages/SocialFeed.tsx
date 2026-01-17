@@ -142,19 +142,19 @@ export default function SocialFeed() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="flex items-center gap-2 mb-8 overflow-x-auto pb-2"
+              className="flex items-center gap-2 mb-6 sm:mb-8 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory"
             >
               {contentTypes.map((type) => (
                 <button
                   key={type.value}
                   onClick={() => setActiveFilter(type.value)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
+                  className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap snap-start ${
                     activeFilter === type.value
                       ? "bg-primary text-primary-foreground"
                       : "bg-card border border-border text-muted-foreground hover:text-foreground hover:border-gold-muted"
                   }`}
                 >
-                  <type.icon className="w-4 h-4" />
+                  <type.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   {type.label}
                 </button>
               ))}
@@ -193,12 +193,12 @@ export default function SocialFeed() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + index * 0.1 }}
-                  className="academic-card p-6"
+                  className="academic-card p-4 sm:p-6"
                 >
                   {/* Post Header */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <Avatar className="w-12 h-12 border-2 border-gold-muted">
+                  <div className="flex items-start justify-between mb-3 sm:mb-4">
+                    <div className="flex items-center gap-2.5 sm:gap-3">
+                      <Avatar className="w-10 h-10 sm:w-12 sm:h-12 border-2 border-gold-muted">
                         <AvatarImage src={post.author.avatar_url ?? undefined} />
                         <AvatarFallback className="bg-primary/10 text-primary font-medium">
                           {getInitials(post.author.full_name)}

@@ -37,7 +37,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight"
+            className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-foreground mb-4 sm:mb-6 leading-tight"
           >
             Nền Tảng Tri Thức
             <br />
@@ -61,13 +61,13 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.25 }}
-            className="flex flex-wrap items-center justify-center gap-2 text-sm text-muted-foreground mb-10"
+            className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground mb-8 sm:mb-10"
           >
-            <span className="px-3 py-1 rounded-full bg-muted/50 border border-border/50">🌍 Trường học</span>
-            <span className="px-3 py-1 rounded-full bg-muted/50 border border-border/50">🏢 Tổ chức giáo dục</span>
-            <span className="px-3 py-1 rounded-full bg-muted/50 border border-border/50">💼 Doanh nghiệp</span>
-            <span className="px-3 py-1 rounded-full bg-muted/50 border border-border/50">👨‍🏫 Chuyên gia</span>
-            <span className="px-3 py-1 rounded-full bg-muted/50 border border-border/50">🎓 Người học toàn cầu</span>
+            <span className="px-2 sm:px-3 py-1 rounded-full bg-muted/50 border border-border/50">🌍 Trường học</span>
+            <span className="px-2 sm:px-3 py-1 rounded-full bg-muted/50 border border-border/50">🏢 Tổ chức</span>
+            <span className="px-2 sm:px-3 py-1 rounded-full bg-muted/50 border border-border/50 hidden xs:inline-flex">💼 Doanh nghiệp</span>
+            <span className="px-2 sm:px-3 py-1 rounded-full bg-muted/50 border border-border/50">👨‍🏫 Chuyên gia</span>
+            <span className="px-2 sm:px-3 py-1 rounded-full bg-muted/50 border border-border/50">🎓 Người học</span>
           </motion.div>
 
           {/* CTA Buttons */}
@@ -95,28 +95,28 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="grid grid-cols-3 gap-8 mt-16 max-w-2xl mx-auto"
+            className="grid grid-cols-3 gap-4 sm:gap-8 mt-10 sm:mt-16 max-w-2xl mx-auto"
           >
             <div className="text-center">
-              <div className="flex items-center justify-center mb-2">
-                <Globe className="w-5 h-5 text-secondary mr-2" />
-                <span className="font-display text-3xl font-bold text-foreground">150+</span>
+              <div className="flex flex-col sm:flex-row items-center justify-center mb-1 sm:mb-2">
+                <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-secondary sm:mr-2 mb-1 sm:mb-0" />
+                <span className="font-display text-2xl sm:text-3xl font-bold text-foreground">150+</span>
               </div>
-              <span className="text-sm text-muted-foreground">Quốc Gia</span>
+              <span className="text-xs sm:text-sm text-muted-foreground">Quốc Gia</span>
             </div>
             <div className="text-center">
-              <div className="flex items-center justify-center mb-2">
-                <BookOpen className="w-5 h-5 text-secondary mr-2" />
-                <span className="font-display text-3xl font-bold text-foreground">10K+</span>
+              <div className="flex flex-col sm:flex-row items-center justify-center mb-1 sm:mb-2">
+                <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-secondary sm:mr-2 mb-1 sm:mb-0" />
+                <span className="font-display text-2xl sm:text-3xl font-bold text-foreground">10K+</span>
               </div>
-              <span className="text-sm text-muted-foreground">Khoá Học</span>
+              <span className="text-xs sm:text-sm text-muted-foreground">Khoá Học</span>
             </div>
             <div className="text-center">
-              <div className="flex items-center justify-center mb-2">
-                <Sparkles className="w-5 h-5 text-secondary mr-2" />
-                <span className="font-display text-3xl font-bold text-foreground">50K+</span>
+              <div className="flex flex-col sm:flex-row items-center justify-center mb-1 sm:mb-2">
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-secondary sm:mr-2 mb-1 sm:mb-0" />
+                <span className="font-display text-2xl sm:text-3xl font-bold text-foreground">50K+</span>
               </div>
-              <span className="text-sm text-muted-foreground">NFT Chứng Chỉ</span>
+              <span className="text-xs sm:text-sm text-muted-foreground">NFT Chứng Chỉ</span>
             </div>
           </motion.div>
         </div>

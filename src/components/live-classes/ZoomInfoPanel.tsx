@@ -42,7 +42,7 @@ export function ZoomInfoPanel({ classItem }: ZoomInfoPanelProps) {
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="p-6 rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/30"
+      className="p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/30"
     >
       {/* Header */}
       <div className="flex items-center gap-3 mb-4">
@@ -63,7 +63,7 @@ export function ZoomInfoPanel({ classItem }: ZoomInfoPanelProps) {
               <span className="text-xs text-muted-foreground block mb-1">
                 🆔 {t("liveClasses.zoomPanel.roomId")}
               </span>
-              <span className="font-mono text-lg font-semibold text-foreground tracking-wider">
+              <span className="font-mono text-base sm:text-lg font-semibold text-foreground tracking-normal sm:tracking-wider">
                 {classItem.meeting_id}
               </span>
             </div>
@@ -88,7 +88,7 @@ export function ZoomInfoPanel({ classItem }: ZoomInfoPanelProps) {
               <span className="text-xs text-muted-foreground block mb-1">
                 🔐 {t("liveClasses.zoomPanel.password")}
               </span>
-              <span className="font-mono text-lg font-semibold text-foreground tracking-wider">
+              <span className="font-mono text-base sm:text-lg font-semibold text-foreground tracking-normal sm:tracking-wider">
                 {classItem.meeting_password}
               </span>
             </div>

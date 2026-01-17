@@ -70,7 +70,7 @@ export function CountdownTimer({ targetClass, onViewDetails, onJoinNow }: Countd
         key={value}
         initial={{ scale: 1.1, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className={`w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center text-2xl sm:text-3xl font-bold ${
+        className={`w-14 h-14 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center text-xl sm:text-3xl font-bold ${
           isStarting 
             ? "bg-gradient-to-br from-gold to-gold-muted text-foreground shadow-lg shadow-gold/30" 
             : isLive
@@ -80,7 +80,7 @@ export function CountdownTimer({ targetClass, onViewDetails, onJoinNow }: Countd
       >
         {value.toString().padStart(2, '0')}
       </motion.div>
-      <span className="text-xs sm:text-sm text-muted-foreground mt-2 font-medium">{label}</span>
+      <span className="text-[10px] sm:text-sm text-muted-foreground mt-1.5 sm:mt-2 font-medium">{label}</span>
     </div>
   );
 
@@ -123,7 +123,7 @@ export function CountdownTimer({ targetClass, onViewDetails, onJoinNow }: Countd
 
       {/* Countdown Boxes */}
       {!isLive && (
-        <div className="flex justify-center gap-3 sm:gap-4 mb-6">
+        <div className="flex justify-center gap-2 sm:gap-4 mb-4 sm:mb-6">
           <TimeBox value={timeLeft.days} label={t("liveClasses.countdown.days")} />
           <TimeBox value={timeLeft.hours} label={t("liveClasses.countdown.hours")} />
           <TimeBox value={timeLeft.minutes} label={t("liveClasses.countdown.minutes")} />
