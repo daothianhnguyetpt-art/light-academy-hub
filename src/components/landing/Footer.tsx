@@ -34,9 +34,9 @@ export function Footer() {
   return (
     <footer className="bg-card border-t border-border">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand */}
-          <div className="col-span-2 md:col-span-1">
+          <div className="sm:col-span-2 lg:col-span-1">
             <Link to="/" className="flex items-center gap-2 mb-4">
               <img 
                 src={funAcademyLogo} 
@@ -59,7 +59,7 @@ export function Footer() {
                 <a
                   key={social.label}
                   href={social.href}
-                  className="p-2 rounded-lg bg-accent/50 text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                  className="p-2.5 rounded-lg bg-accent/50 text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
                   aria-label={social.label}
                 >
                   <social.icon className="w-5 h-5" />
@@ -123,15 +123,15 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="gold-line my-8" />
         
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <p className="text-sm text-muted-foreground">
             © 2026 FUN Academy. All rights reserved.
           </p>
-          <div className="flex items-center gap-6">
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <div className="flex items-center gap-4 sm:gap-6">
+            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors py-2">
               Privacy Policy
             </a>
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors py-2">
               Terms of Service
             </a>
           </div>

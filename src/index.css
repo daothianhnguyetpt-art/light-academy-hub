@@ -373,4 +373,25 @@
       background-position: -200% 0;
     }
   }
+
+  /* Scrollbar hide utility for mobile */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Smooth scroll with touch */
+  .snap-x {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .snap-start {
+    scroll-snap-align: start;
+  }
+  .snap-mandatory {
+    scroll-snap-type: x mandatory;
+  }
 }

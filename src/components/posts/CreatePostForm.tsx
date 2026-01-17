@@ -241,8 +241,8 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
       animate={{ opacity: 1, y: 0 }}
       className="academic-card p-6 mb-8"
     >
-      <div className="flex gap-4">
-        <Avatar className="w-12 h-12 border-2 border-gold-muted flex-shrink-0">
+      <div className="flex gap-3 sm:gap-4">
+        <Avatar className="w-10 h-10 sm:w-12 sm:h-12 border-2 border-gold-muted flex-shrink-0">
           <AvatarImage src={profile?.avatar_url ?? undefined} />
           <AvatarFallback className="bg-primary/10 text-primary font-medium">
             {getInitials(profile?.full_name ?? null)}
@@ -310,11 +310,11 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
           )}
 
           {/* Toolbar - Facebook style */}
-          <div className="flex items-center justify-between pt-2 border-t border-border">
-            <div className="flex items-center gap-1">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-3 border-t border-border">
+            <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide">
               {/* Post Type Selector */}
               <Select value={postType} onValueChange={setPostType}>
-                <SelectTrigger className="w-[130px] border-border bg-background h-9">
+                <SelectTrigger className="w-[110px] sm:w-[130px] border-border bg-background h-9 text-xs sm:text-sm">
                   <SelectValue placeholder={t("socialFeed.postTypeLabel")} />
                 </SelectTrigger>
                 <SelectContent>

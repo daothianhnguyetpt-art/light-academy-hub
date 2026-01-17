@@ -487,22 +487,23 @@ export default function LiveClasses() {
 
                 {/* Filter Tabs */}
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-4">
-                  <TabsList className="w-full grid grid-cols-5">
-                    <TabsTrigger value="all" className="text-xs">
+                  <TabsList className="w-full h-auto flex flex-wrap sm:grid sm:grid-cols-5 gap-1 p-1">
+                    <TabsTrigger value="all" className="text-[10px] sm:text-xs flex-1 sm:flex-none">
                       {t("liveClasses.tabs.all")}
                     </TabsTrigger>
-                    <TabsTrigger value="registered" className="text-xs">
+                    <TabsTrigger value="registered" className="text-[10px] sm:text-xs flex-1 sm:flex-none">
                       {t("liveClasses.tabs.registered")}
                     </TabsTrigger>
-                    <TabsTrigger value="live" className="text-xs">
+                    <TabsTrigger value="live" className="text-[10px] sm:text-xs flex-1 sm:flex-none">
                       {t("liveClasses.tabs.live")}
                     </TabsTrigger>
-                    <TabsTrigger value="livestream" className="text-xs">
+                    <TabsTrigger value="livestream" className="text-[10px] sm:text-xs flex-1 sm:flex-none">
                       {t("liveClasses.tabs.livestream")}
                     </TabsTrigger>
-                    <TabsTrigger value="completed" className="text-xs flex items-center gap-1">
+                    <TabsTrigger value="completed" className="text-[10px] sm:text-xs flex-1 sm:flex-none flex items-center gap-1">
                       <Film className="w-3 h-3" />
-                      {t("liveClasses.tabs.completed")}
+                      <span className="hidden xs:inline">{t("liveClasses.tabs.completed")}</span>
+                      <span className="xs:hidden">📹</span>
                     </TabsTrigger>
                   </TabsList>
                 </Tabs>
