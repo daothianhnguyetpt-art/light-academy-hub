@@ -318,6 +318,8 @@
     "recording": "Video ghi lại",
     "noCompletedClasses": "Chưa có lớp học nào kết thúc",
     "noCompletedDescription": "Các buổi học đã kết thúc sẽ hiển thị tại đây",
+    "clickLivestreamBelow": "Nhấn vào nền tảng bên dưới để xem livestream",
+    "openExternal": "Mở ngoài",
     "integrations": {
       "title": "Nền tảng hỗ trợ",
       "connect": "Nhấn để tham gia",

@@ -318,6 +318,8 @@
     "recording": "Recording",
     "noCompletedClasses": "No completed classes",
     "noCompletedDescription": "Completed classes will appear here",
+    "clickLivestreamBelow": "Click platform below to watch livestream",
+    "openExternal": "Open external",
     "integrations": {
       "title": "Supported Platforms",
       "connect": "Click to join",

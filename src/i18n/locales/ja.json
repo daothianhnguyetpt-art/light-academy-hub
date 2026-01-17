@@ -313,6 +313,8 @@
     "recording": "録画",
     "noCompletedClasses": "終了した授業はありません",
     "noCompletedDescription": "終了した授業がここに表示されます",
+    "clickLivestreamBelow": "下のプラットフォームをクリックしてライブを視聴",
+    "openExternal": "外部で開く",
     "integrations": {
       "title": "対応プラットフォーム",
       "connect": "クリックして参加",

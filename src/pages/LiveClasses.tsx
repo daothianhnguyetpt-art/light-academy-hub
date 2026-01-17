@@ -25,19 +25,10 @@ import { getDateLocale } from "@/lib/date-utils";
 import { format } from "date-fns";
 import { 
   Video,
-  Mic,
-  MicOff,
-  VideoOff,
-  MonitorUp,
-  Hand,
-  MessageSquare,
   Users,
-  Settings,
-  Phone,
   Calendar,
   Clock,
   ChevronRight,
-  Circle,
   Loader2,
   Sparkles,
   CheckCircle2,
@@ -55,12 +46,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 
-const meetingParticipants = [
-  { name: "Giảng viên", initials: "GV", isSpeaking: true },
-  { name: "Học viên 1", initials: "H1", isSpeaking: false },
-  { name: "Học viên 2", initials: "H2", isSpeaking: false },
-  { name: "Học viên 3", initials: "H3", isSpeaking: false },
-];
 
 export default function LiveClasses() {
   const { t } = useTranslation();
@@ -70,9 +55,6 @@ export default function LiveClasses() {
   const { registeredClassIds, loading: loadingRegistrations } = useMyRegistrations();
   const { isAdmin } = useAdmin();
   
-  const [isMuted, setIsMuted] = useState(true);
-  const [isVideoOn, setIsVideoOn] = useState(false);
-  const [isHandRaised, setIsHandRaised] = useState(false);
   const [selectedClass, setSelectedClass] = useState<LiveClass | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<string>("all");
@@ -216,165 +198,129 @@ export default function LiveClasses() {
               {isAdmin && (
                 <AdminQuickPanel liveClass={liveClass} onRefresh={fetchClasses} />
               )}
-              {/* Meeting Room Preview */}
+              {/* Main Livestream Player - Show YouTube/Facebook embed when live */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
                 className="academic-card overflow-hidden"
               >
-                {/* Video Area */}
-                <div className="aspect-video bg-foreground/5 relative">
-                  {/* Main Speaker */}
-                  <div className="absolute inset-4 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                    <div className="text-center">
-                      <Avatar className="w-24 h-24 mx-auto mb-4 border-4 border-gold-muted">
-                        <AvatarImage src={liveClass?.instructor?.avatar_url || undefined} />
-                        <AvatarFallback className="bg-primary text-primary-foreground text-2xl font-bold">
-                          {liveClass?.instructor?.full_name?.charAt(0) || "GV"}
-                        </AvatarFallback>
-                      </Avatar>
-                      <h3 className="font-semibold text-foreground">
-                        {liveClass?.instructor?.full_name || t("liveClasses.instructor")}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        {liveClass?.title || t("liveClasses.noLiveClass")}
-                      </p>
+                {/* Header with Live Badge */}
+                {(selectedLivestream || liveClass) && (
+                  <div className="p-4 border-b border-border bg-gradient-to-r from-destructive/10 to-transparent">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-destructive text-destructive-foreground text-sm font-medium animate-pulse">
+                          <span className="w-2 h-2 rounded-full bg-destructive-foreground" />
+                          {t("liveClasses.liveBadge")}
+                        </span>
+                        <span className="font-semibold text-foreground">
+                          {selectedLivestream?.title || liveClass?.title}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="px-3 py-1.5 rounded-full bg-card text-sm text-foreground flex items-center gap-1">
+                          <Users className="w-4 h-4" />
+                          {(selectedLivestream?.registration_count || liveClass?.registration_count) || 0} {t("liveClasses.participants")}
+                        </span>
+                        {selectedLivestream && (
+                          <Button 
+                            variant="ghost" 
+                            size="sm"
+                            onClick={() => setSelectedLivestream(null)}
+                          >
+                            ✕
+                          </Button>
+                        )}
+                      </div>
                     </div>
                   </div>
-
-                  {/* Participant Thumbnails */}
-                  <div className="absolute bottom-4 right-4 flex gap-2">
-                    {meetingParticipants.slice(1).map((participant) => (
-                      <div
-                        key={participant.name}
-                        className={`w-20 h-14 rounded-lg bg-card border-2 flex items-center justify-center ${
-                          participant.isSpeaking ? "border-secondary" : "border-border"
-                        }`}
-                      >
-                        <Avatar className="w-8 h-8">
-                          <AvatarFallback className="text-xs bg-accent">
-                            {participant.initials}
+                )}
+                
+                {/* Video Area - YouTube/Facebook Embed or Placeholder */}
+                <div className="aspect-video bg-foreground/5 relative">
+                  {/* YouTube Embed */}
+                  {(selectedLivestream?.meeting_platform === 'youtube' || 
+                    (!selectedLivestream && liveClass?.meeting_platform === 'youtube')) && 
+                   (selectedLivestream?.livestream_url || liveClass?.livestream_url) ? (
+                    <iframe 
+                      src={getYoutubeEmbedUrl(selectedLivestream?.livestream_url || liveClass?.livestream_url || '') || ''}
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      title="Livestream"
+                    />
+                  ) : (selectedLivestream?.meeting_platform === 'facebook' || 
+                       (!selectedLivestream && liveClass?.meeting_platform === 'facebook')) && 
+                      (selectedLivestream?.livestream_url || liveClass?.livestream_url) ? (
+                    <iframe 
+                      src={getFacebookEmbedUrl(selectedLivestream?.livestream_url || liveClass?.livestream_url || '')}
+                      className="w-full h-full"
+                      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                      allowFullScreen
+                      title="Livestream"
+                    />
+                  ) : (
+                    /* Fallback - Instructor Info when no livestream */
+                    <div className="absolute inset-4 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                      <div className="text-center">
+                        <Avatar className="w-24 h-24 mx-auto mb-4 border-4 border-gold-muted">
+                          <AvatarImage src={liveClass?.instructor?.avatar_url || undefined} />
+                          <AvatarFallback className="bg-primary text-primary-foreground text-2xl font-bold">
+                            {liveClass?.instructor?.full_name?.charAt(0) || "GV"}
                           </AvatarFallback>
                         </Avatar>
+                        <h3 className="font-semibold text-foreground">
+                          {liveClass?.instructor?.full_name || t("liveClasses.instructor")}
+                        </h3>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          {liveClass?.title || t("liveClasses.noLiveClass")}
+                        </p>
+                        {liveClass && (
+                          <p className="text-xs text-muted-foreground">
+                            {t("liveClasses.clickLivestreamBelow")}
+                          </p>
+                        )}
                       </div>
-                    ))}
-                    <div className="w-20 h-14 rounded-lg bg-card border-2 border-border flex items-center justify-center text-xs text-muted-foreground">
-                      +152
-                    </div>
-                  </div>
-
-                  {/* Live Badge */}
-                  {liveClass && (
-                    <div className="absolute top-4 left-4 flex items-center gap-2">
-                      <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-destructive text-destructive-foreground text-sm font-medium">
-                        <span className="w-2 h-2 rounded-full bg-destructive-foreground animate-pulse" />
-                        {t("liveClasses.liveBadge")}
-                      </span>
-                      <span className="px-3 py-1.5 rounded-full bg-card/80 backdrop-blur text-sm text-foreground">
-                        <Users className="w-4 h-4 inline mr-1" />
-                        {liveClass.registration_count || 0} {t("liveClasses.participants")}
-                      </span>
                     </div>
                   )}
                 </div>
 
-                {/* Controls */}
-                <div className="p-4 bg-card border-t border-border">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button
-                            variant={isMuted ? "outline" : "default"}
-                            size="icon"
-                            onClick={() => setIsMuted(!isMuted)}
-                            className={isMuted ? "border-border" : "bg-primary"}
+                {/* Info Bar */}
+                {(selectedLivestream || liveClass) && (
+                  <div className="p-4 bg-card border-t border-border">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <Avatar className="w-10 h-10 border-2 border-gold-muted">
+                          <AvatarImage src={(selectedLivestream?.instructor || liveClass?.instructor)?.avatar_url || undefined} />
+                          <AvatarFallback className="bg-primary text-primary-foreground font-bold">
+                            {(selectedLivestream?.instructor || liveClass?.instructor)?.full_name?.charAt(0) || "GV"}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="font-medium text-foreground">
+                            {(selectedLivestream?.instructor || liveClass?.instructor)?.full_name || t("liveClasses.instructor")}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {(selectedLivestream?.instructor || liveClass?.instructor)?.academic_title || t("liveClasses.instructor")}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {(selectedLivestream?.meeting_url || liveClass?.meeting_url) && (
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => joinMeeting(selectedLivestream?.meeting_url || liveClass?.meeting_url)}
                           >
-                            {isMuted ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+                            <ExternalLink className="w-4 h-4 mr-2" />
+                            {t("liveClasses.openExternal")}
                           </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{isMuted ? t("liveClasses.controls.unmute") : t("liveClasses.controls.mute")}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                      
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button
-                            variant={isVideoOn ? "default" : "outline"}
-                            size="icon"
-                            onClick={() => setIsVideoOn(!isVideoOn)}
-                            className={isVideoOn ? "bg-primary" : "border-border"}
-                          >
-                            {isVideoOn ? <Video className="w-5 h-5" /> : <VideoOff className="w-5 h-5" />}
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{isVideoOn ? t("liveClasses.controls.videoOff") : t("liveClasses.controls.videoOn")}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                      
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button variant="outline" size="icon" className="border-border">
-                            <MonitorUp className="w-5 h-5" />
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{t("liveClasses.controls.shareScreen")}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                      
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button
-                            variant={isHandRaised ? "default" : "outline"}
-                            size="icon"
-                            onClick={() => setIsHandRaised(!isHandRaised)}
-                            className={isHandRaised ? "bg-secondary text-secondary-foreground" : "border-border"}
-                          >
-                            <Hand className="w-5 h-5" />
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{isHandRaised ? t("liveClasses.controls.lowerHand") : t("liveClasses.controls.raiseHand")}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                      
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button variant="outline" size="icon" className="border-border">
-                            <MessageSquare className="w-5 h-5" />
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{t("liveClasses.controls.openChat")}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button variant="outline" size="icon" className="border-border text-destructive hover:bg-destructive/10">
-                            <Circle className="w-5 h-5 fill-current" />
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{t("liveClasses.controls.record")}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                      <Button variant="outline" size="icon" className="border-border">
-                        <Settings className="w-5 h-5" />
-                      </Button>
-                      <Button variant="destructive" className="px-4">
-                        <Phone className="w-4 h-4 mr-2" />
-                        {t("liveClasses.controls.leave")}
-                      </Button>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </motion.div>
 
               {/* Integration Info - Now Clickable */}
@@ -463,53 +409,6 @@ export default function LiveClasses() {
                 </div>
               </motion.div>
 
-              {/* Livestream Embed Player */}
-              {selectedLivestream && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="mt-6 academic-card overflow-hidden"
-                >
-                  <div className="p-4 border-b border-border flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Badge variant="destructive" className="text-xs">
-                        🔴 {t("liveClasses.liveBadge")}
-                      </Badge>
-                      <span className="font-medium text-foreground">{selectedLivestream.title}</span>
-                    </div>
-                    <Button 
-                      variant="ghost" 
-                      size="sm"
-                      onClick={() => setSelectedLivestream(null)}
-                    >
-                      ✕
-                    </Button>
-                  </div>
-                  <div className="aspect-video bg-foreground/5">
-                    {selectedLivestream.meeting_platform === 'youtube' && selectedLivestream.livestream_url && (
-                      <iframe 
-                        src={getYoutubeEmbedUrl(selectedLivestream.livestream_url) || ''}
-                        className="w-full h-full"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                    )}
-                    {selectedLivestream.meeting_platform === 'facebook' && selectedLivestream.livestream_url && (
-                      <iframe 
-                        src={getFacebookEmbedUrl(selectedLivestream.livestream_url)}
-                        className="w-full h-full"
-                        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                        allowFullScreen
-                      />
-                    )}
-                    {!selectedLivestream.livestream_url && (
-                      <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                        <p>{t("liveClasses.noMeetingUrl")}</p>
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              )}
             </div>
 
             {/* Sidebar - Upcoming Classes */}
