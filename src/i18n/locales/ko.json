@@ -326,6 +326,23 @@
     "meetingId": "회의 ID",
     "meetingPassword": "비밀번호",
     "joinZoomNow": "지금 Zoom 참여!",
+    "countdown": {
+      "nextSession": "다음 세션",
+      "days": "일",
+      "hours": "시간",
+      "minutes": "분",
+      "seconds": "초",
+      "starting": "곧 시작!",
+      "happeningNow": "진행 중!"
+    },
+    "zoomPanel": {
+      "title": "Zoom 룸",
+      "roomId": "룸 ID",
+      "password": "비밀번호",
+      "joinNow": "지금 Zoom 참여!",
+      "tip": "버튼을 클릭하여 장치에서 Zoom을 엽니다",
+      "copied": "복사됨!"
+    },
     "admin": {
       "panelTitle": "라이브 관리",
       "addNew": "새로 추가",

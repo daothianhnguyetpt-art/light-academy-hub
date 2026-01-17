@@ -21,7 +21,10 @@ import {
   MapPin,
   CheckCircle2,
   ExternalLink,
-  Play
+  Play,
+  Video,
+  Copy,
+  Check
 } from "lucide-react";
 import { LiveClass } from "@/hooks/useLiveClasses";
 import { useLiveClassRegistration } from "@/hooks/useLiveClassRegistration";
@@ -31,6 +34,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useTranslation } from "@/i18n/useTranslation";
 import { getDateLocale } from "@/lib/date-utils";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { toast } from "sonner";
 
 interface ClassDetailModalProps {
   classItem: LiveClass | null;
@@ -44,6 +48,8 @@ export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModa
   const { user } = useAuth();
   const [enableReminder, setEnableReminder] = useState(true);
   const [isRegistering, setIsRegistering] = useState(false);
+  const [copiedId, setCopiedId] = useState(false);
+  const [copiedPassword, setCopiedPassword] = useState(false);
   
   const { 
     isRegistered, 
@@ -120,6 +126,22 @@ export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModa
       endTime,
       location: 'FUN Academy Online',
     });
+  };
+
+  const handleCopyMeetingInfo = async (text: string, type: 'id' | 'password') => {
+    try {
+      await navigator.clipboard.writeText(text);
+      if (type === 'id') {
+        setCopiedId(true);
+        setTimeout(() => setCopiedId(false), 2000);
+      } else {
+        setCopiedPassword(true);
+        setTimeout(() => setCopiedPassword(false), 2000);
+      }
+      toast.success(t("liveClasses.zoomPanel.copied"));
+    } catch {
+      toast.error(t("common.error"));
+    }
   };
 
   if (!classItem) return null;
@@ -214,39 +236,70 @@ export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModa
             </span>
           </div>
 
-          {/* Zoom Meeting Info - Show ID and Password */}
+          {/* Zoom Meeting Info - Enhanced with copy buttons */}
           {classItem.meeting_platform === 'zoom' && (classItem.meeting_id || classItem.meeting_password) && (
-            <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <h4 className="text-sm font-semibold text-blue-600 dark:text-blue-400 mb-2 flex items-center gap-2">
+            <div className="p-4 rounded-lg bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/30">
+              <h4 className="text-sm font-semibold text-blue-600 dark:text-blue-400 mb-3 flex items-center gap-2">
                 <div className="w-6 h-6 rounded bg-blue-500 flex items-center justify-center text-white text-xs font-bold">Z</div>
                 {t("liveClasses.zoomInfo")}
               </h4>
-              <div className="grid grid-cols-2 gap-3 text-sm">
+              <div className="space-y-2">
                 {classItem.meeting_id && (
-                  <div>
-                    <span className="text-muted-foreground">{t("liveClasses.meetingId")}:</span>
-                    <span className="ml-2 font-mono font-semibold text-foreground">{classItem.meeting_id}</span>
+                  <div className="flex items-center justify-between p-2 rounded bg-background/50 border border-border">
+                    <div>
+                      <span className="text-xs text-muted-foreground block">{t("liveClasses.meetingId")}:</span>
+                      <span className="font-mono font-semibold text-foreground">{classItem.meeting_id}</span>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleCopyMeetingInfo(classItem.meeting_id || '', 'id')}
+                    >
+                      {copiedId ? <Check className="w-4 h-4 text-secondary" /> : <Copy className="w-4 h-4" />}
+                    </Button>
                   </div>
                 )}
                 {classItem.meeting_password && (
-                  <div>
-                    <span className="text-muted-foreground">{t("liveClasses.meetingPassword")}:</span>
-                    <span className="ml-2 font-mono font-semibold text-foreground">{classItem.meeting_password}</span>
+                  <div className="flex items-center justify-between p-2 rounded bg-background/50 border border-border">
+                    <div>
+                      <span className="text-xs text-muted-foreground block">{t("liveClasses.meetingPassword")}:</span>
+                      <span className="font-mono font-semibold text-foreground">{classItem.meeting_password}</span>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleCopyMeetingInfo(classItem.meeting_password || '', 'password')}
+                    >
+                      {copiedPassword ? <Check className="w-4 h-4 text-secondary" /> : <Copy className="w-4 h-4" />}
+                    </Button>
                   </div>
                 )}
               </div>
+              
+              {/* Prominent Join Zoom Button */}
+              {classItem.meeting_url && (
+                <Button 
+                  variant="gold"
+                  className="w-full mt-4 gap-2 text-base font-semibold"
+                  onClick={() => joinMeeting(classItem.meeting_url)}
+                >
+                  <Video className="w-5 h-5" />
+                  {t("liveClasses.zoomPanel.joinNow")}
+                  <ExternalLink className="w-4 h-4" />
+                </Button>
+              )}
             </div>
           )}
 
-          {/* Join Meeting Button - Show when class is live and has meeting URL */}
-          {classItem.status === 'live' && classItem.meeting_url && isMeetingPlatform(classItem.meeting_platform) && (
+          {/* Join Meeting Button - Show when class is live and has meeting URL (non-Zoom) */}
+          {classItem.status === 'live' && classItem.meeting_url && classItem.meeting_platform === 'google_meet' && (
             <Button 
               variant="gold"
               className="w-full"
               onClick={() => joinMeeting(classItem.meeting_url)}
             >
               <ExternalLink className="w-4 h-4 mr-2" />
-              {classItem.meeting_platform === 'zoom' ? t("liveClasses.joinZoom") : t("liveClasses.joinMeet")}
+              {t("liveClasses.joinMeet")}
             </Button>
           )}
 
