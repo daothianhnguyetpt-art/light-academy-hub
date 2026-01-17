@@ -56,6 +56,8 @@
     "scheduledAt": "Scheduled At",
     "durationMinutes": "Duration (minutes)",
     "meetingUrl": "Meeting URL (Zoom/Meet)",
+    "meetingId": "Meeting ID",
+    "meetingPassword": "Meeting Password",
     "livestreamUrl": "Livestream URL (YouTube/FB)",
     "recordingUrl": "Recording URL",
     "recordingUrlHint": "Link to recorded video after livestream ends",
@@ -325,6 +327,10 @@
       "connect": "Click to join",
       "watchLive": "Watch livestream"
     },
+    "zoomInfo": "Zoom Meeting Info",
+    "meetingId": "Meeting ID",
+    "meetingPassword": "Password",
+    "joinZoomNow": "Join Zoom Now!",
     "admin": {
       "panelTitle": "Livestream Management",
       "addNew": "Add New",

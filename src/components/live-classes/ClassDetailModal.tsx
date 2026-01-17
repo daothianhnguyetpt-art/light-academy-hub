@@ -214,6 +214,30 @@ export function ClassDetailModal({ classItem, isOpen, onClose }: ClassDetailModa
             </span>
           </div>
 
+          {/* Zoom Meeting Info - Show ID and Password */}
+          {classItem.meeting_platform === 'zoom' && (classItem.meeting_id || classItem.meeting_password) && (
+            <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
+              <h4 className="text-sm font-semibold text-blue-600 dark:text-blue-400 mb-2 flex items-center gap-2">
+                <div className="w-6 h-6 rounded bg-blue-500 flex items-center justify-center text-white text-xs font-bold">Z</div>
+                {t("liveClasses.zoomInfo")}
+              </h4>
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                {classItem.meeting_id && (
+                  <div>
+                    <span className="text-muted-foreground">{t("liveClasses.meetingId")}:</span>
+                    <span className="ml-2 font-mono font-semibold text-foreground">{classItem.meeting_id}</span>
+                  </div>
+                )}
+                {classItem.meeting_password && (
+                  <div>
+                    <span className="text-muted-foreground">{t("liveClasses.meetingPassword")}:</span>
+                    <span className="ml-2 font-mono font-semibold text-foreground">{classItem.meeting_password}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Join Meeting Button - Show when class is live and has meeting URL */}
           {classItem.status === 'live' && classItem.meeting_url && isMeetingPlatform(classItem.meeting_platform) && (
             <Button 

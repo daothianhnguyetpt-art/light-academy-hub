@@ -36,6 +36,8 @@ export function LivestreamForm({ open, onOpenChange, editingClass, onSuccess }: 
     description: editingClass?.description || "",
     meeting_platform: editingClass?.meeting_platform || "youtube",
     meeting_url: editingClass?.meeting_url || "",
+    meeting_id: editingClass?.meeting_id || "",
+    meeting_password: editingClass?.meeting_password || "",
     livestream_url: editingClass?.livestream_url || "",
     recording_url: editingClass?.recording_url || "",
     scheduled_at: editingClass?.scheduled_at 
@@ -172,6 +174,30 @@ export function LivestreamForm({ open, onOpenChange, editingClass, onSuccess }: 
               placeholder="https://zoom.us/j/... hoặc https://meet.google.com/..."
             />
           </div>
+
+          {/* Zoom-specific fields */}
+          {formData.meeting_platform === 'zoom' && (
+            <div className="grid grid-cols-2 gap-4 p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
+              <div>
+                <Label htmlFor="meeting_id">{t("admin.meetingId")}</Label>
+                <Input
+                  id="meeting_id"
+                  value={formData.meeting_id}
+                  onChange={(e) => setFormData({ ...formData, meeting_id: e.target.value })}
+                  placeholder="88 08 08 2024"
+                />
+              </div>
+              <div>
+                <Label htmlFor="meeting_password">{t("admin.meetingPassword")}</Label>
+                <Input
+                  id="meeting_password"
+                  value={formData.meeting_password}
+                  onChange={(e) => setFormData({ ...formData, meeting_password: e.target.value })}
+                  placeholder="999"
+                />
+              </div>
+            </div>
+          )}
 
           <div>
             <Label htmlFor="livestream_url">{t("admin.livestreamUrl")}</Label>

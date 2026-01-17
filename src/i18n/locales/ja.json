@@ -56,6 +56,8 @@
     "scheduledAt": "予定時刻",
     "durationMinutes": "時間(分)",
     "meetingUrl": "ミーティングURL",
+    "meetingId": "ミーティングID",
+    "meetingPassword": "パスワード",
     "livestreamUrl": "配信URL",
     "recordingUrl": "録画URL",
     "recordingUrlHint": "配信終了後の録画動画リンク",
@@ -320,6 +322,10 @@
       "connect": "クリックして参加",
       "watchLive": "ライブ配信を視聴"
     },
+    "zoomInfo": "Zoom会議情報",
+    "meetingId": "会議ID",
+    "meetingPassword": "パスワード",
+    "joinZoomNow": "今すぐZoomに参加!",
     "admin": {
       "panelTitle": "ライブ管理",
       "addNew": "新規追加",

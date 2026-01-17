@@ -606,6 +606,8 @@ export type Database = {
           instructor_id: string | null
           livestream_url: string | null
           max_participants: number | null
+          meeting_id: string | null
+          meeting_password: string | null
           meeting_platform: string | null
           meeting_url: string | null
           recording_url: string | null
@@ -622,6 +624,8 @@ export type Database = {
           instructor_id?: string | null
           livestream_url?: string | null
           max_participants?: number | null
+          meeting_id?: string | null
+          meeting_password?: string | null
           meeting_platform?: string | null
           meeting_url?: string | null
           recording_url?: string | null
@@ -638,6 +642,8 @@ export type Database = {
           instructor_id?: string | null
           livestream_url?: string | null
           max_participants?: number | null
+          meeting_id?: string | null
+          meeting_password?: string | null
           meeting_platform?: string | null
           meeting_url?: string | null
           recording_url?: string | null
