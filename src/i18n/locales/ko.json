@@ -313,6 +313,8 @@
     "recording": "녹화",
     "noCompletedClasses": "종료된 수업이 없습니다",
     "noCompletedDescription": "종료된 수업이 여기에 표시됩니다",
+    "clickLivestreamBelow": "아래 플랫폼을 클릭하여 라이브 시청",
+    "openExternal": "외부에서 열기",
     "integrations": {
       "title": "지원 플랫폼",
       "connect": "클릭하여 참여",

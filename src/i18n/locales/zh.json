@@ -313,6 +313,8 @@
     "recording": "录播视频",
     "noCompletedClasses": "暂无已结束的课程",
     "noCompletedDescription": "已结束的课程将在此显示",
+    "clickLivestreamBelow": "点击下方平台观看直播",
+    "openExternal": "外部打开",
     "integrations": {
       "title": "支持的平台",
       "connect": "点击加入",
