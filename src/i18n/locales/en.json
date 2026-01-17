@@ -331,6 +331,23 @@
     "meetingId": "Meeting ID",
     "meetingPassword": "Password",
     "joinZoomNow": "Join Zoom Now!",
+    "countdown": {
+      "nextSession": "Next Session",
+      "days": "days",
+      "hours": "hours",
+      "minutes": "min",
+      "seconds": "sec",
+      "starting": "Starting soon!",
+      "happeningNow": "Happening now!"
+    },
+    "zoomPanel": {
+      "title": "Zoom Room",
+      "roomId": "Room ID",
+      "password": "Password",
+      "joinNow": "Join Zoom Now!",
+      "tip": "Click the button to open Zoom on your device",
+      "copied": "Copied!"
+    },
     "admin": {
       "panelTitle": "Livestream Management",
       "addNew": "Add New",

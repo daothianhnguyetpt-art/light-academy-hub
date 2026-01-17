@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
@@ -8,6 +8,8 @@ import { useMyRegistrations } from "@/hooks/useLiveClassRegistration";
 import { useAdmin } from "@/hooks/useAdmin";
 import { ClassDetailModal } from "@/components/live-classes/ClassDetailModal";
 import { AdminQuickPanel } from "@/components/live-classes/AdminQuickPanel";
+import { CountdownTimer } from "@/components/live-classes/CountdownTimer";
+import { ZoomInfoPanel } from "@/components/live-classes/ZoomInfoPanel";
 import { checkReminders } from "@/lib/calendar-utils";
 import { 
   joinMeeting, 
@@ -168,6 +170,32 @@ export default function LiveClasses() {
 
   const liveClass = classes.find(c => c.status === 'live');
 
+  // Find the next upcoming class (for countdown)
+  const nextUpcomingClass = useMemo(() => {
+    const now = new Date();
+    const upcomingClasses = classes
+      .filter(c => c.status === 'scheduled' && new Date(c.scheduled_at) > now)
+      .sort((a, b) => new Date(a.scheduled_at).getTime() - new Date(b.scheduled_at).getTime());
+    return upcomingClasses[0] || null;
+  }, [classes]);
+
+  // Find active Zoom class (live or about to start)
+  const activeZoomClass = useMemo(() => {
+    const now = new Date();
+    // First check for live Zoom class
+    const liveZoom = classes.find(c => c.status === 'live' && c.meeting_platform === 'zoom');
+    if (liveZoom) return liveZoom;
+    
+    // Then check for Zoom class starting within 30 minutes
+    const soonZoom = classes.find(c => {
+      if (c.meeting_platform !== 'zoom' || c.status !== 'scheduled') return false;
+      const scheduledTime = new Date(c.scheduled_at);
+      const diffMinutes = (scheduledTime.getTime() - now.getTime()) / (1000 * 60);
+      return diffMinutes >= 0 && diffMinutes <= 30;
+    });
+    return soonZoom || null;
+  }, [classes]);
+
   return (
     <div className="min-h-screen bg-background">
       <Header
@@ -198,6 +226,38 @@ export default function LiveClasses() {
               {isAdmin && (
                 <AdminQuickPanel liveClass={liveClass} onRefresh={fetchClasses} />
               )}
+
+              {/* Countdown Timer - Show when no live class */}
+              {!liveClass && nextUpcomingClass && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05 }}
+                  className="mb-6"
+                >
+                  <CountdownTimer
+                    targetClass={nextUpcomingClass}
+                    onViewDetails={(c) => {
+                      setSelectedClass(c);
+                      setIsModalOpen(true);
+                    }}
+                    onJoinNow={(c) => handleJoinMeeting(c)}
+                  />
+                </motion.div>
+              )}
+
+              {/* Zoom Info Panel - Show when Zoom class is active/starting soon */}
+              {activeZoomClass && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.08 }}
+                  className="mb-6"
+                >
+                  <ZoomInfoPanel classItem={activeZoomClass} />
+                </motion.div>
+              )}
+
               {/* Main Livestream Player - Show YouTube/Facebook embed when live */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}

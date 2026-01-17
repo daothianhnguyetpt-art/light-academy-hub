@@ -326,6 +326,23 @@
     "meetingId": "会议ID",
     "meetingPassword": "密码",
     "joinZoomNow": "立即加入Zoom!",
+    "countdown": {
+      "nextSession": "下一节课",
+      "days": "天",
+      "hours": "时",
+      "minutes": "分",
+      "seconds": "秒",
+      "starting": "即将开始!",
+      "happeningNow": "正在进行!"
+    },
+    "zoomPanel": {
+      "title": "Zoom会议室",
+      "roomId": "会议ID",
+      "password": "密码",
+      "joinNow": "立即加入Zoom!",
+      "tip": "点击按钮在您的设备上打开Zoom",
+      "copied": "已复制!"
+    },
     "admin": {
       "panelTitle": "直播管理",
       "addNew": "添加新直播",

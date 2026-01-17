@@ -331,6 +331,23 @@
     "meetingId": "ID phòng",
     "meetingPassword": "Mật khẩu",
     "joinZoomNow": "Vào phòng Zoom ngay!",
+    "countdown": {
+      "nextSession": "Buổi học tiếp theo",
+      "days": "ngày",
+      "hours": "giờ",
+      "minutes": "phút",
+      "seconds": "giây",
+      "starting": "Sắp bắt đầu!",
+      "happeningNow": "Đang diễn ra!"
+    },
+    "zoomPanel": {
+      "title": "Phòng Zoom",
+      "roomId": "ID phòng",
+      "password": "Mật khẩu",
+      "joinNow": "Vào phòng Zoom ngay!",
+      "tip": "Nhấn nút để mở Zoom trên thiết bị của bạn",
+      "copied": "Đã sao chép!"
+    },
     "admin": {
       "panelTitle": "Quản lý Livestream",
       "addNew": "Thêm mới",
