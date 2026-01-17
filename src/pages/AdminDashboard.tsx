@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Shield, Radio, Users, Plus, Loader2, ArrowLeft, Gift } from "lucide-react";
+import { Shield, Radio, Users, Plus, Loader2, ArrowLeft, Gift, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTranslation } from "@/i18n";
@@ -13,6 +13,9 @@ import { LivestreamTable } from "@/components/admin/LivestreamTable";
 import { UserManagementTable } from "@/components/admin/UserManagementTable";
 import { RewardForm } from "@/components/admin/RewardForm";
 import { RewardHistoryTable } from "@/components/admin/RewardHistoryTable";
+import { VideoForm } from "@/components/admin/VideoForm";
+import { VideoTable } from "@/components/admin/VideoTable";
+import { useAdminVideos, AdminVideo } from "@/hooks/useAdminVideos";
 
 export default function AdminDashboard() {
   const { t } = useTranslation();
@@ -26,6 +29,11 @@ export default function AdminDashboard() {
   const [editingClass, setEditingClass] = useState<any>(null);
   const [isRewardFormOpen, setIsRewardFormOpen] = useState(false);
   const [rewardRefreshKey, setRewardRefreshKey] = useState(0);
+  
+  // Video management state
+  const { videos, loading: loadingVideos, fetchVideos } = useAdminVideos();
+  const [isVideoFormOpen, setIsVideoFormOpen] = useState(false);
+  const [editingVideo, setEditingVideo] = useState<AdminVideo | null>(null);
 
   const fetchClasses = async () => {
     try {
@@ -46,8 +54,9 @@ export default function AdminDashboard() {
   useEffect(() => {
     if (isAdmin) {
       fetchClasses();
+      fetchVideos();
     }
-  }, [isAdmin]);
+  }, [isAdmin, fetchVideos]);
 
   // Redirect if not authenticated or not admin
   useEffect(() => {
@@ -80,6 +89,16 @@ export default function AdminDashboard() {
   const handleFormClose = () => {
     setIsFormOpen(false);
     setEditingClass(null);
+  };
+
+  const handleEditVideo = (video: AdminVideo) => {
+    setEditingVideo(video);
+    setIsVideoFormOpen(true);
+  };
+
+  const handleVideoFormClose = () => {
+    setIsVideoFormOpen(false);
+    setEditingVideo(null);
   };
 
   return (
@@ -115,18 +134,26 @@ export default function AdminDashboard() {
           transition={{ duration: 0.5 }}
         >
           <Tabs defaultValue="livestream" className="space-y-6">
-            <TabsList className="grid w-full max-w-2xl grid-cols-3">
-              <TabsTrigger value="livestream" className="gap-2">
+            <TabsList className="grid w-full max-w-3xl grid-cols-4">
+              <TabsTrigger value="livestream" className="gap-2 text-xs sm:text-sm">
                 <Radio className="w-4 h-4" />
-                {t("admin.livestreamManagement")}
+                <span className="hidden sm:inline">{t("admin.livestreamManagement")}</span>
+                <span className="sm:hidden">Livestream</span>
               </TabsTrigger>
-              <TabsTrigger value="users" className="gap-2">
+              <TabsTrigger value="videos" className="gap-2 text-xs sm:text-sm">
+                <Video className="w-4 h-4" />
+                <span className="hidden sm:inline">{t("admin.video.management")}</span>
+                <span className="sm:hidden">Video</span>
+              </TabsTrigger>
+              <TabsTrigger value="users" className="gap-2 text-xs sm:text-sm">
                 <Users className="w-4 h-4" />
-                {t("admin.userManagement")}
+                <span className="hidden sm:inline">{t("admin.userManagement")}</span>
+                <span className="sm:hidden">Users</span>
               </TabsTrigger>
-              <TabsTrigger value="rewards" className="gap-2">
+              <TabsTrigger value="rewards" className="gap-2 text-xs sm:text-sm">
                 <Gift className="w-4 h-4" />
-                {t("admin.rewards.title")}
+                <span className="hidden sm:inline">{t("admin.rewards.title")}</span>
+                <span className="sm:hidden">Rewards</span>
               </TabsTrigger>
             </TabsList>
 
@@ -154,6 +181,34 @@ export default function AdminDashboard() {
                   classes={classes}
                   onEdit={handleEdit}
                   onRefresh={fetchClasses}
+                />
+              )}
+            </TabsContent>
+
+            {/* Video Management Tab */}
+            <TabsContent value="videos" className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-lg font-semibold">{t("admin.video.management")}</h2>
+                  <p className="text-sm text-muted-foreground">
+                    {t("admin.video.managementDesc")}
+                  </p>
+                </div>
+                <Button onClick={() => setIsVideoFormOpen(true)} className="gap-2">
+                  <Plus className="w-4 h-4" />
+                  {t("admin.video.add")}
+                </Button>
+              </div>
+
+              {loadingVideos ? (
+                <div className="flex items-center justify-center py-12">
+                  <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+                </div>
+              ) : (
+                <VideoTable
+                  videos={videos}
+                  onEdit={handleEditVideo}
+                  onRefresh={fetchVideos}
                 />
               )}
             </TabsContent>
@@ -209,6 +264,17 @@ export default function AdminDashboard() {
         onSuccess={() => {
           setRewardRefreshKey((k) => k + 1);
           setIsRewardFormOpen(false);
+        }}
+      />
+
+      {/* Video Form Modal */}
+      <VideoForm
+        open={isVideoFormOpen}
+        onOpenChange={handleVideoFormClose}
+        editingVideo={editingVideo}
+        onSuccess={() => {
+          fetchVideos();
+          handleVideoFormClose();
         }}
       />
     </div>
