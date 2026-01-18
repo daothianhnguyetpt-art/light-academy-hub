@@ -96,3 +96,52 @@ export function isLivestreamPlatform(platform: string | null): boolean {
 export function isMeetingPlatform(platform: string | null): boolean {
   return platform === 'zoom' || platform === 'google_meet';
 }
+
+// Extract Vimeo video ID from various URL formats
+export function extractVimeoId(url: string): string | null {
+  if (!url) return null;
+  
+  const patterns = [
+    /vimeo\.com\/(\d+)/,
+    /player\.vimeo\.com\/video\/(\d+)/,
+  ];
+  
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) return match[1];
+  }
+  return null;
+}
+
+// Generate Vimeo embed URL
+export function getVimeoEmbedUrl(url: string): string | null {
+  const videoId = extractVimeoId(url);
+  if (!videoId) return null;
+  return `https://player.vimeo.com/video/${videoId}?autoplay=1`;
+}
+
+// Check if URL is a direct video file (mp4, webm, etc.)
+export function isDirectVideoUrl(url: string | null): boolean {
+  if (!url) return false;
+  const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov', '.avi'];
+  return videoExtensions.some(ext => url.toLowerCase().includes(ext));
+}
+
+// Check if URL is from Supabase Storage
+export function isSupabaseStorageUrl(url: string | null): boolean {
+  if (!url) return false;
+  return url.includes('supabase.co/storage') || url.includes('supabase.in/storage');
+}
+
+// Determine video source type
+export function getVideoSourceType(url: string | null): 'youtube' | 'vimeo' | 'facebook' | 'direct' | 'storage' | null {
+  if (!url) return null;
+  
+  if (extractYoutubeId(url)) return 'youtube';
+  if (extractVimeoId(url)) return 'vimeo';
+  if (url.includes('facebook.com')) return 'facebook';
+  if (isSupabaseStorageUrl(url)) return 'storage';
+  if (isDirectVideoUrl(url)) return 'direct';
+  
+  return 'direct'; // Default to direct for unknown URLs
+}
