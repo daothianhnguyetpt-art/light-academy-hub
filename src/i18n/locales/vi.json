@@ -415,6 +415,16 @@
     "meetingId": "ID phòng",
     "meetingPassword": "Mật khẩu",
     "joinZoomNow": "Vào phòng Zoom ngay!",
+    "admin": {
+      "panelTitle": "Quản lý Livestream",
+      "addNew": "Thêm mới",
+      "endLive": "Kết thúc",
+      "noActiveLive": "Không có lớp học nào đang live",
+      "scheduledLivestreams": "Lớp học sẵn sàng phát",
+      "goLive": "Phát sóng",
+      "goLiveSuccess": "Đã bắt đầu phát sóng!",
+      "goLiveSuccessDesc": "Lớp học đang được phát trực tiếp"
+    },
     "countdown": {
       "nextSession": "Buổi học tiếp theo",
       "days": "ngày",
