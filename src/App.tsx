@@ -11,6 +11,7 @@ import InstitutionDetail from "./pages/InstitutionDetail";
 import SocialFeed from "./pages/SocialFeed";
 import VideoLibrary from "./pages/VideoLibrary";
 import VideoDetail from "./pages/VideoDetail";
+import CourseDetail from "./pages/CourseDetail";
 import LiveClasses from "./pages/LiveClasses";
 import Library from "./pages/Library";
 import LibraryDetail from "./pages/LibraryDetail";
@@ -40,6 +41,7 @@ const App = () => (
               <Route path="/social-feed" element={<SocialFeed />} />
               <Route path="/video-library" element={<VideoLibrary />} />
               <Route path="/video/:id" element={<VideoDetail />} />
+              <Route path="/course/:id" element={<CourseDetail />} />
               <Route path="/live-classes" element={<LiveClasses />} />
               <Route path="/library" element={<Library />} />
               <Route path="/library/:id" element={<LibraryDetail />} />

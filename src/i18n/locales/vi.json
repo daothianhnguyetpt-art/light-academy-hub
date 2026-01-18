@@ -166,6 +166,44 @@
       "date": "Ngày",
       "points": "điểm",
       "totalPoints": "Tổng điểm"
+    },
+    "course": {
+      "management": "Quản Lý Khóa Học",
+      "managementDesc": "Tạo và quản lý các khóa học từ nhiều video",
+      "add": "Thêm Khóa Học",
+      "edit": "Sửa Khóa Học",
+      "title": "Tên khóa học",
+      "titleRequired": "Vui lòng nhập tên khóa học",
+      "titlePlaceholder": "Nhập tên khóa học...",
+      "description": "Mô tả khóa học",
+      "descriptionPlaceholder": "Mô tả nội dung khóa học...",
+      "thumbnail": "Ảnh bìa",
+      "thumbnailPlaceholder": "URL ảnh bìa hoặc tải lên...",
+      "thumbnailUploaded": "Đã tải lên ảnh bìa",
+      "thumbnailSizeError": "Ảnh bìa phải nhỏ hơn 5MB",
+      "category": "Danh mục",
+      "categoryPlaceholder": "Chọn danh mục...",
+      "level": "Cấp độ",
+      "levelPlaceholder": "Chọn cấp độ...",
+      "durationHours": "Thời lượng (giờ)",
+      "videoCount": "Số video",
+      "manageVideos": "Quản lý Video",
+      "addVideo": "Thêm",
+      "selectVideoToAdd": "Chọn video để thêm vào khóa học...",
+      "noAvailableVideos": "Không có video nào khả dụng",
+      "videosInCourse": "Video trong khóa học",
+      "noVideosInCourse": "Chưa có video nào trong khóa học",
+      "videoAdded": "Đã thêm video vào khóa học",
+      "videoRemoved": "Đã xóa video khỏi khóa học",
+      "noCourses": "Chưa có khóa học nào",
+      "noCoursesDesc": "Tạo khóa học đầu tiên để nhóm các video",
+      "created": "Đã tạo khóa học",
+      "createdDesc": "Khóa học mới đã được thêm",
+      "updated": "Đã cập nhật khóa học",
+      "updatedDesc": "Thông tin khóa học đã được lưu",
+      "deleted": "Đã xóa khóa học",
+      "deletedDesc": "Khóa học đã bị xóa",
+      "deleteWarning": "Khóa học này sẽ bị xóa. Các video vẫn được giữ nguyên nhưng sẽ không còn thuộc khóa học nào."
     }
   },
   "nav": {
@@ -1001,5 +1039,16 @@
     "copyright": "© 2026 FUN Academy. All rights reserved.",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service"
+  },
+  "courseDetail": {
+    "title": "Chi tiết Khóa học",
+    "videos": "video",
+    "videoList": "Danh sách Video",
+    "totalDuration": "Tổng thời lượng",
+    "startLearning": "Bắt đầu học",
+    "continueLearning": "Tiếp tục học",
+    "instructor": "Giảng viên",
+    "noVideos": "Chưa có video nào trong khóa học",
+    "notFound": "Không tìm thấy khóa học"
   }
 }

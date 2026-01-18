@@ -161,6 +161,44 @@
       "date": "날짜",
       "points": "포인트",
       "totalPoints": "총 포인트"
+    },
+    "course": {
+      "management": "코스 관리",
+      "managementDesc": "여러 비디오로 코스를 생성하고 관리",
+      "add": "코스 추가",
+      "edit": "코스 편집",
+      "title": "코스명",
+      "titleRequired": "코스명을 입력하세요",
+      "titlePlaceholder": "코스명 입력...",
+      "description": "코스 설명",
+      "descriptionPlaceholder": "코스 내용 설명...",
+      "thumbnail": "썸네일",
+      "thumbnailPlaceholder": "썸네일 URL 또는 업로드...",
+      "thumbnailUploaded": "썸네일이 업로드되었습니다",
+      "thumbnailSizeError": "썸네일은 5MB 이하여야 합니다",
+      "category": "카테고리",
+      "categoryPlaceholder": "카테고리 선택...",
+      "level": "레벨",
+      "levelPlaceholder": "레벨 선택...",
+      "durationHours": "시간(시)",
+      "videoCount": "비디오 수",
+      "manageVideos": "비디오 관리",
+      "addVideo": "추가",
+      "selectVideoToAdd": "코스에 추가할 비디오 선택...",
+      "noAvailableVideos": "사용 가능한 비디오가 없습니다",
+      "videosInCourse": "코스 내 비디오",
+      "noVideosInCourse": "아직 비디오가 없습니다",
+      "videoAdded": "비디오가 코스에 추가되었습니다",
+      "videoRemoved": "비디오가 코스에서 제거되었습니다",
+      "noCourses": "아직 코스가 없습니다",
+      "noCoursesDesc": "첫 번째 코스를 만들어 비디오를 그룹화하세요",
+      "created": "코스가 생성되었습니다",
+      "createdDesc": "새 코스가 추가되었습니다",
+      "updated": "코스가 업데이트되었습니다",
+      "updatedDesc": "코스 정보가 저장되었습니다",
+      "deleted": "코스가 삭제되었습니다",
+      "deletedDesc": "코스가 삭제되었습니다",
+      "deleteWarning": "이 코스는 삭제됩니다. 비디오는 유지되지만 어떤 코스에도 속하지 않게 됩니다."
     }
   },
   "nav": {
@@ -996,5 +1034,16 @@
     "copyright": "© 2026 FUN Academy. All rights reserved.",
     "privacy": "개인정보 처리방침",
     "terms": "이용약관"
+  },
+  "courseDetail": {
+    "title": "코스 상세",
+    "videos": "개 비디오",
+    "videoList": "비디오 목록",
+    "totalDuration": "총 시간",
+    "startLearning": "학습 시작",
+    "continueLearning": "학습 계속",
+    "instructor": "강사",
+    "noVideos": "아직 비디오가 없습니다",
+    "notFound": "코스를 찾을 수 없습니다"
   }
 }

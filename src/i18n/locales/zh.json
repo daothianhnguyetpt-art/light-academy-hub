@@ -161,6 +161,44 @@
       "date": "日期",
       "points": "积分",
       "totalPoints": "总积分"
+    },
+    "course": {
+      "management": "课程管理",
+      "managementDesc": "从多个视频创建和管理课程",
+      "add": "添加课程",
+      "edit": "编辑课程",
+      "title": "课程名称",
+      "titleRequired": "请输入课程名称",
+      "titlePlaceholder": "输入课程名称...",
+      "description": "课程描述",
+      "descriptionPlaceholder": "描述课程内容...",
+      "thumbnail": "缩略图",
+      "thumbnailPlaceholder": "缩略图URL或上传...",
+      "thumbnailUploaded": "缩略图已上传",
+      "thumbnailSizeError": "缩略图必须小于5MB",
+      "category": "分类",
+      "categoryPlaceholder": "选择分类...",
+      "level": "级别",
+      "levelPlaceholder": "选择级别...",
+      "durationHours": "时长（小时）",
+      "videoCount": "视频数量",
+      "manageVideos": "管理视频",
+      "addVideo": "添加",
+      "selectVideoToAdd": "选择要添加到课程的视频...",
+      "noAvailableVideos": "没有可用的视频",
+      "videosInCourse": "课程中的视频",
+      "noVideosInCourse": "课程中还没有视频",
+      "videoAdded": "视频已添加到课程",
+      "videoRemoved": "视频已从课程中移除",
+      "noCourses": "暂无课程",
+      "noCoursesDesc": "创建您的第一个课程来分组视频",
+      "created": "课程已创建",
+      "createdDesc": "新课程已添加",
+      "updated": "课程已更新",
+      "updatedDesc": "课程信息已保存",
+      "deleted": "课程已删除",
+      "deletedDesc": "课程已删除",
+      "deleteWarning": "此课程将被删除。视频将被保留，但将不再属于任何课程。"
     }
   },
   "nav": {
@@ -996,5 +1034,16 @@
     "copyright": "© 2026 FUN Academy. 保留所有权利。",
     "privacy": "隐私政策",
     "terms": "服务条款"
+  },
+  "courseDetail": {
+    "title": "课程详情",
+    "videos": "个视频",
+    "videoList": "视频列表",
+    "totalDuration": "总时长",
+    "startLearning": "开始学习",
+    "continueLearning": "继续学习",
+    "instructor": "讲师",
+    "noVideos": "课程中还没有视频",
+    "notFound": "未找到课程"
   }
 }
