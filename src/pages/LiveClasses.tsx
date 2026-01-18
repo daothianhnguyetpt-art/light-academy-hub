@@ -237,7 +237,11 @@ export default function LiveClasses() {
 
               {/* Admin Quick Panel */}
               {isAdmin && (
-                <AdminQuickPanel liveClass={liveClass} onRefresh={fetchClasses} />
+                <AdminQuickPanel 
+                  liveClass={liveClass} 
+                  scheduledClasses={livestreamClasses.filter(c => c.status === 'scheduled')}
+                  onRefresh={fetchClasses} 
+                />
               )}
 
               {/* Countdown Timer - Show when no live class */}
