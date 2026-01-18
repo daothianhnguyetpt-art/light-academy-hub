@@ -5,8 +5,10 @@ import { Header } from "@/components/landing/Header";
 import { Footer } from "@/components/landing/Footer";
 import { useWallet } from "@/hooks/useWallet";
 import { useVideos } from "@/hooks/useVideos";
+import { useAdmin } from "@/hooks/useAdmin";
 import { useTranslation } from "@/i18n/useTranslation";
 import { VideoFilterDrawer, VideoFilters } from "@/components/videos/VideoFilterDrawer";
+import { VideoForm } from "@/components/admin/VideoForm";
 import { 
   Play, 
   Clock, 
@@ -18,7 +20,8 @@ import {
   Award,
   ChevronRight,
   Loader2,
-  SlidersHorizontal
+  SlidersHorizontal,
+  Plus
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -38,10 +41,12 @@ export default function VideoLibrary() {
   const { t } = useTranslation();
   const { isConnected, address, connectWallet } = useWallet();
   const { videos, loading, fetchVideos, incrementViews } = useVideos();
+  const { isAdmin } = useAdmin();
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [showFilters, setShowFilters] = useState(false);
+  const [showVideoForm, setShowVideoForm] = useState(false);
   const [filters, setFilters] = useState<VideoFilters>({
     level: null,
     duration: null,
@@ -162,20 +167,43 @@ export default function VideoLibrary() {
                 className="pl-10 bg-card border-border focus:border-gold-muted"
               />
             </div>
-            <Button 
-              variant="outline" 
-              className="border-border hover:border-gold-muted relative"
-              onClick={() => setShowFilters(true)}
-            >
-              <SlidersHorizontal className="w-4 h-4 mr-2" />
-              {t("videoLibrary.filters")}
-              {activeFiltersCount > 0 && (
-                <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center bg-secondary text-secondary-foreground text-xs">
-                  {activeFiltersCount}
-                </Badge>
+            <div className="flex gap-2">
+              {isAdmin && (
+                <Button 
+                  onClick={() => setShowVideoForm(true)}
+                  className="bg-primary hover:bg-primary/90"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  {t("admin.video.add")}
+                </Button>
               )}
-            </Button>
+              <Button 
+                variant="outline" 
+                className="border-border hover:border-gold-muted relative"
+                onClick={() => setShowFilters(true)}
+              >
+                <SlidersHorizontal className="w-4 h-4 mr-2" />
+                {t("videoLibrary.filters")}
+                {activeFiltersCount > 0 && (
+                  <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center bg-secondary text-secondary-foreground text-xs">
+                    {activeFiltersCount}
+                  </Badge>
+                )}
+              </Button>
+            </div>
           </motion.div>
+
+          {/* Video Form Modal (Admin Only) */}
+          {isAdmin && (
+            <VideoForm
+              open={showVideoForm}
+              onOpenChange={setShowVideoForm}
+              onSuccess={() => {
+                const categoryToFetch = activeCategory === "all" ? "Tất cả" : activeCategory;
+                fetchVideos(categoryToFetch, debouncedSearch);
+              }}
+            />
+          )}
 
           {/* Filter Drawer */}
           <VideoFilterDrawer
