@@ -88,14 +88,26 @@ export default function LiveClasses() {
     return () => clearInterval(interval);
   }, []);
 
-  // Auto-select active livestream when page loads
+  // Auto-select active livestream when page loads (include scheduled livestreams with URL)
   useEffect(() => {
     if (classes.length > 0 && !selectedLivestream) {
+      // First priority: live classes
       const activeLivestream = classes.find(
         c => c.status === 'live' && isLivestreamPlatform(c.meeting_platform)
       );
       if (activeLivestream) {
         setSelectedLivestream(activeLivestream);
+        return;
+      }
+      
+      // Second priority: scheduled livestreams with URL (preview available)
+      const scheduledLivestream = classes.find(
+        c => c.status === 'scheduled' && 
+             isLivestreamPlatform(c.meeting_platform) && 
+             c.livestream_url
+      );
+      if (scheduledLivestream) {
+        setSelectedLivestream(scheduledLivestream);
       }
     }
   }, [classes, selectedLivestream]);
@@ -123,9 +135,10 @@ export default function LiveClasses() {
         return true;
       });
 
-  // Get livestream classes for the embed section
+  // Get livestream classes for the embed section (include scheduled with URL)
   const livestreamClasses = classes.filter((c) => 
-    isLivestreamPlatform(c.meeting_platform) && c.status === 'live'
+    isLivestreamPlatform(c.meeting_platform) && 
+    (c.status === 'live' || (c.status === 'scheduled' && c.livestream_url))
   );
 
   // Handle joining a meeting
@@ -265,15 +278,26 @@ export default function LiveClasses() {
                 transition={{ delay: 0.1 }}
                 className="academic-card overflow-hidden"
               >
-                {/* Header with Live Badge */}
+                {/* Header with Live/Upcoming Badge */}
                 {(selectedLivestream || liveClass) && (
-                  <div className="p-4 border-b border-border bg-gradient-to-r from-destructive/10 to-transparent">
+                  <div className={`p-4 border-b border-border bg-gradient-to-r ${
+                    (selectedLivestream?.status === 'live' || liveClass?.status === 'live') 
+                      ? 'from-destructive/10 to-transparent' 
+                      : 'from-amber-500/10 to-transparent'
+                  }`}>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-destructive text-destructive-foreground text-sm font-medium animate-pulse">
-                          <span className="w-2 h-2 rounded-full bg-destructive-foreground" />
-                          {t("liveClasses.liveBadge")}
-                        </span>
+                        {(selectedLivestream?.status === 'live' || (!selectedLivestream && liveClass?.status === 'live')) ? (
+                          <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-destructive text-destructive-foreground text-sm font-medium animate-pulse">
+                            <span className="w-2 h-2 rounded-full bg-destructive-foreground" />
+                            {t("liveClasses.liveBadge")}
+                          </span>
+                        ) : (
+                          <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500 text-white text-sm font-medium">
+                            <Video className="w-3.5 h-3.5" />
+                            {t("liveClasses.upcomingBadge") || "Sắp phát"}
+                          </span>
+                        )}
                         <span className="font-semibold text-foreground">
                           {selectedLivestream?.title || liveClass?.title}
                         </span>
@@ -437,7 +461,9 @@ export default function LiveClasses() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <button 
                     onClick={() => {
-                      const ytClass = classes.find(c => c.meeting_platform === 'youtube' && c.status === 'live');
+                      // Find YouTube livestream (live first, then scheduled with URL)
+                      const ytClass = classes.find(c => c.meeting_platform === 'youtube' && c.status === 'live') ||
+                                      classes.find(c => c.meeting_platform === 'youtube' && c.status === 'scheduled' && c.livestream_url);
                       if (ytClass) setSelectedLivestream(ytClass);
                     }}
                     className="flex items-center gap-3 p-4 rounded-lg bg-accent/50 border border-border hover:border-red-500 hover:bg-red-500/10 transition-all group"
@@ -453,7 +479,9 @@ export default function LiveClasses() {
                   
                   <button 
                     onClick={() => {
-                      const fbClass = classes.find(c => c.meeting_platform === 'facebook' && c.status === 'live');
+                      // Find Facebook livestream (live first, then scheduled with URL)
+                      const fbClass = classes.find(c => c.meeting_platform === 'facebook' && c.status === 'live') ||
+                                      classes.find(c => c.meeting_platform === 'facebook' && c.status === 'scheduled' && c.livestream_url);
                       if (fbClass) setSelectedLivestream(fbClass);
                     }}
                     className="flex items-center gap-3 p-4 rounded-lg bg-accent/50 border border-border hover:border-blue-600 hover:bg-blue-600/10 transition-all group"
