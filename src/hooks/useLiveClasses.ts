@@ -41,6 +41,7 @@ export function useLiveClasses() {
       setError(null);
 
       // Fetch classes with instructor info
+      // Include: live classes, scheduled classes (for preview with livestream_url), and upcoming classes
       const { data, error: fetchError } = await supabase
         .from('live_classes')
         .select(`
@@ -49,7 +50,7 @@ export function useLiveClasses() {
             id, full_name, avatar_url, academic_title
           )
         `)
-        .or(`status.eq.live,scheduled_at.gte.${new Date().toISOString()}`)
+        .or('status.eq.live,status.eq.scheduled')
         .order('scheduled_at', { ascending: true });
 
       if (fetchError) throw fetchError;
