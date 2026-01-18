@@ -532,14 +532,14 @@ export function VideoForm({ open, onOpenChange, editingVideo, onSuccess }: Video
           <div>
             <Label>{t("admin.video.instructor")}</Label>
             <Select
-              value={formData.instructor_id}
-              onValueChange={(value) => setFormData({ ...formData, instructor_id: value })}
+              value={formData.instructor_id || "none"}
+              onValueChange={(value) => setFormData({ ...formData, instructor_id: value === "none" ? "" : value })}
             >
               <SelectTrigger>
                 <SelectValue placeholder={t("admin.video.instructorPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Không có</SelectItem>
+                <SelectItem value="none">{t("common.none") || "Không có"}</SelectItem>
                 {instructors.map(instructor => (
                   <SelectItem key={instructor.id} value={instructor.id}>
                     {instructor.full_name}
