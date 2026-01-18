@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Shield, Radio, Users, Plus, Loader2, ArrowLeft, Gift, Video } from "lucide-react";
+import { Shield, Radio, Users, Plus, Loader2, ArrowLeft, Gift, Video, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTranslation } from "@/i18n";
@@ -15,7 +15,11 @@ import { RewardForm } from "@/components/admin/RewardForm";
 import { RewardHistoryTable } from "@/components/admin/RewardHistoryTable";
 import { VideoForm } from "@/components/admin/VideoForm";
 import { VideoTable } from "@/components/admin/VideoTable";
+import { CourseForm } from "@/components/admin/CourseForm";
+import { CourseTable } from "@/components/admin/CourseTable";
+import { CourseVideosModal } from "@/components/admin/CourseVideosModal";
 import { useAdminVideos, AdminVideo } from "@/hooks/useAdminVideos";
+import { useAdminCourses, AdminCourse } from "@/hooks/useAdminCourses";
 
 export default function AdminDashboard() {
   const { t } = useTranslation();
@@ -34,6 +38,12 @@ export default function AdminDashboard() {
   const { videos, loading: loadingVideos, fetchVideos } = useAdminVideos();
   const [isVideoFormOpen, setIsVideoFormOpen] = useState(false);
   const [editingVideo, setEditingVideo] = useState<AdminVideo | null>(null);
+
+  // Course management state
+  const { courses, loading: loadingCourses, fetchCourses } = useAdminCourses();
+  const [isCourseFormOpen, setIsCourseFormOpen] = useState(false);
+  const [editingCourse, setEditingCourse] = useState<AdminCourse | null>(null);
+  const [managingVideosForCourse, setManagingVideosForCourse] = useState<AdminCourse | null>(null);
 
   const fetchClasses = async () => {
     try {
@@ -55,8 +65,9 @@ export default function AdminDashboard() {
     if (isAdmin) {
       fetchClasses();
       fetchVideos();
+      fetchCourses();
     }
-  }, [isAdmin, fetchVideos]);
+  }, [isAdmin, fetchVideos, fetchCourses]);
 
   // Redirect if not authenticated or not admin
   useEffect(() => {
@@ -101,6 +112,20 @@ export default function AdminDashboard() {
     setEditingVideo(null);
   };
 
+  const handleEditCourse = (course: AdminCourse) => {
+    setEditingCourse(course);
+    setIsCourseFormOpen(true);
+  };
+
+  const handleCourseFormClose = () => {
+    setIsCourseFormOpen(false);
+    setEditingCourse(null);
+  };
+
+  const handleManageVideos = (course: AdminCourse) => {
+    setManagingVideosForCourse(course);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -134,11 +159,16 @@ export default function AdminDashboard() {
           transition={{ duration: 0.5 }}
         >
           <Tabs defaultValue="livestream" className="space-y-6">
-            <TabsList className="grid w-full max-w-3xl grid-cols-4">
+            <TabsList className="grid w-full max-w-4xl grid-cols-5">
               <TabsTrigger value="livestream" className="gap-2 text-xs sm:text-sm">
                 <Radio className="w-4 h-4" />
                 <span className="hidden sm:inline">{t("admin.livestreamManagement")}</span>
-                <span className="sm:hidden">Livestream</span>
+                <span className="sm:hidden">Live</span>
+              </TabsTrigger>
+              <TabsTrigger value="courses" className="gap-2 text-xs sm:text-sm">
+                <BookOpen className="w-4 h-4" />
+                <span className="hidden sm:inline">{t("admin.course.management")}</span>
+                <span className="sm:hidden">Courses</span>
               </TabsTrigger>
               <TabsTrigger value="videos" className="gap-2 text-xs sm:text-sm">
                 <Video className="w-4 h-4" />
@@ -181,6 +211,35 @@ export default function AdminDashboard() {
                   classes={classes}
                   onEdit={handleEdit}
                   onRefresh={fetchClasses}
+                />
+              )}
+            </TabsContent>
+
+            {/* Course Management Tab */}
+            <TabsContent value="courses" className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-lg font-semibold">{t("admin.course.management")}</h2>
+                  <p className="text-sm text-muted-foreground">
+                    {t("admin.course.managementDesc")}
+                  </p>
+                </div>
+                <Button onClick={() => setIsCourseFormOpen(true)} className="gap-2">
+                  <Plus className="w-4 h-4" />
+                  {t("admin.course.add")}
+                </Button>
+              </div>
+
+              {loadingCourses ? (
+                <div className="flex items-center justify-center py-12">
+                  <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+                </div>
+              ) : (
+                <CourseTable
+                  courses={courses}
+                  onEdit={handleEditCourse}
+                  onManageVideos={handleManageVideos}
+                  onRefresh={fetchCourses}
                 />
               )}
             </TabsContent>
@@ -276,6 +335,25 @@ export default function AdminDashboard() {
           fetchVideos();
           handleVideoFormClose();
         }}
+      />
+
+      {/* Course Form Modal */}
+      <CourseForm
+        open={isCourseFormOpen}
+        onOpenChange={handleCourseFormClose}
+        editingCourse={editingCourse}
+        onSuccess={() => {
+          fetchCourses();
+          handleCourseFormClose();
+        }}
+      />
+
+      {/* Course Videos Modal */}
+      <CourseVideosModal
+        open={!!managingVideosForCourse}
+        onOpenChange={() => setManagingVideosForCourse(null)}
+        course={managingVideosForCourse}
+        onRefresh={fetchCourses}
       />
     </div>
   );

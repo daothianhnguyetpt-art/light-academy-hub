@@ -161,6 +161,44 @@
       "date": "日付",
       "points": "ポイント",
       "totalPoints": "合計ポイント"
+    },
+    "course": {
+      "management": "コース管理",
+      "managementDesc": "複数の動画からコースを作成・管理",
+      "add": "コース追加",
+      "edit": "コース編集",
+      "title": "コース名",
+      "titleRequired": "コース名を入力してください",
+      "titlePlaceholder": "コース名を入力...",
+      "description": "コース説明",
+      "descriptionPlaceholder": "コースの内容を説明...",
+      "thumbnail": "サムネイル",
+      "thumbnailPlaceholder": "サムネイルURLまたはアップロード...",
+      "thumbnailUploaded": "サムネイルがアップロードされました",
+      "thumbnailSizeError": "サムネイルは5MB以下にしてください",
+      "category": "カテゴリ",
+      "categoryPlaceholder": "カテゴリを選択...",
+      "level": "レベル",
+      "levelPlaceholder": "レベルを選択...",
+      "durationHours": "時間（時）",
+      "videoCount": "動画数",
+      "manageVideos": "動画管理",
+      "addVideo": "追加",
+      "selectVideoToAdd": "コースに追加する動画を選択...",
+      "noAvailableVideos": "利用可能な動画がありません",
+      "videosInCourse": "コース内の動画",
+      "noVideosInCourse": "まだ動画がありません",
+      "videoAdded": "動画がコースに追加されました",
+      "videoRemoved": "動画がコースから削除されました",
+      "noCourses": "まだコースがありません",
+      "noCoursesDesc": "最初のコースを作成して動画をグループ化",
+      "created": "コースが作成されました",
+      "createdDesc": "新しいコースが追加されました",
+      "updated": "コースが更新されました",
+      "updatedDesc": "コース情報が保存されました",
+      "deleted": "コースが削除されました",
+      "deletedDesc": "コースが削除されました",
+      "deleteWarning": "このコースは削除されます。動画は保持されますが、どのコースにも属さなくなります。"
     }
   },
   "nav": {
@@ -996,5 +1034,16 @@
     "copyright": "© 2026 FUN Academy. All rights reserved.",
     "privacy": "プライバシーポリシー",
     "terms": "利用規約"
+  },
+  "courseDetail": {
+    "title": "コース詳細",
+    "videos": "本の動画",
+    "videoList": "動画一覧",
+    "totalDuration": "総時間",
+    "startLearning": "学習を開始",
+    "continueLearning": "学習を続ける",
+    "instructor": "講師",
+    "noVideos": "まだ動画がありません",
+    "notFound": "コースが見つかりません"
   }
 }

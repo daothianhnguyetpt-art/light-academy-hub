@@ -166,6 +166,44 @@
       "date": "Date",
       "points": "points",
       "totalPoints": "Total Points"
+    },
+    "course": {
+      "management": "Course Management",
+      "managementDesc": "Create and manage courses from multiple videos",
+      "add": "Add Course",
+      "edit": "Edit Course",
+      "title": "Course name",
+      "titleRequired": "Please enter a course name",
+      "titlePlaceholder": "Enter course name...",
+      "description": "Course description",
+      "descriptionPlaceholder": "Describe the course content...",
+      "thumbnail": "Thumbnail",
+      "thumbnailPlaceholder": "Thumbnail URL or upload...",
+      "thumbnailUploaded": "Thumbnail uploaded",
+      "thumbnailSizeError": "Thumbnail must be smaller than 5MB",
+      "category": "Category",
+      "categoryPlaceholder": "Select category...",
+      "level": "Level",
+      "levelPlaceholder": "Select level...",
+      "durationHours": "Duration (hours)",
+      "videoCount": "Videos",
+      "manageVideos": "Manage Videos",
+      "addVideo": "Add",
+      "selectVideoToAdd": "Select video to add to course...",
+      "noAvailableVideos": "No available videos",
+      "videosInCourse": "Videos in course",
+      "noVideosInCourse": "No videos in this course yet",
+      "videoAdded": "Video added to course",
+      "videoRemoved": "Video removed from course",
+      "noCourses": "No courses yet",
+      "noCoursesDesc": "Create your first course to group videos",
+      "created": "Course created",
+      "createdDesc": "New course has been added",
+      "updated": "Course updated",
+      "updatedDesc": "Course information has been saved",
+      "deleted": "Course deleted",
+      "deletedDesc": "Course has been deleted",
+      "deleteWarning": "This course will be deleted. Videos will be kept but will no longer belong to any course."
     }
   },
   "nav": {
@@ -1001,5 +1039,16 @@
     "copyright": "© 2026 FUN Academy. All rights reserved.",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service"
+  },
+  "courseDetail": {
+    "title": "Course Details",
+    "videos": "videos",
+    "videoList": "Video List",
+    "totalDuration": "Total Duration",
+    "startLearning": "Start Learning",
+    "continueLearning": "Continue Learning",
+    "instructor": "Instructor",
+    "noVideos": "No videos in this course yet",
+    "notFound": "Course not found"
   }
 }
