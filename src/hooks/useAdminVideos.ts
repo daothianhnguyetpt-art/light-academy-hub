@@ -175,6 +175,36 @@ export function useAdminVideos() {
     return data.publicUrl;
   }, []);
 
+  const uploadVideo = useCallback(async (
+    file: File, 
+    onProgress?: (progress: number) => void
+  ): Promise<string> => {
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+
+    // Supabase doesn't support progress natively, so we simulate it
+    if (onProgress) onProgress(10);
+
+    const { error: uploadError } = await supabase.storage
+      .from('video-library')
+      .upload(fileName, file, {
+        cacheControl: '3600',
+        upsert: false,
+      });
+
+    if (onProgress) onProgress(90);
+
+    if (uploadError) throw uploadError;
+
+    const { data } = supabase.storage
+      .from('video-library')
+      .getPublicUrl(fileName);
+
+    if (onProgress) onProgress(100);
+
+    return data.publicUrl;
+  }, []);
+
   return {
     videos,
     loading,
@@ -184,5 +214,6 @@ export function useAdminVideos() {
     updateVideo,
     deleteVideo,
     uploadThumbnail,
+    uploadVideo,
   };
 }

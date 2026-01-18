@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,9 +16,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Progress } from "@/components/ui/progress";
 import { useTranslation } from "@/i18n";
 import { toast } from "@/hooks/use-toast";
-import { Loader2, Upload, Image as ImageIcon } from "lucide-react";
+import { Loader2, Upload, Link as LinkIcon, Video, X } from "lucide-react";
 import { useAdminVideos, AdminVideo, VideoFormData } from "@/hooks/useAdminVideos";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -45,9 +47,14 @@ const VIDEO_LEVELS = ["beginner", "intermediate", "advanced"];
 
 export function VideoForm({ open, onOpenChange, editingVideo, onSuccess }: VideoFormProps) {
   const { t } = useTranslation();
-  const { createVideo, updateVideo, uploadThumbnail, saving } = useAdminVideos();
+  const { createVideo, updateVideo, uploadThumbnail, uploadVideo, saving } = useAdminVideos();
   const [uploading, setUploading] = useState(false);
+  const [uploadingVideo, setUploadingVideo] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [videoType, setVideoType] = useState<'embed' | 'upload'>('embed');
   const [instructors, setInstructors] = useState<{ id: string; full_name: string }[]>([]);
+  const [dragActive, setDragActive] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   const [formData, setFormData] = useState<VideoFormData>({
     title: "",
@@ -77,6 +84,12 @@ export function VideoForm({ open, onOpenChange, editingVideo, onSuccess }: Video
         instructor_id: editingVideo.instructor_id || "",
         course_id: editingVideo.course_id || "",
       });
+      // Detect video type based on URL
+      if (editingVideo.video_url?.includes('supabase.co/storage')) {
+        setVideoType('upload');
+      } else {
+        setVideoType('embed');
+      }
     } else {
       setFormData({
         title: "",
@@ -90,7 +103,9 @@ export function VideoForm({ open, onOpenChange, editingVideo, onSuccess }: Video
         instructor_id: "",
         course_id: "",
       });
+      setVideoType('embed');
     }
+    setUploadProgress(0);
   }, [editingVideo, open]);
 
   // Fetch instructors (educators)
@@ -119,7 +134,7 @@ export function VideoForm({ open, onOpenChange, editingVideo, onSuccess }: Video
     if (file.size > 5 * 1024 * 1024) {
       toast({
         title: t("common.error"),
-        description: "Thumbnail phải nhỏ hơn 5MB",
+        description: t("admin.video.thumbnailSizeError"),
         variant: "destructive",
       });
       return;
@@ -131,7 +146,7 @@ export function VideoForm({ open, onOpenChange, editingVideo, onSuccess }: Video
       setFormData(prev => ({ ...prev, thumbnail_url: url }));
       toast({
         title: t("common.success"),
-        description: "Đã tải lên thumbnail",
+        description: t("admin.video.thumbnailUploaded"),
       });
     } catch (error: any) {
       toast({
@@ -142,6 +157,85 @@ export function VideoForm({ open, onOpenChange, editingVideo, onSuccess }: Video
     } finally {
       setUploading(false);
     }
+  };
+
+  const handleVideoUpload = async (file: File) => {
+    if (!file) return;
+
+    // Check file size (500MB max)
+    if (file.size > 500 * 1024 * 1024) {
+      toast({
+        title: t("common.error"),
+        description: t("admin.video.videoSizeError"),
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Check file type
+    const allowedTypes = ['video/mp4', 'video/webm', 'video/ogg'];
+    if (!allowedTypes.includes(file.type)) {
+      toast({
+        title: t("common.error"),
+        description: t("admin.video.videoTypeError"),
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      setUploadingVideo(true);
+      setUploadProgress(0);
+      
+      const url = await uploadVideo(file, (progress) => {
+        setUploadProgress(progress);
+      });
+      
+      setFormData(prev => ({ ...prev, video_url: url }));
+      toast({
+        title: t("common.success"),
+        description: t("admin.video.videoUploaded"),
+      });
+    } catch (error: any) {
+      toast({
+        title: t("common.error"),
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setUploadingVideo(false);
+      setUploadProgress(0);
+    }
+  };
+
+  const handleDrag = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleVideoUpload(e.dataTransfer.files[0]);
+    }
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      handleVideoUpload(e.target.files[0]);
+    }
+  };
+
+  const clearVideoUrl = () => {
+    setFormData(prev => ({ ...prev, video_url: "" }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -182,6 +276,12 @@ export function VideoForm({ open, onOpenChange, editingVideo, onSuccess }: Video
     }
   };
 
+  const getVideoFileName = (url: string) => {
+    if (!url) return '';
+    const parts = url.split('/');
+    return parts[parts.length - 1] || 'video';
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-xl max-h-[90vh] overflow-y-auto">
@@ -199,7 +299,7 @@ export function VideoForm({ open, onOpenChange, editingVideo, onSuccess }: Video
               id="title"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              placeholder="Nhập tiêu đề video..."
+              placeholder={t("admin.video.titlePlaceholder")}
               required
             />
           </div>
@@ -211,21 +311,119 @@ export function VideoForm({ open, onOpenChange, editingVideo, onSuccess }: Video
               id="description"
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder="Mô tả nội dung video..."
+              placeholder={t("admin.video.descriptionPlaceholder")}
               rows={3}
             />
           </div>
 
-          {/* Video URL */}
+          {/* Video Type Selection */}
           <div>
-            <Label htmlFor="video_url">{t("admin.video.videoUrl")}</Label>
-            <Input
-              id="video_url"
-              value={formData.video_url}
-              onChange={(e) => setFormData({ ...formData, video_url: e.target.value })}
-              placeholder="https://youtube.com/watch?v=... hoặc link video trực tiếp"
-            />
+            <Label className="mb-3 block">{t("admin.video.videoType")}</Label>
+            <RadioGroup
+              value={videoType}
+              onValueChange={(value: 'embed' | 'upload') => {
+                setVideoType(value);
+                setFormData(prev => ({ ...prev, video_url: "" }));
+              }}
+              className="flex gap-4"
+            >
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="embed" id="embed" />
+                <Label htmlFor="embed" className="flex items-center gap-2 cursor-pointer">
+                  <LinkIcon className="w-4 h-4" />
+                  {t("admin.video.embedLink")}
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="upload" id="upload" />
+                <Label htmlFor="upload" className="flex items-center gap-2 cursor-pointer">
+                  <Upload className="w-4 h-4" />
+                  {t("admin.video.uploadFile")}
+                </Label>
+              </div>
+            </RadioGroup>
           </div>
+
+          {/* Video URL or Upload */}
+          {videoType === 'embed' ? (
+            <div>
+              <Label htmlFor="video_url">{t("admin.video.videoUrl")}</Label>
+              <Input
+                id="video_url"
+                value={formData.video_url}
+                onChange={(e) => setFormData({ ...formData, video_url: e.target.value })}
+                placeholder="https://youtube.com/watch?v=... hoặc https://vimeo.com/..."
+              />
+              <p className="text-xs text-muted-foreground mt-1">
+                {t("admin.video.supportedPlatforms")}
+              </p>
+            </div>
+          ) : (
+            <div>
+              <Label>{t("admin.video.uploadFile")}</Label>
+              
+              {formData.video_url && !uploadingVideo ? (
+                <div className="mt-2 p-3 bg-accent/50 rounded-lg flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Video className="w-5 h-5 text-primary" />
+                    <span className="text-sm truncate max-w-[200px]">
+                      {getVideoFileName(formData.video_url)}
+                    </span>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    onClick={clearVideoUrl}
+                    className="h-8 w-8"
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
+                </div>
+              ) : (
+                <div
+                  className={`mt-2 border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${
+                    dragActive ? 'border-primary bg-primary/5' : 'border-border hover:border-primary/50'
+                  } ${uploadingVideo ? 'pointer-events-none opacity-60' : ''}`}
+                  onDragEnter={handleDrag}
+                  onDragLeave={handleDrag}
+                  onDragOver={handleDrag}
+                  onDrop={handleDrop}
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  {uploadingVideo ? (
+                    <div className="space-y-3">
+                      <Loader2 className="w-8 h-8 animate-spin mx-auto text-primary" />
+                      <p className="text-sm text-muted-foreground">
+                        {t("admin.video.uploading")}
+                      </p>
+                      <Progress value={uploadProgress} className="w-full max-w-xs mx-auto" />
+                      <p className="text-xs text-muted-foreground">
+                        {uploadProgress}%
+                      </p>
+                    </div>
+                  ) : (
+                    <>
+                      <Upload className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
+                      <p className="text-sm text-muted-foreground">
+                        {t("admin.video.dragDropVideo")}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {t("admin.video.supportedFormats")}
+                      </p>
+                    </>
+                  )}
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="video/mp4,video/webm,video/ogg"
+                    className="hidden"
+                    onChange={handleFileSelect}
+                  />
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Thumbnail */}
           <div>
@@ -234,7 +432,7 @@ export function VideoForm({ open, onOpenChange, editingVideo, onSuccess }: Video
               <Input
                 value={formData.thumbnail_url}
                 onChange={(e) => setFormData({ ...formData, thumbnail_url: e.target.value })}
-                placeholder="URL ảnh bìa hoặc tải lên..."
+                placeholder={t("admin.video.thumbnailPlaceholder")}
                 className="flex-1"
               />
               <label className="cursor-pointer">
@@ -275,7 +473,7 @@ export function VideoForm({ open, onOpenChange, editingVideo, onSuccess }: Video
                 onValueChange={(value) => setFormData({ ...formData, category: value })}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Chọn danh mục..." />
+                  <SelectValue placeholder={t("admin.video.categoryPlaceholder")} />
                 </SelectTrigger>
                 <SelectContent>
                   {VIDEO_CATEGORIES.map(cat => (
@@ -292,7 +490,7 @@ export function VideoForm({ open, onOpenChange, editingVideo, onSuccess }: Video
                 onValueChange={(value) => setFormData({ ...formData, level: value })}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Chọn cấp độ..." />
+                  <SelectValue placeholder={t("admin.video.levelPlaceholder")} />
                 </SelectTrigger>
                 <SelectContent>
                   {VIDEO_LEVELS.map(level => (
@@ -325,7 +523,7 @@ export function VideoForm({ open, onOpenChange, editingVideo, onSuccess }: Video
                 id="institution"
                 value={formData.institution}
                 onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
-                placeholder="Trường/Tổ chức..."
+                placeholder={t("admin.video.institutionPlaceholder")}
               />
             </div>
           </div>
@@ -338,7 +536,7 @@ export function VideoForm({ open, onOpenChange, editingVideo, onSuccess }: Video
               onValueChange={(value) => setFormData({ ...formData, instructor_id: value })}
             >
               <SelectTrigger>
-                <SelectValue placeholder="Chọn giảng viên..." />
+                <SelectValue placeholder={t("admin.video.instructorPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="">Không có</SelectItem>
@@ -356,7 +554,7 @@ export function VideoForm({ open, onOpenChange, editingVideo, onSuccess }: Video
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
               {t("common.cancel")}
             </Button>
-            <Button type="submit" disabled={saving}>
+            <Button type="submit" disabled={saving || uploadingVideo}>
               {saving && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
               {t("common.save")}
             </Button>

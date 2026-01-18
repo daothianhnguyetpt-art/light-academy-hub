@@ -23,6 +23,16 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { 
+  extractYoutubeId, 
+  getYoutubeEmbedUrl, 
+  extractVimeoId, 
+  getVimeoEmbedUrl, 
+  getFacebookEmbedUrl,
+  isSupabaseStorageUrl,
+  isDirectVideoUrl,
+  getVideoSourceType
+} from "@/lib/meeting-utils";
 
 interface Video {
   id: string;
@@ -171,24 +181,6 @@ export default function VideoDetail() {
     return views.toString();
   };
 
-  const getVideoEmbedUrl = (url: string | null) => {
-    if (!url) return null;
-    
-    // YouTube
-    const youtubeMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/);
-    if (youtubeMatch) {
-      return `https://www.youtube.com/embed/${youtubeMatch[1]}`;
-    }
-    
-    // Vimeo
-    const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
-    if (vimeoMatch) {
-      return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
-    }
-    
-    return url;
-  };
-
   const getInitials = (name: string | null) => {
     if (!name) return "?";
     return name.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase();
@@ -233,7 +225,107 @@ export default function VideoDetail() {
     );
   }
 
-  const embedUrl = getVideoEmbedUrl(video.video_url);
+  // Determine video source type and get appropriate embed URL
+  const videoSourceType = getVideoSourceType(video.video_url);
+  
+  const renderVideoPlayer = () => {
+    const url = video.video_url;
+    
+    if (!url) {
+      return (
+        <div className="w-full h-full flex items-center justify-center">
+          {video.thumbnail_url ? (
+            <div className="relative w-full h-full">
+              <img 
+                src={video.thumbnail_url} 
+                alt={video.title}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                <div className="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center">
+                  <Play className="w-9 h-9 text-primary-foreground ml-1" />
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="text-center">
+              <Play className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+              <p className="text-muted-foreground">Video chưa có sẵn</p>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // Direct video file or Supabase Storage
+    if (videoSourceType === 'storage' || videoSourceType === 'direct') {
+      return (
+        <video 
+          controls 
+          className="w-full h-full"
+          poster={video.thumbnail_url || undefined}
+        >
+          <source src={url} type="video/mp4" />
+          <source src={url} type="video/webm" />
+          Your browser does not support the video tag.
+        </video>
+      );
+    }
+
+    // YouTube embed
+    if (videoSourceType === 'youtube') {
+      const embedUrl = getYoutubeEmbedUrl(url);
+      return (
+        <iframe
+          src={embedUrl || undefined}
+          title={video.title}
+          className="w-full h-full"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      );
+    }
+
+    // Vimeo embed
+    if (videoSourceType === 'vimeo') {
+      const embedUrl = getVimeoEmbedUrl(url);
+      return (
+        <iframe
+          src={embedUrl || undefined}
+          title={video.title}
+          className="w-full h-full"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowFullScreen
+        />
+      );
+    }
+
+    // Facebook embed
+    if (videoSourceType === 'facebook') {
+      const embedUrl = getFacebookEmbedUrl(url);
+      return (
+        <iframe
+          src={embedUrl}
+          title={video.title}
+          className="w-full h-full"
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      );
+    }
+
+    // Fallback: try as direct video
+    return (
+      <video 
+        controls 
+        className="w-full h-full"
+        poster={video.thumbnail_url || undefined}
+      >
+        <source src={url} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -262,37 +354,7 @@ export default function VideoDetail() {
               >
                 {/* Video Player */}
                 <div className="aspect-video bg-foreground/5 rounded-xl overflow-hidden mb-6">
-                  {embedUrl ? (
-                    <iframe
-                      src={embedUrl}
-                      title={video.title}
-                      className="w-full h-full"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      {video.thumbnail_url ? (
-                        <div className="relative w-full h-full">
-                          <img 
-                            src={video.thumbnail_url} 
-                            alt={video.title}
-                            className="w-full h-full object-cover"
-                          />
-                          <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                            <div className="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center">
-                              <Play className="w-9 h-9 text-primary-foreground ml-1" />
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="text-center">
-                          <Play className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                          <p className="text-muted-foreground">Video chưa có sẵn</p>
-                        </div>
-                      )}
-                    </div>
-                  )}
+                  {renderVideoPlayer()}
                 </div>
 
                 {/* Video Info */}
