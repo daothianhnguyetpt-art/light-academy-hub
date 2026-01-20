@@ -285,7 +285,7 @@ export function Header({
                   {loading ? (
                     <div className="h-10 bg-muted animate-pulse rounded-md" />
                   ) : user ? (
-                    <>
+                  <>
                       <Link
                         to="/profile"
                         onClick={() => setIsMobileMenuOpen(false)}
@@ -294,6 +294,16 @@ export function Header({
                         <User className="w-4 h-4" />
                         {t("common.myProfile")}
                       </Link>
+                      {isAdmin && (
+                        <Link
+                          to="/admin"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="flex items-center gap-2 px-4 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-md transition-colors"
+                        >
+                          <Shield className="w-4 h-4" />
+                          {t("admin.dashboard")}
+                        </Link>
+                      )}
                       <Button
                         variant="ghost"
                         onClick={() => {
