@@ -86,7 +86,12 @@
     "roleChanged": "역할 변경됨",
     "roleChangedDesc": "사용자 역할이 업데이트되었습니다",
     "fetchUsersFailed": "사용자 로드 실패",
-    "roles": { "admin": "관리자", "moderator": "중재자", "educator": "강사", "learner": "학습자" },
+    "roles": { "owner": "소유자", "admin": "관리자", "moderator": "중재자", "educator": "강사", "learner": "학습자" },
+    "cannotChangeOwner": "소유자 역할은 변경할 수 없습니다",
+    "cannotChangeAdmin": "소유자만 관리자를 관리할 수 있습니다",
+    "onlyOwnerCanDelete": "소유자만 역할을 삭제할 수 있습니다",
+    "deleteRole": "역할 삭제",
+    "deleteRoleConfirm": "이 사용자의 역할을 삭제하시겠습니까?",
     "video": {
       "management": "비디오 관리",
       "managementDesc": "학술 비디오 라이브러리 업로드 및 관리",
