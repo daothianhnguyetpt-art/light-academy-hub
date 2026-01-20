@@ -86,7 +86,12 @@
     "roleChanged": "角色已更改",
     "roleChangedDesc": "用户角色已更新",
     "fetchUsersFailed": "无法加载用户",
-    "roles": { "admin": "管理员", "moderator": "版主", "educator": "讲师", "learner": "学员" },
+    "roles": { "owner": "所有者", "admin": "管理员", "moderator": "版主", "educator": "讲师", "learner": "学员" },
+    "cannotChangeOwner": "无法更改所有者权限",
+    "cannotChangeAdmin": "只有所有者可以管理管理员",
+    "onlyOwnerCanDelete": "只有所有者可以删除角色",
+    "deleteRole": "删除角色",
+    "deleteRoleConfirm": "确认删除此用户的角色?",
     "video": {
       "management": "视频管理",
       "managementDesc": "上传和管理学术视频库",

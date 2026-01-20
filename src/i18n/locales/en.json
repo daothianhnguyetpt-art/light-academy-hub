@@ -87,11 +87,17 @@
     "roleChangedDesc": "User role has been updated",
     "fetchUsersFailed": "Failed to load users",
     "roles": {
+      "owner": "Owner",
       "admin": "Admin",
       "moderator": "Moderator",
       "educator": "Educator",
       "learner": "Learner"
     },
+    "cannotChangeOwner": "Cannot change owner's role",
+    "cannotChangeAdmin": "Only owner can manage admins",
+    "onlyOwnerCanDelete": "Only owner can delete roles",
+    "deleteRole": "Delete Role",
+    "deleteRoleConfirm": "Confirm deleting this user's role?",
     "video": {
       "management": "Video Management",
       "managementDesc": "Upload and manage academic video library",

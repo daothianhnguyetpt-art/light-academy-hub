@@ -86,7 +86,12 @@
     "roleChanged": "権限変更完了",
     "roleChangedDesc": "ユーザー権限が更新されました",
     "fetchUsersFailed": "ユーザー読み込み失敗",
-    "roles": { "admin": "管理者", "moderator": "モデレーター", "educator": "講師", "learner": "学習者" },
+    "roles": { "owner": "オーナー", "admin": "管理者", "moderator": "モデレーター", "educator": "講師", "learner": "学習者" },
+    "cannotChangeOwner": "オーナーの権限は変更できません",
+    "cannotChangeAdmin": "オーナーのみが管理者を管理できます",
+    "onlyOwnerCanDelete": "オーナーのみが役割を削除できます",
+    "deleteRole": "役割を削除",
+    "deleteRoleConfirm": "このユーザーの役割を削除しますか?",
     "video": {
       "management": "動画管理",
       "managementDesc": "学術動画ライブラリのアップロードと管理",

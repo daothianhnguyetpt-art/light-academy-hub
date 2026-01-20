@@ -87,11 +87,17 @@
     "roleChangedDesc": "Quyền người dùng đã được cập nhật",
     "fetchUsersFailed": "Không thể tải danh sách người dùng",
     "roles": {
-      "admin": "Admin",
-      "moderator": "Moderator",
+      "owner": "Chủ sở hữu",
+      "admin": "Quản trị viên",
+      "moderator": "Điều phối viên",
       "educator": "Giảng viên",
       "learner": "Học viên"
     },
+    "cannotChangeOwner": "Không thể thay đổi quyền của chủ sở hữu",
+    "cannotChangeAdmin": "Chỉ chủ sở hữu mới có thể quản lý admin",
+    "onlyOwnerCanDelete": "Chỉ chủ sở hữu mới có thể xóa vai trò",
+    "deleteRole": "Xóa vai trò",
+    "deleteRoleConfirm": "Xác nhận xóa vai trò người dùng này?",
     "video": {
       "management": "Quản Lý Video",
       "managementDesc": "Tải lên và quản lý thư viện video học thuật",
