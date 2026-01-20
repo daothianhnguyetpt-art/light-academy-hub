@@ -69,16 +69,32 @@ export default function AdminDashboard() {
     }
   }, [isAdmin, fetchVideos, fetchCourses]);
 
-  // Redirect if not authenticated or not admin
+  // Redirect if not authenticated or not admin - với logic chống race condition
   useEffect(() => {
-    if (!authLoading && !adminLoading) {
-      if (!user) {
-        navigate('/');
-      } else if (!isAdmin) {
-        navigate('/');
-      }
+    // Đợi auth load xong trước
+    if (authLoading) {
+      return;
     }
-  }, [user, isAdmin, authLoading, adminLoading, navigate]);
+
+    // Không có user -> redirect về trang chủ
+    if (!user) {
+      console.log('[AdminDashboard] No user, redirecting to /');
+      navigate('/');
+      return;
+    }
+
+    // Có user nhưng admin check đang loading -> đợi
+    if (adminLoading) {
+      return;
+    }
+
+    // Đã check xong, không phải admin -> redirect
+    if (!isAdmin) {
+      console.log('[AdminDashboard] User is not admin, redirecting to /', { userId: user.id, isAdmin });
+      navigate('/');
+    }
+  }, [authLoading, adminLoading, user, isAdmin, navigate]);
+  
 
   if (authLoading || adminLoading) {
     return (
