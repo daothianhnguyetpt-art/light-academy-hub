@@ -25,7 +25,8 @@ export function useAdmin() {
         console.error('Error checking admin status:', error);
         setIsAdmin(false);
       } else {
-        setIsAdmin(data?.role === 'admin');
+        // Owner cũng có quyền admin
+        setIsAdmin(data?.role === 'admin' || data?.role === 'owner');
       }
     } catch (err) {
       console.error('Error checking admin status:', err);
