@@ -11,9 +11,9 @@ const footerLinks = {
   ],
   resources: [
     { label: "Whitepaper", href: "/whitepaper" },
+    { label: "Hiến Pháp Ánh Sáng", href: "/constitution" },
     { label: "Documentation", href: "#" },
     { label: "Help Center", href: "#" },
-    { label: "Community", href: "#" },
   ],
   ecosystem: [
     { label: "FUN Token", href: "#" },
