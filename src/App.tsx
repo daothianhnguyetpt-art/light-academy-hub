@@ -16,6 +16,7 @@ import LiveClasses from "./pages/LiveClasses";
 import Library from "./pages/Library";
 import LibraryDetail from "./pages/LibraryDetail";
 import Whitepaper from "./pages/Whitepaper";
+import Constitution from "./pages/Constitution";
 import Profile from "./pages/Profile";
 import LightLaw from "./pages/LightLaw";
 import Auth from "./pages/Auth";
@@ -46,6 +47,7 @@ const App = () => (
               <Route path="/library" element={<Library />} />
               <Route path="/library/:id" element={<LibraryDetail />} />
               <Route path="/whitepaper" element={<Whitepaper />} />
+              <Route path="/constitution" element={<Constitution />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/admin" element={<AdminDashboard />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
