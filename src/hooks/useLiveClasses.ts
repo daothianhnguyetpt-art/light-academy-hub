@@ -1,5 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { createLogger } from '@/lib/logger';
+
+const logger = createLogger('useLiveClasses');
 
 export interface LiveClassInstructor {
   id: string;
@@ -72,7 +75,7 @@ export function useLiveClasses() {
 
       setClasses(classesWithCounts);
     } catch (err) {
-      console.error('Error fetching live classes:', err);
+      logger.error('Error fetching live classes', err);
       setError('Không thể tải lớp học');
     } finally {
       setLoading(false);
@@ -96,7 +99,7 @@ export function useLiveClasses() {
 
       return data || [];
     } catch (err) {
-      console.error('Error fetching live classes:', err);
+      logger.error('Error fetching live classes', err);
       return [];
     }
   }, []);
@@ -118,7 +121,7 @@ export function useLiveClasses() {
 
       return data || [];
     } catch (err) {
-      console.error('Error fetching completed classes:', err);
+      logger.error('Error fetching completed classes', err);
       return [];
     }
   }, []);

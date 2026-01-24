@@ -1,6 +1,9 @@
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+import { createLogger } from '@/lib/logger';
+
+const logger = createLogger('useAdminVideos');
 
 export interface AdminVideo {
   id: string;
@@ -75,7 +78,7 @@ export function useAdminVideos() {
         instructor: video.instructor as AdminVideo['instructor'],
       })));
     } catch (error) {
-      console.error('Error fetching videos:', error);
+      logger.error('Error fetching videos', error);
     } finally {
       setLoading(false);
     }

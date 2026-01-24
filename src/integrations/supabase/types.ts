@@ -1069,6 +1069,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_access_meeting_credentials: {
+        Args: { class_id: string }
+        Returns: boolean
+      }
+      get_live_class_with_credentials: {
+        Args: { class_id: string }
+        Returns: Json
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

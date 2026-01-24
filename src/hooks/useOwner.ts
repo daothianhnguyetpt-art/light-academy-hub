@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { createLogger } from '@/lib/logger';
+
+const logger = createLogger('useOwner');
 
 export function useOwner() {
   const [isOwner, setIsOwner] = useState(false);
@@ -24,7 +27,7 @@ export function useOwner() {
 
         setIsOwner(roles?.role === 'owner');
       } catch (error) {
-        console.error('Error checking owner status:', error);
+        logger.error('Error checking owner status', error);
         setIsOwner(false);
       } finally {
         setLoading(false);
