@@ -17,6 +17,10 @@ import { useProfile } from "@/hooks/useProfile";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useTranslation } from "@/i18n/useTranslation";
+import { createLogger } from "@/lib/logger";
+import { validateImageFile, validateVideoFile, generateSafeFilename } from "@/lib/file-validation";
+
+const logger = createLogger('CreatePostForm');
 
 interface CreatePostFormProps {
   onCreatePost: (content: string, postType: string, mediaUrl?: string, mediaType?: string, location?: string) => Promise<any>;
@@ -55,8 +59,9 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        toast.error(t("socialFeed.imageTooLarge"));
+      const validation = validateImageFile(file);
+      if (!validation.isValid) {
+        toast.error(validation.error || t("socialFeed.imageTooLarge"));
         return;
       }
       // Clear video if selecting image
@@ -69,8 +74,9 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
   const handleVideoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 50 * 1024 * 1024) {
-        toast.error(t("socialFeed.videoTooLarge"));
+      const validation = validateVideoFile(file);
+      if (!validation.isValid) {
+        toast.error(validation.error || t("socialFeed.videoTooLarge"));
         return;
       }
       // Clear image if selecting video
@@ -127,7 +133,7 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
         setIsGettingLocation(false);
       },
       (error) => {
-        console.error('Geolocation error:', error);
+        logger.error('Geolocation error', error);
         toast.error(t("socialFeed.locationFailed"));
         setIsGettingLocation(false);
       },
@@ -138,15 +144,14 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
   const uploadImage = async (file: File): Promise<string | null> => {
     if (!user) return null;
     
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${user.id}/${Date.now()}.${fileExt}`;
+    const fileName = generateSafeFilename(user.id, file.name);
     
     const { error } = await supabase.storage
       .from('post-images')
       .upload(fileName, file);
 
     if (error) {
-      console.error('Upload error:', error);
+      logger.error('Upload error', error);
       throw error;
     }
 
@@ -160,15 +165,14 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
   const uploadVideo = async (file: File): Promise<string | null> => {
     if (!user) return null;
     
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${user.id}/${Date.now()}.${fileExt}`;
+    const fileName = generateSafeFilename(user.id, file.name);
     
     const { error } = await supabase.storage
       .from('post-videos')
       .upload(fileName, file);
 
     if (error) {
-      console.error('Video upload error:', error);
+      logger.error('Video upload error', error);
       throw error;
     }
 
@@ -210,7 +214,7 @@ export function CreatePostForm({ onCreatePost }: CreatePostFormProps) {
       removeVideo();
       removeLocation();
     } catch (err) {
-      console.error('Error creating post:', err);
+      logger.error('Error creating post', err);
       toast.error(t("socialFeed.postFailed"));
     } finally {
       setIsSubmitting(false);

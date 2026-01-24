@@ -1,6 +1,9 @@
 import { useState, useCallback } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { createLogger } from '@/lib/logger';
+
+const logger = createLogger('useAdminCourses');
 
 export interface AdminCourse {
   id: string;
@@ -69,7 +72,7 @@ export function useAdminCourses() {
 
       setCourses(coursesWithCounts);
     } catch (error: any) {
-      console.error('Error fetching courses:', error);
+      logger.error('Error fetching courses', error);
       toast({
         title: "Lỗi",
         description: error.message,

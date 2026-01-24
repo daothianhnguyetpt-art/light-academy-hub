@@ -1,5 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { createLogger } from '@/lib/logger';
+
+const logger = createLogger('useLibraryResources');
 
 export interface LibraryResource {
   id: string;
@@ -45,7 +48,7 @@ export function useLibraryResources() {
 
       setResources(data || []);
     } catch (err) {
-      console.error('Error fetching library resources:', err);
+      logger.error('Error fetching library resources', err);
       setError('Không thể tải tài liệu');
     } finally {
       setLoading(false);

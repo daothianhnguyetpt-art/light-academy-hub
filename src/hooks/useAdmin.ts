@@ -1,6 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from './useAuth';
+import { createLogger } from '@/lib/logger';
+
+const logger = createLogger('useAdmin');
 
 export function useAdmin() {
   const { user, loading: authLoading } = useAuth();
@@ -31,16 +34,16 @@ export function useAdmin() {
         .single();
 
       if (error) {
-        console.error('Error checking admin status:', error);
+        logger.error('Error checking admin status', error);
         setIsAdmin(false);
       } else {
         // Owner cũng có quyền admin
         const hasAdminAccess = data?.role === 'admin' || data?.role === 'owner';
-        console.log('[useAdmin] Role check result:', { userId: user.id, role: data?.role, hasAdminAccess });
+        logger.debug('Role check result', { role: data?.role, hasAdminAccess });
         setIsAdmin(hasAdminAccess);
       }
     } catch (err) {
-      console.error('Error checking admin status:', err);
+      logger.error('Error checking admin status', err);
       setIsAdmin(false);
     } finally {
       setLoading(false);
