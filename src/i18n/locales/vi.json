@@ -576,6 +576,22 @@
       "walletConnected": "Đã kết nối",
       "connectWallet": "Kết nối ví",
       "saving": "Đang lưu..."
+    },
+    "setPassword": "Cài Đặt Mật Khẩu",
+    "setPasswordModal": {
+      "title": "Cài Đặt Mật Khẩu",
+      "description": "Tạo mật khẩu để đăng nhập bằng email trong tương lai",
+      "email": "Email của bạn",
+      "newPassword": "Mật khẩu mới",
+      "confirmPassword": "Xác nhận mật khẩu",
+      "save": "Lưu Mật Khẩu",
+      "saving": "Đang lưu...",
+      "success": "Đã cài đặt mật khẩu thành công!",
+      "error": "Không thể cài đặt mật khẩu",
+      "passwordMismatch": "Mật khẩu xác nhận không khớp",
+      "passwordTooShort": "Mật khẩu tối thiểu 6 ký tự",
+      "passwordTooLong": "Mật khẩu không quá 72 ký tự",
+      "infoMessage": "Sau khi cài đặt mật khẩu, bạn có thể đăng nhập bằng Google hoặc email/mật khẩu."
     }
   },
   "library": {

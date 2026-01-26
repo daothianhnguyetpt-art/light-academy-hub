@@ -566,6 +566,22 @@
       "walletConnected": "Connected",
       "connectWallet": "Connect wallet",
       "saving": "Saving..."
+    },
+    "setPassword": "Set Password",
+    "setPasswordModal": {
+      "title": "Set Password",
+      "description": "Create a password to login with email in the future",
+      "email": "Your email",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "save": "Save Password",
+      "saving": "Saving...",
+      "success": "Password set successfully!",
+      "error": "Could not set password",
+      "passwordMismatch": "Passwords do not match",
+      "passwordTooShort": "Password must be at least 6 characters",
+      "passwordTooLong": "Password must be less than 72 characters",
+      "infoMessage": "After setting a password, you can login with either Google or email/password."
     }
   },
   "library": {
