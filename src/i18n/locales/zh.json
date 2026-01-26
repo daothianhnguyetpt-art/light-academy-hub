@@ -560,6 +560,22 @@
       "walletConnected": "已连接",
       "connectWallet": "连接钱包",
       "saving": "保存中..."
+    },
+    "setPassword": "设置密码",
+    "setPasswordModal": {
+      "title": "设置密码",
+      "description": "创建密码以便将来使用邮箱登录",
+      "email": "您的邮箱",
+      "newPassword": "新密码",
+      "confirmPassword": "确认密码",
+      "save": "保存密码",
+      "saving": "保存中...",
+      "success": "密码设置成功！",
+      "error": "无法设置密码",
+      "passwordMismatch": "两次密码不一致",
+      "passwordTooShort": "密码至少6个字符",
+      "passwordTooLong": "密码不能超过72个字符",
+      "infoMessage": "设置密码后，您可以使用Google或邮箱/密码登录。"
     }
   },
   "library": {

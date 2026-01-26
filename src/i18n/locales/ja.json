@@ -560,6 +560,22 @@
       "walletConnected": "接続済み",
       "connectWallet": "ウォレット接続",
       "saving": "保存中..."
+    },
+    "setPassword": "パスワード設定",
+    "setPasswordModal": {
+      "title": "パスワード設定",
+      "description": "今後メールでログインするためにパスワードを作成します",
+      "email": "メールアドレス",
+      "newPassword": "新しいパスワード",
+      "confirmPassword": "パスワード確認",
+      "save": "パスワードを保存",
+      "saving": "保存中...",
+      "success": "パスワードを設定しました！",
+      "error": "パスワードを設定できませんでした",
+      "passwordMismatch": "パスワードが一致しません",
+      "passwordTooShort": "パスワードは6文字以上必要です",
+      "passwordTooLong": "パスワードは72文字以下にしてください",
+      "infoMessage": "パスワード設定後、Googleまたはメール/パスワードでログインできます。"
     }
   },
   "library": {

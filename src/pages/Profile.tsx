@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useRewards } from "@/hooks/useRewards";
 import { EditProfileModal } from "@/components/profile/EditProfileModal";
+import { SetPasswordModal } from "@/components/profile/SetPasswordModal";
 import { useTranslation } from "@/i18n/useTranslation";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { getDateLocale } from "@/lib/date-utils";
@@ -31,7 +32,8 @@ import {
   Heart,
   Pencil,
   Gift,
-  FileText
+  FileText,
+  Key
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -46,11 +48,18 @@ export default function Profile() {
   const { t } = useTranslation();
   const { language } = useLanguage();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isSetPasswordModalOpen, setIsSetPasswordModalOpen] = useState(false);
   const { isConnected, address, connectWallet, disconnectWallet } = useWallet();
   const { user, signOut } = useAuth();
   const { profile, certificates, stats, loading, updateProfile } = useProfile();
   const { userRewards, fetchUserRewards } = useRewards();
   const navigate = useNavigate();
+
+  // Check if user is Google user without email/password
+  const isGoogleUser = user?.app_metadata?.provider === 'google' || 
+    user?.identities?.some(identity => identity.provider === 'google');
+  const hasEmailPassword = user?.identities?.some(identity => identity.provider === 'email');
+  const showSetPasswordButton = isGoogleUser && !hasEmailPassword;
 
   useEffect(() => {
     if (user) {
@@ -266,6 +275,18 @@ export default function Profile() {
                       <Pencil className="w-4 h-4 mr-2" />
                       {t("profile.editProfile")}
                     </Button>
+
+                    {/* Set Password Button - Only for Google users without password */}
+                    {showSetPasswordButton && (
+                      <Button
+                        onClick={() => setIsSetPasswordModalOpen(true)}
+                        variant="outline"
+                        className="border-secondary/50 hover:bg-secondary/10"
+                      >
+                        <Key className="w-4 h-4 mr-2" />
+                        {t("profile.setPassword")}
+                      </Button>
+                    )}
 
                     {/* Logout / Disconnect Button */}
                     {(user || isConnected) && (
@@ -594,6 +615,13 @@ export default function Profile() {
         onUpdate={updateProfile}
         onConnectWallet={connectWallet}
         currentWalletAddress={address ?? undefined}
+      />
+
+      {/* Set Password Modal */}
+      <SetPasswordModal
+        open={isSetPasswordModalOpen}
+        onOpenChange={setIsSetPasswordModalOpen}
+        userEmail={user?.email || ""}
       />
     </div>
   );
