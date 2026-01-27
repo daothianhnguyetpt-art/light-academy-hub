@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, ArrowRight, ArrowLeft } from "lucide-react";
@@ -44,6 +44,14 @@ export function AuthDialog({
   const { acceptLightLaw } = useProfile();
 
   const allChecked = CHECKLIST_ITEMS.every((id) => checkedItems[id] === true);
+
+  // Check if user has already accepted Light Law when dialog opens
+  useEffect(() => {
+    if (open) {
+      const hasLocalAcceptance = localStorage.getItem("light_law_accepted") === "true";
+      setStep(hasLocalAcceptance ? "auth-methods" : "light-law");
+    }
+  }, [open]);
 
   const handleCheckChange = (id: string, checked: boolean) => {
     setCheckedItems((prev) => ({ ...prev, [id]: checked }));
@@ -102,9 +110,8 @@ export function AuthDialog({
 
   const handleOpenChange = (newOpen: boolean) => {
     if (!newOpen) {
-      // Reset to first step and clear checkboxes when closing
+      // Only reset checkboxes when closing - step will be set by useEffect when reopening
       setTimeout(() => {
-        setStep("light-law");
         setCheckedItems({});
       }, 300);
     }
