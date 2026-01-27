@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ConfettiProvider } from "@/contexts/ConfettiContext";
 import { LanguageProvider } from "@/i18n";
+import { LightLawGuard } from "@/components/auth/LightLawGuard";
 import Index from "./pages/Index";
 import GlobalSchools from "./pages/GlobalSchools";
 import InstitutionDetail from "./pages/InstitutionDetail";
@@ -32,29 +33,31 @@ const App = () => (
       <TooltipProvider>
         <ConfettiProvider>
           <BrowserRouter>
-            <Toaster />
-            <Sonner />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/global-schools" element={<GlobalSchools />} />
-              <Route path="/institution/:id" element={<InstitutionDetail />} />
-              <Route path="/light-law" element={<LightLaw />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/social-feed" element={<SocialFeed />} />
-              <Route path="/video-library" element={<VideoLibrary />} />
-              <Route path="/video/:id" element={<VideoDetail />} />
-              <Route path="/course/:id" element={<CourseDetail />} />
-              <Route path="/live-classes" element={<LiveClasses />} />
-              <Route path="/library" element={<Library />} />
-              <Route path="/library/:id" element={<LibraryDetail />} />
-              <Route path="/whitepaper" element={<Whitepaper />} />
-              <Route path="/constitution" element={<Constitution />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/docs/platform" element={<PlatformDocs />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <LightLawGuard>
+              <Toaster />
+              <Sonner />
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/global-schools" element={<GlobalSchools />} />
+                <Route path="/institution/:id" element={<InstitutionDetail />} />
+                <Route path="/light-law" element={<LightLaw />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/social-feed" element={<SocialFeed />} />
+                <Route path="/video-library" element={<VideoLibrary />} />
+                <Route path="/video/:id" element={<VideoDetail />} />
+                <Route path="/course/:id" element={<CourseDetail />} />
+                <Route path="/live-classes" element={<LiveClasses />} />
+                <Route path="/library" element={<Library />} />
+                <Route path="/library/:id" element={<LibraryDetail />} />
+                <Route path="/whitepaper" element={<Whitepaper />} />
+                <Route path="/constitution" element={<Constitution />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/docs/platform" element={<PlatformDocs />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </LightLawGuard>
           </BrowserRouter>
         </ConfettiProvider>
       </TooltipProvider>
