@@ -42,9 +42,8 @@ export function LightLawRedirectModal({
         {/* Content */}
         <div className="text-center space-y-3 text-muted-foreground px-2">
           <p className="text-base">
-            Để trở thành thành viên chính thức, bạn cần đồng ý với{" "}
-            <span className="text-foreground font-semibold">Luật Ánh Sáng</span>{" "}
-            của chúng tôi.
+            Để trở thành thành viên chính thức của FUN Ecosystem, bạn cần đồng ý với{" "}
+            <span className="text-foreground font-semibold">Luật Ánh Sáng</span>.
           </p>
           <p className="text-sm opacity-80">
             Bạn sẽ được chuyển đến trang Luật Ánh Sáng để tìm hiểu và xác nhận. 🕊️
