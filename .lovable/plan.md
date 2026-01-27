@@ -1,30 +1,16 @@
 
+# Kế Hoạch: Modal Thông Báo Chuyển Hướng Light Law
 
-# Kế Hoạch: Sửa Light Law - Bỏ Modal, Navigate Đến Trang /light-law
+## Tổng Quan
 
-## Tổng Quan Thay Đổi
-
-### Vấn đề 1: Light Law hiển thị 2 lần
-- Bỏ step "light-law" trong `AuthDialog.tsx`
-- Luôn hiển thị thẳng Auth Methods
-
-### Vấn đề 2: Thay modal bằng navigate đến trang
-- Cập nhật `LightLawGuard.tsx` để navigate đến `/light-law` thay vì hiện modal
-- Cập nhật trang `LightLaw.tsx` để xử lý user đã đăng nhập
-- Xóa file `LightLawModal.tsx` (không còn cần thiết)
+Thêm modal thông báo nhẹ nhàng, dễ thương khi user đăng nhập mà chưa accept Light Law. Modal giải thích tình huống và cho user lựa chọn trước khi redirect.
 
 ## Luồng Mới
 
 ```text
 ┌─────────────────────────────────────────────────────────────────┐
-│ User click "Đăng nhập" → AuthDialog hiện Auth Methods trực tiếp │
+│ User đăng nhập thành công (Google / Email / Wallet)            │
 └─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-              ┌───────────────────────────────┐
-              │ User đăng nhập thành công     │
-              │ (Google / Email / Wallet)     │
-              └───────────────────────────────┘
                               │
                               ▼
               ┌───────────────────────────────┐
@@ -36,165 +22,212 @@
                      │              │
                      ▼              ▼
           ┌──────────────┐   ┌──────────────────────┐
-          │ Tiếp tục     │   │ Navigate đến         │
-          │ bình thường  │   │ /light-law           │
+          │ Vào app      │   │ ✨ HIỆN MODAL        │
+          │ bình thường  │   │ THÔNG BÁO ✨         │
           └──────────────┘   └──────────────────────┘
                                        │
-                                       ▼
-                             ┌──────────────────────┐
-                             │ User tick 5 checkbox │
-                             │ & click Đồng Ý       │
-                             └──────────────────────┘
-                                       │
-                     ┌─────────────────┼─────────────────┐
+                     ┌─────────────────┴─────────────────┐
                      ▼                                   ▼
               ┌────────────┐                    ┌────────────────┐
-              │ Lưu DB +   │                    │ "Tiếp tục      │
-              │ Celebration│                    │  Guest"        │
-              │ → /social  │                    │ → signOut      │
+              │ Click OK   │                    │ Đăng xuất &    │
+              │            │                    │ Tiếp tục Guest │
               └────────────┘                    └────────────────┘
+                     │                                   │
+                     ▼                                   ▼
+              ┌────────────┐                    ┌────────────────┐
+              │ Navigate   │                    │ signOut() →    │
+              │ /light-law │                    │ Ở trang hiện   │
+              └────────────┘                    │ tại với Guest  │
+                                                └────────────────┘
+```
+
+## Thiết Kế Modal
+
+```text
+┌─────────────────────────────────────────────────────┐
+│                                                     │
+│                    🌟 ✨ 🌟                         │
+│                                                     │
+│              Chào mừng bạn đến với                  │
+│              FUN Ecosystem! 💫                      │
+│                                                     │
+│   ─────────────────────────────────────────────    │
+│                                                     │
+│   Để trở thành thành viên chính thức, bạn cần      │
+│   đồng ý với Luật Ánh Sáng của chúng tôi.          │
+│                                                     │
+│   Bạn sẽ được chuyển đến trang Luật Ánh Sáng       │
+│   để tìm hiểu và xác nhận. 🕊️                      │
+│                                                     │
+│   ┌─────────────────────────────────────────────┐  │
+│   │  ✨ OK, Đưa con đến Ánh Sáng               │  │
+│   └─────────────────────────────────────────────┘  │
+│                                                     │
+│          Đăng xuất & Tiếp tục ở chế độ Khách       │
+│                                                     │
+└─────────────────────────────────────────────────────┘
 ```
 
 ## Chi Tiết Kỹ Thuật
 
-### File 1: `src/components/auth/AuthDialog.tsx`
+### File 1: Tạo mới `src/components/auth/LightLawRedirectModal.tsx`
 
-**Thay đổi chính:**
-- Bỏ state `step` (không còn cần 2 bước)
-- Bỏ state `checkedItems`, hàm `handleCheckChange`, `handleAcceptLightLaw`
-- Bỏ import `LightLawContent`, `Checkbox`
-- Bỏ nút "Quay lại"
-- Luôn render `AuthMethodSelector` trực tiếp
+Modal nhẹ nhàng, tươi sáng với:
+- Emoji và icon dễ thương
+- Gradient background nhẹ
+- Nội dung ngắn gọn, thân thiện
+- Nút chính: "OK, Đưa con đến Ánh Sáng" (màu gold, nổi bật)
+- Nút phụ: "Đăng xuất & Tiếp tục ở chế độ Khách" (text link nhẹ)
 
 ```typescript
-// BỎ: step, checkedItems, allChecked, handleCheckChange, handleAcceptLightLaw
-// BỎ: AnimatePresence, motion cho step switching
-// BỎ: Nút "Quay lại"
-// GIỮ: AuthMethodSelector render trực tiếp
+interface LightLawRedirectModalProps {
+  open: boolean;
+  onConfirm: () => void;        // Navigate to /light-law
+  onContinueAsGuest: () => void; // Sign out & stay as guest
+}
+
+export function LightLawRedirectModal({
+  open,
+  onConfirm,
+  onContinueAsGuest,
+}: LightLawRedirectModalProps) {
+  return (
+    <Dialog open={open} onOpenChange={() => {}}>
+      <DialogContent 
+        className="sm:max-w-md"
+        onPointerDownOutside={(e) => e.preventDefault()}
+        onEscapeKeyDown={(e) => e.preventDefault()}
+        // Ẩn nút X - modal bắt buộc chọn 1 trong 2
+      >
+        {/* Header với emoji */}
+        <div className="text-center mb-4">
+          <div className="text-3xl mb-2">🌟 ✨ 🌟</div>
+          <DialogTitle className="text-xl font-display">
+            Chào mừng bạn đến với
+            <br />
+            <span className="text-gradient-gold">FUN Ecosystem!</span> 💫
+          </DialogTitle>
+        </div>
+
+        {/* Nội dung */}
+        <div className="text-center space-y-3 text-muted-foreground">
+          <p>
+            Để trở thành thành viên chính thức, bạn cần đồng ý với 
+            <span className="text-foreground font-medium"> Luật Ánh Sáng </span>
+            của chúng tôi.
+          </p>
+          <p className="text-sm">
+            Bạn sẽ được chuyển đến trang Luật Ánh Sáng để tìm hiểu và xác nhận. 🕊️
+          </p>
+        </div>
+
+        {/* Buttons */}
+        <div className="mt-6 space-y-3">
+          <Button
+            onClick={onConfirm}
+            className="w-full btn-primary-gold"
+          >
+            <Sparkles className="w-4 h-4 mr-2" />
+            OK, Đưa con đến Ánh Sáng
+          </Button>
+          
+          <button
+            onClick={onContinueAsGuest}
+            className="w-full text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
+          >
+            Đăng xuất & Tiếp tục ở chế độ Khách
+          </button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
 ```
 
-### File 2: `src/components/auth/LightLawGuard.tsx`
+### File 2: Cập nhật `src/components/auth/LightLawGuard.tsx`
 
-**Thay đổi chính:**
-- Thay vì `setShowModal(true)` → dùng `navigate("/light-law")`
-- Bỏ import `LightLawModal`
-- Bỏ các handler cho modal
-- Đơn giản hóa logic
+Thay vì redirect ngay, hiện modal trước:
 
 ```typescript
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
+import { LightLawRedirectModal } from "./LightLawRedirectModal";
 
 export function LightLawGuard({ children }: { children: ReactNode }) {
-  const { user, loading: authLoading } = useAuth();
+  const { user, loading: authLoading, signOut } = useAuth();
   const { profile, loading: profileLoading } = useProfile();
   const navigate = useNavigate();
   const location = useLocation();
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if (authLoading || profileLoading) return;
 
-    // User đã đăng nhập nhưng chưa accept Light Law
+    // User đăng nhập nhưng chưa accept Light Law
     if (user && profile && !profile.light_law_accepted_at) {
-      // Tránh redirect loop nếu đang ở trang /light-law
+      // Không hiện modal nếu đang ở /light-law
       if (location.pathname !== "/light-law") {
-        navigate("/light-law");
+        setShowModal(true);
       }
+    } else {
+      setShowModal(false);
     }
-  }, [user, profile, authLoading, profileLoading, navigate, location.pathname]);
+  }, [user, profile, authLoading, profileLoading, location.pathname]);
 
-  return <>{children}</>;
+  const handleConfirm = () => {
+    setShowModal(false);
+    navigate("/light-law");
+  };
+
+  const handleContinueAsGuest = async () => {
+    setShowModal(false);
+    await signOut();
+    // Ở lại trang hiện tại với tư cách guest
+  };
+
+  return (
+    <>
+      {children}
+      <LightLawRedirectModal
+        open={showModal}
+        onConfirm={handleConfirm}
+        onContinueAsGuest={handleContinueAsGuest}
+      />
+    </>
+  );
 }
 ```
 
-### File 3: `src/pages/LightLaw.tsx`
+## Đặc Điểm Modal
 
-**Thay đổi chính:**
-- Thêm logic cho user đã đăng nhập (gọi `acceptLightLaw()` từ useProfile)
-- Cập nhật `handleEnter()` để gọi API lưu database
-- Cập nhật `handleGuest()` để signOut nếu đang đăng nhập
-- Thêm confetti celebration khi accept thành công
-
-```typescript
-import { useAuth } from "@/hooks/useAuth";
-import { useProfile } from "@/hooks/useProfile";
-import { useConfetti } from "@/contexts/ConfettiContext";
-
-export default function LightLaw() {
-  const navigate = useNavigate();
-  const { user, signOut } = useAuth();
-  const { acceptLightLaw } = useProfile();
-  const { triggerConfetti } = useConfetti();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleEnter = async () => {
-    if (!allChecked || isSubmitting) return;
-    
-    setIsSubmitting(true);
-    try {
-      // Nếu đã đăng nhập → lưu vào database
-      if (user) {
-        const success = await acceptLightLaw();
-        if (success) {
-          localStorage.setItem("light_law_accepted", "true");
-          triggerConfetti();
-          navigate("/social-feed");
-        }
-      } else {
-        // Nếu chưa đăng nhập → chỉ lưu localStorage (cho guest)
-        localStorage.setItem("light_law_accepted", "true");
-        navigate("/social-feed");
-      }
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleGuest = async () => {
-    // Nếu đang đăng nhập → signOut trước
-    if (user) {
-      await signOut();
-    }
-    navigate("/social-feed");
-  };
-
-  // ... rest of component
-}
-```
-
-### File 4: Xóa `src/components/auth/LightLawModal.tsx`
-
-Không còn cần thiết vì đã chuyển sang dùng trang /light-law.
+| Yếu tố | Chi tiết |
+|--------|----------|
+| **Tone** | Thân thiện, ấm áp, không đe dọa |
+| **Emoji** | 🌟 ✨ 💫 🕊️ - tươi sáng, tích cực |
+| **Màu sắc** | Gold gradient cho highlight, nền sáng |
+| **Nút chính** | "OK, Đưa con đến Ánh Sáng" - gold, nổi bật |
+| **Nút phụ** | Text link nhẹ nhàng, không áp lực |
+| **Không có nút X** | Bắt buộc chọn 1 trong 2 options |
 
 ## Các File Cần Thay Đổi
 
 | File | Hành động |
 |------|-----------|
-| `src/components/auth/AuthDialog.tsx` | Đơn giản hóa - bỏ step light-law |
-| `src/components/auth/LightLawGuard.tsx` | Navigate thay vì modal |
-| `src/pages/LightLaw.tsx` | Thêm logic cho user đã đăng nhập |
-| `src/components/auth/LightLawModal.tsx` | **XÓA** (không còn dùng) |
+| `src/components/auth/LightLawRedirectModal.tsx` | **Tạo mới** |
+| `src/components/auth/LightLawGuard.tsx` | Thêm state modal + handlers |
 
 ## Kết Quả Mong Đợi
 
 | Trường hợp | Hành vi |
 |------------|---------|
-| User click đăng nhập | Hiện thẳng Auth Methods |
-| User mới đăng nhập xong | Navigate đến /light-law (trang đẹp, scroll thoải mái) |
-| User tick 5 điều + Đồng ý | Lưu DB + Celebration + Navigate /social-feed |
-| User chọn "Xem với tư cách khách" | SignOut (nếu đang login) + Navigate /social-feed |
-| User cũ (đã accept trong DB) | Không bị redirect, vào app bình thường |
-
-## Ưu Điểm
-
-1. **Trải nghiệm tốt hơn**: Trang /light-law đẹp, scroll thoải mái, không bị giới hạn modal
-2. **Đơn giản hơn**: Bỏ component modal, logic tập trung vào 1 trang
-3. **Không duplicate**: Chỉ 1 nơi kiểm tra Light Law (LightLawGuard)
-4. **Dễ maintain**: Ít code hơn, dễ debug hơn
+| User mới đăng nhập | Hiện modal dễ thương thông báo |
+| User click "OK" | Đóng modal → Navigate /light-law |
+| User click "Đăng xuất & Guest" | Đóng modal → signOut() → Ở lại trang |
+| User cũ (đã accept) | Không hiện modal |
+| User đang ở /light-law | Không hiện modal (tránh loop) |
 
 ## Thời Gian Thực Hiện
 
-Ước tính: 15 phút
-
+Ước tính: 10 phút
