@@ -1,260 +1,200 @@
 
 
-# Kế Hoạch: Bảo Vệ Luật Ánh Sáng Với Tùy Chọn Guest Mode
+# Kế Hoạch: Sửa Light Law - Bỏ Modal, Navigate Đến Trang /light-law
 
-## Tổng Quan
+## Tổng Quan Thay Đổi
 
-Đảm bảo mọi user mới đều phải đồng ý Luật Ánh Sáng để sử dụng đầy đủ hệ sinh thái FUN Academy. Nếu không đồng ý, user có thể tiếp tục ở chế độ Guest (xem nội dung công khai).
+### Vấn đề 1: Light Law hiển thị 2 lần
+- Bỏ step "light-law" trong `AuthDialog.tsx`
+- Luôn hiển thị thẳng Auth Methods
 
-## Luồng Hoạt Động
+### Vấn đề 2: Thay modal bằng navigate đến trang
+- Cập nhật `LightLawGuard.tsx` để navigate đến `/light-law` thay vì hiện modal
+- Cập nhật trang `LightLaw.tsx` để xử lý user đã đăng nhập
+- Xóa file `LightLawModal.tsx` (không còn cần thiết)
+
+## Luồng Mới
 
 ```text
 ┌─────────────────────────────────────────────────────────────────┐
-│                     USER ĐĂNG NHẬP                              │
-│            (Google OAuth / Wallet / Email)                      │
+│ User click "Đăng nhập" → AuthDialog hiện Auth Methods trực tiếp │
 └─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
               ┌───────────────────────────────┐
-              │ Authentication thành công     │
+              │ User đăng nhập thành công     │
+              │ (Google / Email / Wallet)     │
               └───────────────────────────────┘
                               │
                               ▼
               ┌───────────────────────────────┐
-              │ Kiểm tra database:            │
-              │ light_law_accepted_at != null?│
+              │ LightLawGuard kiểm tra:       │
+              │ profile.light_law_accepted_at │
               └───────────────────────────────┘
                      │              │
-                   YES             NO
+                   CÓ             CHƯA
                      │              │
                      ▼              ▼
           ┌──────────────┐   ┌──────────────────────┐
-          │ Cho vào app  │   │ HIỆN MODAL LIGHT LAW │
-          │ đầy đủ       │   │ (Có thể đóng)        │
+          │ Tiếp tục     │   │ Navigate đến         │
+          │ bình thường  │   │ /light-law           │
           └──────────────┘   └──────────────────────┘
                                        │
+                                       ▼
+                             ┌──────────────────────┐
+                             │ User tick 5 checkbox │
+                             │ & click Đồng Ý       │
+                             └──────────────────────┘
+                                       │
                      ┌─────────────────┼─────────────────┐
-                     │                 │                 │
-                     ▼                 ▼                 ▼
-              ┌────────────┐   ┌────────────┐   ┌────────────────┐
-              │ Click X    │   │ Đồng ý     │   │ Click "Tiếp    │
-              │ (đóng)     │   │ đủ 5 điều  │   │ tục Guest"     │
-              └────────────┘   └────────────┘   └────────────────┘
-                     │                 │                 │
-                     ▼                 ▼                 ▼
-              ┌────────────┐   ┌────────────┐   ┌────────────────┐
-              │ Đăng xuất  │   │ Lưu DB +   │   │ Đăng xuất      │
-              │ → Guest    │   │ Vào app OK │   │ → Guest        │
-              └────────────┘   └────────────┘   └────────────────┘
+                     ▼                                   ▼
+              ┌────────────┐                    ┌────────────────┐
+              │ Lưu DB +   │                    │ "Tiếp tục      │
+              │ Celebration│                    │  Guest"        │
+              │ → /social  │                    │ → signOut      │
+              └────────────┘                    └────────────────┘
 ```
 
 ## Chi Tiết Kỹ Thuật
 
-### File 1: Tạo mới `src/components/auth/LightLawGuard.tsx`
+### File 1: `src/components/auth/AuthDialog.tsx`
 
-Component wrapper kiểm tra và hiển thị modal Light Law:
+**Thay đổi chính:**
+- Bỏ state `step` (không còn cần 2 bước)
+- Bỏ state `checkedItems`, hàm `handleCheckChange`, `handleAcceptLightLaw`
+- Bỏ import `LightLawContent`, `Checkbox`
+- Bỏ nút "Quay lại"
+- Luôn render `AuthMethodSelector` trực tiếp
 
 ```typescript
+// BỎ: step, checkedItems, allChecked, handleCheckChange, handleAcceptLightLaw
+// BỎ: AnimatePresence, motion cho step switching
+// BỎ: Nút "Quay lại"
+// GIỮ: AuthMethodSelector render trực tiếp
+```
+
+### File 2: `src/components/auth/LightLawGuard.tsx`
+
+**Thay đổi chính:**
+- Thay vì `setShowModal(true)` → dùng `navigate("/light-law")`
+- Bỏ import `LightLawModal`
+- Bỏ các handler cho modal
+- Đơn giản hóa logic
+
+```typescript
+import { ReactNode, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
+
 export function LightLawGuard({ children }: { children: ReactNode }) {
-  const { user, loading: authLoading, signOut } = useAuth();
-  const { profile, loading: profileLoading, acceptLightLaw } = useProfile();
-  const [showModal, setShowModal] = useState(false);
-  const { triggerCelebration } = useConfetti();
+  const { user, loading: authLoading } = useAuth();
+  const { profile, loading: profileLoading } = useProfile();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    if (!authLoading && !profileLoading && user && profile) {
-      if (!profile.light_law_accepted_at) {
-        setShowModal(true);
+    if (authLoading || profileLoading) return;
+
+    // User đã đăng nhập nhưng chưa accept Light Law
+    if (user && profile && !profile.light_law_accepted_at) {
+      // Tránh redirect loop nếu đang ở trang /light-law
+      if (location.pathname !== "/light-law") {
+        navigate("/light-law");
       }
     }
-  }, [user, profile, authLoading, profileLoading]);
+  }, [user, profile, authLoading, profileLoading, navigate, location.pathname]);
 
-  const handleAccept = async () => {
-    await acceptLightLaw();
-    localStorage.setItem("light_law_accepted", "true");
-    setShowModal(false);
-    triggerCelebration(); // Celebration sau khi accept
-  };
-
-  const handleContinueAsGuest = async () => {
-    await signOut();
-    setShowModal(false);
-  };
-
-  const handleClose = async () => {
-    await signOut();
-    setShowModal(false);
-  };
-
-  return (
-    <>
-      {children}
-      <LightLawModal 
-        open={showModal}
-        onAccept={handleAccept}
-        onContinueAsGuest={handleContinueAsGuest}
-        onClose={handleClose}
-      />
-    </>
-  );
+  return <>{children}</>;
 }
 ```
 
-### File 2: Tạo mới `src/components/auth/LightLawModal.tsx`
+### File 3: `src/pages/LightLaw.tsx`
 
-Modal với 3 lựa chọn:
+**Thay đổi chính:**
+- Thêm logic cho user đã đăng nhập (gọi `acceptLightLaw()` từ useProfile)
+- Cập nhật `handleEnter()` để gọi API lưu database
+- Cập nhật `handleGuest()` để signOut nếu đang đăng nhập
+- Thêm confetti celebration khi accept thành công
 
 ```typescript
-interface LightLawModalProps {
-  open: boolean;
-  onAccept: () => void;
-  onContinueAsGuest: () => void;
-  onClose: () => void;
-}
+import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
+import { useConfetti } from "@/contexts/ConfettiContext";
 
-export function LightLawModal({ 
-  open, 
-  onAccept, 
-  onContinueAsGuest,
-  onClose 
-}: LightLawModalProps) {
-  const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
-  const allChecked = CHECKLIST_ITEMS.every((id) => checkedItems[id]);
+export default function LightLaw() {
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
+  const { acceptLightLaw } = useProfile();
+  const { triggerConfetti } = useConfetti();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  return (
-    <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onClose()}>
-      <DialogContent className="sm:max-w-xl md:max-w-2xl">
-        {/* Nút X vẫn có - click sẽ trigger onClose → signOut */}
-        
-        <LightLawContent 
-          checkedItems={checkedItems}
-          onCheckChange={handleCheckChange}
-        />
+  const handleEnter = async () => {
+    if (!allChecked || isSubmitting) return;
+    
+    setIsSubmitting(true);
+    try {
+      // Nếu đã đăng nhập → lưu vào database
+      if (user) {
+        const success = await acceptLightLaw();
+        if (success) {
+          localStorage.setItem("light_law_accepted", "true");
+          triggerConfetti();
+          navigate("/social-feed");
+        }
+      } else {
+        // Nếu chưa đăng nhập → chỉ lưu localStorage (cho guest)
+        localStorage.setItem("light_law_accepted", "true");
+        navigate("/social-feed");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
-        {/* Nút Đồng Ý */}
-        <Button
-          onClick={onAccept}
-          disabled={!allChecked}
-          className="w-full btn-primary-gold"
-        >
-          <Sparkles className="w-5 h-5 mr-2" />
-          CON ĐỒNG Ý & BƯỚC VÀO ÁNH SÁNG
-        </Button>
+  const handleGuest = async () => {
+    // Nếu đang đăng nhập → signOut trước
+    if (user) {
+      await signOut();
+    }
+    navigate("/social-feed");
+  };
 
-        {/* Separator */}
-        <div className="relative my-4">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">
-              hoặc
-            </span>
-          </div>
-        </div>
-
-        {/* Nút tiếp tục Guest */}
-        <Button
-          variant="ghost"
-          onClick={onContinueAsGuest}
-          className="w-full text-muted-foreground hover:text-foreground"
-        >
-          Tiếp tục chế độ khách (Guest)
-        </Button>
-
-        <p className="text-xs text-muted-foreground text-center">
-          Chế độ khách chỉ có thể xem nội dung công khai
-        </p>
-      </DialogContent>
-    </Dialog>
-  );
+  // ... rest of component
 }
 ```
 
-### File 3: Cập nhật `src/App.tsx`
+### File 4: Xóa `src/components/auth/LightLawModal.tsx`
 
-Wrap app với LightLawGuard:
-
-```typescript
-import { LightLawGuard } from "@/components/auth/LightLawGuard";
-
-const App = () => (
-  <LanguageProvider>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <ConfettiProvider>
-          <BrowserRouter>
-            <LightLawGuard>
-              <Toaster />
-              <Sonner />
-              <Routes>
-                {/* ... all routes */}
-              </Routes>
-            </LightLawGuard>
-          </BrowserRouter>
-        </ConfettiProvider>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </LanguageProvider>
-);
-```
-
-### File 4: Giữ nguyên `src/components/auth/AuthDialog.tsx`
-
-Logic hiện tại vẫn hoạt động tốt cho flow đăng ký email (kiểm tra localStorage trước).
-
-## Giao Diện Modal
-
-```text
-┌─────────────────────────────────────────────────────┐
-│                                               [X]   │
-│                                                     │
-│              ✨ LUẬT ÁNH SÁNG ✨                    │
-│                                                     │
-│  ☐ Con xin sống CHÂN THẬT                          │
-│  ☐ Con xin sống CÓ TRÁCH NHIỆM                     │
-│  ☐ Con xin học hỏi và TRƯỞNG THÀNH                 │
-│  ☐ Con xin hành động từ TÌNH YÊU                   │
-│  ☐ Con xin là ÁNH SÁNG cho thế giới                │
-│                                                     │
-│  ┌─────────────────────────────────────────────┐   │
-│  │  ✨ CON ĐỒNG Ý & BƯỚC VÀO ÁNH SÁNG         │   │
-│  └─────────────────────────────────────────────┘   │
-│                                                     │
-│                    ─── hoặc ───                     │
-│                                                     │
-│         Tiếp tục chế độ khách (Guest)              │
-│                                                     │
-│    Chế độ khách chỉ có thể xem nội dung công khai  │
-└─────────────────────────────────────────────────────┘
-```
-
-## Kết Quả Mong Đợi
-
-| Hành động | Kết quả |
-|-----------|---------|
-| User mới đăng nhập → Đồng ý | Vào app đầy đủ + Celebration |
-| User mới đăng nhập → Click X | Đăng xuất → Guest mode |
-| User mới đăng nhập → "Tiếp tục Guest" | Đăng xuất → Guest mode |
-| User cũ (đã accept trong DB) | Bỏ qua modal → Vào app bình thường |
-
-## Ưu Điểm
-
-1. **Tôn trọng quyền lựa chọn**: User có thể từ chối mà không bị khóa
-2. **Rõ ràng hậu quả**: Guest mode chỉ xem được nội dung công khai
-3. **Trải nghiệm tốt**: Celebration đúng lúc, không ép buộc
-4. **Bảo vệ nguyên tắc**: Chỉ ai đồng ý Light Law mới là thành viên chính thức
+Không còn cần thiết vì đã chuyển sang dùng trang /light-law.
 
 ## Các File Cần Thay Đổi
 
 | File | Hành động |
 |------|-----------|
-| `src/components/auth/LightLawGuard.tsx` | Tạo mới |
-| `src/components/auth/LightLawModal.tsx` | Tạo mới |
-| `src/App.tsx` | Wrap với LightLawGuard |
-| `src/components/auth/AuthDialog.tsx` | Giữ nguyên |
+| `src/components/auth/AuthDialog.tsx` | Đơn giản hóa - bỏ step light-law |
+| `src/components/auth/LightLawGuard.tsx` | Navigate thay vì modal |
+| `src/pages/LightLaw.tsx` | Thêm logic cho user đã đăng nhập |
+| `src/components/auth/LightLawModal.tsx` | **XÓA** (không còn dùng) |
+
+## Kết Quả Mong Đợi
+
+| Trường hợp | Hành vi |
+|------------|---------|
+| User click đăng nhập | Hiện thẳng Auth Methods |
+| User mới đăng nhập xong | Navigate đến /light-law (trang đẹp, scroll thoải mái) |
+| User tick 5 điều + Đồng ý | Lưu DB + Celebration + Navigate /social-feed |
+| User chọn "Xem với tư cách khách" | SignOut (nếu đang login) + Navigate /social-feed |
+| User cũ (đã accept trong DB) | Không bị redirect, vào app bình thường |
+
+## Ưu Điểm
+
+1. **Trải nghiệm tốt hơn**: Trang /light-law đẹp, scroll thoải mái, không bị giới hạn modal
+2. **Đơn giản hơn**: Bỏ component modal, logic tập trung vào 1 trang
+3. **Không duplicate**: Chỉ 1 nơi kiểm tra Light Law (LightLawGuard)
+4. **Dễ maintain**: Ít code hơn, dễ debug hơn
 
 ## Thời Gian Thực Hiện
 
-Ước tính: 20 phút
+Ước tính: 15 phút
 
