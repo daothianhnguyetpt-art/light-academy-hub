@@ -1,20 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, ArrowRight, ArrowLeft } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { LightLawContent } from "./LightLawContent";
 import { AuthMethodSelector } from "./AuthMethodSelector";
 import { WalletType } from "./WalletOptions";
 import { Particles } from "@/components/effects/Particles";
 import { useAuth } from "@/hooks/useAuth";
-import { useProfile } from "@/hooks/useProfile";
 import { toast } from "sonner";
 
 interface AuthDialogProps {
@@ -25,10 +21,6 @@ interface AuthDialogProps {
   connectingWalletType: WalletType | null;
 }
 
-type DialogStep = "light-law" | "auth-methods";
-
-const CHECKLIST_ITEMS = ["honest", "responsible", "growth", "love", "light"];
-
 export function AuthDialog({
   open,
   onOpenChange,
@@ -36,40 +28,9 @@ export function AuthDialog({
   isConnectingWallet,
   connectingWalletType,
 }: AuthDialogProps) {
-  const [step, setStep] = useState<DialogStep>("light-law");
   const [isLoading, setIsLoading] = useState(false);
-  const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
   const navigate = useNavigate();
-  const { signInWithGoogle, user } = useAuth();
-  const { acceptLightLaw } = useProfile();
-
-  const allChecked = CHECKLIST_ITEMS.every((id) => checkedItems[id] === true);
-
-  // Check if user has already accepted Light Law when dialog opens
-  useEffect(() => {
-    if (open) {
-      const hasLocalAcceptance = localStorage.getItem("light_law_accepted") === "true";
-      setStep(hasLocalAcceptance ? "auth-methods" : "light-law");
-    }
-  }, [open]);
-
-  const handleCheckChange = (id: string, checked: boolean) => {
-    setCheckedItems((prev) => ({ ...prev, [id]: checked }));
-  };
-
-  const handleAcceptLightLaw = async () => {
-    if (!allChecked) return;
-    // Store acceptance locally first
-    localStorage.setItem("light_law_accepted", "true");
-    localStorage.setItem("light_law_accepted_at", new Date().toISOString());
-    
-    // If user is already logged in, save to database
-    if (user) {
-      await acceptLightLaw();
-    }
-    
-    setStep("auth-methods");
-  };
+  const { signInWithGoogle } = useAuth();
 
   const handleEmailLogin = () => {
     onOpenChange(false);
@@ -104,22 +65,8 @@ export function AuthDialog({
     onOpenChange(false);
   };
 
-  const handleBack = () => {
-    setStep("light-law");
-  };
-
-  const handleOpenChange = (newOpen: boolean) => {
-    if (!newOpen) {
-      // Only reset checkboxes when closing - step will be set by useEffect when reopening
-      setTimeout(() => {
-        setCheckedItems({});
-      }, 300);
-    }
-    onOpenChange(newOpen);
-  };
-
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-xl md:max-w-2xl max-w-[95vw] relative">
         {/* Background glow effect */}
         <div className="absolute inset-0 bg-gradient-radial pointer-events-none" />
@@ -127,89 +74,24 @@ export function AuthDialog({
         {/* Particles */}
         <Particles count={10} />
         
-        <DialogHeader className="sr-only">
-          <DialogTitle>
-            {step === "light-law" ? "Luật Ánh Sáng" : "Chọn Phương Thức Đăng Nhập"}
+        <DialogHeader>
+          <DialogTitle className="flex items-center justify-center gap-2 text-xl font-display">
+            <Sparkles className="w-5 h-5 text-secondary" />
+            Chọn Phương Thức Đăng Nhập
           </DialogTitle>
         </DialogHeader>
 
-        <AnimatePresence mode="wait">
-          {step === "light-law" ? (
-            <motion.div
-              key="light-law"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.2 }}
-              className="relative z-10"
-            >
-              <LightLawContent 
-                checkedItems={checkedItems}
-                onCheckChange={handleCheckChange}
-              />
-              
-              <div className="mt-5">
-                <motion.div
-                  animate={allChecked ? {
-                    boxShadow: [
-                      "0 0 15px hsl(var(--gold) / 0.2)",
-                      "0 0 30px hsl(var(--gold) / 0.4)",
-                      "0 0 15px hsl(var(--gold) / 0.2)"
-                    ]
-                  } : {}}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                  className="rounded-md"
-                >
-                  <Button
-                    onClick={handleAcceptLightLaw}
-                    disabled={!allChecked}
-                    className={`w-full h-11 text-base transition-all ${
-                      allChecked 
-                        ? "btn-primary-gold" 
-                        : "bg-muted text-muted-foreground cursor-not-allowed"
-                    }`}
-                  >
-                    <Sparkles className="w-5 h-5 mr-2" />
-                    {allChecked ? "CON ĐỒNG Ý & BƯỚC VÀO ÁNH SÁNG" : "Vui lòng đồng ý tất cả điều khoản"}
-                    {allChecked && <ArrowRight className="w-5 h-5 ml-2" />}
-                  </Button>
-                </motion.div>
-                <p className="text-xs text-muted-foreground text-center mt-2">
-                  Đã đồng ý: {Object.values(checkedItems).filter(Boolean).length} / {CHECKLIST_ITEMS.length}
-                </p>
-              </div>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="auth-methods"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.2 }}
-              className="relative z-10"
-            >
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleBack}
-                className="mb-4 -ml-2 text-muted-foreground hover:text-foreground"
-              >
-                <ArrowLeft className="w-4 h-4 mr-1" />
-                Quay lại
-              </Button>
-
-              <AuthMethodSelector
-                onEmailLogin={handleEmailLogin}
-                onEmailRegister={handleEmailRegister}
-                onGoogleLogin={handleGoogleLogin}
-                onWalletConnect={handleWalletConnect}
-                isLoading={isLoading}
-                isConnectingWallet={isConnectingWallet}
-                connectingWalletType={connectingWalletType}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div className="relative z-10">
+          <AuthMethodSelector
+            onEmailLogin={handleEmailLogin}
+            onEmailRegister={handleEmailRegister}
+            onGoogleLogin={handleGoogleLogin}
+            onWalletConnect={handleWalletConnect}
+            isLoading={isLoading}
+            isConnectingWallet={isConnectingWallet}
+            connectingWalletType={connectingWalletType}
+          />
+        </div>
       </DialogContent>
     </Dialog>
   );
