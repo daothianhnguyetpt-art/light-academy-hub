@@ -1,61 +1,30 @@
-import { ReactNode, useState, useEffect } from "react";
+import { ReactNode, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
-import { useConfetti } from "@/contexts/ConfettiContext";
-import { LightLawModal } from "./LightLawModal";
 
 interface LightLawGuardProps {
   children: ReactNode;
 }
 
 export function LightLawGuard({ children }: LightLawGuardProps) {
-  const { user, loading: authLoading, signOut } = useAuth();
-  const { profile, loading: profileLoading, acceptLightLaw } = useProfile();
-  const [showModal, setShowModal] = useState(false);
-  const { triggerConfetti } = useConfetti();
+  const { user, loading: authLoading } = useAuth();
+  const { profile, loading: profileLoading } = useProfile();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    // Only check when auth and profile have finished loading
+    // Wait for auth and profile to finish loading
     if (authLoading || profileLoading) return;
 
     // User is logged in but hasn't accepted Light Law
     if (user && profile && !profile.light_law_accepted_at) {
-      setShowModal(true);
-    } else {
-      setShowModal(false);
+      // Avoid redirect loop if already on /light-law page
+      if (location.pathname !== "/light-law") {
+        navigate("/light-law");
+      }
     }
-  }, [user, profile, authLoading, profileLoading]);
+  }, [user, profile, authLoading, profileLoading, navigate, location.pathname]);
 
-  const handleAccept = async () => {
-    const success = await acceptLightLaw();
-    if (success) {
-      localStorage.setItem("light_law_accepted", "true");
-      setShowModal(false);
-      // Trigger celebration after accepting Light Law
-      triggerConfetti();
-    }
-  };
-
-  const handleContinueAsGuest = async () => {
-    await signOut();
-    setShowModal(false);
-  };
-
-  const handleClose = async () => {
-    // Closing modal = choosing guest mode
-    await signOut();
-    setShowModal(false);
-  };
-
-  return (
-    <>
-      {children}
-      <LightLawModal
-        open={showModal}
-        onAccept={handleAccept}
-        onContinueAsGuest={handleContinueAsGuest}
-        onClose={handleClose}
-      />
-    </>
-  );
+  return <>{children}</>;
 }

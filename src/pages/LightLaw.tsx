@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Sparkles, Sun, Heart, Users, Shield, Eye, Check } from "lucide-react";
+import { Sparkles, Sun, Heart, Users, Shield, Eye, Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
+import { useConfetti } from "@/contexts/ConfettiContext";
 
 const checklistItems = [
   {
@@ -46,7 +49,11 @@ const mantras = [
 
 export default function LightLaw() {
   const navigate = useNavigate();
+  const { user, signOut } = useAuth();
+  const { acceptLightLaw } = useProfile();
+  const { triggerConfetti } = useConfetti();
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const allChecked = checklistItems.every((item) => checkedItems[item.id]);
 
@@ -54,14 +61,34 @@ export default function LightLaw() {
     setCheckedItems((prev) => ({ ...prev, [id]: checked }));
   };
 
-  const handleEnter = () => {
-    if (allChecked) {
-      localStorage.setItem("light_law_accepted", "true");
-      navigate("/social-feed");
+  const handleEnter = async () => {
+    if (!allChecked || isSubmitting) return;
+    
+    setIsSubmitting(true);
+    try {
+      // If user is logged in → save to database
+      if (user) {
+        const success = await acceptLightLaw();
+        if (success) {
+          localStorage.setItem("light_law_accepted", "true");
+          triggerConfetti();
+          navigate("/social-feed");
+        }
+      } else {
+        // If not logged in → just save to localStorage (for guest)
+        localStorage.setItem("light_law_accepted", "true");
+        navigate("/social-feed");
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const handleGuest = () => {
+  const handleGuest = async () => {
+    // If logged in → sign out first
+    if (user) {
+      await signOut();
+    }
     navigate("/social-feed");
   };
 
@@ -269,13 +296,17 @@ export default function LightLaw() {
         >
           <Button
             onClick={handleEnter}
-            disabled={!allChecked}
+            disabled={!allChecked || isSubmitting}
             className={`btn-primary-gold btn-ripple px-8 py-6 text-lg font-semibold ${
               !allChecked ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
-            <Sparkles className="w-5 h-5 mr-2" />
-            CON ĐỒNG Ý & BƯỚC VÀO ÁNH SÁNG
+            {isSubmitting ? (
+              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+            ) : (
+              <Sparkles className="w-5 h-5 mr-2" />
+            )}
+            {isSubmitting ? "Đang xử lý..." : "CON ĐỒNG Ý & BƯỚC VÀO ÁNH SÁNG"}
           </Button>
           
           <button
@@ -285,6 +316,12 @@ export default function LightLaw() {
             <Eye className="w-4 h-4" />
             Xem trước với tư cách khách
           </button>
+
+          {user && (
+            <p className="text-xs text-muted-foreground text-center">
+              Chọn "Xem với tư cách khách" sẽ đăng xuất tài khoản của bạn
+            </p>
+          )}
         </motion.div>
 
         {/* Footer decoration */}
