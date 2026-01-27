@@ -1,119 +1,260 @@
 
-# Kế Hoạch: Bỏ Qua Luật Ánh Sáng Cho User Đã Đồng Ý
+
+# Kế Hoạch: Bảo Vệ Luật Ánh Sáng Với Tùy Chọn Guest Mode
 
 ## Tổng Quan
 
-Hiện tại, mỗi lần mở dialog đăng nhập, user đều phải đồng ý lại Luật Ánh Sáng. Cần sửa để nếu user đã từng đồng ý trước đó thì tự động chuyển đến màn hình chọn phương thức đăng nhập.
+Đảm bảo mọi user mới đều phải đồng ý Luật Ánh Sáng để sử dụng đầy đủ hệ sinh thái FUN Academy. Nếu không đồng ý, user có thể tiếp tục ở chế độ Guest (xem nội dung công khai).
 
-## Luồng Hiện Tại
-
-```text
-+--------------------+     +-------------------+     +------------------+
-| Mở Auth Dialog     | --> | Hiện Light Law    | --> | Tick 5 điều      |
-|                    |     | (LUÔN LUÔN)       |     | khoản            |
-+--------------------+     +-------------------+     +------------------+
-                                                              |
-                                                              v
-                                                     +------------------+
-                                                     | Chọn phương thức |
-                                                     | đăng nhập        |
-                                                     +------------------+
-```
-
-## Luồng Sau Khi Sửa
+## Luồng Hoạt Động
 
 ```text
-+--------------------+     +-------------------+
-| Mở Auth Dialog     | --> | Kiểm tra đã đồng  |
-|                    |     | ý chưa?           |
-+--------------------+     +-------------------+
-                                    |
-                     +--------------+--------------+
-                     |                             |
-                     v                             v
-           +------------------+          +------------------+
-           | ĐÃ ĐỒNG Ý       |          | CHƯA ĐỒNG Ý      |
-           | (localStorage    |          | Hiện Light Law   |
-           | hoặc database)   |          +------------------+
-           +------------------+                   |
-                     |                            v
-                     |                   +------------------+
-                     |                   | Tick 5 điều khoản|
-                     |                   +------------------+
-                     |                            |
-                     v                            v
-           +------------------+          +------------------+
-           | Chuyển thẳng đến | <-----   | Lưu đồng ý &     |
-           | Auth Methods     |          | chuyển tiếp      |
-           +------------------+          +------------------+
+┌─────────────────────────────────────────────────────────────────┐
+│                     USER ĐĂNG NHẬP                              │
+│            (Google OAuth / Wallet / Email)                      │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+              ┌───────────────────────────────┐
+              │ Authentication thành công     │
+              └───────────────────────────────┘
+                              │
+                              ▼
+              ┌───────────────────────────────┐
+              │ Kiểm tra database:            │
+              │ light_law_accepted_at != null?│
+              └───────────────────────────────┘
+                     │              │
+                   YES             NO
+                     │              │
+                     ▼              ▼
+          ┌──────────────┐   ┌──────────────────────┐
+          │ Cho vào app  │   │ HIỆN MODAL LIGHT LAW │
+          │ đầy đủ       │   │ (Có thể đóng)        │
+          └──────────────┘   └──────────────────────┘
+                                       │
+                     ┌─────────────────┼─────────────────┐
+                     │                 │                 │
+                     ▼                 ▼                 ▼
+              ┌────────────┐   ┌────────────┐   ┌────────────────┐
+              │ Click X    │   │ Đồng ý     │   │ Click "Tiếp    │
+              │ (đóng)     │   │ đủ 5 điều  │   │ tục Guest"     │
+              └────────────┘   └────────────┘   └────────────────┘
+                     │                 │                 │
+                     ▼                 ▼                 ▼
+              ┌────────────┐   ┌────────────┐   ┌────────────────┐
+              │ Đăng xuất  │   │ Lưu DB +   │   │ Đăng xuất      │
+              │ → Guest    │   │ Vào app OK │   │ → Guest        │
+              └────────────┘   └────────────┘   └────────────────┘
 ```
 
 ## Chi Tiết Kỹ Thuật
 
-### File cần chỉnh sửa
+### File 1: Tạo mới `src/components/auth/LightLawGuard.tsx`
 
-**`src/components/auth/AuthDialog.tsx`**
-
-### Thay đổi cụ thể
-
-1. **Thêm logic kiểm tra khi component mount hoặc khi dialog mở**
-
-   Trong `useEffect`, kiểm tra:
-   - `localStorage.getItem("light_law_accepted")` - cho guest
-   - `profile?.light_law_accepted_at` - cho user đã đăng nhập (nếu có)
-
-2. **Cập nhật initial state của `step`**
-
-   Thay vì luôn bắt đầu ở `"light-law"`, sử dụng `useEffect` để set step dựa trên trạng thái đồng ý.
-
-3. **Xử lý edge case khi reset dialog**
-
-   Khi đóng dialog, chỉ reset checkboxes nhưng giữ nguyên step nếu đã đồng ý.
-
-### Code thay đổi
+Component wrapper kiểm tra và hiển thị modal Light Law:
 
 ```typescript
-// Thêm useEffect để kiểm tra trạng thái đồng ý
-useEffect(() => {
-  if (open) {
-    // Kiểm tra localStorage (cho cả guest và user đã login)
-    const hasLocalAcceptance = localStorage.getItem("light_law_accepted") === "true";
-    
-    if (hasLocalAcceptance) {
-      setStep("auth-methods");
-    } else {
-      setStep("light-law");
-    }
-  }
-}, [open]);
+export function LightLawGuard({ children }: { children: ReactNode }) {
+  const { user, loading: authLoading, signOut } = useAuth();
+  const { profile, loading: profileLoading, acceptLightLaw } = useProfile();
+  const [showModal, setShowModal] = useState(false);
+  const { triggerCelebration } = useConfetti();
 
-// Cập nhật handleOpenChange - chỉ reset checkboxes, không reset step nếu đã đồng ý
-const handleOpenChange = (newOpen: boolean) => {
-  if (!newOpen) {
-    setTimeout(() => {
-      setCheckedItems({});
-      // Không reset step nữa - để useEffect xử lý khi mở lại
-    }, 300);
-  }
-  onOpenChange(newOpen);
-};
+  useEffect(() => {
+    if (!authLoading && !profileLoading && user && profile) {
+      if (!profile.light_law_accepted_at) {
+        setShowModal(true);
+      }
+    }
+  }, [user, profile, authLoading, profileLoading]);
+
+  const handleAccept = async () => {
+    await acceptLightLaw();
+    localStorage.setItem("light_law_accepted", "true");
+    setShowModal(false);
+    triggerCelebration(); // Celebration sau khi accept
+  };
+
+  const handleContinueAsGuest = async () => {
+    await signOut();
+    setShowModal(false);
+  };
+
+  const handleClose = async () => {
+    await signOut();
+    setShowModal(false);
+  };
+
+  return (
+    <>
+      {children}
+      <LightLawModal 
+        open={showModal}
+        onAccept={handleAccept}
+        onContinueAsGuest={handleContinueAsGuest}
+        onClose={handleClose}
+      />
+    </>
+  );
+}
 ```
 
-### Lý do thiết kế
+### File 2: Tạo mới `src/components/auth/LightLawModal.tsx`
 
-- **Sử dụng localStorage làm nguồn chính**: Vì khi chưa đăng nhập thì không có profile trong database. LocalStorage được lưu ngay khi user đồng ý, trước cả khi đăng nhập.
-- **Giữ nguyên logic lưu vào database**: Sau khi đăng nhập thành công, `acceptLightLaw()` vẫn được gọi để đồng bộ vào database.
-- **Đơn giản & hiệu quả**: Không cần fetch profile trước khi hiện dialog.
+Modal với 3 lựa chọn:
+
+```typescript
+interface LightLawModalProps {
+  open: boolean;
+  onAccept: () => void;
+  onContinueAsGuest: () => void;
+  onClose: () => void;
+}
+
+export function LightLawModal({ 
+  open, 
+  onAccept, 
+  onContinueAsGuest,
+  onClose 
+}: LightLawModalProps) {
+  const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
+  const allChecked = CHECKLIST_ITEMS.every((id) => checkedItems[id]);
+
+  return (
+    <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onClose()}>
+      <DialogContent className="sm:max-w-xl md:max-w-2xl">
+        {/* Nút X vẫn có - click sẽ trigger onClose → signOut */}
+        
+        <LightLawContent 
+          checkedItems={checkedItems}
+          onCheckChange={handleCheckChange}
+        />
+
+        {/* Nút Đồng Ý */}
+        <Button
+          onClick={onAccept}
+          disabled={!allChecked}
+          className="w-full btn-primary-gold"
+        >
+          <Sparkles className="w-5 h-5 mr-2" />
+          CON ĐỒNG Ý & BƯỚC VÀO ÁNH SÁNG
+        </Button>
+
+        {/* Separator */}
+        <div className="relative my-4">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-background px-2 text-muted-foreground">
+              hoặc
+            </span>
+          </div>
+        </div>
+
+        {/* Nút tiếp tục Guest */}
+        <Button
+          variant="ghost"
+          onClick={onContinueAsGuest}
+          className="w-full text-muted-foreground hover:text-foreground"
+        >
+          Tiếp tục chế độ khách (Guest)
+        </Button>
+
+        <p className="text-xs text-muted-foreground text-center">
+          Chế độ khách chỉ có thể xem nội dung công khai
+        </p>
+      </DialogContent>
+    </Dialog>
+  );
+}
+```
+
+### File 3: Cập nhật `src/App.tsx`
+
+Wrap app với LightLawGuard:
+
+```typescript
+import { LightLawGuard } from "@/components/auth/LightLawGuard";
+
+const App = () => (
+  <LanguageProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <ConfettiProvider>
+          <BrowserRouter>
+            <LightLawGuard>
+              <Toaster />
+              <Sonner />
+              <Routes>
+                {/* ... all routes */}
+              </Routes>
+            </LightLawGuard>
+          </BrowserRouter>
+        </ConfettiProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </LanguageProvider>
+);
+```
+
+### File 4: Giữ nguyên `src/components/auth/AuthDialog.tsx`
+
+Logic hiện tại vẫn hoạt động tốt cho flow đăng ký email (kiểm tra localStorage trước).
+
+## Giao Diện Modal
+
+```text
+┌─────────────────────────────────────────────────────┐
+│                                               [X]   │
+│                                                     │
+│              ✨ LUẬT ÁNH SÁNG ✨                    │
+│                                                     │
+│  ☐ Con xin sống CHÂN THẬT                          │
+│  ☐ Con xin sống CÓ TRÁCH NHIỆM                     │
+│  ☐ Con xin học hỏi và TRƯỞNG THÀNH                 │
+│  ☐ Con xin hành động từ TÌNH YÊU                   │
+│  ☐ Con xin là ÁNH SÁNG cho thế giới                │
+│                                                     │
+│  ┌─────────────────────────────────────────────┐   │
+│  │  ✨ CON ĐỒNG Ý & BƯỚC VÀO ÁNH SÁNG         │   │
+│  └─────────────────────────────────────────────┘   │
+│                                                     │
+│                    ─── hoặc ───                     │
+│                                                     │
+│         Tiếp tục chế độ khách (Guest)              │
+│                                                     │
+│    Chế độ khách chỉ có thể xem nội dung công khai  │
+└─────────────────────────────────────────────────────┘
+```
 
 ## Kết Quả Mong Đợi
 
-| Trường hợp | Hành vi |
-|------------|---------|
-| User mới, chưa từng đồng ý | Hiện Light Law → tick 5 điều → Auth Methods |
-| User đã đồng ý, đăng xuất, đăng nhập lại | Hiện thẳng Auth Methods |
-| User xóa localStorage | Hiện Light Law lại (đây là hành vi hợp lý) |
-| User mới trên thiết bị mới | Hiện Light Law (localStorage trống) |
+| Hành động | Kết quả |
+|-----------|---------|
+| User mới đăng nhập → Đồng ý | Vào app đầy đủ + Celebration |
+| User mới đăng nhập → Click X | Đăng xuất → Guest mode |
+| User mới đăng nhập → "Tiếp tục Guest" | Đăng xuất → Guest mode |
+| User cũ (đã accept trong DB) | Bỏ qua modal → Vào app bình thường |
+
+## Ưu Điểm
+
+1. **Tôn trọng quyền lựa chọn**: User có thể từ chối mà không bị khóa
+2. **Rõ ràng hậu quả**: Guest mode chỉ xem được nội dung công khai
+3. **Trải nghiệm tốt**: Celebration đúng lúc, không ép buộc
+4. **Bảo vệ nguyên tắc**: Chỉ ai đồng ý Light Law mới là thành viên chính thức
+
+## Các File Cần Thay Đổi
+
+| File | Hành động |
+|------|-----------|
+| `src/components/auth/LightLawGuard.tsx` | Tạo mới |
+| `src/components/auth/LightLawModal.tsx` | Tạo mới |
+| `src/App.tsx` | Wrap với LightLawGuard |
+| `src/components/auth/AuthDialog.tsx` | Giữ nguyên |
 
 ## Thời Gian Thực Hiện
 
-Ước tính: 5 phút - Chỉ cần thay đổi nhỏ trong 1 file.
+Ước tính: 20 phút
+
