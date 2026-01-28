@@ -95,16 +95,17 @@ export function Header({
     }} className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-border/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-2">
-              <img src={funAcademyLogo} alt="FUN Academy" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover" />
-              
-            </Link>
+            {/* Logo + Mobile Menu Button */}
+            <div className="flex items-center gap-1">
+              <Link to="/" className="flex items-center gap-2">
+                <img src={funAcademyLogo} alt="FUN Academy" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover" />
+              </Link>
 
-            {/* Mobile Menu Button - Right side */}
-            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="lg:hidden flex items-center justify-center w-11 h-11 text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-lg transition-colors" aria-label="Toggle menu">
-              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+              {/* Mobile Menu Button - Next to logo */}
+              <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="lg:hidden flex items-center justify-center w-10 h-10 text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-lg transition-colors" aria-label="Toggle menu">
+                {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+            </div>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1">
