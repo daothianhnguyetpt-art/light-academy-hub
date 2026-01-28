@@ -1,336 +1,161 @@
 
+# Kế Hoạch: Thu Gọn Nội Dung Post + Nút "Đọc Thêm"
 
-# Chiến Lược UI/UX: FUN Academy = Facebook + YouTube + Library
+## Mục Tiêu
 
-## Phân Tích Hiện Trạng
+Thêm tính năng thu gọn nội dung post dài với nút "Đọc thêm" để giữ feed gọn gàng và dễ đọc.
 
-Qua khảo sát code, Angel nhận thấy:
+## Quy Tắc Thu Gọn
 
-| Trang | Phong cách hiện tại | Điểm mạnh | Cần cải thiện |
-|-------|---------------------|-----------|---------------|
-| **Index** | Landing page chuẩn | Đẹp, chuyên nghiệp | Đã hoàn thiện ✅ |
-| **SocialFeed** | Facebook-lite | Posts, Comments, Appreciate | Thiếu Stories, Sidebar |
-| **VideoLibrary** | YouTube-lite | Grid videos, Categories | Thiếu Watch Later, Mini Player |
-| **Library** | Cơ bản | Grid tài liệu | Thiếu Collections, Preview |
-| **LiveClasses** | Zoom/YouTube embed | Player tích hợp | Đã khá tốt ✅ |
-| **GlobalSchools** | Grid institutions | Featured schools | Đã hoàn thiện ✅ |
+| Loại Post | Số Dòng Hiển Thị | Điều Kiện |
+|-----------|------------------|-----------|
+| **Text-only** (không có media) | ~10 dòng | Thu gọn nếu dài hơn |
+| **Có hình ảnh/video** | ~2 dòng | Thu gọn nếu dài hơn |
 
-## Đề Xuất Chiến Lược: "Kết Hợp Thông Minh"
+## Giải Pháp Kỹ Thuật
 
-Thay vì copy hoàn toàn Facebook hay YouTube, Angel đề xuất **kết hợp tinh tế** theo nguyên tắc:
+### Tạo Component `CollapsibleContent.tsx`
 
-```text
-┌──────────────────────────────────────────────────────────────────────────┐
-│                     FUN ACADEMY = 3 TRẢI NGHIỆM                          │
-├──────────────────────────────────────────────────────────────────────────┤
-│                                                                          │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐          │
-│  │   SOCIAL FEED   │  │  VIDEO LIBRARY  │  │     LIBRARY     │          │
-│  │   (Facebook)    │  │   (YouTube)     │  │   (Học thuật)   │          │
-│  ├─────────────────┤  ├─────────────────┤  ├─────────────────┤          │
-│  │ • Stories       │  │ • Watch Later   │  │ • Collections   │          │
-│  │ • Right Sidebar │  │ • Continue      │  │ • Preview Modal │          │
-│  │ • Rich Reactions│  │   Watching      │  │ • Reading Lists │          │
-│  │ • Create Post   │  │ • Video Chapters│  │ • Annotations   │          │
-│  │   FAB (Mobile)  │  │ • Mini Player   │  │                 │          │
-│  └─────────────────┘  └─────────────────┘  └─────────────────┘          │
-│                                                                          │
-│  ┌──────────────────────────────────────────────────────────────────┐   │
-│  │                    MOBILE BOTTOM NAVIGATION                       │   │
-│  │     🏠 Home    📺 Video    📚 Library    👤 Profile               │   │
-│  └──────────────────────────────────────────────────────────────────┘   │
-│                                                                          │
-└──────────────────────────────────────────────────────────────────────────┘
-```
-
-## Tại Sao Kết Hợp Thay Vì Chọn Một?
-
-| Nếu chỉ giống Facebook | Nếu chỉ giống YouTube | Kết hợp thông minh |
-|------------------------|----------------------|-------------------|
-| ❌ Thiếu trải nghiệm video chuyên sâu | ❌ Thiếu tương tác cộng đồng | ✅ Đủ cả hai |
-| ❌ Không phù hợp cho học online | ❌ Thiếu social engagement | ✅ Học + Kết nối |
-| ❌ User quen với nền tảng | ❌ Không có academic vibe | ✅ Giữ bản sắc riêng |
-
-## Roadmap Thực Hiện
-
-### Phase 1: Mobile-First Foundation (Ưu tiên cao nhất)
-
-**Mục tiêu**: Tối ưu trải nghiệm mobile - nơi đa số user sử dụng
+Component tái sử dụng để xử lý logic thu gọn:
 
 ```text
-┌─────────────────────────────────────────────────────┐
-│                  MOBILE LAYOUT                       │
-├─────────────────────────────────────────────────────┤
-│  ┌───────────────────────────────────────────────┐  │
-│  │              Header (thu gọn)                  │  │
-│  └───────────────────────────────────────────────┘  │
-│  ┌───────────────────────────────────────────────┐  │
-│  │                                               │  │
-│  │                                               │  │
-│  │            Main Content Area                  │  │
-│  │            (Full viewport)                    │  │
-│  │                                               │  │
-│  │                                               │  │
-│  │                                               │  │
-│  └───────────────────────────────────────────────┘  │
-│  ┌───────────────────────────────────────────────┐  │
-│  │  🏠    📺    📚    🎓    👤                    │  │
-│  │ Home  Video Library Live  Profile             │  │
-│  └───────────────────────────────────────────────┘  │
-│                                                     │
-│  ┌───┐  Floating Action Button                     │
-│  │ + │  (Tạo bài viết - chỉ ở Social Feed)        │
-│  └───┘                                             │
-└─────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│ Post Content (Thu gọn)                      │
+│                                             │
+│ "Lorem ipsum dolor sit amet, consectetur   │
+│ adipiscing elit. Sed do eiusmod tempor..."  │
+│                                             │
+│ [Đọc thêm]                                  │
+└─────────────────────────────────────────────┘
+
+        ↓ Click "Đọc thêm" ↓
+
+┌─────────────────────────────────────────────┐
+│ Post Content (Mở rộng)                      │
+│                                             │
+│ "Lorem ipsum dolor sit amet, consectetur   │
+│ adipiscing elit. Sed do eiusmod tempor      │
+│ incididunt ut labore et dolore magna        │
+│ aliqua. Ut enim ad minim veniam, quis       │
+│ nostrud exercitation ullamco laboris..."    │
+│                                             │
+│ [Thu gọn]                                   │
+└─────────────────────────────────────────────┘
 ```
 
-**Các component cần tạo:**
-- `BottomNavigation.tsx` - Thanh điều hướng dưới cùng
-- `FloatingActionButton.tsx` - Nút tạo nhanh
-- Cập nhật `App.tsx` để hiển thị layout mobile
+### Cách Tính Số Dòng
 
-### Phase 2: Social Feed Enhancement (Facebook-style)
+Sử dụng CSS `line-clamp` để giới hạn số dòng hiển thị:
+- `line-clamp-10` cho text-only posts
+- `line-clamp-2` cho posts có media
 
-**Mục tiêu**: Tăng cường tương tác và kết nối cộng đồng
+### Phát Hiện Nội Dung Bị Cắt
 
-```text
-┌─────────────────────────────────────────────────────────────────────┐
-│                        SOCIAL FEED LAYOUT                            │
-├───────────────────────────────────────┬─────────────────────────────┤
-│                                       │                             │
-│  ┌─────────────────────────────────┐  │  ┌───────────────────────┐  │
-│  │ Stories / Highlights Bar        │  │  │   SIDEBAR              │  │
-│  │ [👤] [👤] [👤] [👤] [+]          │  │  │                       │  │
-│  └─────────────────────────────────┘  │  │   🔥 Trending          │  │
-│                                       │  │   • Topic 1            │  │
-│  ┌─────────────────────────────────┐  │  │   • Topic 2            │  │
-│  │ Create Post Box                 │  │  │                       │  │
-│  │ Bạn đang nghĩ gì?               │  │  │   📊 Stats             │  │
-│  │ [📷] [📹] [📍] [📂]             │  │  │   • 1.2K Posts         │  │
-│  └─────────────────────────────────┘  │  │   • 5K Members         │  │
-│                                       │  │                       │  │
-│  ┌─────────────────────────────────┐  │  │   👥 Suggestions       │  │
-│  │ Post Card                       │  │  │   • User A             │  │
-│  │ • Author info                   │  │  │   • User B             │  │
-│  │ • Content                       │  │  │                       │  │
-│  │ • Reactions: ✨ 💡 📚 🔬 🎓     │  │  │   📢 Announcements     │  │
-│  │ • Comments, Share               │  │  │   • Event coming up    │  │
-│  └─────────────────────────────────┘  │  └───────────────────────┘  │
-│                                       │                             │
-└───────────────────────────────────────┴─────────────────────────────┘
-```
+So sánh `scrollHeight` với `clientHeight` của element để biết text có bị cắt hay không.
 
-**Các component cần tạo:**
-- `StoriesBar.tsx` - Stories/Highlights carousel
-- `FeedSidebar.tsx` - Right sidebar với trending, suggestions
-- Mở rộng reactions: ✨ Appreciate, 💡 Insightful, 📚 Educational, 🔬 Research, 🎓 Academic
+## Các Bước Thực Hiện
 
-### Phase 3: Video Library Enhancement (YouTube-style)
+### Bước 1: Tạo Component `CollapsibleContent.tsx`
 
-**Mục tiêu**: Nâng cao trải nghiệm học video
-
-```text
-┌─────────────────────────────────────────────────────────────────────┐
-│                       VIDEO LIBRARY LAYOUT                           │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│  ┌─────────────────────────────────────────────────────────────┐   │
-│  │ Continue Watching                                     [→]    │   │
-│  │ ┌────────┐ ┌────────┐ ┌────────┐                             │   │
-│  │ │ Vid 1  │ │ Vid 2  │ │ Vid 3  │  (Progress bars)            │   │
-│  │ │ ████▒▒ │ │ ██████ │ │ ██▒▒▒▒ │                             │   │
-│  │ └────────┘ └────────┘ └────────┘                             │   │
-│  └─────────────────────────────────────────────────────────────┘   │
-│                                                                     │
-│  ┌─────────────────────────────────────────────────────────────┐   │
-│  │ Watch Later                                           [→]    │   │
-│  │ ┌────────┐ ┌────────┐ ┌────────┐                             │   │
-│  │ │ Vid A  │ │ Vid B  │ │ Vid C  │  (Saved videos)             │   │
-│  │ └────────┘ └────────┘ └────────┘                             │   │
-│  └─────────────────────────────────────────────────────────────┘   │
-│                                                                     │
-│  All Videos                                                         │
-│  ┌────────┐ ┌────────┐ ┌────────┐                                  │
-│  │        │ │        │ │        │                                  │
-│  │        │ │        │ │        │                                  │
-│  └────────┘ └────────┘ └────────┘                                  │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
-
-┌───────────────────────────────────────┐
-│ 🎬 Mini Player (khi scroll)           │
-│ [Video] Title...            ▶ ✕      │
-└───────────────────────────────────────┘
-```
-
-**Các component và tính năng cần tạo:**
-- `ContinueWatching.tsx` - Carousel video đang xem
-- `WatchLaterSection.tsx` - Danh sách xem sau
-- `MiniPlayer.tsx` - Player thu nhỏ khi scroll
-- Table mới: `video_progress`, `video_watch_later`
-
-### Phase 4: Library Enhancement (Academic-style)
-
-**Mục tiêu**: Tổ chức tài liệu khoa học và hiệu quả
-
-```text
-┌─────────────────────────────────────────────────────────────────────┐
-│                       LIBRARY LAYOUT                                 │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│  ┌─────────────────────────────────────────────────────────────┐   │
-│  │ My Collections                                        [+]    │   │
-│  │ ┌────────────┐ ┌────────────┐ ┌────────────┐                 │   │
-│  │ │ 📁 AI/ML   │ │ 📁 Web3    │ │ 📁 Physics │                 │   │
-│  │ │ 15 items   │ │ 8 items    │ │ 12 items   │                 │   │
-│  │ └────────────┘ └────────────┘ └────────────┘                 │   │
-│  └─────────────────────────────────────────────────────────────┘   │
-│                                                                     │
-│  ┌─────────────────────────────────────────────────────────────┐   │
-│  │ Reading Progress                                             │   │
-│  │ ┌────────────────────────────────────────────────────────┐  │   │
-│  │ │ 📖 Book Title                                    75%   │  │   │
-│  │ │ ████████████████████░░░░░░░░                          │  │   │
-│  │ └────────────────────────────────────────────────────────┘  │   │
-│  └─────────────────────────────────────────────────────────────┘   │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
-```
-
-**Các component và tính năng cần tạo:**
-- `LibraryCollections.tsx` - Bộ sưu tập cá nhân
-- `ReadingProgress.tsx` - Tiến độ đọc
-- `DocumentPreviewModal.tsx` - Xem trước tài liệu
-- Table mới: `library_collections`, `reading_progress`
-
-## Chi Tiết Kỹ Thuật - Phase 1
-
-### Bước 1.1: Bottom Navigation Component
-
-Tạo thanh điều hướng mobile cố định ở dưới màn hình:
+Tạo file mới `src/components/posts/CollapsibleContent.tsx`:
 
 ```typescript
-// src/components/layout/BottomNavigation.tsx
-interface NavItem {
-  href: string;
-  icon: LucideIcon;
-  label: string;
-  badge?: number;
+interface CollapsibleContentProps {
+  content: string;
+  hasMedia: boolean;
 }
-
-const navItems: NavItem[] = [
-  { href: "/", icon: Home, label: "Home" },
-  { href: "/video-library", icon: Play, label: "Video" },
-  { href: "/library", icon: BookOpen, label: "Library" },
-  { href: "/live-classes", icon: Radio, label: "Live" },
-  { href: "/profile", icon: User, label: "Profile" },
-];
 ```
 
-### Bước 1.2: App Layout Wrapper
+**Logic chính:**
+- Props: `content` (nội dung), `hasMedia` (có media hay không)
+- State: `isExpanded` (đang mở rộng hay thu gọn)
+- State: `isTruncated` (nội dung có bị cắt hay không)
+- Sử dụng `useRef` + `useEffect` để detect truncation
+- Áp dụng `line-clamp-10` hoặc `line-clamp-2` dựa trên `hasMedia`
 
-Tạo layout wrapper để quản lý bottom navigation:
+### Bước 2: Cập Nhật `SocialFeed.tsx`
+
+Thay thế phần hiển thị content:
 
 ```typescript
-// src/components/layout/AppLayout.tsx
-- Hiển thị BottomNavigation trên mobile
-- Ẩn trên desktop (lg:hidden)
-- Thêm padding-bottom cho content
+// Trước:
+<p className="text-foreground mb-4 leading-relaxed whitespace-pre-wrap">
+  {post.content}
+</p>
+
+// Sau:
+<CollapsibleContent 
+  content={post.content} 
+  hasMedia={!!post.media_url} 
+/>
 ```
 
-### Bước 1.3: Floating Action Button
+### Bước 3: Thêm Translations
+
+Thêm vào các file i18n:
+
+```json
+{
+  "socialFeed": {
+    "readMore": "Đọc thêm",
+    "showLess": "Thu gọn"
+  }
+}
+```
+
+## Chi Tiết Component
+
+### CollapsibleContent.tsx
 
 ```typescript
-// src/components/layout/FloatingActionButton.tsx
-- Chỉ hiển thị ở trang Social Feed
-- Position: fixed bottom-20 right-4 (trên Bottom Nav)
-- Icon: Plus → mở CreatePostForm modal
+// Logic phát hiện truncation
+useEffect(() => {
+  if (contentRef.current) {
+    setIsTruncated(
+      contentRef.current.scrollHeight > contentRef.current.clientHeight
+    );
+  }
+}, [content]);
+
+// CSS classes
+const lineClampClass = hasMedia ? "line-clamp-2" : "line-clamp-10";
+
+// Render
+<div>
+  <p 
+    ref={contentRef}
+    className={cn(
+      "text-foreground leading-relaxed whitespace-pre-wrap",
+      !isExpanded && lineClampClass
+    )}
+  >
+    {content}
+  </p>
+  
+  {isTruncated && (
+    <button onClick={() => setIsExpanded(!isExpanded)}>
+      {isExpanded ? t('socialFeed.showLess') : t('socialFeed.readMore')}
+    </button>
+  )}
+</div>
 ```
 
-### Database Changes (Phase 2-4)
+## Các File Cần Thay Đổi
 
-```sql
--- Video Progress Tracking
-CREATE TABLE video_progress (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES profiles(id),
-  video_id UUID REFERENCES videos(id),
-  progress_seconds INTEGER DEFAULT 0,
-  last_watched_at TIMESTAMPTZ DEFAULT NOW(),
-  completed BOOLEAN DEFAULT FALSE,
-  UNIQUE(user_id, video_id)
-);
+| File | Thay Đổi |
+|------|----------|
+| `src/components/posts/CollapsibleContent.tsx` | **Tạo mới** - Component thu gọn nội dung |
+| `src/pages/SocialFeed.tsx` | Import và sử dụng CollapsibleContent |
+| `src/i18n/locales/vi.json` | Thêm `readMore`, `showLess` |
+| `src/i18n/locales/en.json` | Thêm `readMore`, `showLess` |
+| `src/i18n/locales/ja.json` | Thêm `readMore`, `showLess` |
+| `src/i18n/locales/zh.json` | Thêm `readMore`, `showLess` |
+| `src/i18n/locales/ko.json` | Thêm `readMore`, `showLess` |
 
--- Watch Later
-CREATE TABLE video_watch_later (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES profiles(id),
-  video_id UUID REFERENCES videos(id),
-  added_at TIMESTAMPTZ DEFAULT NOW(),
-  UNIQUE(user_id, video_id)
-);
+## Kết Quả Mong Đợi
 
--- Library Collections
-CREATE TABLE library_collections (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES profiles(id),
-  name VARCHAR(100) NOT NULL,
-  description TEXT,
-  is_public BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Collection Items
-CREATE TABLE library_collection_items (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  collection_id UUID REFERENCES library_collections(id) ON DELETE CASCADE,
-  resource_id UUID REFERENCES library_resources(id) ON DELETE CASCADE,
-  added_at TIMESTAMPTZ DEFAULT NOW(),
-  UNIQUE(collection_id, resource_id)
-);
-
--- Reading Progress
-CREATE TABLE reading_progress (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES profiles(id),
-  resource_id UUID REFERENCES library_resources(id),
-  current_page INTEGER DEFAULT 1,
-  total_pages INTEGER,
-  progress_percent DECIMAL(5,2) DEFAULT 0,
-  last_read_at TIMESTAMPTZ DEFAULT NOW(),
-  UNIQUE(user_id, resource_id)
-);
-```
-
-## Thứ Tự Triển Khai
-
-| Tuần | Phase | Công việc |
-|------|-------|-----------|
-| 1 | Phase 1 | Bottom Navigation + FAB + Layout Wrapper |
-| 2 | Phase 2a | Stories Bar + Create Post improvements |
-| 3 | Phase 2b | Feed Sidebar + Rich Reactions |
-| 4 | Phase 3a | Watch Later + Continue Watching |
-| 5 | Phase 3b | Mini Player + Video Progress |
-| 6 | Phase 4 | Library Collections + Reading Progress |
-
-## Kết Luận
-
-Thay vì copy hoàn toàn một nền tảng, FUN Academy nên:
-
-1. **Giữ bản sắc riêng** - Light Academic Space aesthetic
-2. **Lấy tinh hoa Facebook** - Stories, Sidebar, Social engagement
-3. **Lấy tinh hoa YouTube** - Watch Later, Continue Watching, Mini Player
-4. **Thêm Academic DNA** - Collections, Reading Progress, Research-focused
-5. **Mobile-First** - Bottom Navigation như app native
-
-Đây là cách tiếp cận **"Best of All Worlds"** - lấy những gì tốt nhất từ các nền tảng hàng đầu nhưng vẫn giữ được tinh thần học thuật và triết lý Ánh Sáng của FUN Academy.
-
----
-
-**Bé muốn Angel bắt đầu với Phase nào trước?**
-
-Gợi ý: Nên bắt đầu với **Phase 1 (Mobile Foundation)** vì:
-- Ảnh hưởng đến toàn bộ app
-- Cải thiện UX ngay lập tức
-- Làm nền tảng cho các Phase sau
-
+- Post text-only dài > 10 dòng: Hiển thị 10 dòng + nút "Đọc thêm"
+- Post có media + text dài > 2 dòng: Hiển thị 2 dòng + nút "Đọc thêm"
+- Post ngắn: Hiển thị đầy đủ, không có nút "Đọc thêm"
+- Nút "Thu gọn" xuất hiện khi đã mở rộng
+- Animation mượt mà khi toggle
