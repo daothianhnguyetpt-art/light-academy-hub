@@ -215,7 +215,11 @@
     "videoLibrary": "视频库",
     "liveClasses": "直播课程",
     "library": "资料库",
-    "globalSchools": "全球学校"
+    "globalSchools": "全球学校",
+    "feed": "动态",
+    "video": "视频",
+    "live": "直播",
+    "profile": "个人资料"
   },
   "auth": {
     "welcomeBack": "欢迎回来",

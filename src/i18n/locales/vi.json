@@ -221,7 +221,11 @@
     "videoLibrary": "Thư Viện Video",
     "liveClasses": "Lớp Học Trực Tuyến",
     "library": "Thư Viện",
-    "globalSchools": "Global Schools"
+    "globalSchools": "Global Schools",
+    "feed": "Bảng Tin",
+    "video": "Video",
+    "live": "Trực Tiếp",
+    "profile": "Hồ Sơ"
   },
 "auth": {
     "welcomeBack": "Chào mừng trở lại",
