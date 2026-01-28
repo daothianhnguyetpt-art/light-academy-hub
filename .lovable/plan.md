@@ -1,161 +1,115 @@
 
-# Kế Hoạch: Thu Gọn Nội Dung Post + Nút "Đọc Thêm"
 
-## Mục Tiêu
+# Kế Hoạch Fix: Thu Gọn Nội Dung Post Only-Text
 
-Thêm tính năng thu gọn nội dung post dài với nút "Đọc thêm" để giữ feed gọn gàng và dễ đọc.
+## Vấn Đề Phát Hiện
 
-## Quy Tắc Thu Gọn
+Tính năng thu gọn hoạt động tốt với bài có media (line-clamp-2), nhưng không hoạt động với bài only-text (line-clamp-10). Nguyên nhân:
 
-| Loại Post | Số Dòng Hiển Thị | Điều Kiện |
-|-----------|------------------|-----------|
-| **Text-only** (không có media) | ~10 dòng | Thu gọn nếu dài hơn |
-| **Có hình ảnh/video** | ~2 dòng | Thu gọn nếu dài hơn |
+1. **Timing issue**: Khi component render, CSS `line-clamp` được apply nhưng `scrollHeight` chưa được tính đúng vì browser chưa paint xong
+2. **Thiếu RAF**: Cần dùng `requestAnimationFrame` để chờ browser layout hoàn tất
+3. **Thiếu resize listener**: Khi window resize, số dòng có thể thay đổi
 
-## Giải Pháp Kỹ Thuật
+## Giải Pháp
 
-### Tạo Component `CollapsibleContent.tsx`
-
-Component tái sử dụng để xử lý logic thu gọn:
+Cập nhật logic detect truncation trong `CollapsibleContent.tsx`:
 
 ```text
-┌─────────────────────────────────────────────┐
-│ Post Content (Thu gọn)                      │
-│                                             │
-│ "Lorem ipsum dolor sit amet, consectetur   │
-│ adipiscing elit. Sed do eiusmod tempor..."  │
-│                                             │
-│ [Đọc thêm]                                  │
-└─────────────────────────────────────────────┘
-
-        ↓ Click "Đọc thêm" ↓
-
-┌─────────────────────────────────────────────┐
-│ Post Content (Mở rộng)                      │
-│                                             │
-│ "Lorem ipsum dolor sit amet, consectetur   │
-│ adipiscing elit. Sed do eiusmod tempor      │
-│ incididunt ut labore et dolore magna        │
-│ aliqua. Ut enim ad minim veniam, quis       │
-│ nostrud exercitation ullamco laboris..."    │
-│                                             │
-│ [Thu gọn]                                   │
-└─────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────┐
+│            FLOW DETECT TRUNCATION                    │
+├─────────────────────────────────────────────────────┤
+│                                                     │
+│  1. Component Mount                                 │
+│         ↓                                           │
+│  2. Wait for requestAnimationFrame (browser paint) │
+│         ↓                                           │
+│  3. Check scrollHeight > clientHeight              │
+│         ↓                                           │
+│  4. Set isTruncated = true/false                   │
+│         ↓                                           │
+│  5. Listen for window resize → Re-check            │
+│                                                     │
+└─────────────────────────────────────────────────────┘
 ```
 
-### Cách Tính Số Dòng
+## Thay Đổi Code
 
-Sử dụng CSS `line-clamp` để giới hạn số dòng hiển thị:
-- `line-clamp-10` cho text-only posts
-- `line-clamp-2` cho posts có media
+### File: `src/components/posts/CollapsibleContent.tsx`
 
-### Phát Hiện Nội Dung Bị Cắt
-
-So sánh `scrollHeight` với `clientHeight` của element để biết text có bị cắt hay không.
-
-## Các Bước Thực Hiện
-
-### Bước 1: Tạo Component `CollapsibleContent.tsx`
-
-Tạo file mới `src/components/posts/CollapsibleContent.tsx`:
-
+**Trước (có vấn đề):**
 ```typescript
-interface CollapsibleContentProps {
-  content: string;
-  hasMedia: boolean;
-}
-```
-
-**Logic chính:**
-- Props: `content` (nội dung), `hasMedia` (có media hay không)
-- State: `isExpanded` (đang mở rộng hay thu gọn)
-- State: `isTruncated` (nội dung có bị cắt hay không)
-- Sử dụng `useRef` + `useEffect` để detect truncation
-- Áp dụng `line-clamp-10` hoặc `line-clamp-2` dựa trên `hasMedia`
-
-### Bước 2: Cập Nhật `SocialFeed.tsx`
-
-Thay thế phần hiển thị content:
-
-```typescript
-// Trước:
-<p className="text-foreground mb-4 leading-relaxed whitespace-pre-wrap">
-  {post.content}
-</p>
-
-// Sau:
-<CollapsibleContent 
-  content={post.content} 
-  hasMedia={!!post.media_url} 
-/>
-```
-
-### Bước 3: Thêm Translations
-
-Thêm vào các file i18n:
-
-```json
-{
-  "socialFeed": {
-    "readMore": "Đọc thêm",
-    "showLess": "Thu gọn"
-  }
-}
-```
-
-## Chi Tiết Component
-
-### CollapsibleContent.tsx
-
-```typescript
-// Logic phát hiện truncation
 useEffect(() => {
-  if (contentRef.current) {
-    setIsTruncated(
-      contentRef.current.scrollHeight > contentRef.current.clientHeight
-    );
+  const checkTruncation = () => {
+    if (contentRef.current) {
+      const { scrollHeight, clientHeight } = contentRef.current;
+      setIsTruncated(scrollHeight > clientHeight);
+    }
+  };
+
+  checkTruncation();
+
+  if (document.fonts?.ready) {
+    document.fonts.ready.then(checkTruncation);
   }
-}, [content]);
-
-// CSS classes
-const lineClampClass = hasMedia ? "line-clamp-2" : "line-clamp-10";
-
-// Render
-<div>
-  <p 
-    ref={contentRef}
-    className={cn(
-      "text-foreground leading-relaxed whitespace-pre-wrap",
-      !isExpanded && lineClampClass
-    )}
-  >
-    {content}
-  </p>
-  
-  {isTruncated && (
-    <button onClick={() => setIsExpanded(!isExpanded)}>
-      {isExpanded ? t('socialFeed.showLess') : t('socialFeed.readMore')}
-    </button>
-  )}
-</div>
+}, [content, hasMedia]);
 ```
+
+**Sau (fix):**
+```typescript
+useEffect(() => {
+  const checkTruncation = () => {
+    if (contentRef.current) {
+      const { scrollHeight, clientHeight } = contentRef.current;
+      // Add small tolerance (1px) for rounding issues
+      setIsTruncated(scrollHeight > clientHeight + 1);
+    }
+  };
+
+  // Use RAF to wait for browser paint
+  const rafId = requestAnimationFrame(() => {
+    checkTruncation();
+  });
+
+  // Also check after fonts load
+  if (document.fonts?.ready) {
+    document.fonts.ready.then(() => {
+      requestAnimationFrame(checkTruncation);
+    });
+  }
+
+  // Re-check on window resize
+  const handleResize = () => {
+    requestAnimationFrame(checkTruncation);
+  };
+  window.addEventListener('resize', handleResize);
+
+  return () => {
+    cancelAnimationFrame(rafId);
+    window.removeEventListener('resize', handleResize);
+  };
+}, [content, hasMedia, isExpanded]);
+```
+
+## Chi Tiết Cải Tiến
+
+| Cải tiến | Mô tả |
+|----------|-------|
+| **requestAnimationFrame** | Chờ browser paint xong trước khi check |
+| **Tolerance 1px** | Tránh false negative do rounding errors |
+| **Resize listener** | Re-check khi window resize |
+| **isExpanded dependency** | Re-check khi toggle expand/collapse |
+| **Cleanup function** | Dọn dẹp RAF và event listener |
 
 ## Các File Cần Thay Đổi
 
 | File | Thay Đổi |
 |------|----------|
-| `src/components/posts/CollapsibleContent.tsx` | **Tạo mới** - Component thu gọn nội dung |
-| `src/pages/SocialFeed.tsx` | Import và sử dụng CollapsibleContent |
-| `src/i18n/locales/vi.json` | Thêm `readMore`, `showLess` |
-| `src/i18n/locales/en.json` | Thêm `readMore`, `showLess` |
-| `src/i18n/locales/ja.json` | Thêm `readMore`, `showLess` |
-| `src/i18n/locales/zh.json` | Thêm `readMore`, `showLess` |
-| `src/i18n/locales/ko.json` | Thêm `readMore`, `showLess` |
+| `src/components/posts/CollapsibleContent.tsx` | Cập nhật useEffect với RAF + resize listener |
 
 ## Kết Quả Mong Đợi
 
-- Post text-only dài > 10 dòng: Hiển thị 10 dòng + nút "Đọc thêm"
-- Post có media + text dài > 2 dòng: Hiển thị 2 dòng + nút "Đọc thêm"
-- Post ngắn: Hiển thị đầy đủ, không có nút "Đọc thêm"
-- Nút "Thu gọn" xuất hiện khi đã mở rộng
-- Animation mượt mà khi toggle
+- Bài only-text dài > 10 dòng: Hiển thị nút "Đọc thêm" ✅
+- Bài có media + text dài > 2 dòng: Vẫn hoạt động tốt ✅
+- Responsive: Re-check khi resize window ✅
+- Performance: Cleanup đúng cách khi unmount ✅
+
