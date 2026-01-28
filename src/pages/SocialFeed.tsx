@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { CreatePostForm } from "@/components/posts/CreatePostForm";
 import { CommentSection } from "@/components/posts/CommentSection";
 import { EditPostModal } from "@/components/posts/EditPostModal";
+import { CollapsibleContent } from "@/components/posts/CollapsibleContent";
 import { useTranslation } from "@/i18n/useTranslation";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { getDateLocale } from "@/lib/date-utils";
@@ -252,9 +253,10 @@ export default function SocialFeed() {
                   </div>
 
                   {/* Post Content */}
-                  <p className="text-foreground mb-4 leading-relaxed whitespace-pre-wrap">
-                    {post.content}
-                  </p>
+                  <CollapsibleContent 
+                    content={post.content} 
+                    hasMedia={!!post.media_url} 
+                  />
 
                   {/* Location */}
                   {post.location && (

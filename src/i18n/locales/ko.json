@@ -502,7 +502,9 @@
     "videoTooLarge": "비디오는 50MB 미만이어야 합니다",
     "postFailed": "게시 실패",
     "locationFailed": "위치를 가져올 수 없습니다",
-    "browserNoLocation": "브라우저가 위치 정보를 지원하지 않습니다"
+    "browserNoLocation": "브라우저가 위치 정보를 지원하지 않습니다",
+    "readMore": "더 보기",
+    "showLess": "접기"
   },
   "profile": {
     "rewards": {

@@ -518,7 +518,9 @@
     "videoTooLarge": "Video phải nhỏ hơn 50MB",
     "postFailed": "Không thể đăng bài",
     "locationFailed": "Không thể lấy vị trí của bạn",
-    "browserNoLocation": "Trình duyệt không hỗ trợ định vị"
+    "browserNoLocation": "Trình duyệt không hỗ trợ định vị",
+    "readMore": "Đọc thêm",
+    "showLess": "Thu gọn"
   },
   "profile": {
     "rewards": {
