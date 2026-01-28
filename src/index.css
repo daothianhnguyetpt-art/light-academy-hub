@@ -394,4 +394,9 @@
   .snap-mandatory {
     scroll-snap-type: x mandatory;
   }
+
+  /* Safe area for mobile bottom navigation */
+  .safe-area-pb {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
 }

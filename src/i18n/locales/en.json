@@ -221,7 +221,11 @@
     "videoLibrary": "Video Library",
     "liveClasses": "Live Classes",
     "library": "Library",
-    "globalSchools": "Global Schools"
+    "globalSchools": "Global Schools",
+    "feed": "Feed",
+    "video": "Video",
+    "live": "Live",
+    "profile": "Profile"
   },
 "auth": {
     "welcomeBack": "Welcome back",
