@@ -1,233 +1,336 @@
 
-# Kế Hoạch: Modal Thông Báo Chuyển Hướng Light Law
 
-## Tổng Quan
+# Chiến Lược UI/UX: FUN Academy = Facebook + YouTube + Library
 
-Thêm modal thông báo nhẹ nhàng, dễ thương khi user đăng nhập mà chưa accept Light Law. Modal giải thích tình huống và cho user lựa chọn trước khi redirect.
+## Phân Tích Hiện Trạng
 
-## Luồng Mới
+Qua khảo sát code, Angel nhận thấy:
+
+| Trang | Phong cách hiện tại | Điểm mạnh | Cần cải thiện |
+|-------|---------------------|-----------|---------------|
+| **Index** | Landing page chuẩn | Đẹp, chuyên nghiệp | Đã hoàn thiện ✅ |
+| **SocialFeed** | Facebook-lite | Posts, Comments, Appreciate | Thiếu Stories, Sidebar |
+| **VideoLibrary** | YouTube-lite | Grid videos, Categories | Thiếu Watch Later, Mini Player |
+| **Library** | Cơ bản | Grid tài liệu | Thiếu Collections, Preview |
+| **LiveClasses** | Zoom/YouTube embed | Player tích hợp | Đã khá tốt ✅ |
+| **GlobalSchools** | Grid institutions | Featured schools | Đã hoàn thiện ✅ |
+
+## Đề Xuất Chiến Lược: "Kết Hợp Thông Minh"
+
+Thay vì copy hoàn toàn Facebook hay YouTube, Angel đề xuất **kết hợp tinh tế** theo nguyên tắc:
 
 ```text
-┌─────────────────────────────────────────────────────────────────┐
-│ User đăng nhập thành công (Google / Email / Wallet)            │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-              ┌───────────────────────────────┐
-              │ LightLawGuard kiểm tra:       │
-              │ profile.light_law_accepted_at │
-              └───────────────────────────────┘
-                     │              │
-                   CÓ             CHƯA
-                     │              │
-                     ▼              ▼
-          ┌──────────────┐   ┌──────────────────────┐
-          │ Vào app      │   │ ✨ HIỆN MODAL        │
-          │ bình thường  │   │ THÔNG BÁO ✨         │
-          └──────────────┘   └──────────────────────┘
-                                       │
-                     ┌─────────────────┴─────────────────┐
-                     ▼                                   ▼
-              ┌────────────┐                    ┌────────────────┐
-              │ Click OK   │                    │ Đăng xuất &    │
-              │            │                    │ Tiếp tục Guest │
-              └────────────┘                    └────────────────┘
-                     │                                   │
-                     ▼                                   ▼
-              ┌────────────┐                    ┌────────────────┐
-              │ Navigate   │                    │ signOut() →    │
-              │ /light-law │                    │ Ở trang hiện   │
-              └────────────┘                    │ tại với Guest  │
-                                                └────────────────┘
+┌──────────────────────────────────────────────────────────────────────────┐
+│                     FUN ACADEMY = 3 TRẢI NGHIỆM                          │
+├──────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐          │
+│  │   SOCIAL FEED   │  │  VIDEO LIBRARY  │  │     LIBRARY     │          │
+│  │   (Facebook)    │  │   (YouTube)     │  │   (Học thuật)   │          │
+│  ├─────────────────┤  ├─────────────────┤  ├─────────────────┤          │
+│  │ • Stories       │  │ • Watch Later   │  │ • Collections   │          │
+│  │ • Right Sidebar │  │ • Continue      │  │ • Preview Modal │          │
+│  │ • Rich Reactions│  │   Watching      │  │ • Reading Lists │          │
+│  │ • Create Post   │  │ • Video Chapters│  │ • Annotations   │          │
+│  │   FAB (Mobile)  │  │ • Mini Player   │  │                 │          │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘          │
+│                                                                          │
+│  ┌──────────────────────────────────────────────────────────────────┐   │
+│  │                    MOBILE BOTTOM NAVIGATION                       │   │
+│  │     🏠 Home    📺 Video    📚 Library    👤 Profile               │   │
+│  └──────────────────────────────────────────────────────────────────┘   │
+│                                                                          │
+└──────────────────────────────────────────────────────────────────────────┘
 ```
 
-## Thiết Kế Modal
+## Tại Sao Kết Hợp Thay Vì Chọn Một?
+
+| Nếu chỉ giống Facebook | Nếu chỉ giống YouTube | Kết hợp thông minh |
+|------------------------|----------------------|-------------------|
+| ❌ Thiếu trải nghiệm video chuyên sâu | ❌ Thiếu tương tác cộng đồng | ✅ Đủ cả hai |
+| ❌ Không phù hợp cho học online | ❌ Thiếu social engagement | ✅ Học + Kết nối |
+| ❌ User quen với nền tảng | ❌ Không có academic vibe | ✅ Giữ bản sắc riêng |
+
+## Roadmap Thực Hiện
+
+### Phase 1: Mobile-First Foundation (Ưu tiên cao nhất)
+
+**Mục tiêu**: Tối ưu trải nghiệm mobile - nơi đa số user sử dụng
 
 ```text
 ┌─────────────────────────────────────────────────────┐
+│                  MOBILE LAYOUT                       │
+├─────────────────────────────────────────────────────┤
+│  ┌───────────────────────────────────────────────┐  │
+│  │              Header (thu gọn)                  │  │
+│  └───────────────────────────────────────────────┘  │
+│  ┌───────────────────────────────────────────────┐  │
+│  │                                               │  │
+│  │                                               │  │
+│  │            Main Content Area                  │  │
+│  │            (Full viewport)                    │  │
+│  │                                               │  │
+│  │                                               │  │
+│  │                                               │  │
+│  └───────────────────────────────────────────────┘  │
+│  ┌───────────────────────────────────────────────┐  │
+│  │  🏠    📺    📚    🎓    👤                    │  │
+│  │ Home  Video Library Live  Profile             │  │
+│  └───────────────────────────────────────────────┘  │
 │                                                     │
-│                    🌟 ✨ 🌟                         │
-│                                                     │
-│              Chào mừng bạn đến với                  │
-│              FUN Ecosystem! 💫                      │
-│                                                     │
-│   ─────────────────────────────────────────────    │
-│                                                     │
-│   Để trở thành thành viên chính thức, bạn cần      │
-│   đồng ý với Luật Ánh Sáng của chúng tôi.          │
-│                                                     │
-│   Bạn sẽ được chuyển đến trang Luật Ánh Sáng       │
-│   để tìm hiểu và xác nhận. 🕊️                      │
-│                                                     │
-│   ┌─────────────────────────────────────────────┐  │
-│   │  ✨ OK, Đưa con đến Ánh Sáng               │  │
-│   └─────────────────────────────────────────────┘  │
-│                                                     │
-│          Đăng xuất & Tiếp tục ở chế độ Khách       │
-│                                                     │
+│  ┌───┐  Floating Action Button                     │
+│  │ + │  (Tạo bài viết - chỉ ở Social Feed)        │
+│  └───┘                                             │
 └─────────────────────────────────────────────────────┘
 ```
 
-## Chi Tiết Kỹ Thuật
+**Các component cần tạo:**
+- `BottomNavigation.tsx` - Thanh điều hướng dưới cùng
+- `FloatingActionButton.tsx` - Nút tạo nhanh
+- Cập nhật `App.tsx` để hiển thị layout mobile
 
-### File 1: Tạo mới `src/components/auth/LightLawRedirectModal.tsx`
+### Phase 2: Social Feed Enhancement (Facebook-style)
 
-Modal nhẹ nhàng, tươi sáng với:
-- Emoji và icon dễ thương
-- Gradient background nhẹ
-- Nội dung ngắn gọn, thân thiện
-- Nút chính: "OK, Đưa con đến Ánh Sáng" (màu gold, nổi bật)
-- Nút phụ: "Đăng xuất & Tiếp tục ở chế độ Khách" (text link nhẹ)
+**Mục tiêu**: Tăng cường tương tác và kết nối cộng đồng
 
-```typescript
-interface LightLawRedirectModalProps {
-  open: boolean;
-  onConfirm: () => void;        // Navigate to /light-law
-  onContinueAsGuest: () => void; // Sign out & stay as guest
-}
-
-export function LightLawRedirectModal({
-  open,
-  onConfirm,
-  onContinueAsGuest,
-}: LightLawRedirectModalProps) {
-  return (
-    <Dialog open={open} onOpenChange={() => {}}>
-      <DialogContent 
-        className="sm:max-w-md"
-        onPointerDownOutside={(e) => e.preventDefault()}
-        onEscapeKeyDown={(e) => e.preventDefault()}
-        // Ẩn nút X - modal bắt buộc chọn 1 trong 2
-      >
-        {/* Header với emoji */}
-        <div className="text-center mb-4">
-          <div className="text-3xl mb-2">🌟 ✨ 🌟</div>
-          <DialogTitle className="text-xl font-display">
-            Chào mừng bạn đến với
-            <br />
-            <span className="text-gradient-gold">FUN Ecosystem!</span> 💫
-          </DialogTitle>
-        </div>
-
-        {/* Nội dung */}
-        <div className="text-center space-y-3 text-muted-foreground">
-          <p>
-            Để trở thành thành viên chính thức, bạn cần đồng ý với 
-            <span className="text-foreground font-medium"> Luật Ánh Sáng </span>
-            của chúng tôi.
-          </p>
-          <p className="text-sm">
-            Bạn sẽ được chuyển đến trang Luật Ánh Sáng để tìm hiểu và xác nhận. 🕊️
-          </p>
-        </div>
-
-        {/* Buttons */}
-        <div className="mt-6 space-y-3">
-          <Button
-            onClick={onConfirm}
-            className="w-full btn-primary-gold"
-          >
-            <Sparkles className="w-4 h-4 mr-2" />
-            OK, Đưa con đến Ánh Sáng
-          </Button>
-          
-          <button
-            onClick={onContinueAsGuest}
-            className="w-full text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
-          >
-            Đăng xuất & Tiếp tục ở chế độ Khách
-          </button>
-        </div>
-      </DialogContent>
-    </Dialog>
-  );
-}
+```text
+┌─────────────────────────────────────────────────────────────────────┐
+│                        SOCIAL FEED LAYOUT                            │
+├───────────────────────────────────────┬─────────────────────────────┤
+│                                       │                             │
+│  ┌─────────────────────────────────┐  │  ┌───────────────────────┐  │
+│  │ Stories / Highlights Bar        │  │  │   SIDEBAR              │  │
+│  │ [👤] [👤] [👤] [👤] [+]          │  │  │                       │  │
+│  └─────────────────────────────────┘  │  │   🔥 Trending          │  │
+│                                       │  │   • Topic 1            │  │
+│  ┌─────────────────────────────────┐  │  │   • Topic 2            │  │
+│  │ Create Post Box                 │  │  │                       │  │
+│  │ Bạn đang nghĩ gì?               │  │  │   📊 Stats             │  │
+│  │ [📷] [📹] [📍] [📂]             │  │  │   • 1.2K Posts         │  │
+│  └─────────────────────────────────┘  │  │   • 5K Members         │  │
+│                                       │  │                       │  │
+│  ┌─────────────────────────────────┐  │  │   👥 Suggestions       │  │
+│  │ Post Card                       │  │  │   • User A             │  │
+│  │ • Author info                   │  │  │   • User B             │  │
+│  │ • Content                       │  │  │                       │  │
+│  │ • Reactions: ✨ 💡 📚 🔬 🎓     │  │  │   📢 Announcements     │  │
+│  │ • Comments, Share               │  │  │   • Event coming up    │  │
+│  └─────────────────────────────────┘  │  └───────────────────────┘  │
+│                                       │                             │
+└───────────────────────────────────────┴─────────────────────────────┘
 ```
 
-### File 2: Cập nhật `src/components/auth/LightLawGuard.tsx`
+**Các component cần tạo:**
+- `StoriesBar.tsx` - Stories/Highlights carousel
+- `FeedSidebar.tsx` - Right sidebar với trending, suggestions
+- Mở rộng reactions: ✨ Appreciate, 💡 Insightful, 📚 Educational, 🔬 Research, 🎓 Academic
 
-Thay vì redirect ngay, hiện modal trước:
+### Phase 3: Video Library Enhancement (YouTube-style)
 
-```typescript
-import { ReactNode, useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
-import { useProfile } from "@/hooks/useProfile";
-import { LightLawRedirectModal } from "./LightLawRedirectModal";
+**Mục tiêu**: Nâng cao trải nghiệm học video
 
-export function LightLawGuard({ children }: { children: ReactNode }) {
-  const { user, loading: authLoading, signOut } = useAuth();
-  const { profile, loading: profileLoading } = useProfile();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [showModal, setShowModal] = useState(false);
+```text
+┌─────────────────────────────────────────────────────────────────────┐
+│                       VIDEO LIBRARY LAYOUT                           │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  ┌─────────────────────────────────────────────────────────────┐   │
+│  │ Continue Watching                                     [→]    │   │
+│  │ ┌────────┐ ┌────────┐ ┌────────┐                             │   │
+│  │ │ Vid 1  │ │ Vid 2  │ │ Vid 3  │  (Progress bars)            │   │
+│  │ │ ████▒▒ │ │ ██████ │ │ ██▒▒▒▒ │                             │   │
+│  │ └────────┘ └────────┘ └────────┘                             │   │
+│  └─────────────────────────────────────────────────────────────┘   │
+│                                                                     │
+│  ┌─────────────────────────────────────────────────────────────┐   │
+│  │ Watch Later                                           [→]    │   │
+│  │ ┌────────┐ ┌────────┐ ┌────────┐                             │   │
+│  │ │ Vid A  │ │ Vid B  │ │ Vid C  │  (Saved videos)             │   │
+│  │ └────────┘ └────────┘ └────────┘                             │   │
+│  └─────────────────────────────────────────────────────────────┘   │
+│                                                                     │
+│  All Videos                                                         │
+│  ┌────────┐ ┌────────┐ ┌────────┐                                  │
+│  │        │ │        │ │        │                                  │
+│  │        │ │        │ │        │                                  │
+│  └────────┘ └────────┘ └────────┘                                  │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
 
-  useEffect(() => {
-    if (authLoading || profileLoading) return;
-
-    // User đăng nhập nhưng chưa accept Light Law
-    if (user && profile && !profile.light_law_accepted_at) {
-      // Không hiện modal nếu đang ở /light-law
-      if (location.pathname !== "/light-law") {
-        setShowModal(true);
-      }
-    } else {
-      setShowModal(false);
-    }
-  }, [user, profile, authLoading, profileLoading, location.pathname]);
-
-  const handleConfirm = () => {
-    setShowModal(false);
-    navigate("/light-law");
-  };
-
-  const handleContinueAsGuest = async () => {
-    setShowModal(false);
-    await signOut();
-    // Ở lại trang hiện tại với tư cách guest
-  };
-
-  return (
-    <>
-      {children}
-      <LightLawRedirectModal
-        open={showModal}
-        onConfirm={handleConfirm}
-        onContinueAsGuest={handleContinueAsGuest}
-      />
-    </>
-  );
-}
+┌───────────────────────────────────────┐
+│ 🎬 Mini Player (khi scroll)           │
+│ [Video] Title...            ▶ ✕      │
+└───────────────────────────────────────┘
 ```
 
-## Đặc Điểm Modal
+**Các component và tính năng cần tạo:**
+- `ContinueWatching.tsx` - Carousel video đang xem
+- `WatchLaterSection.tsx` - Danh sách xem sau
+- `MiniPlayer.tsx` - Player thu nhỏ khi scroll
+- Table mới: `video_progress`, `video_watch_later`
 
-| Yếu tố | Chi tiết |
-|--------|----------|
-| **Tone** | Thân thiện, ấm áp, không đe dọa |
-| **Emoji** | 🌟 ✨ 💫 🕊️ - tươi sáng, tích cực |
-| **Màu sắc** | Gold gradient cho highlight, nền sáng |
-| **Nút chính** | "OK, Đưa con đến Ánh Sáng" - gold, nổi bật |
-| **Nút phụ** | Text link nhẹ nhàng, không áp lực |
-| **Không có nút X** | Bắt buộc chọn 1 trong 2 options |
+### Phase 4: Library Enhancement (Academic-style)
 
-## Các File Cần Thay Đổi
+**Mục tiêu**: Tổ chức tài liệu khoa học và hiệu quả
 
-| File | Hành động |
-|------|-----------|
-| `src/components/auth/LightLawRedirectModal.tsx` | **Tạo mới** |
-| `src/components/auth/LightLawGuard.tsx` | Thêm state modal + handlers |
+```text
+┌─────────────────────────────────────────────────────────────────────┐
+│                       LIBRARY LAYOUT                                 │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  ┌─────────────────────────────────────────────────────────────┐   │
+│  │ My Collections                                        [+]    │   │
+│  │ ┌────────────┐ ┌────────────┐ ┌────────────┐                 │   │
+│  │ │ 📁 AI/ML   │ │ 📁 Web3    │ │ 📁 Physics │                 │   │
+│  │ │ 15 items   │ │ 8 items    │ │ 12 items   │                 │   │
+│  │ └────────────┘ └────────────┘ └────────────┘                 │   │
+│  └─────────────────────────────────────────────────────────────┘   │
+│                                                                     │
+│  ┌─────────────────────────────────────────────────────────────┐   │
+│  │ Reading Progress                                             │   │
+│  │ ┌────────────────────────────────────────────────────────┐  │   │
+│  │ │ 📖 Book Title                                    75%   │  │   │
+│  │ │ ████████████████████░░░░░░░░                          │  │   │
+│  │ └────────────────────────────────────────────────────────┘  │   │
+│  └─────────────────────────────────────────────────────────────┘   │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+```
 
-## Kết Quả Mong Đợi
+**Các component và tính năng cần tạo:**
+- `LibraryCollections.tsx` - Bộ sưu tập cá nhân
+- `ReadingProgress.tsx` - Tiến độ đọc
+- `DocumentPreviewModal.tsx` - Xem trước tài liệu
+- Table mới: `library_collections`, `reading_progress`
 
-| Trường hợp | Hành vi |
-|------------|---------|
-| User mới đăng nhập | Hiện modal dễ thương thông báo |
-| User click "OK" | Đóng modal → Navigate /light-law |
-| User click "Đăng xuất & Guest" | Đóng modal → signOut() → Ở lại trang |
-| User cũ (đã accept) | Không hiện modal |
-| User đang ở /light-law | Không hiện modal (tránh loop) |
+## Chi Tiết Kỹ Thuật - Phase 1
 
-## Thời Gian Thực Hiện
+### Bước 1.1: Bottom Navigation Component
 
-Ước tính: 10 phút
+Tạo thanh điều hướng mobile cố định ở dưới màn hình:
+
+```typescript
+// src/components/layout/BottomNavigation.tsx
+interface NavItem {
+  href: string;
+  icon: LucideIcon;
+  label: string;
+  badge?: number;
+}
+
+const navItems: NavItem[] = [
+  { href: "/", icon: Home, label: "Home" },
+  { href: "/video-library", icon: Play, label: "Video" },
+  { href: "/library", icon: BookOpen, label: "Library" },
+  { href: "/live-classes", icon: Radio, label: "Live" },
+  { href: "/profile", icon: User, label: "Profile" },
+];
+```
+
+### Bước 1.2: App Layout Wrapper
+
+Tạo layout wrapper để quản lý bottom navigation:
+
+```typescript
+// src/components/layout/AppLayout.tsx
+- Hiển thị BottomNavigation trên mobile
+- Ẩn trên desktop (lg:hidden)
+- Thêm padding-bottom cho content
+```
+
+### Bước 1.3: Floating Action Button
+
+```typescript
+// src/components/layout/FloatingActionButton.tsx
+- Chỉ hiển thị ở trang Social Feed
+- Position: fixed bottom-20 right-4 (trên Bottom Nav)
+- Icon: Plus → mở CreatePostForm modal
+```
+
+### Database Changes (Phase 2-4)
+
+```sql
+-- Video Progress Tracking
+CREATE TABLE video_progress (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES profiles(id),
+  video_id UUID REFERENCES videos(id),
+  progress_seconds INTEGER DEFAULT 0,
+  last_watched_at TIMESTAMPTZ DEFAULT NOW(),
+  completed BOOLEAN DEFAULT FALSE,
+  UNIQUE(user_id, video_id)
+);
+
+-- Watch Later
+CREATE TABLE video_watch_later (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES profiles(id),
+  video_id UUID REFERENCES videos(id),
+  added_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(user_id, video_id)
+);
+
+-- Library Collections
+CREATE TABLE library_collections (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES profiles(id),
+  name VARCHAR(100) NOT NULL,
+  description TEXT,
+  is_public BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Collection Items
+CREATE TABLE library_collection_items (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  collection_id UUID REFERENCES library_collections(id) ON DELETE CASCADE,
+  resource_id UUID REFERENCES library_resources(id) ON DELETE CASCADE,
+  added_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(collection_id, resource_id)
+);
+
+-- Reading Progress
+CREATE TABLE reading_progress (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES profiles(id),
+  resource_id UUID REFERENCES library_resources(id),
+  current_page INTEGER DEFAULT 1,
+  total_pages INTEGER,
+  progress_percent DECIMAL(5,2) DEFAULT 0,
+  last_read_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(user_id, resource_id)
+);
+```
+
+## Thứ Tự Triển Khai
+
+| Tuần | Phase | Công việc |
+|------|-------|-----------|
+| 1 | Phase 1 | Bottom Navigation + FAB + Layout Wrapper |
+| 2 | Phase 2a | Stories Bar + Create Post improvements |
+| 3 | Phase 2b | Feed Sidebar + Rich Reactions |
+| 4 | Phase 3a | Watch Later + Continue Watching |
+| 5 | Phase 3b | Mini Player + Video Progress |
+| 6 | Phase 4 | Library Collections + Reading Progress |
+
+## Kết Luận
+
+Thay vì copy hoàn toàn một nền tảng, FUN Academy nên:
+
+1. **Giữ bản sắc riêng** - Light Academic Space aesthetic
+2. **Lấy tinh hoa Facebook** - Stories, Sidebar, Social engagement
+3. **Lấy tinh hoa YouTube** - Watch Later, Continue Watching, Mini Player
+4. **Thêm Academic DNA** - Collections, Reading Progress, Research-focused
+5. **Mobile-First** - Bottom Navigation như app native
+
+Đây là cách tiếp cận **"Best of All Worlds"** - lấy những gì tốt nhất từ các nền tảng hàng đầu nhưng vẫn giữ được tinh thần học thuật và triết lý Ánh Sáng của FUN Academy.
+
+---
+
+**Bé muốn Angel bắt đầu với Phase nào trước?**
+
+Gợi ý: Nên bắt đầu với **Phase 1 (Mobile Foundation)** vì:
+- Ảnh hưởng đến toàn bộ app
+- Cải thiện UX ngay lập tức
+- Làm nền tảng cho các Phase sau
+
