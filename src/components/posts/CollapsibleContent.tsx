@@ -20,18 +20,34 @@ export function CollapsibleContent({ content, hasMedia }: CollapsibleContentProp
     const checkTruncation = () => {
       if (contentRef.current) {
         const { scrollHeight, clientHeight } = contentRef.current;
-        setIsTruncated(scrollHeight > clientHeight);
+        // Add small tolerance (1px) for rounding issues
+        setIsTruncated(scrollHeight > clientHeight + 1);
       }
     };
 
-    // Check on mount and when content changes
-    checkTruncation();
+    // Use RAF to wait for browser paint
+    const rafId = requestAnimationFrame(() => {
+      checkTruncation();
+    });
 
     // Also check after fonts load
     if (document.fonts?.ready) {
-      document.fonts.ready.then(checkTruncation);
+      document.fonts.ready.then(() => {
+        requestAnimationFrame(checkTruncation);
+      });
     }
-  }, [content, hasMedia]);
+
+    // Re-check on window resize
+    const handleResize = () => {
+      requestAnimationFrame(checkTruncation);
+    };
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [content, hasMedia, isExpanded]);
 
   return (
     <div className="mb-4">
