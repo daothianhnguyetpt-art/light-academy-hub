@@ -502,7 +502,9 @@
     "videoTooLarge": "動画は50MB未満である必要があります",
     "postFailed": "投稿に失敗しました",
     "locationFailed": "位置を取得できませんでした",
-    "browserNoLocation": "ブラウザは位置情報をサポートしていません"
+    "browserNoLocation": "ブラウザは位置情報をサポートしていません",
+    "readMore": "続きを読む",
+    "showLess": "閉じる"
   },
   "profile": {
     "rewards": {

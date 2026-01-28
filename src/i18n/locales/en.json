@@ -508,7 +508,9 @@
     "videoTooLarge": "Video must be less than 50MB",
     "postFailed": "Failed to create post",
     "locationFailed": "Could not get your location",
-    "browserNoLocation": "Browser does not support geolocation"
+    "browserNoLocation": "Browser does not support geolocation",
+    "readMore": "Read more",
+    "showLess": "Show less"
   },
   "profile": {
     "rewards": {
