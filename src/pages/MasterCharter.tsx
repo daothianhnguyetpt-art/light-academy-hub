@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   ArrowLeft, 
   Download, 
@@ -20,11 +20,16 @@ import {
   Sun,
   Droplet,
   Scale,
-  Handshake
+  Handshake,
+  ZoomIn
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import funAcademyLogo from "@/assets/fun-academy-logo.jpg";
+import masterCharterEN from "@/assets/master-charter-en.jpg";
+import masterCharterVN from "@/assets/master-charter-vn.jpg";
 
 // Section data
 const sections = [
@@ -130,6 +135,10 @@ function SectionHeading({
 export default function MasterCharter() {
   const [activeSection, setActiveSection] = useState("origin");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [infographicLang, setInfographicLang] = useState<'vi' | 'en'>('vi');
+  const [isZoomOpen, setIsZoomOpen] = useState(false);
+
+  const currentInfographic = infographicLang === 'vi' ? masterCharterVN : masterCharterEN;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -230,6 +239,152 @@ export default function MasterCharter() {
           </motion.div>
         </div>
       </section>
+
+      {/* Infographic Section */}
+      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gold/5 to-transparent">
+        <div className="container mx-auto max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <div className="text-center mb-8">
+              <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-2">
+                📊 Infographic
+              </h2>
+              <p className="text-muted-foreground">
+                Tổng quan Master Charter trong một hình ảnh
+              </p>
+            </div>
+
+            {/* Language Tabs */}
+            <div className="flex justify-center mb-6">
+              <Tabs value={infographicLang} onValueChange={(v) => setInfographicLang(v as 'vi' | 'en')}>
+                <TabsList className="bg-gold/10 border border-gold/20">
+                  <TabsTrigger 
+                    value="vi" 
+                    className="data-[state=active]:bg-gold data-[state=active]:text-primary-foreground"
+                  >
+                    🇻🇳 Tiếng Việt
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="en"
+                    className="data-[state=active]:bg-gold data-[state=active]:text-primary-foreground"
+                  >
+                    🇺🇸 English
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
+
+            {/* Infographic Image */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={infographicLang}
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.3 }}
+                className="relative group"
+              >
+                <div 
+                  onClick={() => setIsZoomOpen(true)}
+                  className="relative cursor-zoom-in rounded-2xl overflow-hidden border-2 border-gold/30 shadow-lg shadow-gold/10 bg-background/50 backdrop-blur-sm transition-all duration-300 hover:border-gold/50 hover:shadow-xl hover:shadow-gold/20 hover:scale-[1.01]"
+                >
+                  <img 
+                    src={currentInfographic} 
+                    alt={`Master Charter Infographic - ${infographicLang === 'vi' ? 'Vietnamese' : 'English'}`}
+                    className="w-full h-auto"
+                  />
+                  
+                  {/* Zoom Overlay */}
+                  <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/5 transition-colors flex items-center justify-center">
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 backdrop-blur-sm rounded-full p-3 shadow-lg">
+                      <ZoomIn className="w-6 h-6 text-gold" />
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap justify-center gap-4 mt-6">
+              <Button
+                variant="outline"
+                className="border-gold/30 hover:border-gold hover:bg-gold/10"
+                onClick={() => setIsZoomOpen(true)}
+              >
+                <ZoomIn className="w-4 h-4 mr-2" />
+                Xem toàn màn hình
+              </Button>
+              <Button
+                variant="outline"
+                className="border-gold/30 hover:border-gold hover:bg-gold/10"
+                asChild
+              >
+                <a href={currentInfographic} download={`master-charter-${infographicLang}.jpg`}>
+                  <Download className="w-4 h-4 mr-2" />
+                  Tải về ({infographicLang === 'vi' ? 'VN' : 'EN'})
+                </a>
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Zoom Modal */}
+      <Dialog open={isZoomOpen} onOpenChange={setIsZoomOpen}>
+        <DialogContent className="max-w-[95vw] max-h-[95vh] p-2 sm:p-4 overflow-auto bg-background/95 backdrop-blur-md">
+          <div className="flex flex-col items-center">
+            {/* Language Toggle in Modal */}
+            <div className="flex justify-center mb-4">
+              <Tabs value={infographicLang} onValueChange={(v) => setInfographicLang(v as 'vi' | 'en')}>
+                <TabsList className="bg-gold/10 border border-gold/20">
+                  <TabsTrigger 
+                    value="vi" 
+                    className="data-[state=active]:bg-gold data-[state=active]:text-primary-foreground"
+                  >
+                    🇻🇳 Tiếng Việt
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="en"
+                    className="data-[state=active]:bg-gold data-[state=active]:text-primary-foreground"
+                  >
+                    🇺🇸 English
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
+
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={infographicLang}
+                src={currentInfographic}
+                alt={`Master Charter Infographic - ${infographicLang === 'vi' ? 'Vietnamese' : 'English'}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="max-w-full max-h-[80vh] object-contain rounded-lg"
+              />
+            </AnimatePresence>
+
+            {/* Download Button */}
+            <div className="mt-4">
+              <Button
+                variant="outline"
+                className="border-gold/30 hover:border-gold hover:bg-gold/10"
+                asChild
+              >
+                <a href={currentInfographic} download={`master-charter-${infographicLang}.jpg`}>
+                  <Download className="w-4 h-4 mr-2" />
+                  Tải về ({infographicLang === 'vi' ? 'Tiếng Việt' : 'English'})
+                </a>
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
