@@ -19,6 +19,8 @@ import Library from "./pages/Library";
 import LibraryDetail from "./pages/LibraryDetail";
 import Whitepaper from "./pages/Whitepaper";
 import Constitution from "./pages/Constitution";
+import MasterCharter from "./pages/MasterCharter";
+import PPLP from "./pages/PPLP";
 import Profile from "./pages/Profile";
 import LightLaw from "./pages/LightLaw";
 import Auth from "./pages/Auth";
@@ -53,6 +55,8 @@ const App = () => (
                   <Route path="/library/:id" element={<LibraryDetail />} />
                   <Route path="/whitepaper" element={<Whitepaper />} />
                   <Route path="/constitution" element={<Constitution />} />
+                  <Route path="/master-charter" element={<MasterCharter />} />
+                  <Route path="/pplp" element={<PPLP />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/admin" element={<AdminDashboard />} />
                   <Route path="/docs/platform" element={<PlatformDocs />} />
